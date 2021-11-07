@@ -15,8 +15,8 @@ module.exports.functionName = (variable_name) => {
                 console.log('Error Message Here', err);
                 resolve(err);
             } else {
-                connection.query(`SELECT user.user_id, fullname, email, user_password, role_name, user.role_id  
-                FROM user INNER JOIN role ON user.role_id=role.role_id AND email=?`, [variable_name] ,(err, results) => { //please use only ? to prevent sql injection
+                //please use only ? when declaring values to be inserted to prevent sql injection
+                connection.query(`SELECT user.user_id FROM user INNER JOIN role ON user.role_id=role.role_id AND email=?`, [variable_name] ,(err, results) => { 
                     if (err) {
                         reject(err);
                     } else {
