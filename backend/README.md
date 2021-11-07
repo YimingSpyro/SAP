@@ -2,8 +2,11 @@
 This is the code standard page for all backend developers of the project. In this README, we will be demonstrating the syntax and structure to write APIs for the backend of the project.
 
 Ideally, we will be using Promise based functions so that errors will be easier to catch overall. 
+
 A general guideline to naming conventions in the system: 
+
 newFunction : Functions are in camel case
+
 variable_name : Variable names will be in snake case in all lowercase
 
 1. Example of Writing a new Service (a service is a call made to the database for information) 
