@@ -7,7 +7,7 @@ newFunction : Functions are in camel case
 variable_name : Variable names will be in snake case in all lowercase
 
 1. Example of Writing a new Service (a service is a call made to the database for information) 
-//Description of the new function here
+```//Description of the new function here
 module.exports.functionName = (variable_name) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -33,3 +33,4 @@ module.exports.functionName = (variable_name) => {
         });
     }); //End of new Promise object creation
 } //End of newFunction
+```
