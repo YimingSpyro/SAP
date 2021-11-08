@@ -20,7 +20,6 @@ app.get('/test', (req, res) => {
             console.log(err)
         }
     );
-    //res.send('https://cdn.techinasia.com/wp-content/uploads/2012/05/fuck_you.jpg');
 })
 app.post('/login', (req, res) => {
     console.log(req.body)
