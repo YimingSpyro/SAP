@@ -66,3 +66,39 @@ exports.processNewFunction = async(req, res, next) => {
 
 }; //End of processNewFunction */
 ```
+
+3. sample of middleware functions: these are functions that must be checked before proceeding
+
+these functions can vary alot and have no specific fixed format. 
+```
+module.exports.checkClientFn = (req, res, next) => {
+    // write the code for the function here
+
+    if (condition) {
+        next() //this will allow it proceed to the next function in the api
+        return; 
+    } else {
+        res.status(403).json({ message: 'Write Intended Message Here' }); // this will stop the execution of the rest of the api
+        return;
+    }
+
+} //End of checkClientFn
+```
+
+4. Sample of api function: these will call upon the backend to make requests with or without client params.
+
+```
+//these constants are declared at the start of the document for access to the controller functions
+const authController = require('./controllers/authController');
+const userController = require('./controllers/userController');
+const checkUserFn = require('./middlewares/checkUserFn');
+
+
+//Describe your Function here
+//Match URL's with controllers
+exports.appRoute = router => {
+    //the format for this is as follows
+    //router.post('api route', middlewareFunction, controllerFunction);
+    router.post('/api/user/', checkUserFn.verifyToken, userController.processUpdateOneUser);
+};
+```
