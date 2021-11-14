@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- Online scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <style>
+        body {}
+
+        #top-navbar {
+            background: #15343F;
+            padding-left: 100px;
+        }
+
+        a {
+            color: white;
+        }
+
+        p {
+            background: lightgreen;
+            color: rgb(255, 0, 0);
+        }
+
+        #navbar-header {
+            align-items: center;
+            position: relative;
+            left: 200px;
+            width: 300px;
+            background: yellow;
+        }
+
+        .navbar-collapse {
+            position: relative;
+            right: 300px;
+        }
+
+        #navbarNavAltMarkup>div>a.nav-item.nav-link.active {
+            border-bottom: white solid 1px;
+        }
+
+        img {
+            border-radius: 50%;
+        }
+
+        #msg-wrap {
+            background: coral;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="top-navbar" class="navbar navbar-expand-lg">
+        <div id="navbar-header" class="row">
+            <div class="col-4">
+                <img src="https://static.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg"
+                    style="width: 100px;height:100px" alt="Cinque Terre">
+            </div>
+            <div id="msg-wrap" class="col-8">
+                <p>Welcome</p>
+                <p>Adminstrator 1</p>
+            </div>
+        </div>
+
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav ml-auto">
+                <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" href="#">Features</a>
+                <a class="nav-item nav-link" href="#">Pricing</a>
+                <a class="nav-item nav-link disabled" href="#">Disabled</a>
+            </div>
+        </div>
+
+    </nav>
+
+</body>
+
+</html>
