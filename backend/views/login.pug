@@ -1,0 +1,35 @@
+extends ./layouts/public_layout.pug
+
+block content
+    main
+    
+            div.row
+                //Grid column
+                div.offset-md-2.col-md-8
+                    div.card
+                        div.card-body
+                            //Form register
+                            form(id="loginFormContainer")
+                                h2.text-center.font-up.font-bold.blue-text.py-4 Login
+                                div.md-form
+                                    i.fa.fa-envelope.prefix.grey-text
+                                    input(type="text" id="emailInput" class="form-control")
+                                    label(for="emailInput") Your email
+                                div.md-form
+                                    i.fa.fa-key.prefix.grey-text
+                                    input(type="password" id="passwordInput" class="form-control")
+                                    label(for="passwordInput") Your password
+                                div.text-center
+                                    button(id="submitButton" class="btn btn-primary") 
+                                        | Submit
+                                        
+
+          
+            hr.my-4
+          
+            div.text-center.darken-grey-text.mb-4
+                h3.font-bold.mb-3
+                    |Client side interface also contributes towards security vulnerabilities.
+            </div>
+
+

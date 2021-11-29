@@ -14,14 +14,14 @@
     <!-- Local scripts -->
     <link rel="stylesheet" href="./css/index.css">
 
-    <title>Test</title>
+    <title>Dashboard</title>
     <script>
         function viewCat() {
             var catUrl;
             axios.get('http://localhost:3000/test')
                 .then((response) => {
                     console.log(response.data);
-                    catUrl = response.data;
+                    catUrl = response.data.data;
                     var html = "<ul>";
                     for (i = 0; i < catUrl.length; i++) {
                         html += "<li>" + catUrl[i].staff_name + "</li>"

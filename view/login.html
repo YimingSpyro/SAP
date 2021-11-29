@@ -1,80 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
+    <style>
+        body{
+            font-family:sans-serif;
+            display: flex;
+            justify-content: center;
+            background: #C1C8CB;
+            height:100%;
+        }
+        #content-wrap{
+            margin-top:10%;
+        }
+        body>div{
+            font-size:1em;
+        }
+        #login-title{
+            font-weight:lighter;
+            font-size:70px;
+            font-style: italic;
+            text-align: center;
+            color:#01709A;
+            margin-block-end: 0px;
+        }
+        #login-input-wrap{
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding:20px;
 
-    <!-- Online scripts -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
-    <!-- Local scripts -->
-    <link rel="stylesheet" href="../css/login.css">
-    <script>
-        $(document).ready(() => {
-            $('#login-submit').click(function () {
-                console.log("login");
-                var staff_id_input = $('#login').val;
-                var staff_password_input = $('#password').val;
-                var data = {
-                    staff_id_input:staff_id_input,
-                    staff_password_input:staff_password_input
-                }
-                const headers = {
-                    'Access-Control-Allow-Origin': '*',
-                    'Access-Control-Allow-Methods': 'GET, PUT, POST, DELETE, HEAD, OPTIONS',
-                    'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
-                    }
-                axios.post('http://localhost:3000/login', data, {
-                    headers: headers
-                })
-                    .then((response) => {
-                        console.log(response.data);
-                        catUrl = response.data;
-                        var html = "<ul>";
-                        for (i = 0; i < catUrl.length; i++) {
-                            html += "<li>" + catUrl[i].staff_name + "</li>"
-                        }
-                        html += "</ul>"
-                        // $('body').append('<img class="catImg" src="'+catUrl+'" />')
-                        // $('h1').text("number of cattos :"+ $('.catImg').length);
-                        $('body').append(html);
-
-                    });
-            })
-        })
-    </script>
+        }
+        #login-input-wrap > input{
+            
+            font-weight: bold;
+            width:280px;
+            height:25px;
+            margin-top:20px;
+            border-radius: 3px;
+            border:none;
+            padding:4px 8px 4px 8px
+        }
+        #submit-button{
+            font-weight: 600;
+            padding:4px 5px 4px 5px;
+            color:white;
+            height:30px;
+            margin-top:15px;  
+            background: #86C4F1;
+            border-radius: 3px;
+            border:none;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <!-- Tabs Titles -->
-
-            <!-- Icon -->
-            <div class="fadeIn first">
-                <img id="catt" src="https://static.wikia.nocookie.net/sd-smash/images/1/1d/Catto.jpg" id="icon"
-                    alt="User Icon" />
-            </div>
-
-            <!-- Login Form -->
-            <form id="login-form">
-                <input type="text" id="login" class="fadeIn second" name="login" placeholder="staff id">
-                <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
-                <input type="button" id="login-submit" class="fadeIn fourth" value="Log In">
-            </form>
-
-            <!-- Remind Passowrd -->
-            <div id="formFooter">
-                <a class="underlineHover" href="#">Forgot Password?</a>
-            </div>
-
+    <div id="content-wrap">
+        <p id="login-title">Login</p>
+        <div id="login-input-wrap">
+            <input placeholder="Id"/>
+            <input placeholder="Password" type="password"/>
+            <button id="submit-button" onclick="window.location.href='./home.html'">Login</button>
         </div>
     </div>
 </body>
-
 </html>
