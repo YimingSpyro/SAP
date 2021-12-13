@@ -26,25 +26,25 @@ const config = require('../config/config');
 const pool = require('../config/database')
 
 module.exports.processLogin= ((req,res)=>{
-    console.log(req.body);
     let staff_id = req.body.staff_id;
     let password = req.body.password;
     console.log("staff_id is "+staff_id);
     console.log(password);
-  
- /*    res.status(200).json({
-        data:formData
-    }); */
     var data = authManager.login([staff_id,password])
     .then((value)=>{
+        var userData = value[0];
+        let sendData = {
+            staff_id :userData.staff_id,
+            staff_name:userData.staff_name,
+        }
         res.status(200).json({
-            data:"data is"+value
+            data:sendData
         });
     }).catch((error) => {
-        res.status(500);
-        res.json({
+        console.log(error)
+        res.status(500).json({
             error:error
-        })
+        });
     })
 })
 module.exports.processRegister= ((req,res)=>{
