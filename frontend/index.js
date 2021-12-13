@@ -3,7 +3,7 @@ const app = express();
 
 app.use(express.static('public'))
 
-const myPort = 3000
+const myPort = 8000
 app.get("/login", (req, res) => {
     res.sendFile("/public/login.html", { root: __dirname });
 });
