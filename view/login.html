@@ -1,69 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <!-- Online scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
+    <script>
+        $(document).ready(()=> {
+            $("#submit-button").click((e)=>{
+               var staff_id = $("#staff_id").val();
+               var password = $("#password").val();
+                axios.post('http://localhost:3000/login',{
+                    staff_id:staff_id,
+                    password:password
+                })
+                .then((response) => {
+                    console.log(response.data);
+                    if(respons.date.code==500){
+                        alert("wrong pass")
+                    }
+                });
+            })
+        })
+    </script>
     <style>
-        body{
-            font-family:sans-serif;
+        body {
+            font-family: sans-serif;
             display: flex;
             justify-content: center;
             background: #C1C8CB;
-            height:100%;
+            height: 100%;
         }
-        #content-wrap{
-            margin-top:10%;
+
+        #content-wrap {
+            margin-top: 10%;
         }
-        body>div{
-            font-size:1em;
+
+        body>div {
+            font-size: 1em;
         }
-        #login-title{
-            font-weight:lighter;
-            font-size:70px;
+
+        #login-title {
+            font-weight: lighter;
+            font-size: 70px;
             font-style: italic;
             text-align: center;
-            color:#01709A;
+            color: #01709A;
             margin-block-end: 0px;
         }
-        #login-input-wrap{
+
+        #login-input-wrap {
             display: flex;
             justify-content: center;
             flex-direction: column;
-            padding:20px;
+            padding: 20px;
 
         }
-        #login-input-wrap > input{
-            
+
+        #login-input-wrap input {
+            font-size:.8em;
             font-weight: bold;
-            width:280px;
-            height:25px;
-            margin-top:20px;
+            width: 280px;
+            height: 25px;
+            margin-top: 20px;
             border-radius: 3px;
-            border:none;
-            padding:4px 8px 4px 8px
+            border: none;
+            padding: 4px 8px 4px 8px
         }
-        #submit-button{
+
+        #submit-button {
             font-weight: 600;
-            padding:4px 5px 4px 5px;
-            color:white;
-            height:30px;
-            margin-top:15px;  
+            padding: 4px 5px 4px 5px;
+            color: white;
+            height: 30px;
+            margin-top: 15px;
             background: #86C4F1;
             border-radius: 3px;
-            border:none;
+            border: none;
         }
     </style>
 </head>
+
 <body>
     <div id="content-wrap">
         <p id="login-title">Login</p>
-        <div id="login-input-wrap">
-            <input placeholder="Id"/>
-            <input placeholder="Password" type="password"/>
-            <button id="submit-button" onclick="window.location.href='./home.html'">Login</button>
-        </div>
+            <div id="login-input-wrap">
+                <input id="staff_id" name="staff_id" placeholder="Id" type=text/>
+                <input id="password" name="password" placeholder="Password" type="password" />
+                <button id="submit-button">Login</button>
+            </div>
+
     </div>
 </body>
+
 </html>
