@@ -10,7 +10,7 @@ const config = require('./config');
         database: 'Htge9DZLeE',
         multipleStatements: true
     }); */
-const pool = mysql.createPool({
+ const pool = mysql.createPool({
         connectionLimit: 100,
         host: 'localhost',
         user: 'root',

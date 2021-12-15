@@ -29,6 +29,7 @@ module.exports.getAllStaff = () => {
     }); 
 } 
 
+
 module.exports.getStaffByStaffId = (staff_id) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -54,8 +55,7 @@ module.exports.getStaffByStaffId = (staff_id) => {
             }
         });
     }); 
-} 
-
+};
 module.exports.UpdateStaffByStaffId = (data) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {

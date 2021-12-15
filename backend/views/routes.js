@@ -18,7 +18,6 @@ exports.appRoute = router => {
 
         router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
         router.get('/test', staffController.processGetAllStaff);*/
-        router.get('/test', staffController.processGetAllStaff);
         router.post('/login', authController.processLogin);
         router.get('/api/staff/', staffController.getAllStaff);
         router.get('/api/staff/:id', staffController.getStaffByID);
