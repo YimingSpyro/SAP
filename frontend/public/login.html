@@ -15,22 +15,34 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
+
     <script>
-        $(document).ready(()=> {
-            $("#submit-button").click((e)=>{
-               var staff_id = $("#staff_id").val();
-               var password = $("#password").val();
-                axios.post('http://localhost:3000/login',{
-                    staff_id:staff_id,
-                    password:password
-                })
-                .then((response) => {
-                    console.log(response.data);
-                    if(respons.date.code==500){
-                        alert("wrong pass")
-                    }
-                });
+        $(document).ready(() => {
+            $("#submit-button").click((e) => {
+                var staff_id = $("#staff_id").val();
+                var password = $("#password").val();
+                if (!staff_id.trim()) {
+                    $("#error_message_content").text("Please fill in all the fields.")
+                    $("#error_message").css("display", "block");
+                    $("input#staff_id").focus()
+                } else if (!password.trim()) {
+                    $("#error_message_content").text("Please fill in all the fields.")
+                    $("#error_message").css("display", "block");
+                    $("input#password").focus()
+                } else {
+                    axios.post('http://localhost:3000/login', {
+                        staff_id: staff_id,
+                        password: password
+                    })
+                    .then((response) => {
+                        if (response.status == 200) {
+                            window.location.href = "./home.html"
+                        }
+                    }).catch(() => {
+                        $("#error_message_content").text('Invalid Login credientals, please try again.')
+                        $("#error_message").css("display", "block");
+                    });
+                }
             })
         })
     </script>
@@ -69,7 +81,7 @@
         }
 
         #login-input-wrap input {
-            font-size:.8em;
+            font-size: .8em;
             font-weight: bold;
             width: 280px;
             height: 25px;
@@ -89,17 +101,28 @@
             border-radius: 3px;
             border: none;
         }
+
+        #error_message {
+            display: none;
+            font-size: .8em;
+            padding: 10px;
+            border-radius: 3px;
+            width: 280px;
+            background: #f7d2d2;
+        }
     </style>
 </head>
 
 <body>
     <div id="content-wrap">
         <p id="login-title">Login</p>
-            <div id="login-input-wrap">
-                <input id="staff_id" name="staff_id" placeholder="Id" type=text/>
-                <input id="password" name="password" placeholder="Password" type="password" />
-                <button id="submit-button">Login</button>
-            </div>
+        <div id="login-input-wrap">
+            <div id="error_message"><span id="error_message_content">Invalid Login credientals, please try again</span><i style="margin-left: 5px;"
+                    class="bi bi-exclamation-circle"></i></div>
+            <input id="staff_id" name="staff_id" placeholder="Id" type=text />
+            <input id="password" name="password" placeholder="Password" type="password" />
+            <button id="submit-button">Login</button>
+        </div>
 
     </div>
 </body>
