@@ -3,6 +3,9 @@
 
 /* ============================ Page Content ========================= */
 
+
+/* Users */
+
 #content-view {
     margin-top: 30px;
     margin-left: 69px;
@@ -39,8 +42,72 @@
 }
 
 
+/* Admin */
+
+#content-view-admin {
+    margin-top: 30px;
+    margin-left: 69px;
+    width: 90%;
+    padding: 0;
+}
+
+#content-header-admin {}
+
+#content-header-admin p {
+    color: #22404F;
+    font-weight: bold;
+    font-size: 21px;
+}
+
+#content-item-admin {
+    margin-top: 22px;
+    height: 500px;
+    border-radius: 6px;
+    padding: 0;
+}
+
+
 /* ============================ Buttons ========================= */
 
 .btn-primary {
     background-color: #22404F !important;
+}
+
+caption {
+    color: #22404F !important;
+    font-size: 13px;
+}
+
+
+/* Admin Tables */
+
+.line {
+    width: 73%;
+    border-bottom: 1px solid black;
+    position: absolute;
+}
+
+#admin-table {
+    margin-top: 10px;
+}
+
+#admin-table.table>:not(caption)>*>* {
+    padding: 0.5rem 0.5rem;
+    background-color: #22404F;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.status-unassigned {
+    color: #E6FF00;
+}
+
+.status-progress {
+    color: #FF5050;
+}
+
+.status-complete {
+    color: #00DD25;
 }
