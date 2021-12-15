@@ -17,8 +17,10 @@ module.exports.login = ([staff_id, password]) => {
                             var hash = rows[0].staff_password;
                             bcrypt.compare(password, hash, (err, res) => {
                                 if (res) {
+                                    console.log(rows);
                                     resolve(rows);
                                 } else {
+                                    console.log(err);
                                     reject(err);
                                 }
                             });

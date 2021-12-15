@@ -32,6 +32,7 @@ module.exports.processLogin= ((req,res)=>{
     console.log(password);
     var data = authManager.login([staff_id,password])
     .then((value)=>{
+        console.log(value);
         var userData = value[0];
         let sendData = {
             staff_id :userData.staff_id,
