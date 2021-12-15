@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            background: #C1C8CB;
+            height: 100%;
+        }
+
+        #content-wrap {
+            margin-top: 10%;
+        }
+
+        body>div {
+            font-size: 1em;
+        }
+
+        #login-title {
+            font-weight: lighter;
+            font-size: 70px;
+            font-style: italic;
+            text-align: center;
+            color: #01709A;
+            margin-block-end: 0px;
+        }
+
+        #login-input-wrap {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            padding: 20px;
+
+        }
+
+        #login-input-wrap input {
+
+            font-weight: bold;
+            width: 280px;
+            height: 25px;
+            margin-top: 20px;
+            border-radius: 3px;
+            border: none;
+            padding: 4px 8px 4px 8px
+        }
+
+        #submit-button {
+            font-weight: 600;
+            padding: 4px 5px 4px 5px;
+            color: white;
+            height: 30px;
+            margin-top: 15px;
+            background: #86C4F1;
+            border-radius: 3px;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content-wrap">
+        <p id="login-title">Register</p>
+        <form action="http://localhost:3000/register/" method="POST">
+            <div id="login-input-wrap">
+                <input name="staff_id" placeholder="Id" type=text/>
+                <input name="password" placeholder="Password" type="password" />
+                <button type="submit" id="submit-button">Register</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>

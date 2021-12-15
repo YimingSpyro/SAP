@@ -9,7 +9,7 @@ app.use('*', cors());
 
 
 //Server Settings
-const PORT = 3000;
+const PORT = 8080;
 const path = require("path");
 const bootstrap = require("./bootstrap");
 
