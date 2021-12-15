@@ -30,7 +30,7 @@
                     $("#error_message").css("display", "block");
                     $("input#password").focus()
                 } else {
-                    axios.post('http://localhost:3000/login', {
+                    axios.post('http://localhost:8080/login', {
                         staff_id: staff_id,
                         password: password
                     })
