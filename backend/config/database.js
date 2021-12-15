@@ -6,7 +6,7 @@ const pool = mysql.createPool({
         connectionLimit: 100,
         host: 'localhost',
         user: 'root',
-        password: 'TYKdatabase@123',
+        password: 'password',
         database: 'tas',
         multipleStatements: true
     });

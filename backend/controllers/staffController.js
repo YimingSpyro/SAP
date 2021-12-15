@@ -25,35 +25,65 @@ const staffManager = require('../services/staffService');
 const config = require('../config/config');
 const pool = require('../config/database')
 
-module.exports.processGetAllStaff = ((req,res)=>{
-    var data = staffManager.getAllStaff()
-    .then((value)=>{
-        res.status(200).json({
-            data:value
+// API GET All Staff Data
+exports.getAllStaff = async(req, res, next) => {
+    try {
+        let results = await staffManager.getAllStaff();
+        console.log('Get Staff Personal Information', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
         });
-    },(err)=>{
-        res.status(500);
-        console.log(err).json({
-            error:'Unkown Error'
-        })
-    })
-})
-/* module.exports.getStaffByStaffId = ()=>{
-    return new Promise((resolve,reject)=>{
-        pool.getConnection((err,connection)=>{
-            if(err){
-                resolve(err);
-            }else{
-                connection.query('SELECT * FROM staff_information',(err,rows)=>{
-                    if (err) {
-                        reject(err);
-                    } else {
-             
-                        resolve(rows);
-                    }
-                    connection.release();
-                })
-            }
-        })
-    })
-} */
+    }
+
+};
+
+// API GET Staff Data by ID
+exports.getStaffByID = async(req, res, next) => {
+    let staff_id = req.params.id
+    try {
+        let results = await staffManager.getStaffByStaffId(staff_id);
+        console.log('Get Staff Personal Information by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Admin Update Staff Data by ID
+exports.UpdateStaffByID = async(req, res, next) => {
+    let staff_id = req.params.id
+    let new_staff_name = req.body.staff_name
+    let new_staff_abbrv = req.body.staff_abbrv
+    let new_staff_email = req.body.staff_email
+    let new_staff_number = req.body.staff_number
+    let new_staff_mobile = req.body.staff_mobile
+    let new_staff_remarks = req.body.staff_remarks
+    let data = [new_staff_name,new_staff_abbrv,new_staff_email,new_staff_number,new_staff_mobile,new_staff_remarks,staff_id]
+    try {
+        let results = await staffManager.UpdateStaffByStaffId(data);
+        console.log('Get Staff Personal Information by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
