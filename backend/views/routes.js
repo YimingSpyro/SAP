@@ -1,7 +1,8 @@
 // Import controlers
-const staffController = require('../controllers/staffController');
-const authController= require('../controllers/authController');
-const checkUserFn = require('../middlewares/checkUser');
+const authController = require("../controllers/authController");
+const staffController = require("../controllers/staffController");
+const checkUserFn = require("../middlewares/checkUser");
+
 
 // Match URL's with controllers
 exports.appRoute = router => {
@@ -14,9 +15,13 @@ exports.appRoute = router => {
      
         router.get('/api/user/process-search-design/:pagenumber/:search?', checkUserFn.getClientUserId, userController.processGetSubmissionData);
         router.get('/api/user/process-search-user/:pagenumber/:search?', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetUserData);
-        router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); */
-        router.get('/test', staffController.processGetAllStaff);
-        router.post('/login', authController.processLogin);
-        router.post('/register', authController.processRegister);
+
+        router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
+        router.get('/test', staffController.processGetAllStaff);*/
+
+        router.get('/api/staff/', staffController.getAllStaff)
+        router.get('/api/staff/:id', staffController.getStaffByID)
+        router.put('/api/staff/:id', staffController.UpdateStaffByID)
+
 
 };

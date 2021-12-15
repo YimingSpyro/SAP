@@ -43,10 +43,6 @@ app.use(express.json());
 
 
 
-
-
-
-
 //Express Router
 const router = express.Router();
 app.use(router);
@@ -61,11 +57,14 @@ app.use(express.static(rootPath));
 //router.use(dummyUserFn.useDummyUserForTesting); 
 bootstrap(app, router);
 
+
+
 //Index Page (Home public page)
 router.get('/', (req, res, next) => {
-    res.send('<html><title>Backend API system for experimenting security concept</title><body>This project provides only backend API support</body></html>');
+    res.send('<html><title>TAS Backend API</title><body>This address is currently used for TAS API</body></html>');
     res.end();
 });
+
 
 router.use((err, req, res, next) => {
     if (err) {
