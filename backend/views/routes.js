@@ -18,13 +18,24 @@ exports.appRoute = router => {
 
         router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
         router.get('/test', staffController.processGetAllStaff);*/
+        // LOGIN
         router.post('/login', authController.processLogin);
+        router.post('/register', authController.processRegister);
+
+        // PERSONAL INFORMATION
         router.get('/api/staff/', staffController.getAllStaff);
         router.get('/api/staff/:id', staffController.getStaffByID);
+        router.put('/api/staff/:id', staffController.updateStaffByID)
 
-        router.post('/register', authController.processRegister);
+        // PERSONAL TEACHING REQUIREMENT
+        router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
+        router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
+        router.put('/api/teaching-requirement/:id', staffController.updateTeachingRequirementByID);
+        //router.delete('/api/teaching-requirement/:id', staffController.deleteeTeachingRequirement);
+
         
-        router.put('/api/staff/:id', staffController.UpdateStaffByID)
+        
+        
 
 
 };
