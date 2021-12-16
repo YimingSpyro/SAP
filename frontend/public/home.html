@@ -132,6 +132,7 @@
                     $('#caret-down').toggleClass("bi-caret-right-fill").toggleClass("bi-caret-down-fill");
                 }
             );
+            $('#dashboard-view-wrap').load("./homeviews/admin_home.html")
         })
     </script>
 </head>
@@ -210,139 +211,7 @@
                 </div>
             </div>
             <div id="dashboard-view-wrap" class="col-10 py-3">
-                <div id="dashboard-view" class="container">
-                    <div class="row">
-                        <div class="col-7">
-                            <div class="d-flex justify-content-center">
-                                <div class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Maintenence System
-                                    </div>
-                                    <div class="list-group d-flex flex-column">
-                                        <div id="module-info-item" class="list-item p-2 col"><a>Module Information</a>
-                                        </div>
-
-                                        <div id="staff-info-item" class="list-item p-2 col"><a>Staff Information</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div id="teaching-assignment" class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Teaching Assignment
-                                    </div>
-                                    <div id="teaching-assignment-title" class="list-item p-2 col"><a>Teaching Assignment
-                                            System</a>
-                                    </div>
-                                    <div id="teaching-assignment-list" class="p-2 col">
-                                        <ul id="teaching-assignment-list">
-                                            <li class="w-100">
-                                                <a href="#" class=""> <span
-                                                        class="d-none d-sm-inline teaching-assignment-list-item">View
-                                                        Teaching Schedule</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class=""> <span
-                                                        class="d-none d-sm-inline teaching-assignment-list-item">View
-                                                        Module Preference</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <div class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Exam Matters
-                                    </div>
-                                    <div class="list-group d-flex flex-column">
-                                        <div class="list-item p-2 col"><a>Exam Moderator & Verifier</a></div>
-
-                                    </div>
-                                </div>
-                                <div class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Announcements
-                                    </div>
-                                    <div class="list-group d-flex flex-column">
-                                        <div class="list-item p-2 col"><a>View Announcements</a></div>
-
-                                        <div class="list-item p-2 col"><a>Create New Accouncements</a></div>
-                                        <div class="list-item p-2 col"><a>Manage Announcements</a></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-5">
-                            <div id="dashboard-item-report" class="col">
-                                <div class="col dashboard-item-title">
-                                    Download Reports
-                                </div>
-                                <div id="list-group-report" class="d-flex flex-column">
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">MC list</p>
-                                                <p class="report-item-desc">Download Module Coordinator List</p>
-                                            </div>
-                                            <a href="../SVG Icons/Assigned Module.svg" download="Report">
-                                                <button id="download-button"
-                                                    class="px-4 download-button">Download</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Assignment Report</p>
-                                                <p class="report-item-desc">Download all teaching assignments</p>
-                                            </div>
-                                            <button id="download-button" class="px-4 download-button">Download</button>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Summary by Module</p>
-                                                <p class="report-item-desc">Download Module Summary</p>
-                                            </div>
-                                            <button id="download-button" class="px-4 download-button">Download</button>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Summary by Staff</p>
-                                                <p class="report-item-desc">Download Staff Summary</p>
-                                            </div>
-                                            <button id="download-button" class="px-4 download-button">Download</button>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Examiner & Moderator Report</p>
-                                                <p class="report-item-desc">Download Examiner & Moderator Report</p>
-                                            </div>
-                                            <button id="download-button" class="px-4 download-button">Download</button>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">MDEO Verifier Report</p>
-                                                <p class="report-item-desc">Download MDEO Verifier Report</p>
-                                            </div>
-                                            <button id="download-button" class="px-4 download-button">Download</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Dashboard items to be laoded here -->
             </div>
         </div>
     </div>
