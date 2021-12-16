@@ -31,7 +31,7 @@ exports.appRoute = router => {
         router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
         router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
         router.put('/api/teaching-requirement/:id', staffController.updateTeachingRequirementByID);
-        //router.delete('/api/teaching-requirement/:id', staffController.deleteeTeachingRequirement);
+        router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirementByID);
 
         
         

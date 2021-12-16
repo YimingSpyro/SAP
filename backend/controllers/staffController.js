@@ -121,7 +121,7 @@ exports.createTeachingRequirement = async(req, res, next) => {
     let data = [staff_id,ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_remarks,semester_code]
     try {
         let results = await staffManager.createTeachingRequirement(data);
-        console.log('Get Staff Personal Information by ID', results);
+        console.log('Create Teaching Requirement', results);
         if (results) {
             return res.status(200).json(results);
         }
@@ -162,10 +162,10 @@ exports.updateTeachingRequirementByID = async(req, res, next) => {
 
 // API Delete Teaching Requirement by ID
 exports.deleteTeachingRequirementByID = async(req, res, next) => {
-    let staff_id = req.params.id
+    let ptr_id = req.params.id
     try {
-        let results = await staffManager.deleteTeachingRequirementByID(staff_id);
-        console.log('Get Teaching Requirement by ID', results);
+        let results = await staffManager.deleteTeachingRequirementByID(ptr_id);
+        console.log('Delete Teaching Requirement by ID', results);
         if (results) {
             return res.status(200).json(results);
         }
