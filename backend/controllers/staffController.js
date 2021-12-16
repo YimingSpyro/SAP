@@ -25,6 +25,7 @@ const staffManager = require('../services/staffService');
 const config = require('../config/config');
 const pool = require('../config/database')
 
+
 /* ==== PERSONAL INFORMATION API ==== */
 
 // API GET All Staff Data
@@ -88,7 +89,9 @@ exports.updateStaffByID = async(req, res, next) => {
 
 };
 
+
 /* ==== PERSONAL TEACHING REQUIREMENT API ==== */
+
 
 // API GET Teaching Requirement by ID
 exports.getTeachingRequirementByID = async(req, res, next) => {
@@ -108,7 +111,6 @@ exports.getTeachingRequirementByID = async(req, res, next) => {
     }
 
 };
-
 // API Create Teaching Requirement
 exports.createTeachingRequirement = async(req, res, next) => {
     let staff_id = req.body.staff_id
@@ -134,18 +136,17 @@ exports.createTeachingRequirement = async(req, res, next) => {
     }
 
 };
-
 // API Update Teaching Requirement by ID
-exports.updateTeachingRequirementByID = async(req, res, next) => {
-    let staff_id = req.params.id
+exports.updateTeachingRequirement = async(req, res, next) => {
+    let ptr_id = req.query.ptr_id
     let ptr_day = req.body.ptr_day
     let ptr_time = req.body.ptr_time
     let ptr_duration = req.body.ptr_duration
     let ptr_reason = req.body.ptr_reason
     let ptr_remarks = req.body.ptr_remarks
-    let data = [ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_remarks,staff_id]
+    let data = [ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_remarks,ptr_id]
     try {
-        let results = await staffManager.updateTeachingRequirementByID(data);
+        let results = await staffManager.updateTeachingRequirement(data);
         console.log('Update Teacing Requirement by ID', results);
         if (results) {
             return res.status(200).json(results);
@@ -159,13 +160,114 @@ exports.updateTeachingRequirementByID = async(req, res, next) => {
     }
 
 };
-
 // API Delete Teaching Requirement by ID
-exports.deleteTeachingRequirementByID = async(req, res, next) => {
-    let ptr_id = req.params.id
+exports.deleteTeachingRequirement = async(req, res, next) => {
+    let ptr_id = req.query.ptr_id
     try {
-        let results = await staffManager.deleteTeachingRequirementByID(ptr_id);
+        let results = await staffManager.deleteTeachingRequirement(ptr_id);
         console.log('Delete Teaching Requirement by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+
+/* ==== MODULE PREFERENCE API ==== */
+
+
+// API Get All Modules
+exports.getAllModules = async(req, res, next) => {
+    try {
+        let results = await staffManager.getAllModules();
+        console.log('Get All Modules', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Get All Module Preferences
+exports.getAllModulePreference = async(req, res, next) => {
+    try {
+        let results = await staffManager.getAllModulePreference();
+        console.log('Get All Module Preference', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Get Module Preferences By Staff ID
+exports.getModulePreferenceByID = async(req, res, next) => {
+    try {
+        let staff_id = req.params.id;
+        let results = await staffManager.getModulePreferenceByID(staff_id);
+        console.log('Get Module Preference By Staff ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Select Module Preference
+exports.submitModulePreference = async(req, res, next) => {
+    let staff_id = req.body.staff_id;
+    let semester_code = req.body.semester_code;
+    let preference = req.body.preference;
+    let data = [staff_id, semester_code, preference];
+    try {
+        let results = await staffManager.submitModulePreference(data);
+        console.log('Submit Module Preference', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Select Module Preference
+exports.updateModulePreferenceByID = async(req, res, next) => {
+    let staff_id = req.params.id;
+    let preference = req.body.preference;
+    let data = [preference, staff_id];
+    try {
+        let results = await staffManager.updateModulePreferenceByID(data);
+        console.log('Update Module Preference', results);
         if (results) {
             return res.status(200).json(results);
         }
