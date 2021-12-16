@@ -166,8 +166,8 @@ module.exports.updateTeachingRequirementByID = (data) => {
     }); 
 };
 
-/*
-module.exports.deleteTeachingRequirementByID = (staff_id) => {
+
+module.exports.deleteTeachingRequirementByID = (ptr_id) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) {
@@ -175,7 +175,7 @@ module.exports.deleteTeachingRequirementByID = (staff_id) => {
                 resolve(err);
             } else {
                 //please use only ? when declaring values to be inserted to prevent sql injection
-                connection.query(`SELECT * FROM personal_teaching_req WHERE fk_staff_id = ?`, [staff_id] ,(err, results) => { 
+                connection.query(`DELETE FROM personal_teaching_req WHERE ptr_id = ?`, [ptr_id] ,(err, results) => { 
                     if (err) {
                         reject(err);
                     } else {
@@ -192,4 +192,3 @@ module.exports.deleteTeachingRequirementByID = (staff_id) => {
         });
     }); 
 };
-*/
