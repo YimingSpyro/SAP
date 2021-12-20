@@ -18,13 +18,28 @@ exports.appRoute = router => {
 
         router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
         router.get('/test', staffController.processGetAllStaff);*/
+        // LOGIN
         router.post('/login', authController.processLogin);
+        router.post('/register', authController.processRegister);
+
+        // PERSONAL INFORMATION
         router.get('/api/staff/', staffController.getAllStaff);
         router.get('/api/staff/:id', staffController.getStaffByID);
+        router.put('/api/staff/:id', staffController.updateStaffByID)
 
-        router.post('/register', authController.processRegister);
+        // PERSONAL TEACHING REQUIREMENT
+        router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
+        router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
+        router.put('/api/teaching-requirement/', staffController.updateTeachingRequirement);
+        router.delete('/api/teaching-requirement/', staffController.deleteTeachingRequirement);
+
+        //  MODULE PREFERENCE
+        router.get('/api/module', staffController.getAllModules);
+        router.get('/api/module/preference', staffController.getAllModulePreference);
+        router.get('/api/module/preference/:id', staffController.getModulePreferenceByID);
+        router.post('/api/module/preference', staffController.submitModulePreference);
+        router.put('/api/module/preference/:id', staffController.updateModulePreferenceByID);
         
-        router.put('/api/staff/:id', staffController.UpdateStaffByID)
 
 
 };
