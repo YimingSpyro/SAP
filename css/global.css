@@ -4,6 +4,200 @@
 /* ============================ Page Content ========================= */
 
 
+/* ============================ Announcements ========================= */
+
+#notification-bell {
+    position: absolute;
+    top: 85px;
+    right: 0;
+}
+
+.card {
+    margin-bottom: 1px;
+}
+
+
+/* Important */
+
+#announcementcontent.important {
+    width: 90%;
+    background-color: #F58E8E;
+    border-radius: 5px;
+    margin-left: 69px;
+    margin-right: 69px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.important #announcementtitle {
+    color: #CA0000;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.important #announcementmessage {
+    color: #CA0000;
+    font-size: 14px;
+}
+
+#notification-bell #announcementcontent.important {
+    background-color: #F58E8E;
+    width: 200px;
+    padding-left: 15px;
+    margin-right: 10px;
+}
+
+#notification-bell .important #announcementtitle {
+    color: #CA0000;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#notification-bell .important #announcementmessage {
+    color: #CA0000;
+    font-size: 12px;
+}
+
+
+/* Maintenance  */
+
+#announcementcontent.maintenance {
+    width: 90%;
+    background-color: #F3D353;
+    border-radius: 5px;
+    margin-left: 69px;
+    margin-right: 69px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.maintenance #announcementtitle {
+    color: #6D5B14;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.maintenance #announcementmessage {
+    color: #6D5B14;
+    font-size: 14px;
+}
+
+#notification-bell #announcementcontent.maintenance {
+    background-color: #F3D353;
+    position: absolute;
+    width: 200px;
+    padding-left: 15px;
+    margin-right: 10px;
+}
+
+#notification-bell .maintenance #announcementtitle {
+    color: #6D5B14;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#notification-bell .maintenance #announcementmessage {
+    color: #6D5B14;
+    font-size: 12px;
+}
+
+
+/* general  */
+
+#announcementcontent.general {
+    width: 90%;
+    background-color: #D8F4F9;
+    border-radius: 5px;
+    margin-left: 69px;
+    margin-right: 69px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.general #announcementtitle {
+    color: #22404F;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.general #announcementmessage {
+    color: #22404F;
+    font-size: 14px;
+}
+
+#notification-bell #announcementcontent.general {
+    background-color: #D8F4F9;
+    width: 200px;
+    padding-left: 15px;
+    margin-right: 10px;
+}
+
+#notification-bell .general #announcementtitle {
+    color: #22404F;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#notification-bell .general #announcementmessage {
+    color: #22404F;
+    font-size: 12px;
+}
+
+
+/* success  */
+
+#announcementcontent.success {
+    width: 90%;
+    background-color: #BBF5B9;
+    border-radius: 5px;
+    margin-left: 69px;
+    margin-right: 69px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.success #announcementtitle {
+    color: #1B682F;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.success #announcementmessage {
+    color: #1B682F;
+    font-size: 14px;
+}
+
+#notification-bell #announcementcontent.success {
+    background-color: #BBF5B9;
+    width: 200px;
+    padding-left: 15px;
+    margin-right: 10px;
+}
+
+#notification-bell .success #announcementtitle {
+    color: #1B682F;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+#notification-bell .success #announcementmessage {
+    color: #1B682F;
+    font-size: 12px;
+}
+
+
 /* Users */
 
 #content-view {
@@ -111,3 +305,6 @@ caption {
 .status-complete {
     color: #00DD25;
 }
+
+
+/*  */
