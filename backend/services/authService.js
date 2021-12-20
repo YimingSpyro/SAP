@@ -1,6 +1,20 @@
 const config = require('../config/config');
 const pool = require('../config/database')
 var bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken')
+const JWT_SECRET_KEY = 'tassystem';
+
+function genAccessToken(rows) {
+    var row = rows[0];
+    var items = {
+        staff_name :row.staff_name,
+        staff_id : row.staff_id
+    }
+    const tokenPayload = items;
+    const accessToken = jwt.sign(tokenPayload, JWT_SECRET_KEY);
+    console.log(accessToken)
+    return accessToken;
+}
 const saltRounds = 10;
 module.exports.login = ([staff_id, password]) => {
     return new Promise((resolve, reject) => {
@@ -17,8 +31,12 @@ module.exports.login = ([staff_id, password]) => {
                             var hash = rows[0].staff_password;
                             bcrypt.compare(password, hash, (err, res) => {
                                 if (res) {
-                                    console.log(rows);
-                                    resolve(rows);
+                                    const accessToken = genAccessToken(rows);
+                                    const result = JSON.parse(JSON.stringify(rows[0]));
+                                    result['token'] = accessToken
+                                    console.log(result);
+                                   
+                                    resolve(result);
                                 } else {
                                     console.log(err);
                                     reject(err);
@@ -34,6 +52,7 @@ module.exports.login = ([staff_id, password]) => {
             }
         })
     })
+
 }
 module.exports.register = ([staff_id, password]) => {
     return new Promise((resolve, reject) => {

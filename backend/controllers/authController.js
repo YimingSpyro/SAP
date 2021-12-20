@@ -25,47 +25,50 @@ const authManager = require('../services/authService');
 const config = require('../config/config');
 const pool = require('../config/database')
 
-module.exports.processLogin= ((req,res)=>{
+module.exports.processLogin = ((req, res) => {
     let staff_id = req.body.staff_id;
     let password = req.body.password;
-    console.log("staff_id is "+staff_id);
+    console.log("staff_id is " + staff_id);
     console.log(password);
-    var data = authManager.login([staff_id,password])
-    .then((value)=>{
-        console.log(value);
-        var userData = value[0];
-        let sendData = {
-            staff_id :userData.staff_id,
-            staff_name:userData.staff_name,
-        }
-        res.status(200).json({
-            data:sendData
-        });
-    }).catch((error) => {
-        console.log(error)
-        res.status(500).json({
-            error:error
-        });
-    })
+    var data = authManager.login([staff_id, password])
+        .then((userData) => {
+            console.log(userData.token);
+            let sendData = {
+                staff_id: userData.staff_id,
+                staff_name: userData.staff_name,
+            }
+            res.cookie('token', userData.token, {
+                
+                /* httpOnly: true */
+            })
+            res.status(200).json({
+                data: sendData
+            });
+        }).catch((error) => {
+            console.log(error)
+            res.status(500).json({
+                error: error
+            });
+        })
 })
-module.exports.processRegister= ((req,res)=>{
+module.exports.processRegister = ((req, res) => {
     let staff_id = req.body.staff_id;
     let password = req.body.password;
-  
- /*    res.status(200).json({
-        data:formData
-    }); */
-    var data = authManager.register([staff_id,password])
-    .then((value)=>{
-        res.status(200).json({
-            data:value
-        });
-    },(err)=>{
-        res.status(500);
-        console.log(err).json({
-            error:'Unkown Error'
+
+    /*    res.status(200).json({
+           data:formData
+       }); */
+    var data = authManager.register([staff_id, password])
+        .then((value) => {
+            res.status(200).json({
+                data: value
+            });
+        }, (err) => {
+            res.status(500);
+            console.log(err).json({
+                error: 'Unkown Error'
+            })
         })
-    })
 })
 /* module.exports.getStaffByStaffId = ()=>{
     return new Promise((resolve,reject)=>{

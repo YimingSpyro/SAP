@@ -34,14 +34,16 @@
                         staff_id: staff_id,
                         password: password
                     })
-                    .then((response) => {
-                        if (response.status == 200) {
-                            window.location.href = "./home.html"
-                        }
-                    }).catch(() => {
-                        $("#error_message_content").text('Invalid Login credientals, please try again.')
-                        $("#error_message").css("display", "block");
-                    });
+                        .then((response) => {
+                            if (response.status == 200) {
+                                window.location.href = "./home.html"
+                                /* const accessToken = response.data.accessToken;
+                                storeAccessTokenInLocalStorage(accessToken); */
+                            }
+                        }).catch(() => {
+                            $("#error_message_content").text('Invalid Login credientals, please try again.')
+                            $("#error_message").css("display", "block");
+                        });
                 }
             })
         })
@@ -117,8 +119,8 @@
     <div id="content-wrap">
         <p id="login-title">Login</p>
         <div id="login-input-wrap">
-            <div id="error_message"><span id="error_message_content">Invalid Login credientals, please try again</span><i style="margin-left: 5px;"
-                    class="bi bi-exclamation-circle"></i></div>
+            <div id="error_message"><span id="error_message_content">Invalid Login credientals, please try
+                    again</span><i style="margin-left: 5px;" class="bi bi-exclamation-circle"></i></div>
             <input id="staff_id" name="staff_id" placeholder="Id" type=text />
             <input id="password" name="password" placeholder="Password" type="password" />
             <button id="submit-button">Login</button>

@@ -2,10 +2,16 @@ const express = require("express");
 const cors = require('cors')
 const config = require('./config/config');
 const formData = require('express-form-data');
+const cookieParser = require("cookie-parser");
+
 //const dummyUserFn = require('./src/middlewares/dummyUserFn');
 
 let app = express();
-app.use('*', cors());
+app.use('*', cors(/* {
+    origin: ["http://localhost:8000", "http://localhost:8081"],
+      credentials: true,
+} */));
+app.use(cookieParser());
 
 
 //Server Settings
@@ -58,7 +64,11 @@ app.use(express.static(rootPath));
 bootstrap(app, router);
 
 
-
+app.get('/getcookie', (req, res) => {
+    //show the saved cookies
+    console.log(req.cookies)
+    res.send(req.cookies);
+});
 //Index Page (Home public page)
 router.get('/', (req, res, next) => {
     res.send('<html><title>TAS Backend API</title><body>This address is currently used for TAS API</body></html>');
