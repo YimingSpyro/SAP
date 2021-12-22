@@ -1,0 +1,20 @@
+html
+    head
+        title My Albums And Photos
+        link(rel='stylesheet', href='style.css', type='text/css' )
+        link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Quicksand&display=swap', type='text/css' )
+    body
+        div.container
+            h1 My Albums And Photos
+                a(href="/logout") Logout
+            div.row
+                div.aside
+                    ul#albums
+                        for album in albums
+                            li(id=album.id) #{album.title}
+                div.album-container
+            div.row
+                div.full-image-container
+
+
+            script(src='/app.js')
