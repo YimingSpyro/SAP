@@ -189,7 +189,8 @@ module.exports.deleteTeachingRequirement = (ptr_id) => {
     }); 
 };
 
-// MODULE PREFERENCE
+// MODULE 
+
 module.exports.getAllModules = () => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -215,6 +216,36 @@ module.exports.getAllModules = () => {
         });
     }); 
 };
+module.exports.createModule = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                console.log('Error Message Here', err);
+                resolve(err);
+            } else {
+                //please use only ? when declaring values to be inserted to prevent sql injection
+                connection.query(`INSERT INTO module (mod_code,mod_name,mod_abbrv,mass_lect,fk_mod_coord,mod_dlt,mod_lecture,mod_tutorial,mod_practical,fk_cluster_ldr,fk_semester_code,odd_lechr,even_lechr,odd_prachr,even_prachr,odd_tuthr,even_tuthr)
+                                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`, data ,(err, results) => { 
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results) {
+                            console.log(results);
+                            return resolve(results);
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+                    connection.release();
+                });
+            }
+        });
+    }); 
+};
+
+
+// MODULE PREFERENCE
+
 module.exports.getAllModulePreference = () => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -299,6 +330,83 @@ module.exports.updateModulePreferenceByID = (data) => {
             } else {
                 //please use only ? when declaring values to be inserted to prevent sql injection
                 connection.query(`UPDATE module_preference SET preference = ? WHERE fk_staff_id = ?;`, data ,(err, results) => { 
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results) {
+                            console.log(results);
+                            return resolve(results);
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+                    connection.release();
+                });
+            }
+        });
+    }); 
+};
+
+// MODULE ASSIGNMENT
+module.exports.getAssignedModulesByID = (staff_id) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                console.log('Error Message Here', err);
+                resolve(err);
+            } else {
+                //please use only ? when declaring values to be inserted to prevent sql injection
+                connection.query(`SELECT * FROM mod_assign WHERE fk_staff_id = ?;`, [staff_id] ,(err, results) => { 
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results) {
+                            console.log(results);
+                            return resolve(results);
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+                    connection.release();
+                });
+            }
+        });
+    }); 
+};
+module.exports.assignModuleByID = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                console.log('Error Message Here', err);
+                resolve(err);
+            } else {
+                //please use only ? when declaring values to be inserted to prevent sql injection
+                connection.query(`INSERT INTO mod_assign (fk_mod_code,fk_staff_id,ma_lecture,ma_tutorial,ma_practical,fk_semester_code) VALUES (?,?,?,?,?,?);`, data ,(err, results) => { 
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results) {
+                            console.log(results);
+                            return resolve(results);
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+                    connection.release();
+                });
+            }
+        });
+    }); 
+};
+module.exports.unassignModuleByID = (ma_id) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                console.log('Error Message Here', err);
+                resolve(err);
+            } else {
+                //please use only ? when declaring values to be inserted to prevent sql injection
+                connection.query(`DELETE FROM mod_assign WHERE CONCAT(prefix,assignment_id) = ?;`, [ma_id] ,(err, results) => { 
                     if (err) {
                         reject(err);
                     } else {

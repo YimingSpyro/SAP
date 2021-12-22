@@ -162,7 +162,7 @@ exports.updateTeachingRequirement = async(req, res, next) => {
 };
 // API Delete Teaching Requirement by ID
 exports.deleteTeachingRequirement = async(req, res, next) => {
-    let ptr_id = req.query.ptr_id
+    let ptr_id = req.params.id;
     try {
         let results = await staffManager.deleteTeachingRequirement(ptr_id);
         console.log('Delete Teaching Requirement by ID', results);
@@ -180,7 +180,7 @@ exports.deleteTeachingRequirement = async(req, res, next) => {
 };
 
 
-/* ==== MODULE PREFERENCE API ==== */
+/* ==== MODULES API ==== */
 
 
 // API Get All Modules
@@ -200,6 +200,46 @@ exports.getAllModules = async(req, res, next) => {
     }
 
 };
+// API Create Modules
+exports.createModule = async(req, res, next) => {
+    let mod_code = req.body.mod_code;
+    let mod_name = req.body.mod_name;
+    let mod_abbrv = req.body.mod_abbrv;
+    let mass_lect = req.body.mass_lect;
+    let fk_mod_coord = req.body.fk_mod_coord;
+    let mod_dlt = req.body.mod_dlt;
+    let mod_lecture = req.body.mod_lecture;
+    let mod_tutorial = req.body.mod_tutorial;
+    let mod_practical = req.body.mod_practical;
+    let fk_cluster_ldr = req.body.fk_cluster_ldr;
+    let fk_semester_code = req.body.fk_semester_code;
+    let odd_lechr = req.body.odd_lechr;
+    let even_lechr = req.body.even_lechr;
+    let odd_prachr = req.body.odd_prachr;
+    let even_prachr = req.body.even_prachr;
+    let odd_tuthr = req.body.odd_tuthr;
+    let even_tuthr = req.body.even_tuthr;
+    let data = [mod_code,mod_name,mod_abbrv,mass_lect,fk_mod_coord,mod_dlt,mod_lecture,mod_tutorial,mod_practical,fk_cluster_ldr,fk_semester_code,
+        odd_lechr,even_lechr,odd_prachr, even_prachr,odd_tuthr,even_tuthr]
+    try {
+        let results = await staffManager.createModule(data);
+        console.log('Create Module', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+
+/* ==== MODULE PREFERENCE API ==== */
+
 
 // API Get All Module Preferences
 exports.getAllModulePreference = async(req, res, next) => {
@@ -218,7 +258,6 @@ exports.getAllModulePreference = async(req, res, next) => {
     }
 
 };
-
 // API Get Module Preferences By Staff ID
 exports.getModulePreferenceByID = async(req, res, next) => {
     try {
@@ -237,7 +276,6 @@ exports.getModulePreferenceByID = async(req, res, next) => {
     }
 
 };
-
 // API Select Module Preference
 exports.submitModulePreference = async(req, res, next) => {
     let staff_id = req.body.staff_id;
@@ -280,3 +318,71 @@ exports.updateModulePreferenceByID = async(req, res, next) => {
     }
 
 };
+
+
+/* ==== MODULE ASSIGNMENT API ==== */
+
+
+// API Get Assigned Modules by Staff ID
+exports.getAssignedModulesByID = async(req, res, next) => {
+    let staff_id = req.params.id;
+    try {
+        let results = await staffManager.getAssignedModulesByID(staff_id);
+        console.log('Get Staff Assigned Module', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Assign Module to Staff
+exports.assignModuleByID = async(req, res, next) => {
+    let module_code = req.body.module_code;
+    let staff_id = req.body.staff_id;
+    let ma_lecture = req.body.ma_lecture;
+    let ma_tutorial = req.body.ma_tutorial;
+    let ma_practical = req.body.ma_practical;
+    let semester_code = req.body.semester_code;
+    let data = [module_code, staff_id, ma_lecture, ma_tutorial, ma_practical, semester_code];
+    try {
+        let results = await staffManager.assignModuleByID(data);
+        console.log('Assign Module to Staff', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Delete Module Assignment
+exports.unassignModuleByID = async(req, res, next) => {
+    let ma_id = req.params.id;
+    try {
+        let results = await staffManager.unassignModuleByID(ma_id);
+        console.log('Delete Module Assignmen by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
