@@ -1,7 +1,7 @@
 // Import controlers
-const authController = require("../controllers/authController");
-const staffController = require("../controllers/staffController");
-const checkUserFn = require("../middlewares/checkUser");
+const authController = require("./controllers/authController");
+const staffController = require("./controllers/staffController");
+const checkUserFn = require("./middlewares/checkUserFn");
 
 
 // Match URL's with controllers
@@ -22,6 +22,7 @@ exports.appRoute = router => {
         // LOGIN
         router.post('/login', authController.processLogin);
         router.post('/register', authController.processRegister);
+        //router.get('/checkauthentication',authController.processTestCookie);
 
         // PERSONAL INFORMATION
         router.get('/api/staff/', staffController.getAllStaff);

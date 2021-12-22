@@ -68,8 +68,7 @@ i {
     color: white
 }
 
-.nav-item>a>span,
-.nav-link>span {
+.nav-link {
     color: white
 }
 
@@ -116,10 +115,18 @@ i {
     background: rgb(133, 163, 189);
 
 }
-#main-list img{
+.icons{
+    display:table-cell;
     height: 45px;
     width: 45px;
 
+}
+.navbar-title{
+    overflow: hidden;
+    max-width: 140px;
+    width:140px;
+    display:table-cell;
+    vertical-align: middle;
 }
 #ul-collapse {
     transition: 2s;

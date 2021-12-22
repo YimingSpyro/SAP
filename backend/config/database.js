@@ -14,7 +14,7 @@ const config = require('./config');
         connectionLimit: 100,
         host: 'localhost',
         user: 'root',
-        password: 'password',
+        password: 'TYKdatabase@123',
         database: 'tas',
         multipleStatements: true
     });
