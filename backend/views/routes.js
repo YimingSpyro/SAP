@@ -18,6 +18,7 @@ exports.appRoute = router => {
 
         router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
         router.get('/test', staffController.processGetAllStaff);*/
+        
         // LOGIN
         router.post('/login', authController.processLogin);
         router.post('/register', authController.processRegister);
@@ -31,15 +32,21 @@ exports.appRoute = router => {
         router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
         router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
         router.put('/api/teaching-requirement/', staffController.updateTeachingRequirement);
-        router.delete('/api/teaching-requirement/', staffController.deleteTeachingRequirement);
+        router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
 
-        //  MODULE PREFERENCE
-        router.get('/api/module', staffController.getAllModules);
+        // MODULE
+        router.get('/api/module/', staffController.getAllModules);
+        router.post('/api/module/', staffController.createModule);
+
+        // MODULE PREFERENCE
         router.get('/api/module/preference', staffController.getAllModulePreference);
         router.get('/api/module/preference/:id', staffController.getModulePreferenceByID);
         router.post('/api/module/preference', staffController.submitModulePreference);
         router.put('/api/module/preference/:id', staffController.updateModulePreferenceByID);
         
-
+        // ASSIGNED MODULES
+        router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
+        router.post('/api/module/assign/', staffController.assignModuleByID);
+        router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
 
 };
