@@ -3,6 +3,8 @@ const cors = require('cors')
 const config = require('./config/config');
 const formData = require('express-form-data');
 const cookieParser = require("cookie-parser");
+var jwt = require('jsonwebtoken')
+const JWT_SECRET_KEY = 'tassystem';
 
 
 //Server Settings
@@ -64,8 +66,21 @@ app.use(express.static(rootPath));
 const route = require('./routes')
 route.appRoute(app, router);
 
+const isAuthenticated = (req,res,next)=>{
+    const token = req.cookies.token;
+    if(!token){
+        return res.sendStatus(403);
+    }
+    try{
+        const data = jwt.verify(token,JWT_SECRET_KEY)
+        console.log(data);
+        if(data.staff_name) return res.redirect('http://localhost:8000/home.html')
+    }catch{
+        return res.sendStatus(403);
+    }
+}
 
-app.get('/getcookie', (req, res) => {
+app.get('/getcookie',isAuthenticated, (req, res) => {
     //show the saved cookies
     console.log(req.cookies)
     res.cookie("username", "shesh", {
@@ -73,8 +88,12 @@ app.get('/getcookie', (req, res) => {
     });
     res.send(req.cookies);
 });
+
+
+
 //Index Page (Home public page)
 router.get('/', (req, res, next) => {
+
     res.send('<html><title>TAS Backend API</title><body>This address is currently used for TAS API</body></html>');
     res.end();
 });

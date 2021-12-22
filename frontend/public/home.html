@@ -15,14 +15,15 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    
-      <!-- Offline scripts -->
-      <link href="admincss/navbar.css" rel="stylesheet">
+
+    <!-- Offline scripts -->
+    <link href="admincss/navbar.css" rel="stylesheet">
 
     <style>
-        .dashboard-item{
-            height:0%;
+        .dashboard-item {
+            height: 0%;
         }
+
         .list-group {
             height: calc(100% - 50px);
             border-radius: 0 0 6px 6px;
@@ -64,18 +65,21 @@
             transition: 1s;
         }
 
-        
+
 
         .report-item-wrap p {
             color: #15343F;
             text-align: left;
         }
-        .report-item-wrap:hover .report-item-title{
-            color:white
+
+        .report-item-wrap:hover .report-item-title {
+            color: white
         }
-        .report-item-wrap:hover .report-item-desc{
-            color:white
+
+        .report-item-wrap:hover .report-item-desc {
+            color: white
         }
+
         .report-item-title {
             font-size: 1em;
         }
@@ -99,14 +103,14 @@
         }
 
         #teaching-assignment-list {
-            height:60px;
+            height: 60px;
             margin: auto;
             position: relative;
-            top:-7px;
+            top: -7px;
             padding: 0;
             width: 70%;
             text-align: center;
-            
+
         }
 
         .teaching-assignment-list-item {
@@ -115,12 +119,16 @@
             font-size: .8em;
             font-weight: lighter;
         }
+
         a {
             text-decoration: none;
         }
     </style>
     <script>
         $(document).ready(function () {
+            /*   const isLoggedIn= localStorage.getItem('isLoggedIn');
+              if(!isLoggedIn) window.location.href="./login.html"; */
+  
             $("#maintenence-system").hover(
                 function () {
                     $('#ul-collapse').addClass("show");
@@ -143,7 +151,8 @@
             <div id="navbar-card" class="container col-4 col-lg-2 ">
                 <div id="navbar-brand" class="navbar-brand row">
                     <div class="col-3">
-                        <img id="profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
+                        <img id="profile-icon"
+                            src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
                             alt="Cinque Terre">
                     </div>
                     <div id="msg-wrap" class="col-9 ">
@@ -170,40 +179,54 @@
                         id="menu">
                         <li class="nav-item active">
                             <a href="#" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Dashboard.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="../SVG Icons/Dashboard.svg" class="icons"></img>
+                                        <div class="navbar-title">Dashboard</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                         <li id="maintenence-system">
                             <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <img src="../SVG Icons/Maintenance.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Maintenence System
-                                    <!-- System </span><i id="caret-down" class="bi bi-caret-down-fill"></i>  --></a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Teaching
-                                    Assignment</span>
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="../SVG Icons/Maintenance.svg" class="icons"></img>
+                                        <div class="navbar-title">Maintence System</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Exam Matters.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Exam
-                                    Matters</span>
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="../SVG Icons/Teaching Allocation System.svg" class="icons"></img>
+                                        <div class="navbar-title">Teaching
+                                            Assignment</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
-                
                         <li class="nav-item">
                             <a href="#" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Announcements.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Announcements</span>
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="../SVG Icons/Exam Matters.svg" class="icons"></img>
+                                        <div class="navbar-title">Exam Matters</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="../SVG Icons/Announcements.svg" class="icons"></img>
+                                        <div class="navbar-title">Announcements</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
 

@@ -21,7 +21,7 @@ exports.appRoute = router => {
         // LOGIN
         router.post('/login', authController.processLogin);
         router.post('/register', authController.processRegister);
-        router.get('/testcookie',authController.processTestCookie);
+        //router.get('/checkauthentication',authController.processTestCookie);
 
         // PERSONAL INFORMATION
         router.get('/api/staff/', staffController.getAllStaff);
