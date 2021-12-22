@@ -33,17 +33,17 @@
                     axios.post('http://localhost:8080/login', {
                         staff_id: staff_id,
                         password: password
-                    })
-                        .then((response) => {
-                            if (response.status == 200) {
-                                window.location.href = "./home.html"
-                                /* const accessToken = response.data.accessToken;
-                                storeAccessTokenInLocalStorage(accessToken); */
-                            }
-                        }).catch(() => {
-                            $("#error_message_content").text('Invalid Login credientals, please try again.')
-                            $("#error_message").css("display", "block");
-                        });
+                    },{withCredentials: true}).then((response) => {
+                        if (response.status == 200) {
+                            console.log(response);
+                            /* window.location.href = "./home.html" */
+                            /* const accessToken = response.data.accessToken;
+                            storeAccessTokenInLocalStorage(accessToken); */
+                        }
+                    }).catch(() => {
+                        $("#error_message_content").text('Invalid Login credientals, please try again.')
+                        $("#error_message").css("display", "block");
+                    });
                 }
             })
         })

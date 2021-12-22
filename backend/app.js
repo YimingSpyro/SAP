@@ -4,24 +4,37 @@ const config = require('./config/config');
 const formData = require('express-form-data');
 const cookieParser = require("cookie-parser");
 
-//const dummyUserFn = require('./src/middlewares/dummyUserFn');
-
-let app = express();
-app.use('*', cors(/* {
-    origin: ["http://localhost:8000", "http://localhost:8081"],
-      credentials: true,
-} */));
-app.use(cookieParser());
-
 
 //Server Settings
 const PORT = 8080;
 const path = require("path");
-const bootstrap = require("./bootstrap");
+
+
+
+let app = express();
+
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
+app.use(cookieParser());
+
 
 //https://github.com/ortexx/express-form-data#readme
-
-
 //Parse data with connect-multiparty. 
 app.use(formData.parse({}));
 //Delete from the request all empty files (size == 0)
@@ -31,42 +44,33 @@ app.use(formData.stream());
 //Union the body and the files
 app.use(formData.union());
 
-//Pug Template Engine
+/* //Pug Template Engine
 app.set("view engine", "pug");
-app.set("views", path.resolve("./src/views"));
+app.set("views", path.resolve("./src/views")); */
 
 //Request Parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-//Not using the following because the client side will be using
-//formdata technique to send data. This is due to the web application
-//has file submission functionality.
-//app.use(express.json());
-//app.use(express.urlencoded({ extended: true }));
-
-
-
-
 
 
 //Express Router
 const router = express.Router();
 app.use(router);
-const rootPath = path.resolve("./dist");
 
-//All client side files are parked inside the dist directory.
-//The client side files are compiled by using Gulp
-//The actual code files which developers edit is at /src/assets
+//To serve static files such as images, CSS files, and JavaScript files, use the express.static built-in middleware function in Express.
+const rootPath = path.resolve("./dist");
 app.use(express.static(rootPath));
-//Applied this middleware function to supply dummy user id for testing
-//when I have not prepared the login functionality.
-//router.use(dummyUserFn.useDummyUserForTesting); 
-bootstrap(app, router);
+
+const route = require('./routes')
+route.appRoute(app, router);
 
 
 app.get('/getcookie', (req, res) => {
     //show the saved cookies
     console.log(req.cookies)
+    res.cookie("username", "shesh", {
+        httpOnly: true
+    });
     res.send(req.cookies);
 });
 //Index Page (Home public page)
@@ -75,15 +79,15 @@ router.get('/', (req, res, next) => {
     res.end();
 });
 
-
+//This is an error handling middleware, all 4 parameters are required
 router.use((err, req, res, next) => {
     if (err) {
-        //Handle file type and max size of image
+
         return res.send(err.message);
     }
 });
 
-process.on('uncaughtException', function(error, origin) {
+process.on('uncaughtException', function (error, origin) {
     //Handle the error safely. 
     //Developer note: As long as you have callback hell, the error handling code
     //will break. This often occurs during team development.
