@@ -173,7 +173,7 @@
                                     <td>DIT Yr2</td>
                                     <td>Assigned</td>
                                     <td class="text-end">
-                                        <div>View</div>
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
                                     </td>
                                 </tr>
                                 <tr class="border-bottom border-white">
@@ -182,16 +182,16 @@
                                     <td>DIT Yr2</td>
                                     <td>Assigned</td>
                                     <td class="text-end">
-                                        <div>View</div>
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
                                     </td>
                                 </tr>
                                 <tr class="status-unassigned border-bottom border-white">
                                     <td>AB1234</td>
                                     <td>Interesting Lesson</td>
                                     <td>DIT Yr2</td>
-                                    <td>Assigned</td>
+                                    <td>Unassigned</td>
                                     <td class="text-end">
-                                        <div>View</div>
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
                                     </td>
                                 </tr>
 
@@ -200,6 +200,134 @@
 
                         </table>
 
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <!-- Content header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Module: EP1234 ABC</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="modal-body">
+
+                                        <form action="">
+                                            <!-- ======== NOTE: Existing Data should show in the placeholders  ========-->
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="exam-type" class="col-sm-2 col-form-label col-form-label-sm">Type:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="exam-type" placeholder="Exam Type">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="offered-to" class="col-sm-2 col-form-label col-form-label-sm">Offered To:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="offered-to" placeholder="(DIT) Year 2">
+                                                </div>
+                                            </div>
+
+                                            <br>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="chief-examiner" class="col-sm-2 col-form-label col-form-label-sm">Chief Examiner:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="chief-examiner" placeholder="Chief Examiner Name">
+                                                </div>
+
+                                                <div class="col-sm-1">
+
+                                                </div>
+
+                                                <!-- MDEO & Marker -->
+                                                <label for="mdeo" class="col-sm-2 col-form-label col-form-label-sm">MDEO & Marker:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="mdeo" placeholder="MDEO & Marker">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="co-examiner" class="col-sm-2 col-form-label col-form-label-sm">Add Co-Examiner:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="co-examiner" placeholder="Optional">
+                                                </div>
+                                                <div class="col-sm-1">
+
+                                                </div>
+                                                <!-- Add Marker -->
+                                                <label for="add-marker" class="col-sm-2 col-form-label col-form-label-sm">Add Marker</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="add-marker" placeholder="Optional">
+                                                </div>
+                                            </div>
+
+                                            <br>
+
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="moderator-name" class="col-sm-2 col-form-label col-form-label-sm">Moderator Name:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="moderator-name" placeholder="Moderator Name">
+                                                </div>
+                                                <div class="col-sm-1">
+
+                                                </div>
+                                                <label for="verifier" class="col-sm-2 col-form-label col-form-label-sm">Verifier:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="verifier" placeholder="Verifier">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="external-moderation" class="col-sm-2 col-form-label col-form-label-sm">External Moderation:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="external-moderation" placeholder="Optional">
+                                                </div>
+                                                <div class="col-sm-1">
+
+                                                </div>
+
+                                                <label for="verifier details" class="col-sm-2 col-form-label col-form-label-sm">Verifier Details:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="verifier-details" placeholder="Verifier Details">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+
+                                                <div class="col-sm-6">
+
+                                                </div>
+
+                                                <label for="marks-moderator" class="col-sm-2 col-form-label col-form-label-sm">Marks Moderator</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="marks-moderator" placeholder="Marks Moderator">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Update Button -->
+                                            <button type="submit" class="btn btn-primary float-end">Confirm Assignment</button>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>

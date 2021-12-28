@@ -1,0 +1,30 @@
+/* Change height for height of the grey container box */
+
+#content-header-admin p {
+    color: #22404F;
+}
+
+#content-item-admin {}
+
+.form-group {
+    color: #22404F;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+#tabs {
+    margin-bottom: 15px;
+}
+
+button {
+    width: 150px;
+}
+
+button .primary {
+    color: #22404F !important;
+}
+
+button .secondary {
+    color: #B5D0DD !important;
+    border-style: none;
+}

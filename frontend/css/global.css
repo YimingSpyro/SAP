@@ -198,7 +198,7 @@
 }
 
 
-/* Users */
+/* ================================= Users ============================================*/
 
 #content-view {
     margin-top: 30px;
@@ -236,7 +236,7 @@
 }
 
 
-/* Admin */
+/* =========================================== Admin ============================================*/
 
 #content-view-admin {
     margin-top: 30px;
@@ -261,10 +261,14 @@
 }
 
 
-/* ============================ Buttons ========================= */
+/* ============================ Buttons ================================ */
 
 .btn-primary {
     background-color: #22404F !important;
+}
+
+.btn-secondary {
+    background-color: #B5D0DD !important;
 }
 
 caption {
@@ -307,4 +311,28 @@ caption {
 }
 
 
-/*  */
+/* Modals */
+
+.modal-content {
+    background-color: #B5D0DD;
+    padding: 0 2% 2% 2%;
+    margin-left: 10%;
+    margin-top: 10%;
+}
+
+.modal-header {
+    color: white;
+    font-weight: bold;
+}
+
+.modal-section-title {
+    color: #22404F;
+}
+
+.line2 {
+    width: 97%;
+    border-bottom: 1px solid #22404F;
+    position: absolute;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
