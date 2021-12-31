@@ -12,7 +12,9 @@ const myPort = 8000
 app.get("/test", (req, res) => {
     res.sendFile("/public/home.html", { root: __dirname });
 }); */
-  
+app.get("/profile", (req, res) => {
+    res.sendFile("/view/personalinformation.html", { root: __dirname });
+});
 app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`);
 });
