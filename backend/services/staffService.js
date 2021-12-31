@@ -11,7 +11,7 @@ module.exports.getAllStaff = () => {
                 resolve(err);
             } else {
                 //please use only ? when declaring values to be inserted to prevent sql injection
-                connection.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, staff_number, staff_mobile, staff_remarks 
+                connection.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, fk_designation_id,staff_number, staff_mobile, staff_remarks, fk_staff_type 
                  FROM staff_information;`, [] ,(err, results) => { 
                     if (err) {
                         reject(err);
@@ -37,7 +37,7 @@ module.exports.getStaffByStaffId = (staff_id) => {
                 resolve(err);
             } else {
                 //please use only ? when declaring values to be inserted to prevent sql injection
-                connection.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, staff_number, staff_mobile, staff_remarks 
+                connection.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, fk_designation_id,staff_number, staff_mobile, staff_remarks, fk_staff_type 
                  FROM staff_information WHERE staff_id = ?;`, [staff_id] ,(err, results) => { 
                     if (err) {
                         reject(err);
