@@ -118,8 +118,34 @@ module.exports.createTeachingRequirement = (data) => {
                 resolve(err);
             } else {
                 //please use only ? when declaring values to be inserted to prevent sql injection
-                connection.query(`INSERT INTO personal_teaching_req (fk_staff_id,ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_remarks,fk_semester_code)
-                 VALUES (?,?,?,?,?,?,?);`, data ,(err, results) => { 
+                connection.query(`INSERT INTO personal_teaching_req (fk_staff_id,ptr_day,ptr_time,ptr_duration,ptr_reason,fk_semester_code)
+                 VALUES (?,?,?,?,?,?);`, data ,(err, results) => { 
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results) {
+                            console.log(results);
+                            return resolve(results);
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+                    connection.release();
+                });
+            }
+        });
+    }); 
+};
+module.exports.createTeachingRequirementRemarks = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                console.log('Error Message Here', err);
+                resolve(err);
+            } else {
+                //please use only ? when declaring values to be inserted to prevent sql injection
+                connection.query(`INSERT INTO ptr_remarks (fk_staff_id,ptr_remarks,fk_semester_code)
+                 VALUES (?,?,?);`, data ,(err, results) => { 
                     if (err) {
                         reject(err);
                     } else {

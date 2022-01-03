@@ -118,11 +118,31 @@ exports.createTeachingRequirement = async(req, res, next) => {
     let ptr_time = req.body.ptr_time
     let ptr_duration = req.body.ptr_duration
     let ptr_reason = req.body.ptr_reason
-    let ptr_remarks = req.body.ptr_remarks
     let semester_code = req.body.semester_code
-    let data = [staff_id,ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_remarks,semester_code]
+    let data = [staff_id,ptr_day,ptr_time,ptr_duration,ptr_reason,semester_code]
     try {
         let results = await staffManager.createTeachingRequirement(data);
+        console.log('Create Teaching Requirement', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Create Teaching Requirement
+exports.createTeachingRequirementRemarks = async(req, res, next) => {
+    let staff_id = req.body.staff_id
+    let ptr_remarks = req.body.ptr_remarks
+    let semester_code = req.body.semester_code
+    let data = [staff_id,ptr_remarks,semester_code]
+    try {
+        let results = await staffManager.createTeachingRequirementRemarks(data);
         console.log('Create Teaching Requirement', results);
         if (results) {
             return res.status(200).json(results);
@@ -341,7 +361,6 @@ exports.getAssignedModulesByID = async(req, res, next) => {
     }
 
 };
-
 // API Assign Module to Staff
 exports.assignModuleByID = async(req, res, next) => {
     let module_code = req.body.module_code;
@@ -366,7 +385,6 @@ exports.assignModuleByID = async(req, res, next) => {
     }
 
 };
-
 // API Delete Module Assignment
 exports.unassignModuleByID = async(req, res, next) => {
     let ma_id = req.params.id;

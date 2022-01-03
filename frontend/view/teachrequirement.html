@@ -12,11 +12,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Offline scripts -->
-    <link href="admincss/navbar.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/global.css">
-    <link rel="stylesheet" href="../public/css/teachrequirement.css">
+    <link href="css/navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/teachrequirement.css">
+    <script src="/script/teachrequirement.js"></script>
 
 </head>
 
@@ -41,7 +43,7 @@
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
                 <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                    <img id="notifications" src="SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -75,21 +77,21 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="userdashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
 
                         <!-- Page Link -->
                         <li id="nav-item active">
                             <a href="teachrequirement.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Update Teaching Requirement </span>
                         </li>
 
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="personalinformation.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Update Personal Information</span>
                             </a>
                         </li>
@@ -97,7 +99,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="choosemodulepreference.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Choose Module Preference
                                 </span>
                             </a>
@@ -106,7 +108,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="viewassignedmodule.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                 View Assigned Module    
                                 </span>
                             </a>
@@ -115,7 +117,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="changepassword.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Change Password    
                                 </span>
                             </a>
@@ -143,92 +145,62 @@
                                 <p id="title">Unavailable Teaching Slots</p>
 
                                 <!-- Module table -->
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col" class="col-2">Day</th>
-                                            <th scope="col" class="col-2">Time</th>
-                                            <th scope="col" class="col-2">Duration</th>
-                                            <th scope="col" class="col-4">Reason</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Tue</td>
-                                            <td>5pm</td>
-                                            <td>2.0</td>
-                                            <td>Some reason...</td>
-                                            <td class="text-end">
-                                                <div>Delete</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tue</td>
-                                            <td>5pm</td>
-                                            <td>2.0</td>
-                                            <td>Some reason...</td>
-                                            <td class="text-end">
-                                                <div>Delete</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tue</td>
-                                            <td>5pm</td>
-                                            <td>2.0</td>
-                                            <td>Some reason...</td>
-                                            <td class="text-end">
-                                                <div>Delete</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tue</td>
-                                            <td>5pm</td>
-                                            <td>2.0</td>
-                                            <td>Some reason...</td>
-                                            <td class="text-end">
-                                                <div>Delete</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tue</td>
-                                            <td>5pm</td>
-                                            <td>2.0</td>
-                                            <td>Some reason...</td>
-                                            <td class="text-end">
-                                                <div>Delete</div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="form-group row col-10">
-                                                    <input type="password" class="form-control form-control-sm" id="day">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group row col-10">
-                                                    <input type="password" class="form-control form-control-sm" id="time">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group row col-10">
-                                                    <input type="password" class="form-control form-control-sm" id="duration">
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="form-group row col-12">
-                                                    <input type="password" class="form-control form-control-sm" id="reason">
-                                                </div>
-                                            </td>
-                                            <td class="text-end align-middle">
-                                                <div>Add</div>
-                                            </td>
-                                        </tr>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="col-2">Day</th>
+                                                <th scope="col" class="col-2">Time</th>
+                                                <th scope="col" class="col-2">Duration</th>
+                                                <th scope="col" class="col-4">Reason</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="requirements align-middle">
+                                            <!-- Add Requirement Section -->
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group col-12 my-1">
+                                                        <select class="form-control form-control-sm" id="day">
+                                                            <option>Monday</option>
+                                                            <option>Tuesday</option>
+                                                            <option>Wednesday</option>
+                                                            <option>Thursday</option>
+                                                            <option>Friday</option>
+                                                            <option>Saturday</option>
+                                                            <option>Sunday</option>
+                                                          </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group my-1">
+                                                        <input type="time" class="form-control form-control-sm" id="time">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group my-1">
+                                                        <input type="number" step="0.5" class="form-control form-control-sm" id="duration">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group my-1">
+                                                        <input type="text" class="form-control form-control-sm" id="reason">
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <!-- Add Button -->
+                                                        <button type="button" class="btn btn-primary float-end m-3 p-0" id="add-requirement">Add</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+    
+    
+                                        </tbody>
+    
+                                    </table>
+                                </div>
 
-
-                                    </tbody>
-
-                                </table>
 
                                 <!-- Form Item -->
                                 <div class="form-group row">

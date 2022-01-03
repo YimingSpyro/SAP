@@ -66,8 +66,8 @@ thead {
 
 td .form-control-sm {
     height: 5px;
-    padding: 0;
-    font-size: .5rem;
+    padding: 5px;
+    font-size: 1rem;
     border-radius: 5px;
     margin-bottom: 3px;
 }

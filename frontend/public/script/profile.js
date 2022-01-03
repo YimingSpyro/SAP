@@ -26,9 +26,6 @@ function updateProfileInfo(){
         staff_mobile : $("#staff-mobilenumber")[0].value,
         staff_remarks : $("#staff-remarks")[0].value
     })
-    .then((response) => {
-        console.log(response.data);
-    });
 }
 // START OF SCRIPT
 getProfileInfo();
