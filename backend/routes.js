@@ -51,4 +51,6 @@ exports.appRoute = router => {
         router.post('/api/module/assign/', staffController.assignModuleByID);
         router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
 
+        //UPLOADING FILES
+
 };
