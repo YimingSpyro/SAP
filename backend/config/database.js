@@ -11,10 +11,10 @@ const config = require('./config');
         multipleStatements: true
     }); */
  const pool = mysql.createPool({
-        connectionLimit: 100,
-        host: 'localhost',
+        connectionLimit: 65,
+        host: 'sap-united-db.chaoomqaxpcs.ap-southeast-1.rds.amazonaws.com',
         user: 'root',
-        password: 'password',
+        password: 'SbFdYtnnFqOjdi2ra5NK',
         database: 'tas',
         multipleStatements: true
     });

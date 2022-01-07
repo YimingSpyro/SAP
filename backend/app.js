@@ -123,3 +123,14 @@ app.listen(PORT, err => {
     if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
     console.log(`Server is Listening on: http://localhost:${PORT}/`);
 });
+
+// Connect to the Database
+const pool = require('./config/database')
+pool.getConnection((err) => {
+    if (err) {
+        console.log('Error Message Here', err);
+        resolve(err);
+    } else {
+        console.log("Connected");
+    }
+});
