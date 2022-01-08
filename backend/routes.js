@@ -4,16 +4,39 @@ const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
 const checkUserFn = require("./middlewares/checkUserFn");
 
-//DECLARE MULTER PACKAGE
-const multer  = require('multer')
+//DECLARE MULTER PACKAGE--------------------------------
+const multer = require('multer')
 const storage = multer.diskStorage({
-    destination: './uploads/profile_picture',
+    destination: function (req, file, cb) {
+        cb(null, './uploads/profile_picture');
+    },
     filename: function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + 
-    path.extname(file.originalname));
+        cb(null, `${req.body.name}_${file.originalname}` );
     }
 });
-const upload = multer({dest: './uploads/profile_picture', storage: storage});
+
+const fileFilter = (req, file, cb) => {
+    // reject a file
+    if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+
+//Declare upload using multer package
+//This method is to upload profile pictures with the multer package
+//it also checks for the correct filetype and limits to 3MB
+const uploadPFP = multer({
+    storage: storage,
+    limits: {
+        fileSize: 1024 * 1024 * 3
+    },
+    fileFilter: fileFilter
+});
+
+
+//END OF DECLARING MULTER PACKAGE--------------------------------
 
 // Match URL's with controllers
 exports.appRoute = router => {
@@ -63,34 +86,7 @@ exports.appRoute = router => {
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
 
     //UPLOADING FILES
-    router.post('/uploads/profile-picture',upload.single('upload'), (req, res, next) => {
-        // req.file is the `avatar` file
-        // req.body will hold the text fields, if there were any
-        //console.log(req)
-        console.log('now showing req.file ' + req.file)
-        console.log(req.body)
-        const file = req.file
-        if (!file) {
-            res.status(400).json({message:'File Failed to Upload'})
-        }
-        else{
-            res.status(200).json({message: 'File Uploaded!'})
-        }
-    });
-
-    /* router.post('/uploads/profile-picture', async (req, res) => {
-        // req.file is the `avatar` file
-        // req.body will hold the text fields, if there were any
-        console.log(req)
-        console.log('entered!')
-        console.log('now showing req.file ' + req.files)
-        const file = req.files
-        if (!file) {
-            res.status(400).json({message:'File Failed to Upload'})
-        }
-        else{
-            res.status(200).json({message: 'File Uploaded!'})
-        }
-    }); */
+    router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
+    router.get('/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
 
 }

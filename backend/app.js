@@ -1,12 +1,10 @@
 const express = require("express");
 const cors = require('cors')
 const config = require('./config/config');
-const formData = require('express-form-data');
 const cookieParser = require("cookie-parser");
 var jwt = require('jsonwebtoken')
 const JWT_SECRET_KEY = 'tassystem';
-const fileUpload = require('express-fileupload');
-const bodyParser = require('body-parser');
+var fs = require('fs')
 
 //Server Settings
 const PORT = 8080;
@@ -36,31 +34,21 @@ app.use(function (req, res, next) {
 
 app.use(cookieParser());
 
-
-//https://github.com/ortexx/express-form-data#readme
-//Parse data with connect-multiparty. 
-app.use(formData.parse({}));
-//Delete from the request all empty files (size == 0)
-app.use(formData.format());
-//Change the file objects to fs.ReadStream 
-app.use(formData.stream());
-//Union the body and the files
-app.use(formData.union());
-
 /* //Pug Template Engine
 app.set("view engine", "pug");
 app.set("views", path.resolve("./src/views")); */
 
 
 // enable files upload
-app.use(fileUpload({
-    createParentPath: true
-}));
+const options = {
+    uploadDir: '',
+    autoClean: true
+};
 
 //Request Parsing
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 //Express Router
 const router = express.Router();
