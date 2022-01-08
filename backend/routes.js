@@ -1,8 +1,19 @@
 // Import controlers
 const authController = require("./controllers/authController");
 const staffController = require("./controllers/staffController");
+const uploadsController = require("./controllers/uploadsController");
 const checkUserFn = require("./middlewares/checkUserFn");
 
+//DECLARE MULTER PACKAGE
+const multer  = require('multer')
+const storage = multer.diskStorage({
+    destination: './uploads/profile_picture',
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + '-' + Date.now() + 
+    path.extname(file.originalname));
+    }
+});
+const upload = multer({dest: './uploads/profile_picture', storage: storage});
 
 // Match URL's with controllers
 exports.appRoute = router => {
@@ -18,39 +29,68 @@ exports.appRoute = router => {
 
         router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
         router.get('/test', staffController.processGetAllStaff);*/
-        
-        // LOGIN
-        router.post('/login', authController.processLogin);
-        router.post('/register', authController.processRegister);
-        //router.get('/checkauthentication',authController.processTestCookie);
 
-        // PERSONAL INFORMATION
-        router.get('/api/staff/', staffController.getAllStaff);
-        router.get('/api/staff/:id', staffController.getStaffByID);
-        router.put('/api/staff/:id', staffController.updateStaffByID)
+    // LOGIN
+    router.post('/login', authController.processLogin);
+    router.post('/register', authController.processRegister);
+    //router.get('/checkauthentication',authController.processTestCookie);
 
-        // PERSONAL TEACHING REQUIREMENT
-        router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
-        router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
-        router.post('/api/teaching-requirement/remarks', staffController.createTeachingRequirementRemarks);
-        router.put('/api/teaching-requirement/', staffController.updateTeachingRequirement);
-        router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
+    // PERSONAL INFORMATION
+    router.get('/api/staff/', staffController.getAllStaff);
+    router.get('/api/staff/:id', staffController.getStaffByID);
+    router.put('/api/staff/:id', staffController.updateStaffByID)
 
-        // MODULE
-        router.get('/api/module/', staffController.getAllModules);
-        router.post('/api/module/', staffController.createModule);
+    // PERSONAL TEACHING REQUIREMENT
+    router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
+    router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
+    router.post('/api/teaching-requirement/remarks', staffController.createTeachingRequirementRemarks);
+    router.put('/api/teaching-requirement/', staffController.updateTeachingRequirement);
+    router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
 
-        // MODULE PREFERENCE
-        router.get('/api/module/preference', staffController.getAllModulePreference);
-        router.get('/api/module/preference/:id', staffController.getModulePreferenceByID);
-        router.post('/api/module/preference', staffController.submitModulePreference);
-        router.put('/api/module/preference/:id', staffController.updateModulePreferenceByID);
-        
-        // ASSIGNED MODULES
-        router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
-        router.post('/api/module/assign/', staffController.assignModuleByID);
-        router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
+    // MODULE
+    router.get('/api/module/', staffController.getAllModules);
+    router.post('/api/module/', staffController.createModule);
 
-        //UPLOADING FILES
+    // MODULE PREFERENCE
+    router.get('/api/module/preference', staffController.getAllModulePreference);
+    router.get('/api/module/preference/:id', staffController.getModulePreferenceByID);
+    router.post('/api/module/preference', staffController.submitModulePreference);
+    router.put('/api/module/preference/:id', staffController.updateModulePreferenceByID);
 
-};
+    // ASSIGNED MODULES
+    router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
+    router.post('/api/module/assign/', staffController.assignModuleByID);
+    router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
+
+    //UPLOADING FILES
+    router.post('/uploads/profile-picture',upload.single('upload'), (req, res, next) => {
+        // req.file is the `avatar` file
+        // req.body will hold the text fields, if there were any
+        //console.log(req)
+        console.log('now showing req.file ' + req.file)
+        console.log(req.body)
+        const file = req.file
+        if (!file) {
+            res.status(400).json({message:'File Failed to Upload'})
+        }
+        else{
+            res.status(200).json({message: 'File Uploaded!'})
+        }
+    });
+
+    /* router.post('/uploads/profile-picture', async (req, res) => {
+        // req.file is the `avatar` file
+        // req.body will hold the text fields, if there were any
+        console.log(req)
+        console.log('entered!')
+        console.log('now showing req.file ' + req.files)
+        const file = req.files
+        if (!file) {
+            res.status(400).json({message:'File Failed to Upload'})
+        }
+        else{
+            res.status(200).json({message: 'File Uploaded!'})
+        }
+    }); */
+
+}
