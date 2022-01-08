@@ -11,7 +11,7 @@ const storage = multer.diskStorage({
         cb(null, './uploads/profile_picture');
     },
     filename: function (req, file, cb) {
-        cb(null, `${req.body.name}_${file.originalname}` );
+        cb(null, `${req.body.name}_${new Date().valueOf()}_${file.originalname}` );
     }
 });
 
@@ -85,7 +85,7 @@ exports.appRoute = router => {
     router.post('/api/module/assign/', staffController.assignModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
 
-    //UPLOADING FILES
+    //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
     router.get('/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
 
