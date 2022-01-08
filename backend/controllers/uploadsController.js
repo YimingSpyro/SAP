@@ -43,7 +43,7 @@ module.exports.getProfilePicture = async (req, res) => {
   try {
     let results = await uploadsService.getProfilePicture(req.params.staff_id);
     console.log('Fetching PFP');
-    if (!results.length) {
+    if (results.length < 1) {
       let data = {
         pfp_id: 0,
         file_path: 'default.png',
@@ -52,8 +52,8 @@ module.exports.getProfilePicture = async (req, res) => {
       console.log(data)
       return res.status(200).json(data);
     }
-    else{
-      return res.status(200).json(result);
+    else if (results.length > 0){
+      return res.status(200).json(results);
     }
   }
   catch(error) {
