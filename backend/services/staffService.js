@@ -18,7 +18,7 @@ module.exports.getAllStaff = () => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -40,7 +40,7 @@ module.exports.getStaffByStaffId = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
 
     }).catch((error) => {
@@ -64,7 +64,7 @@ module.exports.updateStaffByStaffId = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -88,7 +88,7 @@ module.exports.getTeachingRequirementByID = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -110,40 +110,18 @@ module.exports.createTeachingRequirement = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
         return error
     })
 };
-module.exports.createTeachingRequirementRemarks = (data) => {
-    return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`INSERT INTO ptr_remarks (fk_staff_id,ptr_remarks,fk_semester_code)
-                 VALUES (?,?,?);`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            pool.release();
-        });
-    }).catch((error) => {
-        console.error(error);
-        return error
-    });
-};
 module.exports.updateTeachingRequirement = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE personal_teaching_req 
-                 SET ptr_day = ?, ptr_time = ?, ptr_duration = ?, ptr_reason = ?, ptr_remarks = ?
+                 SET ptr_day = ?, ptr_time = ?, ptr_duration = ?, ptr_reason = ?
                  WHERE CONCAT(prefix,ptr_id) = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
@@ -155,7 +133,7 @@ module.exports.updateTeachingRequirement = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -176,7 +154,74 @@ module.exports.deleteTeachingRequirement = (ptr_id) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
+        });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
+
+module.exports.getTeachingRequirementRemarks = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT ptr_remarks FROM ptr_remarks WHERE fk_staff_id = ? AND fk_semester_code = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
+module.exports.createTeachingRequirementRemarks = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`INSERT INTO ptr_remarks (fk_staff_id,ptr_remarks,fk_semester_code)
+                 VALUES (?,?,?);`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
+module.exports.updateTeachingRequirementRemarks = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE ptr_remarks  
+                 SET ptr_remarks = ?
+                 WHERE fk_semester_code = ? AND fk_staff_id = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
         });
     }).catch((error) => {
         console.error(error);
@@ -200,7 +245,7 @@ module.exports.getAllModules = () => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -222,7 +267,7 @@ module.exports.createModule = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -247,7 +292,7 @@ module.exports.getAllModulePreference = () => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -268,7 +313,7 @@ module.exports.getModulePreferenceByID = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -289,7 +334,7 @@ module.exports.submitModulePreference = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -310,7 +355,7 @@ module.exports.updateModulePreferenceByID = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -333,7 +378,7 @@ module.exports.getAssignedModulesByID = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -354,7 +399,7 @@ module.exports.assignModuleByID = (data) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
     }).catch((error) => {
         console.error(error);
@@ -375,7 +420,7 @@ module.exports.unassignModuleByID = (ma_id) => {
                     return resolve('Error Message');
                 }
             }
-            pool.release();
+
         });
 
     }).catch((error) => {
