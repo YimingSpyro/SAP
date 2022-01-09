@@ -77,7 +77,7 @@ module.exports.updateStaffByStaffId = (data) => {
 module.exports.getTeachingRequirementByID = (staff_id) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT * FROM personal_teaching_req WHERE fk_staff_id = ?;`, [staff_id], (err, results) => {
+        pool.query(`SELECT * FROM personal_teaching_req WHERE fk_staff_id = ? ORDER BY FIELD(ptr_day,'Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'), ptr_time ASC;`, [staff_id], (err, results) => {
             if (err) {
                 reject(err);
             } else {
