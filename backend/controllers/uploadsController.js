@@ -1,5 +1,3 @@
-const config = require('../config/config');
-const pool = require('../config/database')
 const uploadsService = require('../services/uploadsService')
 const fs = require('fs')
 
@@ -15,8 +13,8 @@ module.exports.uploadProfilePicture = async (req, res) => {
       //if there are no existing records, create new entry
       let create = await uploadsService.insertProfilePicture(staff_id, filename)
       console.log(create)
-      return res.status(200).json({message: "Successfully Uploaded!"});
-    }else if(results.length > 0){
+      return res.status(200).json({ message: "Successfully Uploaded!" });
+    } else if (results.length > 0) {
       console.log('updateProfilePicture')
       //remove the current file in the directory
       let base_path = '.././backend/uploads/profile_picture/'
@@ -30,11 +28,21 @@ module.exports.uploadProfilePicture = async (req, res) => {
       //else update the current entry
       let update = await uploadsService.updateProfilePicture(staff_id, filename)
       console.log(update)
-      return res.status(200).json({message: "Successfully Updated!"});
+      return res.status(200).json({ message: "Successfully Updated!" });
     }
   }
-  catch(error){
-    return res.status(500).json(error);
+  catch (error) {
+    let base_path = '.././backend/uploads/profile_picture/'
+    let filename = req.file.filename
+    let path = base_path + filename
+    //remove the file upon invalid database entry
+    fs.unlink(path, (err) => {
+      if (err) {
+        console.error(err)
+        return
+      }
+    })
+    return res.status(400).json({ message: "Invalid Input" });
   }
 }
 
@@ -52,11 +60,12 @@ module.exports.getProfilePicture = async (req, res) => {
       console.log(data)
       return res.status(200).json(data);
     }
-    else if (results.length > 0){
+    else if (results.length > 0) {
       return res.status(200).json(results);
     }
   }
-  catch(error) {
-    return res.status(400).json(error);
+  catch (error) {
+    console.log(error)
+    return res.status(400).json({ message: "Invalid Input" });
   }
 }

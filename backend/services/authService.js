@@ -23,6 +23,9 @@ module.exports.login = ([staff_id, password]) => {
                 connection.release();
             }
         })
+    }).catch((error) => {
+        console.error(error);
+        return error
     })
 
 }
@@ -50,16 +53,19 @@ module.exports.register = ([staff_id, password]) => {
                 });
             }
         })
+    }).catch((error) => {
+        console.error(error);
+        return error
     })
-    
+
 }
-module.exports.insertJwtRecord = ([staff_id,token]) => {
+module.exports.insertJwtRecord = ([staff_id, token]) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
             if (err) {
                 resolve(err);
             } else {
-                connection.query('INSERT INTO jwt_token_storage (fk_staff_id,jwt_token) VALUES(?,?)',[staff_id,token], (err, rows) => {
+                connection.query('INSERT INTO jwt_token_storage (fk_staff_id,jwt_token) VALUES(?,?)', [staff_id, token], (err, rows) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -70,6 +76,9 @@ module.exports.insertJwtRecord = ([staff_id,token]) => {
                 })
             }
         })
+    }).catch((error) => {
+        console.error(error);
+        return error
     })
 }
 module.exports.getStaffByStaffId = () => {
@@ -89,5 +98,8 @@ module.exports.getStaffByStaffId = () => {
                 })
             }
         })
+    }).catch((error) => {
+        console.error(error);
+        return error
     })
 }
