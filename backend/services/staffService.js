@@ -20,6 +20,9 @@ module.exports.getAllStaff = () => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.getStaffByStaffId = (staff_id) => {
@@ -40,6 +43,9 @@ module.exports.getStaffByStaffId = (staff_id) => {
             pool.release();
         });
 
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.updateStaffByStaffId = (data) => {
@@ -60,6 +66,9 @@ module.exports.updateStaffByStaffId = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 
@@ -81,6 +90,9 @@ module.exports.getTeachingRequirementByID = (staff_id) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.createTeachingRequirement = (data) => {
@@ -100,7 +112,10 @@ module.exports.createTeachingRequirement = (data) => {
             }
             pool.release();
         });
-    });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
 };
 module.exports.createTeachingRequirementRemarks = (data) => {
     return new Promise((resolve, reject) => {
@@ -119,6 +134,9 @@ module.exports.createTeachingRequirementRemarks = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.updateTeachingRequirement = (data) => {
@@ -139,6 +157,9 @@ module.exports.updateTeachingRequirement = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.deleteTeachingRequirement = (ptr_id) => {
@@ -157,6 +178,9 @@ module.exports.deleteTeachingRequirement = (ptr_id) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 
@@ -178,6 +202,9 @@ module.exports.getAllModules = () => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.createModule = (data) => {
@@ -197,6 +224,9 @@ module.exports.createModule = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 
@@ -219,6 +249,9 @@ module.exports.getAllModulePreference = () => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.getModulePreferenceByID = (staff_id) => {
@@ -237,6 +270,9 @@ module.exports.getModulePreferenceByID = (staff_id) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.submitModulePreference = (data) => {
@@ -255,6 +291,9 @@ module.exports.submitModulePreference = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.updateModulePreferenceByID = (data) => {
@@ -273,6 +312,9 @@ module.exports.updateModulePreferenceByID = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 
@@ -293,6 +335,9 @@ module.exports.getAssignedModulesByID = (staff_id) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.assignModuleByID = (data) => {
@@ -311,6 +356,9 @@ module.exports.assignModuleByID = (data) => {
             }
             pool.release();
         });
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
 module.exports.unassignModuleByID = (ma_id) => {
@@ -330,5 +378,8 @@ module.exports.unassignModuleByID = (ma_id) => {
             pool.release();
         });
 
+    }).catch((error) => {
+        console.error(error);
+        return error
     });
 };
