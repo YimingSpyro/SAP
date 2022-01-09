@@ -164,7 +164,37 @@
                             <textarea type="text" class="form-control form-control-sm" id="additional-requests" rows="3"></textarea>
                     
                             <!-- Update Button -->
-                            <button type="submit" class="btn btn-primary float-end">Submit Requests</button>
+                            <button type="button" class="btn btn-primary float-end" id="submit-requests">Submit Requests</button>
+
+                            
+                            <!-- Success Modal -->
+                            <div class="modal fade" id="submit-requests-success" tabindex="-1" aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title">Request Submitted</h5>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn-primary " data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Error Modal -->
+                            <div class="modal fade" id="submit-requests-error" tabindex="-1" aria-labelledby="submit-requests-error-modal" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header justify-content-center">
+                                            <h5 class="modal-title">An Error has occured</h5>
+                                        </div>
+                                        <div class="modal-footer justify-content-center">
+                                            <button type="button" class="btn btn-primary " data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+  
                         </div>
                     
                     </div>

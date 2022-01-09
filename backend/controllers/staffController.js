@@ -135,27 +135,6 @@ exports.createTeachingRequirement = async(req, res, next) => {
     }
 
 };
-// API Create Teaching Requirement
-exports.createTeachingRequirementRemarks = async(req, res, next) => {
-    let staff_id = req.body.staff_id
-    let ptr_remarks = req.body.ptr_remarks
-    let semester_code = req.body.semester_code
-    let data = [staff_id,ptr_remarks,semester_code]
-    try {
-        let results = await staffManager.createTeachingRequirementRemarks(data);
-        console.log('Create Teaching Requirement', results);
-        if (results) {
-            return res.status(200).json(results);
-        }
-    } catch (error) {
-        let message = 'Server is unable to process your request.';
-        console.error('Server is unable to process the request', {'Error':error})
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-};
 // API Update Teaching Requirement by ID
 exports.updateTeachingRequirement = async(req, res, next) => {
     let ptr_id = req.query.ptr_id
@@ -163,8 +142,7 @@ exports.updateTeachingRequirement = async(req, res, next) => {
     let ptr_time = req.body.ptr_time
     let ptr_duration = req.body.ptr_duration
     let ptr_reason = req.body.ptr_reason
-    let ptr_remarks = req.body.ptr_remarks
-    let data = [ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_remarks,ptr_id]
+    let data = [ptr_day,ptr_time,ptr_duration,ptr_reason,ptr_id]
     try {
         let results = await staffManager.updateTeachingRequirement(data);
         console.log('Update Teacing Requirement by ID', results);
@@ -198,6 +176,69 @@ exports.deleteTeachingRequirement = async(req, res, next) => {
     }
 
 };
+// API GET Teaching Requirement Remarks
+exports.getTeachingRequirementRemarks = async(req, res, next) => {
+    let staff_id = req.params.id;
+    let semester_code = req.query.semester_code;
+    let data = [staff_id,semester_code];
+    try {
+        let results = await staffManager.getTeachingRequirementRemarks(data);
+        console.log('Get Teaching Requirement by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Create Teaching Requirement Remarks
+exports.createTeachingRequirementRemarks = async(req, res, next) => {
+    let staff_id = req.body.staff_id
+    let ptr_remarks = req.body.ptr_remarks
+    let semester_code = req.body.semester_code
+    let data = [staff_id,ptr_remarks,semester_code]
+    try {
+        let results = await staffManager.createTeachingRequirementRemarks(data);
+        console.log('Create Teaching Requirement', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Update Teaching Requirement Remarks
+exports.updateTeachingRequirementRemarks = async(req, res, next) => {
+    let staff_id = req.body.staff_id
+    let ptr_remarks = req.body.ptr_remarks
+    let semester_code = req.body.semester_code
+    let data = [ptr_remarks,semester_code,staff_id]
+    try {
+        let results = await staffManager.updateTeachingRequirementRemarks(data);
+        console.log('Update Teacing Requirement Remarks by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', {'Error':error})
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
 
 
 /* ==== MODULES API ==== */
