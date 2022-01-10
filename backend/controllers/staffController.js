@@ -280,8 +280,9 @@ exports.createModule = async(req, res, next) => {
     let even_prachr = req.body.even_prachr;
     let odd_tuthr = req.body.odd_tuthr;
     let even_tuthr = req.body.even_tuthr;
+    let fk_course_id = req.body.fk_course_id;
     let data = [mod_code,mod_name,mod_abbrv,mass_lect,fk_mod_coord,mod_dlt,mod_lecture,mod_tutorial,mod_practical,fk_cluster_ldr,fk_semester_code,
-        odd_lechr,even_lechr,odd_prachr, even_prachr,odd_tuthr,even_tuthr]
+        odd_lechr,even_lechr,odd_prachr, even_prachr,odd_tuthr,even_tuthr,fk_course_id]
     try {
         let results = await staffManager.createModule(data);
         console.log('Create Module', results);
