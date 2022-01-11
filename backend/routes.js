@@ -3,19 +3,29 @@ const authController = require("./controllers/authController");
 const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
 const checkUserFn = require("./middlewares/checkUserFn");
-
-//DECLARE MULTER PACKAGE--------------------------------
 const multer = require('multer')
+const getFields = multer();
+//DECLARE MULTER CONFIGURATIONS--------------------------------
+//declare where to store incoming files
+//this stores profile pictures
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, './uploads/profile_picture');
     },
     filename: function (req, file, cb) {
-        cb(null, `${req.body.name}_${new Date().valueOf()}_${file.originalname}` );
+        cb(null, `${req.body.name}_${new Date().valueOf()}_${file.originalname}`);
     }
 });
-
-const fileFilter = (req, file, cb) => {
+//this stores documents like excels
+const reportStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './uploads/report_samples');
+    },
+    filename: function (req, file, cb) {
+        cb(null, `${new Date().valueOf()}_${file.originalname}`);
+    }
+});
+const PFPfileFilter = (req, file, cb) => {
     // reject a file
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
@@ -23,20 +33,59 @@ const fileFilter = (req, file, cb) => {
         cb(null, false);
     }
 };
-
+const reportFileFilter = (req, file, cb) => {
+    //checks for appropriate file type
+    const checkFileVNDMS = /application\/vnd.ms-.*/
+    const checkFileMS = /application\/ms.*/
+    const checkFileOpenXML = /application\/vnd.openxmlformats-officedocument..*/
+    if (checkFileVNDMS.test(file.mimetype) || checkFileOpenXML.test(file.mimetype) || checkFileMS.test(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+const fileFilter = (req, file, cb) => {
+    if (file) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+const updateFilter = (req, file, cb) => {
+    let c = uploadsController.checkFile(req)
+    if (c) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
 //Declare upload using multer package
 //This method is to upload profile pictures with the multer package
 //it also checks for the correct filetype and limits to 3MB
 const uploadPFP = multer({
     storage: storage,
     limits: {
-        fileSize: 1024 * 1024 * 3
+        fileSize: 1024 * 1024
     },
+    fileFilter: PFPfileFilter
+});
+//This method is to upload excel or csv files
+const uploadReport = multer({
+    storage: reportStorage,
+    fileFilter: reportFileFilter
+});
+
+const upload = multer({
+    storage: reportStorage,
     fileFilter: fileFilter
 });
 
+const updateReport = multer({
+    storage: reportStorage,
+    fileFilter: updateFilter //check if the file fields are empty to prevent upload
+});
 
-//END OF DECLARING MULTER PACKAGE--------------------------------
+//END OF DECLARING MULTER CONFIGURATIONS--------------------------------
 
 // Match URL's with controllers
 exports.appRoute = router => {
@@ -88,5 +137,13 @@ exports.appRoute = router => {
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
     router.get('/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
+    router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
 
+    //REPORTS
+    router.post('/uploads/reports/excel/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
+    router.delete('/uploads/reports/excel/', getFields.none(), uploadsController.deleteReport)
+    router.get('/uploads/reports/excel/', getFields.none(), uploadsController.getAllReport)
+    router.get('/uploads/reports/excel/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
+    router.get('/uploads/reports/excel/file/id', getFields.none(), uploadsController.getReportByID)
+    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
 }
