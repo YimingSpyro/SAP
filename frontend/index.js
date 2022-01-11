@@ -25,6 +25,9 @@ app.get("/module-preference", (req, res) => {
 app.get("/profile-picture/:pfp_id", (req, res) => {
     res.sendFile("/profile_picture/" + req.params.pfp_id, { root: __dirname });
 });
+app.get("/reports", (req, res) => {
+    res.sendFile("/view/reports.html", { root: __dirname });
+});
 app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`);
 });
