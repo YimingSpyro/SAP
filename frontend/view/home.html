@@ -14,124 +14,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Offline scripts -->
-    <link href="admincss/navbar.css" rel="stylesheet">
-
-    <style>
-        .dashboard-item {
-            height: 0%;
-        }
-        
-        .list-group {
-            height: calc(100% - 50px);
-            border-radius: 0 0 6px 6px;
-        }
-        
-        #list-group-report {
-            height: calc(100% - 50px);
-            border-radius: 0 0 6px 6px;
-        }
-        
-        .list-group>.list-item:last-child {
-            border-radius: 0 0 6px 6px;
-        }
-        
-        .list-group>.list-item:not(:first-child) {
-            border-top: 1px solid white
-        }
-        
-        .list-item {
-            min-height: 60px;
-            color: #15343F;
-            background: #D0D2D6;
-            font-size: 1em;
-            font-weight: bold;
-            transition: .4s;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        
-        .list-item:hover {
-            color: white;
-            background: #22404F;
-        }
-        
-        #module-info-item {
-            transition: 1s;
-        }
-        
-        .report-item-wrap p {
-            color: #15343F;
-            text-align: left;
-        }
-        
-        .report-item-wrap:hover .report-item-title {
-            color: white
-        }
-        
-        .report-item-wrap:hover .report-item-desc {
-            color: white
-        }
-        
-        .report-item-title {
-            font-size: 1em;
-        }
-        
-        .report-item-desc {
-            font-size: .6em;
-            font-weight: lighter;
-        }
-        
-        .download-button {
-            background-color: #15343F;
-            color: #ffffff;
-            height: 65%;
-            border: none;
-            border-radius: 3px;
-            font-size: .7em;
-        }
-        
-        #teaching-assignment-title {
-            height: 30%
-        }
-        
-        #teaching-assignment-list {
-            height: 60px;
-            margin: auto;
-            position: relative;
-            top: -7px;
-            padding: 0;
-            /* width: 70%; */
-            text-align: center;
-        }
-        
-        .teaching-assignment-list-item {
-            color: #15343F;
-            font-size: .8em;
-            font-weight: lighter;
-        }
-        
-        a {
-            text-decoration: none;
-        }
-    </style>
-    <script>
-        $(document).ready(function() {
-            $("#maintenence-system").hover(
-                function() {
-                    $('#ul-collapse').addClass("show");
-                    $('#caret-down').toggleClass("bi-caret-down-fill").toggleClass("bi-caret-right-fill");
-
-
-                },
-                function() {
-                    $('#ul-collapse').removeClass("show");
-                    $('#caret-down').toggleClass("bi-caret-right-fill").toggleClass("bi-caret-down-fill");
-                }
-            );
-        })
-    </script>
+    <link rel="stylesheet" href="../public/css/navbar.css">
+    <link rel="stylesheet" href="../public/css/global.css">
 </head>
 
 <body>
@@ -144,7 +28,7 @@
                     </div>
                     <div id="msg-wrap" class="col-9 ">
                         <p>Welcome,</p>
-                        <p>Adminstrator 1</p>
+                        <p>Module Coordinator 1</p>
                     </div>
                 </div>
             </div>
@@ -160,6 +44,7 @@
     <div class="container-fluid">
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
+
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
                     <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                         <li class="nav-item active">
@@ -204,144 +89,124 @@
 
                     </ul>
                 </div>
+
             </div>
             <div id="dashboard-view-wrap" class="col-10 py-3">
                 <div id="dashboard-view" class="container">
                     <div class="row">
                         <div class="col-7">
                             <div class="d-flex justify-content-center">
+
+                                <!-- Personal info -->
                                 <div class="col-6 dashboard-item">
                                     <div class="col dashboard-item-title">
-                                        Maintenence System
+                                        Personal Information
+                                    </div>
+                                    <div id="dashboard-profile" class="list-group d-flex flex-column">
+
+                                        <div id="dashboard-info" class="">
+                                            <!-- Profile Image -->
+                                            <img id="dashboard-profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" alt="Cinque Terre">
+                                            <div class="dashboard-info-name">
+                                                Name abcdefg
+                                            </div>
+                                            <div class="dashboard-info-designation">
+                                                Designation abcdefg
+                                            </div>
+                                            <div class="dashboard-info-email">
+                                                Email@ichat.sp.edu.sg
+                                            </div>
+
+                                            <a href="personalinformation.html"><button id="dashboard-button" type="button" class="btn btn-primary">Edit Profile</button></a>
+
+                                            <div class="dashboard-info-slots">
+                                                Unavailable Teaching Slots
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="col-3">Day</th>
+                                                            <th scope="col" class="col-3">Duration</th>
+                                                            <th scope="col" class="col-3">Time</th>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Mon</td>
+                                                            <td>2hrs</td>
+                                                            <td>3pm</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Fri</td>
+                                                            <td>2hrs</td>
+                                                            <td>3pm</td>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+
+                                            <a href="teachrequirement.html"><button id="dashboard-button" type="button" class="btn btn-primary">Update Slots</button></a>
+                                            <br>
+                                            <a href="changepassword.html"><button id="dashboard-button-bottom" type="button" class="btn btn-primary bottombtn">Change Password</button></a>
+                                            <a href="teachrequirement.html"><button id="dashboard-button-bottom" type="button" class="btn btn-primary bottombtn">Add Requests</button></a>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modules -->
+                                <div class="col-6 dashboard-item">
+                                    <div class="col dashboard-item-title">
+                                        Modules
                                     </div>
                                     <div class="list-group d-flex flex-column">
-                                        <div id="module-info-item" class="list-item p-2 col"><a>Module Information</a>
+                                        <div id="module-info-item" class="list-item p-2 col"><a>Choose Module Preference</a>
                                         </div>
 
-                                        <div id="staff-info-item" class="list-item p-2 col"><a>Staff Information</a>
+                                        <div id="staff-info-item" class="list-item p-2 col"><a>View Assigned Module</a>
                                         </div>
-                                    </div>
-                                </div>
-                                <div id="teaching-assignment" class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Teaching Assignment
-                                    </div>
-                                    <div id="teaching-assignment-title" class="list-item p-2 col"><a>Teaching Assignment
-                                            System</a>
-                                    </div>
-                                    <div id="teaching-assignment-list" class="p-2 col">
-                                        <ul id="teaching-assignment-list">
-                                            <li class="w-100">
-                                                <a href="#" class=""> <span class="d-none d-sm-inline teaching-assignment-list-item">View
-                                                        Teaching Schedule</span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="#" class=""> <span class="d-none d-sm-inline teaching-assignment-list-item">View
-                                                        Module Preference</span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="d-flex justify-content-center">
-                                <div class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Exam Matters
-                                    </div>
-                                    <div class="list-group d-flex flex-column">
-                                        <div class="list-item p-2 col"><a>Exam Moderator & Verifier</a></div>
-
-                                    </div>
-                                </div>
-                                <div class="col-6 dashboard-item">
-                                    <div class="col dashboard-item-title">
-                                        Announcements
-                                    </div>
-                                    <div class="list-group d-flex flex-column">
-                                        <div class="list-item p-2 col"><a>View Announcements</a></div>
-
-                                        <div class="list-item p-2 col"><a>Create New Accouncements</a></div>
-                                        <div class="list-item p-2 col"><a>Manage Announcements</a></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-5">
+
+                            <!-- Module Maint -->
                             <div id="dashboard-item-report" class="col">
                                 <div class="col dashboard-item-title">
-                                    Download Reports
+                                    Module Maintenance
                                 </div>
-                                <div id="list-group-report" class="d-flex flex-column">
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">MC list</p>
-                                                <p class="report-item-desc">Download Module Coordinator List</p>
-                                            </div>
-                                            <a href="../reports/mc_list.xlsx">
-                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
-                                            </a>
-                                        </div>
+
+                                <div id="dashboard-module-maintenance">
+                                    <div class="title">
+                                        Outstanding Modules
                                     </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Assignment Report</p>
-                                                <p class="report-item-desc">Download all teaching assignments</p>
-                                            </div>
-                                            <a href="../reports/assignment_report.xlsx">
-                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Summary by Module</p>
-                                                <p class="report-item-desc">Download Module Summary</p>
-                                            </div>
-                                            <a href="../reports/summary_by_module.xlsx">
-                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Summary by Staff</p>
-                                                <p class="report-item-desc">Download Staff Summary</p>
-                                            </div>
-                                            <a href="../reports/summary_by_staff.xlsx">
-                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">Examiner & Moderator Report</p>
-                                                <p class="report-item-desc">Download Examiner & Moderator Report</p>
-                                            </div>
-                                            <a href="../reports/examiner_moderator_report.xlsx">
-                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="p-1">
-                                                <p class="report-item-title">MDEO Verifier Report</p>
-                                                <p class="report-item-desc">Download MDEO Verifier Report</p>
-                                            </div>
-                                            <a href="../reports/mdeo_verifier_report.xlsx">
-                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
-                                            </a>
-                                        </div>
-                                    </div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">EP1234 ABC: ABC (DIT) Yr 2A</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>ABC Project</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">EP1234 ABC: ABC (DIT) Yr 2A</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>DEF Project</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <a href="module"><button id="dashboard-button" type="button" class="btn btn-primary">View Modules</button></a>
                                 </div>
+
                             </div>
                         </div>
                     </div>
