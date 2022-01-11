@@ -1,10 +1,22 @@
 const uploadsService = require('../services/uploadsService')
 const fs = require('fs')
-const e = require('express')
+const staffService = require('../services/staffService')
 
 //LOCAL FUNCTIONS-----------------------------
 function rmLocal(file_id, location) {
   let base_path = `.././backend/uploads/${location}/`
+  let filename = file_id
+  let final_path = base_path + filename
+  //remove the file upon invalid database entry
+  fs.unlink(final_path, (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+  })
+};
+function rmFront(file_id, location) {
+  let base_path = `.././frontend/${location}/`
   let filename = file_id
   let final_path = base_path + filename
   //remove the file upon invalid database entry
@@ -65,11 +77,9 @@ module.exports.getProfilePicture = async (req, res) => {
     let results = await uploadsService.getProfilePicture(staff_id);
     console.log('Fetching PFP');
     if (results.length < 1) {
-      let data = {
-        pfp_id: 0,
-        file_path: 'default.png',
-        fk_staff_id: null
-      }
+      let data = [{
+        filename: 'default.png',
+      }];
       console.log(data)
       return res.status(200).json(data);
     }
@@ -85,29 +95,28 @@ module.exports.getProfilePicture = async (req, res) => {
 //upload and updates profile pictures accordingly
 module.exports.uploadProfilePicture = async (req, res) => {
   try {
-    let staff_id = req.params.staff_id
-    let filename = req.file.filename
+    //check if file exists
+    if (req.file == undefined) { throw "Please ensure file is 3MB and a JPEG or PNG" };
+    //check whether staff exists
+    let staff_id = req.params.staff_id;
+    if (staff.length == 0) { throw 'No Such Staff' };
+    let staff = await staffService.getStaffByStaffId(staff_id);
     //check for existing entry
+    let filename = req.file.filename
     let results = await uploadsService.getProfilePicture(staff_id);
-    if (req.file == undefined) {
-      //rejected by multer so file is undefined
-      throw "Please ensure file is 3MB and a JPEG or PNG"
-    } else if (results.length == 0) {
-      console.log('insertProfilePicture')
+    if (results.length == 0) {
+      console.log('insertProfilePicture');
       //if there are no existing records, create new entry
-      await uploadsService.insertProfilePicture(staff_id, filename)
+      await uploadsService.insertProfilePicture(staff_id, filename);
       return res.status(200).json({ message: "Uploaded Successfully!" });
     } else if (results.length > 0) {
-      console.log('updateProfilePicture')
-      //remove the file upon invalid database entry
-      rmLocal(results[0].filename, 'profile_picture')
-      //else update the current entry
-      await uploadsService.updateProfilePicture(staff_id, filename)
-      return res.status(200).json({ message: "Successfully Updated!" });
-    } else {
-      //if the user puts an invalid staff_id
-      rmLocal(filename, 'profile_picture')
-      return res.status(400).json({ message: 'Invalid Input' });
+      console.log('updateProfilePicture');
+      //remove the file locally
+      rmFront(results[0].filename, 'profile_picture');
+      //then update the current entry
+      let upload = await uploadsService.updateProfilePicture(staff_id, filename);
+      if (upload.errno) { throw 'Database Error' };
+      return res.status(200).json({ message: "Updated Successfully!" });
     }
   }
   catch (error) {
@@ -115,8 +124,8 @@ module.exports.uploadProfilePicture = async (req, res) => {
     if (req.file == undefined) {
       return res.status(400).json({ message: error });
     } else {
-      rmLocal(req.file.filename, 'profile_picture')
-      return res.status(400).json({ message: 'Invalid Input' });
+      rmFront(req.file.filename, 'profile_picture')
+      return res.status(400).json({ message: error });
     }
   }
 };
@@ -230,9 +239,9 @@ module.exports.updateReport = async (req, res) => {
     if (req.file == undefined) {
       //if the user never specified a file, 
       let update = await uploadsService.updateReport(data);
-      if (update.errno) { 
-        throw 'Database Error' 
-      }else if(update.affectedRows == 0){
+      if (update.errno) {
+        throw 'Database Error'
+      } else if (update.affectedRows == 0) {
         throw 'Invalid File'
       };
       return res.status(200).json({ message: 'Successfully Updated!' });
@@ -245,7 +254,7 @@ module.exports.updateReport = async (req, res) => {
       if (results.affectedRows != 0) {
         console.log('Executing Local Deletion')
         rmLocal(report_id, 'report_samples')
-      }else if(results.affectedRows == 0){
+      } else if (results.affectedRows == 0) {
         rmLocal(new_file_id, 'report_samples')
         throw 'Invalid File'
       }
@@ -259,6 +268,13 @@ module.exports.updateReport = async (req, res) => {
     return res.status(400).json({ message: error });
   }
 };
+//download report
+module.exports.downloadFile = async (req, res) => {
+  console.log('Entering Download File')
+  let location = req.params.file_id
+  let base_path = `.././backend/uploads/report_samples/${location}/`
+  res.status(200).download(base_path)
+}
 //END APIS FOR REPORTS----------------------------------
 
 //TESING API FOR FILE FIELDS-------------------------
