@@ -2,7 +2,7 @@
 function getTeachingRequirements(){
     return axios.get('http://localhost:8080/api/teaching-requirement/8405')
     .then(response => response.data)
-    .catch(err => console.log(err));
+    .catch(err => error(err));
 };
 
 function addTeachingRequirement(){
@@ -16,13 +16,63 @@ function addTeachingRequirement(){
         semester_code : "AY 2021/2022 SEM2" //SAMPLE DATA
     })
     .then(response => response.data)
-    .catch(err => console.log(err));
+    .catch(err => error(err));
 }
 
 function deleteTeachingRequirement(ptr_id){
     return axios.delete('http://localhost:8080/api/teaching-requirement/' + ptr_id)
     .then(response => response.data)
-    .catch(err => console.log(err));
+    .catch(err => error(err));
+}
+
+function getRemarks(){
+    return axios.get('http://localhost:8080/api/teaching-requirement/remarks/8405?semester_code=AY 2021/2022 SEM2')
+    .then(response => response.data)
+    .catch(err => error(err));
+};
+
+function addRemarks(){
+    return axios.post('http://localhost:8080/api/teaching-requirement/remarks', 
+    {
+        staff_id : 8405, //SAMPLE DATA
+        ptr_remarks : $("#additional-requests")[0].value,
+        semester_code : "AY 2021/2022 SEM2" //SAMPLE DATA
+    })
+    .then(() => success())
+    .catch(err => error(err));
+}
+
+function updateRemarks(){
+    return axios.put('http://localhost:8080/api/teaching-requirement/remarks', 
+    {
+        staff_id : 8405, //SAMPLE DATA
+        ptr_remarks : $("#additional-requests")[0].value,
+        semester_code : "AY 2021/2022 SEM2" //SAMPLE DATA
+    })
+    .then(() => success())
+    .catch(err => error(err));
+}
+
+
+
+async function checkRemarksExist(){
+    let data = await getRemarks();
+    if (data.length > 0) {
+        return true;
+    } 
+    else {
+        return false;
+    }
+}
+
+async function submitRemark() {
+    let data = await checkRemarksExist();
+    if (data) {
+        updateRemarks()
+    }
+    else {
+        addRemarks()
+    }
 }
 
 async function generateTeachingRequirements(){
@@ -85,8 +135,16 @@ async function generateTeachingRequirements(){
         </tr>`);
     }
 }
+
+async function generateRemarks(){
+    let data = await getRemarks();
+    if (data.length != 0) {
+        $("#additional-requests")[0].value = data[0].ptr_remarks
+    }
+}
 // START OF SCRIPT
 generateTeachingRequirements();
+generateRemarks();
 
 $(document).ready(() => {
     // Delete Requirement 
@@ -108,4 +166,11 @@ $(document).ready(() => {
         .then(getTeachingRequirements())
         .then(generateTeachingRequirements());
     });
+
+    // Submit Requests
+    $("#submit-requests").click(()=>{
+       submitRemark();
+    });
+
 });
+

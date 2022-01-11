@@ -114,8 +114,10 @@ exports.appRoute = router => {
 
     // PERSONAL TEACHING REQUIREMENT
     router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
+    router.get('/api/teaching-requirement/remarks/:id', staffController.getTeachingRequirementRemarks);
     router.post('/api/teaching-requirement/', staffController.createTeachingRequirement);
     router.post('/api/teaching-requirement/remarks', staffController.createTeachingRequirementRemarks);
+    router.put('/api/teaching-requirement/remarks', staffController.updateTeachingRequirementRemarks);
     router.put('/api/teaching-requirement/', staffController.updateTeachingRequirement);
     router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
 

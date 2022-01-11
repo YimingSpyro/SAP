@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Matters</title>
+    <title>Announcements</title>
 
     <!-- Online scripts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -17,10 +17,10 @@
 
     <!-- Offline scripts -->
     <link href="admincss/navbar.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/global.css">
-    <link rel="stylesheet" href="../public/css/adminexammatters.css">
-
-
+    <<<<<<< Updated upstream:view/adminannouncements.html <link rel="stylesheet" href="../css/global.css">
+        <link rel="stylesheet" href="adminexammatters.css"> =======
+        <link rel="stylesheet" href="../public/css/global.css">
+        <link rel="stylesheet" href="../public/css/adminannouncement.css"> >>>>>>> Stashed changes:frontend/view/adminannouncements.html
 
 </head>
 
@@ -44,13 +44,13 @@
 
             <!-- Page Title -->
             <div id="navbar-title" class="navbar-brand col-9">
-                <h2>Exam Matters</h2>
+                <h2>Announcement System</h2>
             </div>
             <!-- Notification Bell -->
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
                 <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                    <img id="notifications" src="../SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -86,21 +86,21 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="../SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
 
                         <!-- Page Link -->
                         <li id="nav-item">
                             <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="../SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Maintenance System </span>
                         </li>
 
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="../SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Teaching Assignment System</span>
                             </a>
                         </li>
@@ -108,7 +108,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="../SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Exam Matters
                                 </span>
                             </a>
@@ -117,12 +117,17 @@
                         <!-- Page Link -->
                         <li class="nav-item active">
                             <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="../SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                 Announcements   
                                 </span>
                             </a>
                         </li>
-
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="reports.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -133,77 +138,275 @@
 
                     <!-- Content Header -->
                     <div id="content-header-admin">
-                        <p>Exam Moderator & Verifier System</p>
-
-                        <div class="form-group row">
-                            <label for="select-section" class="col-sm-2 col-form-label">Select Section</label>
-                            <div class="col">
-                                <select class="form-select-sm col-2" id="select-section">
-                                    <option selected>Section</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
-                            </div>
-                        </div>
-
-                        <div class="line"></div>
+                        <p>Active Announcements</p>
                     </div>
 
                     <!-- Content Item -->
                     <div id="content-item-admin">
 
-                        <!-- Module table -->
-                        <table id="admin-table" class="table table-dark rounded-top">
-                            <caption>Showing 3 Results</caption>
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="col-2">Module Code</th>
-                                    <th scope="col" class="col-3">Module Name</th>
-                                    <th scope="col" class="col-2">Offer To</th>
-                                    <th scope="col" class="col-2">Status</th>
-                                    <th scope="col" class="col-3"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>DIT Yr2</td>
-                                    <td>Assigned</td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>DIT Yr2</td>
-                                    <td>Assigned</td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                </tr>
-                                <tr class="status-unassigned border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>DIT Yr2</td>
-                                    <td>Assigned</td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                </tr>
+                        <!-- Admin Announcement Bar -->
+                        <div id="announcement-bar-admin">
+
+                            <!-- Actions -->
+                            <div id="announcementactions" class="float-end important">
+                                <div id="editannouncement">
+                                    Edit
+                                </div>
+                                <div id="deleteannouncement">
+                                    Delete
+                                </div>
+                            </div>
+                            <!-- Contents -->
+                            <div id="announcementcontent" class="important">
+                                <!-- To -->
+                                <div id="announcementto" class="float-end">
+                                    All Staff
+                                </div>
+                                <!-- Title -->
+                                <div id="announcementtitle">
+                                    Announcement Title
+                                </div>
+                                <!-- Duration -->
+                                <div id="announcementduration" class="float-end">
+                                    28 Feb 2022 - 30 Feb2022
+                                </div>
+                                <!-- Message -->
+                                <div id="announcementmessage">
+                                    Message go brrrrr
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Announcement Bar -->
+                        <div id="announcement-bar-admin">
+
+                            <!-- Actions -->
+                            <div id="announcementactions" class="float-end maintenance">
+                                <div id="editannouncement">
+                                    Edit
+                                </div>
+                                <div id="deleteannouncement">
+                                    Delete
+                                </div>
+                            </div>
+                            <!-- Contents -->
+                            <div id="announcementcontent" class="maintenance">
+                                <!-- To -->
+                                <div id="announcementto" class="float-end">
+                                    All Staff
+                                </div>
+                                <!-- Title -->
+                                <div id="announcementtitle">
+                                    Announcement Title
+                                </div>
+                                <!-- Duration -->
+                                <div id="announcementduration" class="float-end">
+                                    28 Feb 2022 - 30 Feb2022
+                                </div>
+                                <!-- Message -->
+                                <div id="announcementmessage">
+                                    Message go brrrrr
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Announcement Bar -->
+                        <div id="announcement-bar-admin">
+
+                            <!-- Actions -->
+                            <div id="announcementactions" class="float-end general">
+                                <div id="editannouncement">
+                                    Edit
+                                </div>
+                                <div id="deleteannouncement">
+                                    Delete
+                                </div>
+                            </div>
+                            <!-- Contents -->
+                            <div id="announcementcontent" class="general">
+                                <!-- To -->
+                                <div id="announcementto" class="float-end">
+                                    All Staff
+                                </div>
+                                <!-- Title -->
+                                <div id="announcementtitle">
+                                    Announcement Title
+                                </div>
+                                <!-- Duration -->
+                                <div id="announcementduration" class="float-end">
+                                    28 Feb 2022 - 30 Feb2022
+                                </div>
+                                <!-- Message -->
+                                <div id="announcementmessage">
+                                    Message go brrrrr
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Announcement Bar -->
+                        <div id="announcement-bar-admin">
+
+                            <!-- Actions -->
+                            <div id="announcementactions" class="float-end success">
+                                <div id="editannouncement">
+                                    Edit
+                                </div>
+                                <div id="deleteannouncement">
+                                    Delete
+                                </div>
+                            </div>
+                            <!-- Contents -->
+                            <div id="announcementcontent" class="success">
+                                <!-- To -->
+                                <div id="announcementto" class="float-end">
+                                    All Staff
+                                </div>
+                                <!-- Title -->
+                                <div id="announcementtitle">
+                                    Announcement Title
+                                </div>
+                                <!-- Duration -->
+                                <div id="announcementduration" class="float-end">
+                                    28 Feb 2022 - 30 Feb2022
+                                </div>
+                                <!-- Message -->
+                                <div id="announcementmessage">
+                                    Message go brrrrr
+                                </div>
+                            </div>
+                        </div>
 
 
-                            </tbody>
+                        <!-- Show More -->
+                        <div id="showmore" class="d-flex justify-content-center">
+                            <div>
+                                show more
+                            </div>
+                            <div class="triangle-down"></div>
+                        </div>
+                    </div>
 
-                        </table>
+                    <!-- Content Header -->
+                    <div id="content-header-admin">
+                        <p>Create New Announcement</p>
+                    </div>
 
+                    <div id="content-view" class="container">
 
+                        <!-- Content Header -->
+                        <div id="content-header">
+                            <p>New Announcement</p>
+                        </div>
+
+                        <!-- Content Item -->
+                        <div id="content-item">
+                            <!-- Form items -->
+                            <form action="">
+
+                                <!-- ======== NOTE: Existing Staff Data should show in the placeholders  ========-->
+
+                                <!-- Form Item -->
+                                <div class="form-group row">
+                                    <label for="announcement-type" class="col-sm-3 col-form-label">Announcement Type:</label>
+                                    <div class="col-sm">
+                                        <select class="form-select-sm" id="announcement-type">
+                                    <option selected></option>
+                                    <option>Important</option>
+                                    <option>General Info</option>
+                                    <option>Maintenance</option>
+                                    <option>Success</option>
+                                  </select>
+                                    </div>
+                                </div>
+
+                                <!-- Form Item -->
+                                <div class="form-group row ">
+                                    <div class="col-sm-3">
+                                        <label for="lecturers" class="col-form-label ">Announcement To:</label>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="lecturers">
+                                            <label class="form-check-label" for="lecturers">
+                                                Lecturers
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check">
+                                            <input class=" form-check-input " type="checkbox" value=" " id="modulecoordinator">
+                                            <label class="form-check-label " for="modulecoordinator">
+                                                Module Coordinators
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input " type="checkbox" value=" " id="examrep">
+                                            <label class="form-check-label " for="examrep">
+                                                Examp Reps
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input " type="checkbox" value=" " id="adminsupport">
+                                            <label class="form-check-label " for="adminsupport">
+                                                Admin Support
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Form Item -->
+                                <div class="form-group row">
+                                    <label for="announcement-type" class="col-sm-3 col-form-label">Send Email:</label>
+                                    <div class="col-sm">
+                                        <select class="form-select-sm" id="announcement-type">
+                                    <option selected>Yes</option>
+                                    <option>No</option>
+                                  </select>
+                                    </div>
+                                </div>
+
+                                <!-- Form Item -->
+                                <div class="form-group row">
+                                    <label for="start-date" class="col-sm-3 col-form-label">Announcement Period:</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control form-control-sm" id="start-date" placeholder="Start Date">
+                                    </div>
+
+                                    <label for="end-date" class="col-sm-1 col-form-label">to</label>
+                                    <div class="col-sm-3">
+                                        <input type="text" class="form-control form-control-sm" id="end-date" placeholder="End Date">
+                                    </div>
+                                </div>
+
+                                <!-- Form Item -->
+                                <div class="form-group row">
+                                    <label for="message" class="col-sm-3 col-form-label">Message:</label>
+                                    <div class="col-sm-8">
+                                        <textarea type="text" class="form-control form-control-sm" id="message" rows="3" placeholder="Message"></textarea>
+                                    </div>
+                                </div>
+
+                                <!-- Update Button -->
+                                <button type="submit " class="btn btn-primary float-end ">Create New Announcement</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Content Header -->
+                    <div id="content-header-admin">
+                        <p>Old Announcements</p>
+                    </div>
+
+                    <!-- Show More -->
+                    <div id="showmore" class="d-flex justify-content-center">
+                        <div>
+                            show old announcements
+                        </div>
+                        <div class="triangle-down"></div>
                     </div>
                 </div>
             </div>
+
         </div>
 
 </body>
