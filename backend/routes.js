@@ -129,7 +129,7 @@ exports.appRoute = router => {
     router.get('/api/module/preference', staffController.getAllModulePreference);
     router.get('/api/module/preference/:id', staffController.getModulePreferenceByID);
     router.post('/api/module/preference', staffController.submitModulePreference);
-    router.put('/api/module/preference/:id', staffController.updateModulePreferenceByID);
+    router.put('/api/module/preference/', staffController.updateModulePreferenceByID);
 
     // ASSIGNED MODULES
     router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
