@@ -362,9 +362,10 @@ exports.submitModulePreference = async(req, res, next) => {
 
 // API Select Module Preference
 exports.updateModulePreferenceByID = async(req, res, next) => {
-    let staff_id = req.params.id;
+    let staff_id = req.body.staff_id;
     let preference = req.body.preference;
-    let data = [preference, staff_id];
+    let semester_code = req.body.semester_code;
+    let data = [preference, staff_id, semester_code];
     try {
         let results = await staffManager.updateModulePreferenceByID(data);
         console.log('Update Module Preference', results);

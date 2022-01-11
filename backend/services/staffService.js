@@ -344,7 +344,7 @@ module.exports.submitModulePreference = (data) => {
 module.exports.updateModulePreferenceByID = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`UPDATE module_preference SET preference = ? WHERE fk_staff_id = ?;`, data, (err, results) => {
+        pool.query(`UPDATE module_preference SET preference = ? WHERE fk_staff_id = ? AND fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -367,7 +367,10 @@ module.exports.updateModulePreferenceByID = (data) => {
 module.exports.getAssignedModulesByID = (staff_id) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT * FROM mod_assign WHERE fk_staff_id = ?;`, [staff_id], (err, results) => {
+        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.year_offered FROM mod_assign
+         INNER JOIN module
+         ON mod_assign.fk_mod_code = module.mod_code
+         WHERE fk_staff_id = ?;`, [staff_id], (err, results) => {
             if (err) {
                 reject(err);
             } else {
