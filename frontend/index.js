@@ -21,6 +21,9 @@ app.get("/teaching-requirement", (req, res) => {
 app.get("/module-preference", (req, res) => {
     res.sendFile("/view/choosemodulepreference.html", { root: __dirname });
 });
+app.get("/module-assignment", (req, res) => {
+    res.sendFile("/view/viewassignedmodule.html", { root: __dirname });
+});
 app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`);
 });
