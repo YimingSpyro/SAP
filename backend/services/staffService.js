@@ -344,7 +344,7 @@ module.exports.submitModulePreference = (data) => {
 module.exports.updateModulePreferenceByID = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`UPDATE module_preference SET preference = ? WHERE fk_staff_id = ?;`, data, (err, results) => {
+        pool.query(`UPDATE module_preference SET preference = ? WHERE fk_staff_id = ? AND fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
             } else {
