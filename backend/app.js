@@ -39,14 +39,11 @@ app.set("view engine", "pug");
 app.set("views", path.resolve("./src/views")); */
 
 
-// enable files upload
-const options = {
-    uploadDir: '',
-    autoClean: true
-};
-
 //Request Parsing
-//app.use(cors());
+/* var corsOptions = {
+    origin: 'http://localhost:8000',
+}
+app.use(cors(corsOptions)); */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -61,21 +58,21 @@ app.use(express.static(rootPath));
 const route = require('./routes');
 route.appRoute(app, router);
 
-const isAuthenticated = (req,res,next)=>{
+const isAuthenticated = (req, res, next) => {
     const token = req.cookies.token;
-    if(!token){
+    if (!token) {
         return res.sendStatus(403);
     }
-    try{
-        const data = jwt.verify(token,JWT_SECRET_KEY)
+    try {
+        const data = jwt.verify(token, JWT_SECRET_KEY)
         console.log(data);
-        if(data.staff_name) return res.redirect('http://localhost:8000/home.html')
-    }catch{
+        if (data.staff_name) return res.redirect('http://localhost:8000/home.html')
+    } catch {
         return res.sendStatus(403);
     }
 }
 
-app.get('/getcookie',isAuthenticated, (req, res) => {
+app.get('/getcookie', isAuthenticated, (req, res) => {
     //show the saved cookies
     console.log(req.cookies)
     res.cookie("username", "shesh", {

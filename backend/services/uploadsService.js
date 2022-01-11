@@ -64,7 +64,10 @@ exports.insertNewReport = (data) => {
 }
 module.exports.getAllReport = () => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT reports_file_store.* ,staff_information.stafF_name  FROM reports_file_store INNER JOIN staff_information ON reports_file_store.uploaded_by = staff_information.staff_id;', (err, rows) => {
+        pool.query(`SELECT file_id, filename, file_remarks, fk_semester_code, uploaded_time ,staff_information.stafF_name, system_roles.remarks
+        FROM reports_file_store AS rfi
+        INNER JOIN staff_information ON rfi.uploaded_by = staff_information.staff_id
+        INNER JOIN system_roles ON rfi.allocated_to = system_roles.role_name`, (err, rows) => {
             if (err) {
                 reject(err);
             } else {
