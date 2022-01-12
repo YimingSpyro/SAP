@@ -2,6 +2,7 @@
 const authController = require("./controllers/authController");
 const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
+const examController = require("./controllers/examController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -10,19 +11,19 @@ const getFields = multer();
 //declare where to store incoming files
 //this stores profile pictures
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, '../frontend/profile_picture');
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, `${req.body.name}_${new Date().valueOf()}_${file.originalname}`);
     }
 });
 //this stores documents like excels
 const reportStorage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: function(req, file, cb) {
         cb(null, './uploads/report_samples');
     },
-    filename: function (req, file, cb) {
+    filename: function(req, file, cb) {
         cb(null, `${new Date().valueOf()}_${file.originalname}`);
     }
 });
@@ -136,11 +137,6 @@ exports.appRoute = router => {
     router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
     router.post('/api/module/assign/', staffController.assignModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
-    
-    //STAFF-INFO
-    router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
-    router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
-    router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
 
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
@@ -153,6 +149,16 @@ exports.appRoute = router => {
     router.get('/uploads/reports/excel/', getFields.none(), uploadsController.getAllReport)
     router.get('/uploads/reports/excel/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
     router.get('/uploads/reports/excel/file/id', getFields.none(), uploadsController.getReportByID)
-    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
-    router.get('/reports/download/:file_id',uploadsController.downloadFile)
+    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
+    router.get('/reports/download/:file_id', uploadsController.downloadFile)
+
+    //STAFF SERVICE
+    router.get('/staffService', staffController.processGetAllStaff);
+    router.get('/staffService/:id', staffController.processGetStaffByStaffId);
+
+    //EXAM 
+    router.get('/getExam', examController.processGetAllExam);
+    router.get('/getExam/:id', examController.processGetExamByExamId);
+    router.post('/createExam', examController.createExam);
+
 }
