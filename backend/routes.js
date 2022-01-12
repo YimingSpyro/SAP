@@ -2,6 +2,7 @@
 const authController = require("./controllers/authController");
 const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
+const examController = require("./controllers/examController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -136,7 +137,7 @@ exports.appRoute = router => {
     router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
     router.post('/api/module/assign/', staffController.assignModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
-    
+
     //STAFF-INFO
     router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
@@ -153,6 +154,12 @@ exports.appRoute = router => {
     router.get('/uploads/reports/excel/', getFields.none(), uploadsController.getAllReport)
     router.get('/uploads/reports/excel/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
     router.get('/uploads/reports/excel/file/id', getFields.none(), uploadsController.getReportByID)
-    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
-    router.get('/reports/download/:file_id',uploadsController.downloadFile)
+    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
+    router.get('/reports/download/:file_id', uploadsController.downloadFile)
+
+    //EXAM 
+    router.get('/api/getExam', examController.processGetAllExam);
+    router.get('/api/getExam/:id', examController.getExamByExamId);
+    router.post('/api/createExam', examController.createExam);
+
 }
