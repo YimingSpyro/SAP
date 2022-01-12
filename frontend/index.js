@@ -44,6 +44,9 @@ app.get("/profile-picture/:pfp_id", (req, res) => {
 app.get("/reports", (req, res) => {
     res.sendFile("/view/reports.html", { root: __dirname });
 });
+app.get("/module-preference", (req, res) => {
+    res.sendFile("/view/choosemodulepreference.html", { root: __dirname });
+});
 app.get("/module-assignment", (req, res) => {
     res.sendFile("/view/viewassignedmodule.html", { root: __dirname });
 });
