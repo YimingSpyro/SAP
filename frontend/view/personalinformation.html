@@ -10,9 +10,12 @@
     <title>Personal Information</title>
 
     <!-- Online scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
@@ -21,6 +24,7 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/personalinformation.css">
     <script src="/script/profile.js"></script>
+    <script src="/script/notifications.js"></script>
     <script src="/script/global.js"></script>
 
 
@@ -52,7 +56,8 @@
             <!-- Notification Bell -->
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
-                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
+                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false"
+                    aria-controls="notification-bell">
                     <img id="notifications" src="/SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
@@ -85,25 +90,30 @@
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
-                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="userdashboard.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
 
                         <!-- Page Link -->
                         <li id="nav-item">
                             <a href="teachrequirement.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Update Teaching Requirement </span>
                         </li>
 
                         <!-- Page Link -->
                         <li class="nav-item active">
                             <a href="personalinformation.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Update Personal Information</span>
                             </a>
                         </li>
@@ -111,7 +121,8 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="choosemodulepreference.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Choose Module Preference
                                 </span>
                             </a>
@@ -120,8 +131,9 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="viewassignedmodule.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                View Assigned Module    
+                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
+                                    View Assigned Module
                                 </span>
                             </a>
                         </li>
@@ -129,8 +141,9 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="changepassword.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Change Password    
+                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Change Password
                                 </span>
                             </a>
                         </li>
@@ -152,89 +165,128 @@
                     <div id="content-item">
 
                         <!-- Profile Image -->
-                        <img id="form-profile-icon" src = '/profile-picture/default.png' alt="Cinque Terre">
+                        <img id="form-profile-icon" src='/profile-picture/default.png' alt="Cinque Terre">
 
-                        <!-- Form items -->
-                        <form action="profile">
 
-                            <!-- ======== NOTE: Existing Staff Data should show in the placeholders  ========-->
+                        <!-- ======== NOTE: Existing Staff Data should show in the placeholders  ========-->
 
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-id" class="col-sm-3 col-form-label">Staff Id:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-id" placeholder="123456" disabled>
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-id" class="col-sm-3 col-form-label">Staff Id:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-id"
+                                    placeholder="123456" disabled>
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-name" class="col-sm-3 col-form-label">Staff Name:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-name"
+                                    placeholder="Name 1234">
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-abbrv" class="col-sm-3 col-form-label">Staff Abbrv:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-abbrv"
+                                    placeholder="abc">
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-type" class="col-sm-3 col-form-label">Staff Type:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-type"
+                                    placeholder="abc" disabled>
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-des" class="col-sm-3 col-form-label">Desgination:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-des" placeholder="abc"
+                                    disabled>
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-email" class="col-sm-3 col-form-label">Email:</label>
+                            <div class="col-sm-3">
+                                <input type="email" class="form-control form-control-sm" id="staff-email"
+                                    placeholder="abc@abc.com">
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-contactnumber" class="col-sm-3 col-form-label">Contact Number:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-contactnumber"
+                                    placeholder="12345678">
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-mobilenumber" class="col-sm-3 col-form-label">Mobile Number:</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control form-control-sm" id="staff-mobilenumber"
+                                    placeholder="87654321">
+                            </div>
+                        </div>
+
+                        <!-- Form Item -->
+                        <div class="form-group row">
+                            <label for="staff-remarks" class="col-sm-3 col-form-label">Additional Remarks:</label>
+                            <div class="col-sm-8">
+                                <textarea type="text" class="form-control form-control-sm" id="staff-remarks" rows="3"
+                                    placeholder="remarks abcd"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Update Button -->
+                        <button type="button" class="btn btn-primary float-end" id="update-profile">Update
+                            Profile</button>
+
+
+                    </div>
+                    <!-- Success Modal -->
+                    <div class="modal fade" id="submit-requests-success" tabindex="-1"
+                        aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 class="modal-title">Profile Updated</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary "
+                                        data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-name" class="col-sm-3 col-form-label">Staff Name:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-name" placeholder="Name 1234">
+                    <!-- Error Modal -->
+                    <div class="modal fade" id="submit-requests-error" tabindex="-1"
+                        aria-labelledby="submit-requests-error-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 class="modal-title">An Error has occured</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary "
+                                        data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-abbrv" class="col-sm-3 col-form-label">Staff Abbrv:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-abbrv" placeholder="abc" >
-                                </div>
-                            </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-type" class="col-sm-3 col-form-label">Staff Type:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-type" placeholder="abc" disabled>
-                                </div>
-                            </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-des" class="col-sm-3 col-form-label">Desgination:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-des" placeholder="abc" disabled>
-                                </div>
-                            </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-email" class="col-sm-3 col-form-label">Email:</label>
-                                <div class="col-sm-3">
-                                    <input type="email" class="form-control form-control-sm" id="staff-email" placeholder="abc@abc.com">
-                                </div>
-                            </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-contactnumber" class="col-sm-3 col-form-label">Contact Number:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-contactnumber" placeholder="12345678">
-                                </div>
-                            </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-mobilenumber" class="col-sm-3 col-form-label">Mobile Number:</label>
-                                <div class="col-sm-3">
-                                    <input type="text" class="form-control form-control-sm" id="staff-mobilenumber" placeholder="87654321">
-                                </div>
-                            </div>
-
-                            <!-- Form Item -->
-                            <div class="form-group row">
-                                <label for="staff-remarks" class="col-sm-3 col-form-label">Additional Remarks:</label>
-                                <div class="col-sm-8">
-                                    <textarea type="text" class="form-control form-control-sm" id="staff-remarks" rows="3" placeholder="remarks abcd"></textarea>
-                                </div>
-                            </div>
-
-                            <!-- Update Button -->
-                            <button type="submit" class="btn btn-primary float-end" id="update-profile">Update Profile</button>
-                        </form>
-
+                        </div>
                     </div>
                 </div>
             </div>
