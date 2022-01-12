@@ -16,9 +16,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!-- Offline scripts -->
-    <link href="admincss/navbar.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/global.css">
-    <link rel="stylesheet" href="../public/css/adminmaintenancesystem.css">
+    <link href="/admincss/navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
 
 </head>
 
@@ -49,7 +49,7 @@
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
                 <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                    <img id="notifications" src="/SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -81,44 +81,59 @@
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
-                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <!-- Page Link -->
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Dashboard.svg" class="icons"></img>
+                                        <div class="navbar-title">Dashboard</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li id="maintenence-system">
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Maintenance.svg" class="icons"></img>
+                                        <div class="navbar-title">Maintence System</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                         <li class="nav-item">
-                            <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img>
+                                        <div class="navbar-title">Teaching
+                                            Assignment</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Exam Matters.svg" class="icons"></img>
+                                        <div class="navbar-title">Exam Matters</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
 
-                        <!-- Page Link -->
-                        <li id="nav-item active">
-                            <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Maintenance System </span>
-                        </li>
-
-                        <!-- Page Link -->
                         <li class="nav-item">
-                            <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Teaching Assignment System</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Exam Matters
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                Announcements   
-                                </span>
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Announcements.svg" class="icons"></img>
+                                        <div class="navbar-title">Announcements</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
 
@@ -139,8 +154,8 @@
 
                     <!-- Page Tabs -->
                     <div id="tabs">
-                        <a href="adminmaintenancesystem.html"><button type="button" class="btn btn-primary btn-sm">Module</button></a>
-                        <a href="adminstaffmaintenancesystem.html"><button type="button" class="btn btn-secondary btn-sm">Staff</button></a>
+                        <a href="/maintenance"><button type="button" class="btn btn-primary btn-sm">Module</button></a>
+                        <a href="/maintenance/staff-info"><button type="button" class="btn btn-secondary btn-sm">Staff</button></a>
                     </div>
 
                     <!-- Content Header -->

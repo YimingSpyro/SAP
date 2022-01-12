@@ -135,6 +135,11 @@ exports.appRoute = router => {
     router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
     router.post('/api/module/assign/', staffController.assignModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
+    
+    //STAFF-INFO
+    router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
+    router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
+    router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
 
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
@@ -147,5 +152,5 @@ exports.appRoute = router => {
     router.get('/uploads/reports/excel/', getFields.none(), uploadsController.getAllReport)
     router.get('/uploads/reports/excel/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
     router.get('/uploads/reports/excel/file/id', getFields.none(), uploadsController.getReportByID)
-    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
+    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
 }

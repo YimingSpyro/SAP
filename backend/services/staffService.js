@@ -2,12 +2,51 @@ const config = require('../config/config');
 const pool = require('../config/database')
 
 // PERSONAL INFORRATION
+module.exports.createStaff = (data,roles) => {
+    return new Promise((resolve, reject) => {
+        //used pool.getconnnection here to perform multiple queries
+        pool.getConnection((err, connection) => {
+            if (err) {
+                resolve(err);
+            } else {
+                connection.query(`INSERT INTO staff_information (staff_id,staff_name,staff_abbrv,fk_designation_id,staff_email,staff_number,staff_mobile,staff_remarks,staff_password,fk_staff_type,fk_schedule_id,staff_status)
+                VALUES(?,?,?,?,?,?,?,?,?,?,?,?);`, data, (err, results) => {
+                    if (err) {
+                        console.log(err);
+                        reject(err);
+                    } else {
+                        console.log("created");
+                        if (results) {
+                            connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, roles, (err, results1) => {
+                                if (err) {
+                                    console.log(err);
+                                    reject(err);
+                                } else {
+                                    if (results1) {
+                                        console.log(results1);
+                                        return resolve(results);
+                                    } else {
+                                        return resolve('Error Message');
+                                    }
+                                }
+                            })
+                            console.log(results);
+                            return resolve(results);
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+                });
+                connection.release();
+            }
+        })
 
+    });
+};
 module.exports.getAllStaff = () => {
     return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, fk_designation_id,staff_number, staff_mobile, staff_remarks, fk_staff_type 
-                 FROM staff_information;`, [], (err, results) => {
+        pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email,staff_number, staff_mobile, staff_remarks, fk_staff_type ,designation_id, designation_name,section_name
+        FROM staff_information t1 INNER JOIN designation t2 WHERE t1.fk_designation_id=t2.designation_id AND t1.staff_status='Active';`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -18,16 +57,12 @@ module.exports.getAllStaff = () => {
                     return resolve('Error Message');
                 }
             }
-
+            connection.release();
         });
-    }).catch((error) => {
-        console.error(error);
-        return error
     });
 };
 module.exports.getStaffByStaffId = (staff_id) => {
     return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, fk_designation_id,staff_number, staff_mobile, staff_remarks, fk_staff_type 
                  FROM staff_information WHERE staff_id = ?;`, [staff_id], (err, results) => {
             if (err) {
@@ -40,12 +75,25 @@ module.exports.getStaffByStaffId = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-
+            connection.release();
         });
-
-    }).catch((error) => {
-        console.error(error);
-        return error
+    });
+};
+module.exports.deleteStaffByStaffId = (staff_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`UPDATE staff_information SET staff_status='Inactive' WHERE staff_id=?`, [staff_id], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            connection.release();
+        });
     });
 };
 module.exports.updateStaffByStaffId = (data) => {
