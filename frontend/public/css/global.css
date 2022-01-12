@@ -336,3 +336,179 @@ caption {
     margin-top: 5px;
     margin-bottom: 10px;
 }
+
+
+/* ================================================================= Dashboards =======================================================*/
+
+.dashboard-item {
+    height: 0%;
+}
+
+.list-group {
+    height: calc(100% - 50px);
+    border-radius: 0 0 6px 6px;
+}
+
+#list-group-report {
+    height: calc(100% - 50px);
+    border-radius: 0 0 6px 6px;
+}
+
+.list-group>.list-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+.list-group>.list-item:not(:first-child) {
+    border-top: 1px solid white
+}
+
+.list-item {
+    min-height: 60px;
+    color: #15343F;
+    background: #D0D2D6;
+    font-size: 1em;
+    font-weight: bold;
+    transition: .4s;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.list-item:hover {
+    color: white;
+    background: #22404F;
+}
+
+#module-info-item {
+    transition: 1s;
+}
+
+.report-item-wrap p {
+    color: #15343F;
+    text-align: left;
+}
+
+.report-item-wrap:hover .report-item-title {
+    color: white
+}
+
+.report-item-wrap:hover .report-item-desc {
+    color: white
+}
+
+.report-item-title {
+    font-size: 1em;
+}
+
+.report-item-desc {
+    font-size: .6em;
+    font-weight: lighter;
+}
+
+.download-button {
+    background-color: #15343F;
+    color: #ffffff;
+    height: 65%;
+    border: none;
+    border-radius: 3px;
+    font-size: .7em;
+}
+
+#teaching-assignment-title {
+    height: 30%
+}
+
+#teaching-assignment-list {
+    height: 60px;
+    margin: auto;
+    position: relative;
+    top: -7px;
+    padding: 0;
+    width: 70%;
+    text-align: center;
+}
+
+.teaching-assignment-list-item {
+    color: #15343F;
+    font-size: .8em;
+    font-weight: lighter;
+}
+
+a {
+    text-decoration: none;
+}
+
+#dashboard-profile {
+    height: 100%;
+    background-color: #BDC4D2;
+}
+
+#dashboard-profile-icon {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px
+}
+
+#dashboard-info {
+    text-align: center;
+    padding: 15%;
+    color: #15343F;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.dashboard-info-name,
+.dashboard-info-designation,
+.dashboard-info-email {
+    margin-top: 2px;
+}
+
+#dashboard-button {
+    margin-top: 5px;
+    font-size: 11px;
+}
+
+.dashboard-info-slots {
+    margin-top: 20px;
+}
+
+#dashboard-button-bottom {
+    margin-top: 40px;
+    font-size: 11px;
+}
+
+.dashboard-info-slots .table {
+    background-color: #E9E9E9;
+    margin-top: 5px;
+}
+
+.dashboard-info-slots .table th {
+    margin-top: 10px;
+    background-color: #969696;
+    color: white;
+}
+
+#dashboard-module-maintenance {
+    padding: 10%;
+    background-color: #BDC4D2;
+}
+
+#dashboard-module-maintenance .title {
+    color: #FF0000;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+#dashboard-module-maintenance table {
+    background-color: white;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+#dashboard-module-maintenance table th {
+    background-color: #15343F;
+    color: white;
+}
+
+#dashboard-module-maintenance .table {}

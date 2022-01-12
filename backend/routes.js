@@ -5,12 +5,13 @@ const uploadsController = require("./controllers/uploadsController");
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
+
 //DECLARE MULTER CONFIGURATIONS--------------------------------
 //declare where to store incoming files
 //this stores profile pictures
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads/profile_picture');
+        cb(null, '../frontend/profile_picture');
     },
     filename: function (req, file, cb) {
         cb(null, `${req.body.name}_${new Date().valueOf()}_${file.originalname}`);
@@ -152,5 +153,6 @@ exports.appRoute = router => {
     router.get('/uploads/reports/excel/', getFields.none(), uploadsController.getAllReport)
     router.get('/uploads/reports/excel/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
     router.get('/uploads/reports/excel/file/id', getFields.none(), uploadsController.getReportByID)
-    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
+    router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
+    router.get('/reports/download/:file_id',uploadsController.downloadFile)
 }
