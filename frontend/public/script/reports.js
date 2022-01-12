@@ -1,6 +1,6 @@
 const base_url = 'http://localhost:8080'
-function downloadReport(file_id) {
-    window.open(base_url+'/reports/download/'+file_id, '_blank')
+function downloadReport(file_id, filename) {
+    window.open(`${base_url}/reports/download/${file_id}/${filename}`, '_blank')
 };
 function getAllReports() {
     axios.get(base_url + '/uploads/reports/excel/').then((response) => {
@@ -22,7 +22,7 @@ function getAllReports() {
                 <td>${new Intl.DateTimeFormat('default', options).format(date)}</td>
                 <td>${response.data[i].file_remarks}</td>
                 <td>
-                    <a class="btn btn-outline-light" id="download-button" onclick= downloadReport('${response.data[i].file_id}') role="button">Download</a>
+                    <a class="btn btn-outline-light" id="download-button" onclick= downloadReport('${response.data[i].file_id}','${response.data[i].filename}') role="button">Download</a>
                 </td>
                 </tr>`)
         }

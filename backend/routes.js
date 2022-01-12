@@ -149,5 +149,5 @@ exports.appRoute = router => {
     router.get('/uploads/reports/excel/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
     router.get('/uploads/reports/excel/file/id', getFields.none(), uploadsController.getReportByID)
     router.put('/uploads/reports/excel/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
-    router.get('/reports/download/:file_id',uploadsController.downloadFile)
+    router.get('/reports/download/:file_id/:filename',uploadsController.downloadFile)
 }
