@@ -117,7 +117,7 @@ async function generateExistingPreference(){
             const preference = data[index];
             let choice = index + 1;
             console.log(preference.module);
-            if (preference.module != "") {
+            if (preference.module != null) {
                 $("#choice-"+choice).val(preference.module)
             }
             if (preference.module_coordinator) {

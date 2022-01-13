@@ -10,16 +10,100 @@
     <title>Maintenance System</title>
 
     <!-- Online scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Offline scripts -->
-    <link href="admincss/navbar.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/global.css">
-    <link rel="stylesheet" href="../public/css/adminmaintenancesystem.css">
+    <link href="/admincss/navbar.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
+    <script>
+        function deleteStaffById(element) {
+            var staff_id = $(element).attr("data-staff-id")
 
+            if (confirm("This will remove this staff with staff id: " + staff_id) == true) {
+                console.log("bye");
+                axios.put('http://localhost:8080/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
+                    window.alert("Successfully Deleted!")
+                    getStaffandAppend();
+                }).catch((e) => {
+                    console.log(e);
+                })
+            } else {
+            }
+        }
+        function getStaffandAppend() {
+            $('#staff-row-table').empty();
+            axios.get('http://localhost:8080/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
+                if (response.status == 200) {
+                    var rows = response.data
+                    var html;
+                    for (let i = 0; i < rows.length; i++) {
+                        console.log(i);
+                        html += `<tr class="border-bottom border-white">
+                                        <td>${rows[i].staff_id}</td>
+                                        <td>${rows[i].staff_name}</td>
+                                        <td>0</td>
+                                        <td>3</td>
+                                        <td>0</td>
+                                        <td></td>
+                                        <td class="text-end">
+                                            <a  class="btn btn-primary view-staff" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-staff-id="${rows[i].staff_id}" href="#"><div>View</div></a>
+                                        </td>
+                                        <td class="text-end">
+                                            <div>Edit</div>
+                                        </td>
+                                        <td class="text-end">
+                                            <a  class="btn btn-primary view-staff" onclick="deleteStaffById(this)" data-staff-id="${rows[i].staff_id}" href="#"> <div >Delete</div></a>
+                                        </td>
+                                    </tr>`
+                    }
+                    /*   window.location.href = "./home.html" */
+                    /* const accessToken = response.data.accessToken;
+                    storeAccessTokenInLocalStorage(accessToken); */
+                    $('#staff-row-table').append(html).then(appendStaffFormValues(rows))
+                    //fill in staff-inf-edit modal values
+                }
+            }).catch((error) => {
+                $("#error_message_content").text('Invalid Login credientals, please try again.')
+                $("#error_message").css("display", "block");
+            });
+        }
+        function appendStaffFormValues(rows) {
+            $('.view-staff').on('click', function () {
+                console.log("viewing");
+                var index = $('.view-staff').index(this);
+                //  var dataId = $(this).attr("data-staff-id")
+                console.log($('.view-staff').length);
+                console.log(index);
+                console.log(rows[index]);
+                $('#staff-id-edit-input').val(rows[index].staff_id)
+                $('#staff-name-edit-input').val(rows[index].staff_name)
+                $('#staff-abbrv-edit-input').val(rows[index].staff_abbrv)
+                $('#staff-type-edit-input').val(rows[index].fk_staff_type)
+                $('#staff-designation-edit-input').val(rows[index].designation_name)
+                $('#staff-email-edit-input').val(rows[index].staff_email)
+                $('#staff-contact-edit-input').val(rows[index].staff_number)
+                $('#staff-mobile-edit-input').val(rows[index].staff_mobile)
+                $('#staff-remarks-edit-input').val(rows[index].staff_remarks)
+            })
+        }
+        $(document).ready(() => {
+            $('#btn-module, #btn-staff').click(function () {
+                $('#btn-module, #btn-staff').css("background", "white");
+                $('#btn-module, #btn-staff').removeClass('active');
+                $(this).css("background", "blue");
+                $(this).addClass('active');
+            });
+            getStaffandAppend()
+        })
+    </script>
 </head>
 
 
@@ -32,7 +116,9 @@
             <div id="navbar-card" class="container col-4 col-lg-2 ">
                 <div id="navbar-brand" class="navbar-brand row">
                     <div class="col-3">
-                        <img id="profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" alt="Cinque Terre">
+                        <img id="profile-icon"
+                            src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
+                            alt="Cinque Terre">
                     </div>
                     <div id="msg-wrap" class="col-9 ">
                         <p>Welcome,</p>
@@ -48,8 +134,9 @@
             <!-- Notification Bell -->
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
-                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false"
+                    aria-controls="notification-bell">
+                    <img id="notifications" src="/SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -81,85 +168,296 @@
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
-                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
-                        <!-- Page Link -->
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
+                        <li class="nav-item active">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Dashboard.svg" class="icons"></img>
+                                        <div class="navbar-title">Dashboard</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li id="maintenence-system">
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Maintenance.svg" class="icons"></img>
+                                        <div class="navbar-title">Maintence System</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                         <li class="nav-item">
-                            <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img>
+                                        <div class="navbar-title">Teaching
+                                            Assignment</div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Exam Matters.svg" class="icons"></img>
+                                        <div class="navbar-title">Exam Matters</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
 
-                        <!-- Page Link -->
-                        <li id="nav-item active">
-                            <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Maintenance System </span>
-                        </li>
-
-                        <!-- Page Link -->
                         <li class="nav-item">
-                            <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Teaching Assignment System</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Exam Matters
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                Announcements   
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="reports.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                            <a href="#" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row">
+                                        <img src="/SVG Icons/Announcements.svg" class="icons"></img>
+                                        <div class="navbar-title">Announcements</div>
+                                    </div>
+                                </div>
                             </a>
                         </li>
 
                     </ul>
                 </div>
             </div>
-
             <!-- Page Content -->
             <div id="page-content" class="col-10 py-3">
+                <!-- Modal -->
+                <form action="http://localhost:8080/api/admin/maintenance/staff/create" method="POST">
+                    <div class="modal fade" id="createStaffModal" tabindex="-1" aria-labelledby="createStaffModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header row">
+                                    <h3 class="col-3">Staff Information</h3>
+                                    <div class="col-8">Basic staff information is<span style="color:red">
+                                            required</span></div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Id:</label>
+                                        <input class="staff-info-input" type="text" id="staff-id"
+                                            name="staff-id-input"><br><br>
+                                        <span class="required-indicator">*</span>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Name:</label>
+                                        <input class="staff-info-input" type="text" id="staff-name-input"
+                                            name="staff-name-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Password:</label>
+                                        <input class="staff-info-input" type="text" id="staff-password-input"
+                                            name="staff-password-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Abbrv:</label>
+                                        <input class="staff-info-input" type="text" id="staff-abbrv-input"
+                                            name="staff-abbrv-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Type:</label>
+                                        <select name="staff-type-input" id="staff-type-input" class="staff-info-input">
+                                            <option value="FT">FT</option>
+                                            <option value="AL">AL</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Schedule Type:</label>
+                                        <select name="staff-schedule-input" id="staff-schedule-input"
+                                            class="staff-info-input">
+                                            <option value="PET">PET</option>
+                                            <option value="CET">CET</option>
+                                            <option value="PETCET">PETCET</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Designation:</label>
+                                        <select name="staff-designation-input" id="staff-designation-input"
+                                            class="staff-info-input">
+                                            <option value="1">Admin</option>
+                                            <option value="2">Part-Time Lecturer</option>
+                                            <option value="3">Lecturer</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Email:</label>
+                                        <input class="staff-info-input" type="text" id="staff-email-input"
+                                            name="staff-email-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Contact Number:</label>
+                                        <input class="staff-info-input" type="number" id="staff-contact-input"
+                                            name="staff-contact-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Mobile Number:</label>
+                                        <input class="staff-info-input" type="number" id="staff-mobile-input"
+                                            name="staff-mobile-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper-remark">
+                                        <label class="staff-info-label" for="fname">Remarks:</label>
+                                        <textarea id="staff-remarks-input" name="staff-remarks-input" rows="4"
+                                            cols="50">
+                         </textarea>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff status (Active or
+                                            Inactive):</label>
+                                        <select name="staff-status-input" id="staff-status-input"
+                                            class="staff-info-input">
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff account role ):</label>
+                                        <select name="staff-role-input" id="staff-role-input"
+                                            class="staff-info-input">
+                                            <option value="1">admin</option>
+                                            <option value="2">lecturer</option>
+                                            <option value="3">exam_rep</option>
+                                            <option value="4">mod_coord</option>
+                                            <option value="5">admin_support</option>
+                                        </select><br><br>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" id="editStaffModal" tabindex="-1" aria-labelledby="editStaffModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div></div>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Staff Id:</label>
+                                    <input class="staff-info-input" type="text" id="staff-id-edit-input"
+                                        name="staff-id-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Staff Name:</label>
+                                    <input class="staff-info-input" type="text" id="staff-name-edit-input"
+                                        name="staff-name-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Staff Abbrv:</label>
+                                    <input class="staff-info-input" type="text" id="staff-abbrv-edit-input"
+                                        name="staff-abbrv-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Staff Type:</label>
+                                    <select name="staff-type-edit-input" id="staff-type-edit-input"
+                                        class="staff-info-input">
+                                        <option value="FT">FT</option>
+                                        <option value="AL">AL</option>
+
+                                    </select><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Designation:</label>
+                                    <input class="staff-info-input" type="text" id="staff-designation-edit-input"
+                                        name="staff-designation-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Email:</label>
+                                    <input class="staff-info-input" type="text" id="staff-email-edit-input"
+                                        name="staff-email-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Contact Number:</label>
+                                    <input class="staff-info-input" type="text" id="staff-contact-edit-input"
+                                        name="staff-contact-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper">
+                                    <label class="staff-info-label" for="fname">Mobile Number:</label>
+                                    <input class="staff-info-input" type="text" id="staff-mobile-edit-input"
+                                        name="staff-mobile-edit-input"><br><br>
+                                </div>
+                                <div class="staff-info-edit-wrapper-remark">
+                                    <label class="staff-info-label" for="fname">Remarks:</label>
+                                    <textarea id="staff-remarks-edit-input" name="staff-remarks-edit-input " rows="4"
+                                        cols="50">
+
+                                    </textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div id="content-view-admin" class="container">
 
                     <!-- Page Tabs -->
                     <div id="tabs">
-                        <a href="adminmaintenancesystem.html"><button type="button" class="btn btn-secondary btn-sm">Module</button></a>
-                        <a href="adminstaffmaintenancesystem.html"><button type="button" class="btn btn-primary btn-sm">Staff</button></a>
+                        <a class="button-link" href="/maintenance"><button id="btn-module" type="button"
+                                class="btn btn-primary btn-sm">Module</button></a>
+                        <a class="button-link" href="/maintenance/staff-info"><button id="btn-staff" type="button"
+                                class="btn btn-secondary btn-sm active">Staff</button></a>
                     </div>
 
                     <!-- Content Header -->
                     <div id="content-header-admin">
                         <p>Staff Maintenance System</p>
-
                         <div class="form-group row">
-                            <label for="select-section" class="col-sm-2 col-form-label">Select Section</label>
+                            <label for="select-section" class="col-sm-2 col-form-label">Select Section:</label>
                             <div class="col">
-                                <select class="form-select-sm col-2" id="select-section">
-                                    <option selected>Section</option>
+                                <!-- <div class="col-9" style="background:yellow"> -->
+                                <select class="form-select" id="select-section">
+                                    <option selected>ABCD</option>
                                     <option>1</option>
                                     <option>2</option>
                                     <option>3</option>
                                     <option>4</option>
-                                  </select>
+                                    <img src="/SVG Icons/Chevron Down.svg" class="filter-icons"></img>
+                                </select>
+                                <!--   </div> -->
+                                <!-- <div class="col-3" style="background:red">
+                                      <img src="/SVG Icons/Chevron Down.svg" class="filter-icons"></img>
+                                </div> -->
+                            </div>
+                            <label for="select-section" class="col-sm-2 col-form-label">Order By:</label>
+                            <div class="col">
+                                <select class="form-select" id="select-section">
+                                    <option selected>Date</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                            <div class="col filter-button-wrap">
+                                <button data-bs-toggle="modal" data-bs-target="#createStaffModal" class="filter-button">
+                                    Create Staff</button>
+                            </div>
+                            <div class="col filter-button-wrap">
+                                <button class="filter-button"> Module Preferences</button>
                             </div>
                         </div>
-
                         <div class="line"></div>
                     </div>
 
@@ -174,7 +472,7 @@
                                     <th scope="col" class="col-2">Staff ID</th>
                                     <th scope="col" class="col-2">Staff Name</th>
                                     <th scope="col" class="col-1">Lecture</th>
-                                    <th scope="col" class="col-1">Tutotrial</th>
+                                    <th scope="col" class="col-1">Tutorial</th>
                                     <th scope="col" class="col-1">Practical</th>
                                     <th scope="col" class="col-1"></th>
                                     <th></th>
@@ -182,60 +480,7 @@
                                     <th scope="col" class="col-1"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="border-bottom border-white">
-                                    <td>S12345</td>
-                                    <td>Staff Name 1234</td>
-                                    <td>0</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td></td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Delete</div>
-                                    </td>
-                                </tr>
-
-                                <tr class="border-bottom border-white">
-                                    <td>S12345</td>
-                                    <td>Staff Name 1234</td>
-                                    <td>0</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td></td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Delete</div>
-                                    </td>
-                                </tr>
-
-                                <tr class="border-bottom border-white">
-                                    <td>S12345</td>
-                                    <td>Staff Name 1234</td>
-                                    <td>0</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td></td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Delete</div>
-                                    </td>
-                                </tr>
+                            <tbody id="staff-row-table">
                             </tbody>
 
                         </table>

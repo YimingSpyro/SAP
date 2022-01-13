@@ -13,6 +13,7 @@ module.exports.login = ([staff_id, password]) => {
                         reject(err);
                     } else {
                         if (rows.length == 1) {
+                            console.log(rows);
                             resolve(rows)
                         } else {
                             reject("Invalid Login");

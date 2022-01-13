@@ -17,14 +17,29 @@ app.get("/home", (req, res) => {
 app.get("/test", (req, res) => {
     res.sendFile("/public/home.html", { root: __dirname });
 }); */
+app.get("/login", (req, res) => {
+    res.sendFile("/public/login.html", { root: __dirname });
+});
+app.get("/home", (req, res) => {
+    res.sendFile("/public/home.html", { root: __dirname });
+});
 app.get("/profile", (req, res) => {
     res.sendFile("/view/personalinformation.html", { root: __dirname });
 });
 app.get("/teaching-requirement/", (req, res) => {
     res.sendFile("/view/teachrequirement.html", { root: __dirname });
 });
-app.get("/module-preference", (req, res) => {
-    res.sendFile("/view/choosemodulepreference.html", { root: __dirname });
+app.get("/maintenance", (req, res) => {
+    res.sendFile("/view/adminmaintenancesystem.html", { root: __dirname });
+});
+app.get("/maintenance/staff-info", (req, res) => {
+    res.sendFile("/view/adminstaffmaintenancesystem.html", { root: __dirname });
+});
+app.get("/admin-dashboard", (req, res) => {
+    res.sendFile("/view/admindashboard.html", { root: __dirname });
+});
+app.get("/change-password", (req, res) => {
+    res.sendFile("/view/changepassword.html", { root: __dirname });
 });
 
 app.get("/profile-picture/:pfp_id", (req, res) => {
@@ -32,6 +47,9 @@ app.get("/profile-picture/:pfp_id", (req, res) => {
 });
 app.get("/reports", (req, res) => {
     res.sendFile("/view/reports.html", { root: __dirname });
+});
+app.get("/module-preference", (req, res) => {
+    res.sendFile("/view/choosemodulepreference.html", { root: __dirname });
 });
 app.get("/module-assignment", (req, res) => {
     res.sendFile("/view/viewassignedmodule.html", { root: __dirname });
