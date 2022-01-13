@@ -28,6 +28,25 @@ const config = require('../config/config');
 const pool = require('../config/database')
 
 
+/* ==== SECTION API ==== */
+exports.getAllSections = async (req, res, next) => {
+    try {
+        let results = await staffManager.getAllSections();
+        console.log('Get Staff Personal Information', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+
 /* ==== PERSONAL INFORMATION API ==== */
 
 // API GET All Staff Data
@@ -316,7 +335,41 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
 
 /* ==== MODULES API ==== */
 
+// API Get Modules by mod code
+exports.getModuleBySection = async (req, res, next) => {
+    let section = req.query.section;
+    try {
+        let results = await staffManager.getModuleBySection(section);
+        console.log('Get Module by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
 
+};
+exports.getModuleByCode = async (req, res, next) => {
+    let mod_code = req.query.section;
+    try {
+        let results = await staffManager.getModuleByCode(mod_code);
+        console.log('Get Module by ID', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API Get All Modules
 exports.getAllModules = async (req, res, next) => {
     try {
@@ -459,6 +512,24 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
 /* ==== MODULE ASSIGNMENT API ==== */
 
 
+// API Get Assigned Modules by module
+exports.getAssignedModulesByModule = async (req, res, next) => {
+    let mod_code = req.query.mod_code;
+    try {
+        let results = await staffManager.getAssignedModulesByModule(mod_code);
+        console.log('Get Staff Assigned Module', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API Get Assigned Modules by Staff ID
 exports.getAssignedModulesByID = async (req, res, next) => {
     let staff_id = req.params.id;
@@ -520,3 +591,24 @@ exports.unassignModuleByID = async (req, res, next) => {
 
 };
 
+
+/* ==== TEACHING ASSIGNMENT SYSTEM ==== */
+
+// API Get Staff By Section
+exports.getStaffBySection = async (req, res, next) => {
+    let section = req.query.section;
+    try {
+        let results = await staffManager.getStaffBySection(section);
+        console.log('Get Staff Assigned Module', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
