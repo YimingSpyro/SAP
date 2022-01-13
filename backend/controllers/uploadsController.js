@@ -272,8 +272,9 @@ module.exports.updateReport = async (req, res) => {
 module.exports.downloadFile = async (req, res) => {
   console.log('Entering Download File')
   let location = req.params.file_id
+  let filename = req.params.filename
   let base_path = `.././backend/uploads/report_samples/${location}/`
-  res.status(200).download(base_path)
+  res.status(200).download(base_path,filename )
 }
 //END APIS FOR REPORTS----------------------------------
 

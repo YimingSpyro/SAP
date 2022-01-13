@@ -6,10 +6,14 @@ app.use(express.static('public'))
 app.use(express.static('profile_picture'))
 app.use(cookieparser());
 const myPort = 8000
-/* app.get("/login", (req, res) => {
-    res.sendFile("/public/login.html", { root: __dirname });
+app.get("/login", (req, res) => {
+    res.sendFile("/view/login.html", { root: __dirname });
+});
+app.get("/home", (req, res) => {
+    res.sendFile("/view/home.html", { root: __dirname });
 });
 
+/* 
 app.get("/test", (req, res) => {
     res.sendFile("/public/home.html", { root: __dirname });
 }); */
@@ -54,5 +58,5 @@ app.get("/teaching-assignment", (req, res) => {
     res.sendFile("/view/adminteachingassignmentsystem.html", { root: __dirname });
 });
 app.listen(myPort,() => {
-    console.log(`Client Server started and accessible via port ${myPort}`);
+    console.log(`Client Server started and accessible via port ${myPort}`)
 });
