@@ -6,6 +6,10 @@
 
 #content-item-admin {}
 
+.modal-title {
+    color: #22404F;
+}
+
 .form-group {
     color: #22404F;
     margin-top: 15px;
@@ -13,7 +17,6 @@
 }
 
 button {
-    margin-top: 40px;
     margin-right: 75px;
 }
 
@@ -38,4 +41,8 @@ button {
 
 button {
     margin-right: 0;
+}
+
+.staff-table {
+    height: 500px;
 }
