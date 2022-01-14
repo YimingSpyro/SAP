@@ -5,7 +5,18 @@
 }
 
 #content-item-admin {}
-
+#admin-table{
+    table-layout: fixed;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+#admin-table.table>:not(caption)>*>* {
+    
+}
+.email-col{
+    font-size: .8em;
+}
 .form-group {
     display: flex;
     justify-content: center;

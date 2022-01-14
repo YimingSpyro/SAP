@@ -24,9 +24,13 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
     <script>
+        function copyText(element){
+            element.setAttribute('fill', '#000000');
+            var copyText = element.previousElementSibling.textContent;
+            navigator.clipboard.writeText(copyText);
+        }
         function deleteStaffById(element) {
             var staff_id = $(element).attr("data-staff-id")
-
             if (confirm("This will remove this staff with staff id: " + staff_id) == true) {
                 console.log("bye");
                 axios.put('http://localhost:8080/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
@@ -35,7 +39,6 @@
                 }).catch((e) => {
                     console.log(e);
                 })
-            } else {
             }
         }
         function getStaffandAppend() {
@@ -45,22 +48,18 @@
                     var rows = response.data
                     var html;
                     for (let i = 0; i < rows.length; i++) {
-                        console.log(i);
                         html += `<tr class="border-bottom border-white">
                                         <td>${rows[i].staff_id}</td>
                                         <td>${rows[i].staff_name}</td>
-                                        <td>0</td>
-                                        <td>3</td>
-                                        <td>0</td>
+                                        <td class="email-col"><span>${rows[i].staff_email}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img><br><span>${rows[i].staff_mobile}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img></td>
+                                        <td>${rows[i].designation_name}</td>
+                                        <td>${rows[i].section_name}</td>
                                         <td></td>
                                         <td class="text-end">
-                                            <a  class="btn btn-primary view-staff" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-staff-id="${rows[i].staff_id}" href="#"><div>View</div></a>
+                                            <a  class="btn btn-primary view-staff" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-staff-id="${rows[i].staff_id}" href="#"><div>View/Edit</div></a>
                                         </td>
                                         <td class="text-end">
-                                            <div>Edit</div>
-                                        </td>
-                                        <td class="text-end">
-                                            <a  class="btn btn-primary view-staff" onclick="deleteStaffById(this)" data-staff-id="${rows[i].staff_id}" href="#"> <div >Delete</div></a>
+                                            <a  class="btn btn-primary delete-staff" onclick="deleteStaffById(this)" data-staff-id="${rows[i].staff_id}" href="#"> <div >Delete</div></a>
                                         </td>
                                     </tr>`
                     }
@@ -77,12 +76,10 @@
         }
         function appendStaffFormValues(rows) {
             $('.view-staff').on('click', function () {
-                console.log("viewing");
+
                 var index = $('.view-staff').index(this);
                 //  var dataId = $(this).attr("data-staff-id")
-                console.log($('.view-staff').length);
-                console.log(index);
-                console.log(rows[index]);
+
                 $('#staff-id-edit-input').val(rows[index].staff_id)
                 $('#staff-name-edit-input').val(rows[index].staff_name)
                 $('#staff-abbrv-edit-input').val(rows[index].staff_abbrv)
@@ -469,13 +466,12 @@
                             <caption>Showing 3 Results</caption>
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-2">Staff ID</th>
-                                    <th scope="col" class="col-2">Staff Name</th>
-                                    <th scope="col" class="col-1">Lecture</th>
-                                    <th scope="col" class="col-1">Tutorial</th>
-                                    <th scope="col" class="col-1">Practical</th>
+                                    <th scope="col" class="col-1">Staff ID</th>
+                                    <th scope="col" class="col-1">Staff Name</th>
+                                    <th scope="col" class="col-2">Email</th>
+                                    <th scope="col" class="col-1">Designation</th>
+                                    <th scope="col" class="col-1">Section</th>
                                     <th scope="col" class="col-1"></th>
-                                    <th></th>
                                     <th scope="col" class="col-1"></th>
                                     <th scope="col" class="col-1"></th>
                                 </tr>

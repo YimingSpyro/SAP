@@ -7,10 +7,10 @@ app.use(express.static('profile_picture'))
 app.use(cookieparser());
 const myPort = 8000
 app.get("/login", (req, res) => {
-    res.sendFile("/view/login.html", { root: __dirname });
+    res.sendFile("/public/login.html", { root: __dirname });
 });
 app.get("/home", (req, res) => {
-    res.sendFile("/view/home.html", { root: __dirname });
+    res.sendFile("/public/home.html", { root: __dirname });
 });
 
 /* 
