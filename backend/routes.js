@@ -172,4 +172,6 @@ exports.appRoute = router => {
     // TEACHING ASSIGNMENT SYSTEM
     router.get('/api/tas/section/', staffController.getStaffBySection);
 
+
+    router.get('/api/nav-items', authController.getNavItems);
 }
