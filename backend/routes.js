@@ -147,6 +147,7 @@ exports.appRoute = router => {
     //STAFF-INFO
     router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
+    router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
 
     //PROFILE PICTURE

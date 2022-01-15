@@ -23,23 +23,30 @@
     <link href="/admincss/navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
+    <script src="/script/notifications.js"></script>
     <script>
-        function copyText(element){
+        function copyText(element) {
             element.setAttribute('fill', '#000000');
             var copyText = element.previousElementSibling.textContent;
             navigator.clipboard.writeText(copyText);
         }
         function deleteStaffById(element) {
             var staff_id = $(element).attr("data-staff-id")
-            if (confirm("This will remove this staff with staff id: " + staff_id) == true) {
-                console.log("bye");
-                axios.put('http://localhost:8080/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
-                    window.alert("Successfully Deleted!")
-                    getStaffandAppend();
-                }).catch((e) => {
-                    console.log(e);
+            customConfirm("This will remove this staff with staff id: " + staff_id,
+                () => {
+                    axios.put('http://localhost:8080/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
+                        $('#custom-reconfirm').modal('hide');
+                        customMessage("Successfully Deleted!")
+                        getStaffandAppend();
+                    }).catch((e) => {
+                        customMessage("Unable to delete")
+                        console.log(e);
+                    })
+
+                },
+                () => {
+
                 })
-            }
         }
         function getStaffandAppend() {
             $('#staff-row-table').empty();
@@ -56,10 +63,10 @@
                                         <td>${rows[i].section_name}</td>
                                         <td></td>
                                         <td class="text-end">
-                                            <a  class="btn btn-primary view-staff" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-staff-id="${rows[i].staff_id}" href="#"><div>View/Edit</div></a>
+                                            <a  class="btn btn-primary view-staff" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-staff-id="${rows[i].staff_id}"><div>View/Edit</div></a>
                                         </td>
                                         <td class="text-end">
-                                            <a  class="btn btn-primary delete-staff" onclick="deleteStaffById(this)" data-staff-id="${rows[i].staff_id}" href="#"> <div >Delete</div></a>
+                                            <a  class="btn btn-primary delete-staff" onclick="deleteStaffById(this)" data-staff-id="${rows[i].staff_id}" > <div >Delete</div></a>
                                         </td>
                                     </tr>`
                     }
@@ -76,22 +83,53 @@
         }
         function appendStaffFormValues(rows) {
             $('.view-staff').on('click', function () {
-
                 var index = $('.view-staff').index(this);
                 //  var dataId = $(this).attr("data-staff-id")
-
                 $('#staff-id-edit-input').val(rows[index].staff_id)
                 $('#staff-name-edit-input').val(rows[index].staff_name)
                 $('#staff-abbrv-edit-input').val(rows[index].staff_abbrv)
                 $('#staff-type-edit-input').val(rows[index].fk_staff_type)
-                $('#staff-designation-edit-input').val(rows[index].designation_name)
+                $('#staff-schedule-edit-input').val(rows[index].schedule_id)
+                $('#staff-designation-edit-input').val(rows[index].designation_id)
                 $('#staff-email-edit-input').val(rows[index].staff_email)
-                $('#staff-contact-edit-input').val(rows[index].staff_number)
-                $('#staff-mobile-edit-input').val(rows[index].staff_mobile)
+                $('#staff-contact-edit-input').val((rows[index].staff_number).replace(/[^0-9]/g, ''))
+                $('#staff-mobile-edit-input').val((rows[index].staff_mobile).replace(/[^0-9]/g, ''))
                 $('#staff-remarks-edit-input').val(rows[index].staff_remarks)
+                $('#staff-status-edit-input').val(rows[index].staff_status)
+                $('#update-staff-submit').attr("data-staff-id",rows[index].staff_id)
             })
         }
+        function updateStaffById(element) {
+            var staff_id = $(element).attr("data-staff-id")
+            var data = {
+               staff_id: $('#staff-id-edit-input').val(),
+               staff_name: $('#staff-name-edit-input').val(),
+               staff_abbrv: $('#staff-abbrv-edit-input').val(),
+               staff_type: $('#staff-type-edit-input').val(),
+               staff_schedule: $('#staff-schedule-edit-input').val(),
+               staff_designation: $('#staff-designation-edit-input').val(),
+               staff_email: $('#staff-email-edit-input').val(),
+               staff_contact: $('#staff-contact-edit-input').val(),
+               staff_mobile: $('#staff-mobile-edit-input').val(),
+               staff_remarks: $('#staff-remarks-edit-input').val(),
+               staff_status: $('#staff-status-edit-input').val(),
+            }
+            axios.put('http://localhost:8080/api/admin/maintenance/staff/update/' + staff_id,data)
+            .then((response) => {
+                $('#editStaffModal').modal('hide');
+                customMessage("Successfully Updated!")
+                getStaffandAppend();
+            }).catch((e) => {
+                customMessage("Unable to update")
+                console.log(e);
+            })
+        }
+        function clearModal() {
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        }
         $(document).ready(() => {
+
             $('#btn-module, #btn-staff').click(function () {
                 $('#btn-module, #btn-staff').css("background", "white");
                 $('#btn-module, #btn-staff').removeClass('active');
@@ -318,8 +356,7 @@
                                     </div>
                                     <div class="staff-info-edit-wrapper">
                                         <label class="staff-info-label" for="fname">Staff account role ):</label>
-                                        <select name="staff-role-input" id="staff-role-input"
-                                            class="staff-info-input">
+                                        <select name="staff-role-input" id="staff-role-input" class="staff-info-input">
                                             <option value="1">admin</option>
                                             <option value="2">lecturer</option>
                                             <option value="3">exam_rep</option>
@@ -338,77 +375,151 @@
                     </div>
                 </form>
                 <!-- Modal -->
-                <div class="modal fade" id="editStaffModal" tabindex="-1" aria-labelledby="editStaffModalLabel"
-                    aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <div></div>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff Id:</label>
-                                    <input class="staff-info-input" type="text" id="staff-id-edit-input"
-                                        name="staff-id-edit-input"><br><br>
+                    <div class="modal fade" id="editStaffModal" tabindex="-1" aria-labelledby="editStaffModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header row">
+                                    <h3 class="col-3">Staff Information</h3>
+                                    <div class="col-8">Basic staff information is<span style="color:red">
+                                            required</span></div>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff Name:</label>
-                                    <input class="staff-info-input" type="text" id="staff-name-edit-input"
-                                        name="staff-name-edit-input"><br><br>
+                                <div class="modal-body">
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Id:</label>
+                                        <input class="staff-info-input" type="text" id="staff-id-edit-input"
+                                            name="staff-id-edit-input"><br><br>
+                                        <span class="required-indicator">*</span>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Name:</label>
+                                        <input class="staff-info-input" type="text" id="staff-name-edit-input"
+                                            name="staff-name-edit-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Password:</label>
+                                        <input class="staff-info-input" type="text" id="staff-password-edit-input"
+                                            name="staff-password-edit-input"
+                                            placeholder="Please specify the new password"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Abbrv:</label>
+                                        <input class="staff-info-input" type="text" id="staff-abbrv-edit-input"
+                                            name="staff-abbrv-edit-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff Type:</label>
+                                        <select name="staff-type-edit-input" id="staff-type-edit-input"
+                                            class="staff-info-input">
+                                            <option value="FT">FT</option>
+                                            <option value="AL">AL</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Schedule Type:</label>
+                                        <select name="staff-schedule-edit-input" id="staff-schedule-edit-input"
+                                            class="staff-info-input">
+                                            <option value="PET">PET</option>
+                                            <option value="CET">CET</option>
+                                            <option value="PETCET">PETCET</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Designation:</label>
+                                        <select name="staff-designation-edit-input" id="staff-designation-edit-input"
+                                            class="staff-info-input">
+                                            <option value="1">Admin</option>
+                                            <option value="2">Part-Time Lecturer</option>
+                                            <option value="3">Lecturer</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Email:</label>
+                                        <input class="staff-info-input" type="text" id="staff-email-edit-input"
+                                            name="staff-email-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Contact Number:</label>
+                                        <input class="staff-info-input" type="number" id="staff-contact-edit-input"
+                                            name="staff-contact-edit-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Mobile Number:</label>
+                                        <input class="staff-info-input" type="number" id="staff-mobile-edit-input"
+                                            name="staff-mobile-edit-input"><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper-remark">
+                                        <label class="staff-info-label" for="fname">Remarks:</label>
+                                        <textarea id="staff-remarks-edit-input" name="staff-remarks-edit-input" rows="4"
+                                            cols="50">
+                         </textarea>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff status (Active or
+                                            Inactive):</label>
+                                        <select name="staff-status-edit-input" id="staff-status-edit-input"
+                                            class="staff-info-input">
+                                            <option value="Active">Active</option>
+                                            <option value="Inactive">Inactive</option>
+                                        </select><br><br>
+                                    </div>
+                                    <div class="staff-info-edit-wrapper">
+                                        <label class="staff-info-label" for="fname">Staff account role ):</label>
+                                        <select name="staff-role-input" id="staff-role-input" class="staff-info-input">
+                                            <option value="1">admin</option>
+                                            <option value="2">lecturer</option>
+                                            <option value="3">exam_rep</option>
+                                            <option value="4">mod_coord</option>
+                                            <option value="5">admin_support</option>
+                                        </select><br><br>
+                                    </div>
                                 </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff Abbrv:</label>
-                                    <input class="staff-info-input" type="text" id="staff-abbrv-edit-input"
-                                        name="staff-abbrv-edit-input"><br><br>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button id="update-staff-submit" type="submit" onclick="updateStaffById(this)" class="btn btn-primary">Save changes</button>
                                 </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff Type:</label>
-                                    <select name="staff-type-edit-input" id="staff-type-edit-input"
-                                        class="staff-info-input">
-                                        <option value="FT">FT</option>
-                                        <option value="AL">AL</option>
-
-                                    </select><br><br>
-                                </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Designation:</label>
-                                    <input class="staff-info-input" type="text" id="staff-designation-edit-input"
-                                        name="staff-designation-edit-input"><br><br>
-                                </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Email:</label>
-                                    <input class="staff-info-input" type="text" id="staff-email-edit-input"
-                                        name="staff-email-edit-input"><br><br>
-                                </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Contact Number:</label>
-                                    <input class="staff-info-input" type="text" id="staff-contact-edit-input"
-                                        name="staff-contact-edit-input"><br><br>
-                                </div>
-                                <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Mobile Number:</label>
-                                    <input class="staff-info-input" type="text" id="staff-mobile-edit-input"
-                                        name="staff-mobile-edit-input"><br><br>
-                                </div>
-                                <div class="staff-info-edit-wrapper-remark">
-                                    <label class="staff-info-label" for="fname">Remarks:</label>
-                                    <textarea id="staff-remarks-edit-input" name="staff-remarks-edit-input " rows="4"
-                                        cols="50">
-
-                                    </textarea>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
-                </div>
                 <div id="content-view-admin" class="container">
+                    <div class="modal fade" id="custom-reconfirm" tabindex="-1" aria-labelledby="custom-reconfirm-modal"
+                        aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 id="custom-reconfirm-title">Message</h5>
+                                </div>
+                                <div class="row">
 
+                                    <div class="col modal-footer justify-content-center">
+                                        <button type="button" id="reconfirm-yes"
+                                            class="btn btn-primary ">Delete</button>
+                                    </div>
+                                    <div class="col modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="custom-message-success" tabindex="-1"
+                        aria-labelledby="custom-message-success-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 id="custom-message-title">Submitted</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary " data-bs-dismiss="modal"
+                                        onclick="clearModal()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- Page Tabs -->
                     <div id="tabs">
                         <a class="button-link" href="/maintenance"><button id="btn-module" type="button"
@@ -468,7 +579,7 @@
                                 <tr>
                                     <th scope="col" class="col-1">Staff ID</th>
                                     <th scope="col" class="col-1">Staff Name</th>
-                                    <th scope="col" class="col-2">Email</th>
+                                    <th scope="col" class="col-2">Email/Mobile</th>
                                     <th scope="col" class="col-1">Designation</th>
                                     <th scope="col" class="col-1">Section</th>
                                     <th scope="col" class="col-1"></th>
