@@ -1,6 +1,25 @@
 const config = require('../config/config');
 const pool = require('../config/database')
 
+// SECTION
+module.exports.getAllSections = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT section_name, fk_course_id FROM designation`, [], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            connection.release();
+        });
+    });
+};
+
 // PERSONAL INFORRATION
 module.exports.createStaff = (data,roles) => {
     return new Promise((resolve, reject) => {
@@ -45,13 +64,13 @@ module.exports.createStaff = (data,roles) => {
 };
 module.exports.getAllStaff = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email,staff_number, staff_mobile, staff_remarks, fk_staff_type ,designation_id, designation_name,section_name
+        pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email,staff_number, staff_mobile, staff_remarks,staff_status, fk_staff_type ,designation_id, designation_name,section_name,fk_schedule_id AS 'schedule_id'
         FROM staff_information t1 INNER JOIN designation t2 WHERE t1.fk_designation_id=t2.designation_id AND t1.staff_status='Active';`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -69,7 +88,6 @@ module.exports.getStaffByStaffId = (staff_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -86,7 +104,6 @@ module.exports.deleteStaffByStaffId = (staff_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -96,13 +113,15 @@ module.exports.deleteStaffByStaffId = (staff_id) => {
         });
     });
 };
-module.exports.updateStaffByStaffId = (data) => {
+module.exports.updateStaffByStaffId = (staff_id,data) => {
+    console.log(data);
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE staff_information 
-                     SET staff_name= ?, staff_abbrv = ?, staff_email = ?, staff_number = ?, staff_mobile = ?, staff_remarks = ? 
-                     WHERE staff_id = ?;`, data, (err, results) => {
+                     SET staff_name= ?, staff_abbrv = ?,fk_staff_type=?,fk_schedule_id=?,fk_designation_id=?, staff_email = ?, staff_number = ?, staff_mobile = ?, staff_remarks = ?,staff_status=? 
+                     WHERE staff_id = ${staff_id};`, data, (err, results) => {
             if (err) {
+                console.log("error");
                 reject(err);
             } else {
                 if (results) {
@@ -278,7 +297,48 @@ module.exports.updateTeachingRequirementRemarks = (data) => {
 };
 
 // MODULE 
+module.exports.getModuleBySection = (section) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT * FROM module WHERE fk_course_id = ?`, [section], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
 
+        });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
+module.exports.getModuleByCode = (mod_code) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT * FROM module WHERE mod_code = ?`, [mod_code], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
 module.exports.getAllModules = () => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
@@ -412,6 +472,30 @@ module.exports.updateModulePreferenceByID = (data) => {
 };
 
 // MODULE ASSIGNMENT
+module.exports.getAssignedModulesByModule = (mod_code) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.year_offered FROM mod_assign
+         INNER JOIN module
+         ON mod_assign.fk_mod_code = module.mod_code
+         WHERE fk_mod_code = ?;`, [mod_code], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
 module.exports.getAssignedModulesByID = (staff_id) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
@@ -474,6 +558,33 @@ module.exports.unassignModuleByID = (ma_id) => {
 
         });
 
+    }).catch((error) => {
+        console.error(error);
+        return error
+    });
+};
+
+
+//TAS
+module.exports.getStaffBySection = (section) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT staff_id, staff_name, fk_staff_type FROM staff_information
+        INNER JOIN designation
+        ON fk_designation_id = designation.designation_id
+        WHERE designation.section_name LIKE ?`, [section], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
     }).catch((error) => {
         console.error(error);
         return error
