@@ -182,23 +182,18 @@
                         <div class="line"></div>
                         <br>
                         <div class="row bd-highlight">
-                            <div class="col-2">
-                                <label for="select-section">Select Semester</label>
+                            <div class="col-2 align-self-center">
+                                <label for="select-section">Select Available Sheets</label>
                             </div>
-                            <div class="col">
+                            <div class="col-4">
                                 <select class="form-control form-select" id="select-section">
-                                    <option>No Years Selected</option>
+                                    <option>No Sheet Selected</option>
                                 </select>
                             </div>
-                            <div class="col">
-                                <button class="btn btn-outline-info btn-sm" type="button" id="change-semester">Change
-                                    Sheet</button>
-                            </div>
-
                         </div>
                         <div class="form-group d-flex flex-row-reverse p-2 bd-highlight">
                             <button type="button" class="btn btn-outline-success btn-sm" id="upload-file" hidden="true"
-                                data-toggle="modal" data-target="#uploadModal">Upload Data</button>
+                                data-toggle="modal" data-target="#uploadModal">Upload Sheet Data</button>
                         </div>
 
                         <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
@@ -206,24 +201,20 @@
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="uploadModalLabel">Just a Few More Steps...</h5>
+                                        <h4 class="modal-title" id="uploadModalLabel">Confirm Your Submission</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form>
-                                            <div class="form-group">
-                                                <label for="recipient-name" class="col-form-label">Select Existing
-                                                    Academic Semester</label>
-                                                <input type="text" class="form-control" id="acad-sem">
-                                            </div>
-                                        </form>
+                                        <p id = "confirmation">
+
+                                        </p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary"
                                             data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Confirm Submission</button>
+                                        <button type="button" class="btn btn-primary" id= "uploadModalConfirmation" data-dismiss="modal">Confirm Submission</button>
                                     </div>
                                 </div>
                             </div>

@@ -274,14 +274,40 @@ module.exports.downloadFile = async (req, res) => {
   let location = req.params.file_id
   let filename = req.params.filename
   let base_path = `.././backend/uploads/report_samples/${location}/`
-  res.status(200).download(base_path,filename )
+  res.status(200).download(base_path, filename)
 }
 
 //download reports post processing from frontend (JSON Format)
 module.exports.uploadFileJSON = async (req, res) => {
-  console.log('Entering Upload JSON')
-  console.log(req.body)
-  return res.status(200).json({ message: "Successfully Sent to Database" });
+  try {
+    console.log('Entering Upload JSON')
+    //in this case, req.body.data will send back the object array from the frontend. iterating through the 
+    //array should show each individual object immediately.
+    //console.log(req.body.data)
+    let data = req.body.data
+    let stringConcat = "";
+    //order of elements for reference 
+    //(mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks)
+    data.forEach(element => {
+      stringConcat += `,('${element['Code']}','${element['Year']}','${element['Stage']}','${element['Name']}',
+    '${element['Abbrev']}','${element['DLT']}','${element['L']}','${element['T']}','${element['P']}','${element['CU']}',
+    '${element['Prerequisite (Pass\/Taken)']}','${element['Module Type']}','${element['Type']}','${element['Total']}','${element['Remarks']}')`
+    });
+    let newStringConcat = stringConcat.replace(',', '')
+    let result = await uploadsService.uploadJSONReport(newStringConcat)
+    //console.log(stringConcat)
+    if (result.changedRows == 0) {
+      return res.status(200).json({ message: "Successfully Inserted New Records" });
+    } else if (result.changedRows > 0) {
+      return res.status(200).json({ message: "Successfully Updated Existing Records" });
+    } else if (result.errno) {
+      throw "Database Error. SQL Error Code: " + result.errno
+    }
+
+  } catch(error) {
+    return res.status(500).json({ message: error });
+  }
+
 }
 //END APIS FOR REPORTS----------------------------------
 
