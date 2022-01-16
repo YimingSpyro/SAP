@@ -19,6 +19,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+
+    <link rel="icon" href="/SVG Icons/scrunge.png">
+
+
     <!-- Online scripts to Upload Files -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
@@ -171,7 +185,7 @@
                             <div class="col-2">
                                 <label for="select-section">Select Semester</label>
                             </div>
-                            <div class = "col">
+                            <div class="col">
                                 <select class="form-control form-select" id="select-section">
                                     <option>No Years Selected</option>
                                 </select>
@@ -180,10 +194,39 @@
                                 <button class="btn btn-outline-info btn-sm" type="button" id="change-semester">Change
                                     Sheet</button>
                             </div>
-                            
+
                         </div>
                         <div class="form-group d-flex flex-row-reverse p-2 bd-highlight">
-                            <button type="button" class="btn btn-outline-success btn-sm" id="upload-file" hidden="true">Upload Sheet Data</button>
+                            <button type="button" class="btn btn-outline-success btn-sm" id="upload-file" hidden="true"
+                                data-toggle="modal" data-target="#uploadModal">Upload Data</button>
+                        </div>
+
+                        <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog"
+                            aria-labelledby="uploadModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="uploadModalLabel">Just a Few More Steps...</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient-name" class="col-form-label">Select Existing
+                                                    Academic Semester</label>
+                                                <input type="text" class="form-control" id="acad-sem">
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Confirm Submission</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <table id="dvExcel" class="table table-striped rounded-top">
                             <thead class="thead-light">

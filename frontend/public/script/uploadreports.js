@@ -2,7 +2,7 @@
 var workbook;
 var jsonArr;
 var base_url = 'http://localhost:8080'
-//functions to handle excel upload locally
+//functions to validate the excel file
 function Upload() {
     //Reference the FileUpload element.
     var fileUpload = document.getElementById("fileUpload");
@@ -38,6 +38,7 @@ function Upload() {
         alert("Please upload a valid Excel file.");
     }
 };
+//function to format and handle excel upload locally
 function ProcessExcel(data) {
     //Read the Excel File data.
     workbook = XLSX.read(data, {
@@ -145,11 +146,18 @@ $(document).ready(() => {
         selectOption(year)
         document.getElementById("upload-file").hidden = false;
     })
-    $("#upload-file").click(() => {
+    /* $("#upload-file").click(() => {
         console.log(jsonArr)
-        /* axios.post(base_url + '/reports/upload/excel/', {
-            data : jsonArr
-        }).then((result) =>
-            console.log(result)) */
+        axios.post(base_url + '/reports/upload/excel/', {
+            data: jsonArr
+        }).then((result) => {
+            console.log(result)
+            console.log(result.data.message)
+        })
+    }) */
+    $('#upload-file').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var acad_sem = button.data('acad-sem') // Extract info from data-* attributes
+        console.log(acad_sem)
     })
 })
