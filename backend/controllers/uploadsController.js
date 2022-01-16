@@ -276,6 +276,13 @@ module.exports.downloadFile = async (req, res) => {
   let base_path = `.././backend/uploads/report_samples/${location}/`
   res.status(200).download(base_path,filename )
 }
+
+//download reports post processing from frontend (JSON Format)
+module.exports.uploadFileJSON = async (req, res) => {
+  console.log('Entering Upload JSON')
+  console.log(req.body)
+  return res.status(200).json({ message: "Successfully Sent to Database" });
+}
 //END APIS FOR REPORTS----------------------------------
 
 //TESING API FOR FILE FIELDS-------------------------
