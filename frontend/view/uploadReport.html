@@ -7,20 +7,26 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports</title>
+    <title>Upload Reports</title>
 
     <!-- Online scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <!-- Online scripts to Upload Files -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.13.5/jszip.js"></script>
+
     <!-- Offline scripts -->
     <link href="/css/navbar.css" rel="stylesheet">
-    <link href="/css/report.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/global.css">
-    <script src="/script/reports.js"></script>
+    <script src="/script/uploadreports.js"></script>
     <script src="/script/global.js"></script>
 
 
@@ -154,47 +160,58 @@
 
                     <!-- Content Header -->
                     <div id="content-header-admin">
-                        <p>Download Reports</p>
-
-                        <div class="form-group row">
-                            <label for="select-section" class="col-sm-2 col-form-label">Select Semester</label>
-                            <div class="col">
-                                <select class="form-select-sm col-2" id="select-section">
-                                    <option selected>Semester</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                        <p>Upload Reports</p>
+                        <div class="d-flex p-2 bd-highlight custom-file">
+                            <input class="custom-file-input" type="file" id="fileUpload" />
+                            <input class="btn btn-outline-info btn-sm" type="button" id="upload" value="Prepare Data" />
+                        </div>
+                        <div class="line"></div>
+                        <br>
+                        <div class="row bd-highlight">
+                            <div class="col-2">
+                                <label for="select-section">Select Semester</label>
+                            </div>
+                            <div class = "col">
+                                <select class="form-control form-select" id="select-section">
+                                    <option>No Years Selected</option>
                                 </select>
                             </div>
-                        </div>
-
-                        <div class="line"></div>
-                    </div>
-
-                    <!-- Content Item -->
-                    <div id="content-item-admin">
-
-                        <!-- Module table -->
-                        <table id="admin-table" class="table table-dark rounded-top">
+                            <div class="col">
+                                <button class="btn btn-outline-info btn-sm" type="button" id="change-semester">Change
+                                    Sheet</button>
+                            </div>
                             
-                            <thead>
+                        </div>
+                        <div class="form-group d-flex flex-row-reverse p-2 bd-highlight">
+                            <button type="button" class="btn btn-outline-success btn-sm" id="upload-file" hidden="true">Upload Sheet Data</button>
+                        </div>
+                        <table id="dvExcel" class="table table-striped rounded-top">
+                            <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" class="col-sm">Report Name</th>
-                                    <th scope="col" class="col">Semester</th>
-                                    <th scope="col" class="col">Uploaded By</th>
-                                    <th scope="col" class="col">Allocated To</th>
-                                    <th scope="col" class="col">Upload Time</th>
-                                    <th scope="col" class="col-md-auto">Remarks</th>
-                                    <th scope="col" class="col">File Download</th>
+                                    <th scope="col" class="col-sm">Excel Row</th>
+                                    <th scope="col" class="col-sm">Stage</th>
+                                    <th scope="col" class="col">Code</th>
+                                    <th scope="col" class="col">Abbrev</th>
+                                    <th scope="col" class="col">Name</th>
+                                    <th scope="col" class="col">Module Type</th>
+                                    <th scope="col" class="col-md-auto">Prerequisite (Pass/Taken)</th>
+                                    <th scope="col" class="col">Type</th>
+                                    <th scope="col" class="col-md-auto">L</th>
+                                    <th scope="col" class="col">T</th>
+                                    <th scope="col" class="col-md-auto">P</th>
+                                    <th scope="col" class="col">DLT</th>
+                                    <th scope="col" class="col-md-auto">Total</th>
+                                    <th scope="col" class="col">CU</th>
+                                    <th scope="col" class="col">Remarks</th>
                                 </tr>
                             </thead>
-                            
+                            <tbody>
+                            </tbody>
                         </table>
 
-
-
                     </div>
+                </div>
+            </div>
 
 </body>
 
