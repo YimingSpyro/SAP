@@ -25,7 +25,8 @@ var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const staffManager = require('../services/staffService');
 const config = require('../config/config');
-const pool = require('../config/database')
+const pool = require('../config/database');
+const e = require('express');
 
 
 /* ==== SECTION API ==== */
@@ -33,12 +34,15 @@ exports.getAllSections = async (req, res, next) => {
     try {
         let results = await staffManager.getAllSections();
         console.log('Get Staff Personal Information', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
-        console.error('Server is unable to process the request', { 'Error': error })
+        let message = 'Server is unable to process your request. Error: ' + error;
         return res.status(500).json({
             message: message
         });
@@ -54,11 +58,15 @@ exports.getAllStaff = async (req, res, next) => {
     try {
         let results = await staffManager.getAllStaff();
         console.log('Get Staff Personal Information', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -72,11 +80,15 @@ exports.getStaffByID = async (req, res, next) => {
     try {
         let results = await staffManager.getStaffByStaffId(staff_id);
         console.log('Get Staff Personal Information by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -143,11 +155,15 @@ exports.deleteStaffByID = async (req, res, next) => {
     try {
         let results = await staffManager.deleteStaffByStaffId(staff_id);
         console.log('Get Staff Personal Information by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -174,11 +190,15 @@ exports.updateStaffByID = async (req, res, next) => {
     try {
         let results = await staffManager.updateStaffByStaffId(staff_id,data);
         console.log('Update Staff Personal Information by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -197,11 +217,15 @@ exports.getTeachingRequirementByID = async (req, res, next) => {
     try {
         let results = await staffManager.getTeachingRequirementByID(staff_id);
         console.log('Get Teaching Requirement by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -221,11 +245,15 @@ exports.createTeachingRequirement = async (req, res, next) => {
     try {
         let results = await staffManager.createTeachingRequirement(data);
         console.log('Create Teaching Requirement', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -244,11 +272,15 @@ exports.updateTeachingRequirement = async (req, res, next) => {
     try {
         let results = await staffManager.updateTeachingRequirement(data);
         console.log('Update Teacing Requirement by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -262,11 +294,15 @@ exports.deleteTeachingRequirement = async (req, res, next) => {
     try {
         let results = await staffManager.deleteTeachingRequirement(ptr_id);
         console.log('Delete Teaching Requirement by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -282,11 +318,15 @@ exports.getTeachingRequirementRemarks = async (req, res, next) => {
     try {
         let results = await staffManager.getTeachingRequirementRemarks(data);
         console.log('Get Teaching Requirement by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -303,11 +343,15 @@ exports.createTeachingRequirementRemarks = async (req, res, next) => {
     try {
         let results = await staffManager.createTeachingRequirementRemarks(data);
         console.log('Create Teaching Requirement', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -324,11 +368,15 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
     try {
         let results = await staffManager.updateTeachingRequirementRemarks(data);
         console.log('Update Teacing Requirement Remarks by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -347,11 +395,15 @@ exports.getModuleBySection = async (req, res, next) => {
     try {
         let results = await staffManager.getModuleBySection(section);
         console.log('Get Module by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -364,11 +416,15 @@ exports.getModuleByCode = async (req, res, next) => {
     try {
         let results = await staffManager.getModuleByCode(mod_code);
         console.log('Get Module by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -381,11 +437,15 @@ exports.getAllModules = async (req, res, next) => {
     try {
         let results = await staffManager.getAllModules();
         console.log('Get All Modules', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -418,11 +478,15 @@ exports.createModule = async (req, res, next) => {
     try {
         let results = await staffManager.createModule(data);
         console.log('Create Module', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -440,11 +504,15 @@ exports.getAllModulePreference = async (req, res, next) => {
     try {
         let results = await staffManager.getAllModulePreference();
         console.log('Get All Module Preference', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -458,11 +526,15 @@ exports.getModulePreferenceByID = async (req, res, next) => {
         let staff_id = req.params.id;
         let results = await staffManager.getModulePreferenceByID(staff_id);
         console.log('Get Module Preference By Staff ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -479,11 +551,15 @@ exports.submitModulePreference = async (req, res, next) => {
     try {
         let results = await staffManager.submitModulePreference(data);
         console.log('Submit Module Preference', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -501,11 +577,15 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
     try {
         let results = await staffManager.updateModulePreferenceByID(data);
         console.log('Update Module Preference', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -524,11 +604,15 @@ exports.getAssignedModulesByModule = async (req, res, next) => {
     try {
         let results = await staffManager.getAssignedModulesByModule(mod_code);
         console.log('Get Staff Assigned Module', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -542,11 +626,42 @@ exports.getAssignedModulesByID = async (req, res, next) => {
     try {
         let results = await staffManager.getAssignedModulesByID(staff_id);
         console.log('Get Staff Assigned Module', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Update Module by Staff ID
+exports.updateAssignedModuleByID = async (req, res, next) => {
+    let module_code = req.body.module_code;
+    let staff_id = req.body.staff_id;
+    let ma_lecture = req.body.ma_lecture;
+    let ma_tutorial = req.body.ma_tutorial;
+    let ma_practical = req.body.ma_practical;
+    let semester_code = req.body.semester_code;
+    let data = [ma_lecture, ma_tutorial, ma_practical, semester_code, staff_id, module_code];
+    try {
+        let results = await staffManager.updateAssignedModuleByID(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -566,11 +681,15 @@ exports.assignModuleByID = async (req, res, next) => {
     try {
         let results = await staffManager.assignModuleByID(data);
         console.log('Assign Module to Staff', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -584,11 +703,15 @@ exports.unassignModuleByID = async (req, res, next) => {
     try {
         let results = await staffManager.unassignModuleByID(ma_id);
         console.log('Delete Module Assignmen by ID', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
@@ -606,11 +729,15 @@ exports.getStaffBySection = async (req, res, next) => {
     try {
         let results = await staffManager.getStaffBySection(section);
         console.log('Get Staff Assigned Module', results);
-        if (results) {
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
-        let message = 'Server is unable to process your request.';
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
