@@ -159,15 +159,22 @@ exports.deleteStaffByID = async (req, res, next) => {
 // API Admin Update Staff Data by ID
 exports.updateStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
+    let new_staff_name = req.body.staff_name
     let new_staff_abbrv = req.body.staff_abbrv
+    let new_staff_type = req.body.staff_type
+    let new_staff_schedule_id = req.body.staff_schedule
+    let new_staff_designation_id = req.body.staff_designation
     let new_staff_email = req.body.staff_email
-    let new_staff_number = req.body.staff_number
+    let new_staff_number = req.body.staff_contact
     let new_staff_mobile = req.body.staff_mobile
     let new_staff_remarks = req.body.staff_remarks
-    let data = [new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, staff_id]
+    let new_staff_status = req.body.staff_status
+
+    let data = [new_staff_name, new_staff_abbrv,new_staff_type,new_staff_schedule_id,new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks,new_staff_status]
+    console.log(data);
     try {
-        let results = await staffManager.updateStaffByStaffId(data);
-        console.log('Get Staff Personal Information by ID', results);
+        let results = await staffManager.updateStaffByStaffId(staff_id,data);
+        console.log('Update Staff Personal Information by ID', results);
         if (results) {
             return res.status(200).json(results);
         }

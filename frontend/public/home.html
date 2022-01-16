@@ -11,6 +11,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
@@ -125,32 +127,64 @@
         }
     </style>
     <script>
-        /*   const isLoggedIn= localStorage.getItem('isLoggedIn');
-          if(!isLoggedIn) window.location.href="./login.html"; */
-
-    $(document).ready(function() {
-        $("#maintenence-system").hover(
-            function() {
-                $('#ul-collapse').addClass("show");
-                $('#caret-down').toggleClass("bi-caret-down-fill").toggleClass("bi-caret-right-fill");
-
-
-            },
-            function() {
-                $('#ul-collapse').removeClass("show");
-                $('#caret-down').toggleClass("bi-caret-right-fill").toggleClass("bi-caret-down-fill");
+        if (!sessionStorage.getItem("isLoggedIn")) window.location.href = "./login"
+        var role_id = sessionStorage.getItem('staff_role');
+        axios.get("http://localhost:8080/api/nav-items").then((response) => {
+            var html = ""
+            var rows = response.data
+            for (let i = 0; i < rows.length; i++) {
+                console.log(rows[i].item_title);
+                var roleIdsArray = JSON.parse(rows[i].role_ids);
+                console.log(roleIdsArray);
+                console.log(role_id);
+                if (roleIdsArray.includes(parseInt(role_id))) {
+                    /* html += `
+                    <li id="maintenence-system">
+                        <a href="./maintenance" class="nav-link px-0 align-middle">
+                            <div style="width: 100%; display: table">
+                                <div style="display: table-row">
+                                    <img src="${[rows[i].item_icon_url]}"" class="icons"></img>
+                                    <div class="navbar-title">${rows[i].item_title}</div>
+                                    </div>
+                                    </div>
+                                    </a>
+                                    </li>
+                                    ` */
+                    console.log(rows[i].item_html);
+                    html += rows[i].item_html
+                }
             }
-        );
-        $('#dashboard-view-wrap').load("./homeviews/admin_home.html")
- 
-
-    })
-/*     $(window).on('load', function () {
-        $('.maintenance-system-menu').click(function getMaintenenceSystem() {
-            window.location.href="./maintenance-system"
+            $('#main-list').append(html);
+        }).catch((e) => {
+            console.log(e);
         })
-    }); */
-</script>
+        $(document).ready(function () {
+            var staff_name = sessionStorage.getItem('staff_name')
+            $('#staff-name-text').text(staff_name);
+            var staff_role = sessionStorage.getItem('staff_role_name')
+            $('#welcome-text').text(`Welcome ${staff_role},`);
+            $("#maintenence-system").hover(
+                function () {
+                    $('#ul-collapse').addClass("show");
+                    $('#caret-down').toggleClass("bi-caret-down-fill").toggleClass("bi-caret-right-fill");
+
+
+                },
+                function () {
+                    $('#ul-collapse').removeClass("show");
+                    $('#caret-down').toggleClass("bi-caret-right-fill").toggleClass("bi-caret-down-fill");
+                }
+            );
+            $('#dashboard-view-wrap').load("./homeviews/admin_home.html")
+
+
+        })
+/*     $(window).on('load', function () {
+                                        $('.maintenance-system-menu').click(function getMaintenenceSystem() {
+                                            window.location.href="./maintenance-system"
+                                        })
+                                    }); */
+    </script>
 </head>
 
 <body>
@@ -164,8 +198,8 @@
                             alt="Cinque Terre">
                     </div>
                     <div id="msg-wrap" class="col-9 ">
-                        <p>Welcome,</p>
-                        <p>Adminstrator 1</p>
+                        <p id="welcome-text">Welcome,</p>
+                        <p id="staff-name-text">Adminstrator 1</p>
                     </div>
                 </div>
             </div>
@@ -185,7 +219,7 @@
                     <ul id="main-list"
                         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
-                        <li class="nav-item active">
+                        <!--                         <li class="nav-item active">
                             <a href="#" class="nav-link align-middle px-0">
                                 <div style="width: 100%; display: table">
                                     <div style="display: table-row">
@@ -236,7 +270,7 @@
                                     </div>
                                 </div>
                             </a>
-                        </li>
+                        </li> -->
 
                     </ul>
                 </div>
