@@ -25,7 +25,8 @@ var bcrypt = require('bcryptjs');
 const saltRounds = 10;
 const staffManager = require('../services/staffService');
 const config = require('../config/config');
-const pool = require('../config/database')
+const pool = require('../config/database');
+const e = require('express');
 
 
 /* ==== SECTION API ==== */
@@ -158,13 +159,12 @@ exports.deleteStaffByID = async (req, res, next) => {
 // API Admin Update Staff Data by ID
 exports.updateStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
-    let new_staff_name = req.body.staff_name
     let new_staff_abbrv = req.body.staff_abbrv
     let new_staff_email = req.body.staff_email
     let new_staff_number = req.body.staff_number
     let new_staff_mobile = req.body.staff_mobile
     let new_staff_remarks = req.body.staff_remarks
-    let data = [new_staff_name, new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, staff_id]
+    let data = [new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, staff_id]
     try {
         let results = await staffManager.updateStaffByStaffId(data);
         console.log('Get Staff Personal Information by ID', results);
@@ -541,6 +541,33 @@ exports.getAssignedModulesByID = async (req, res, next) => {
         }
     } catch (error) {
         let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Update Module by Staff ID
+exports.updateAssignedModuleByID = async (req, res, next) => {
+    let module_code = req.body.module_code;
+    let staff_id = req.body.staff_id;
+    let ma_lecture = req.body.ma_lecture;
+    let ma_tutorial = req.body.ma_tutorial;
+    let ma_practical = req.body.ma_practical;
+    let semester_code = req.body.semester_code;
+    let data = [ma_lecture, ma_tutorial, ma_practical, semester_code, staff_id, module_code];
+    try {
+        let results = await staffManager.updateAssignedModuleByID(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message

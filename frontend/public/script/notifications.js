@@ -1,10 +1,22 @@
 function error(err){
-    var errorModal = new bootstrap.Modal($('#submit-requests-error'), 'focus');
-    errorModal.show()
-    console.log(err);
+    $("#submit-requests-error").modal('show')
+    $(".error-message").empty();
+    if (err.response) {
+        $(".error-message").append(err.response.data.message);
+    }
+    else if(err.request) {
+        $(".error-message").append(err, ". Client side error.");
+    }
+    else {
+        $(".error-message").append(err.message);
+    }
+
 }
 
-function success(){
-    var successModal = new bootstrap.Modal($('#submit-requests-success'), 'focus');
-    successModal.show();
+function success(type){
+    let success_modal = '#submit-requests-success-' + type;
+    if (type == null) {
+        success_modal = '#submit-requests-success'
+    }
+    $(success_modal).modal('show')
 }

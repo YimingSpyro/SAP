@@ -1,39 +1,95 @@
-function getSection(){
-    return axios.get('http://localhost:8080/api/section/')
-    .then(response => response.data)
-    .catch(err => error(err));
+
+let base_url = "http://localhost:8080"
+function getSection() {
+    return axios.get(base_url + '/api/section/')
+        .then(response => response.data)
+        .catch(err => error(err));
 };
 
 function getModulesBySection(section) {
-    return axios.get('http://localhost:8080/api/module/section?section='+section)
+    return axios.get(base_url + '/api/module/section?section=' + section)
         .then(response => response.data)
         .catch(err => error(err));
 };
 
 function getAssignedModulesByCode(mod_code) {
-    return axios.get('http://localhost:8080/api/module/assign?mod_code=' + mod_code)
+    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code)
         .then(response => response.data)
         .catch(err => error(err));
 };
 
 function getStaffBySection(section) {
-    return axios.get('http://localhost:8080/api/tas/section?section=%'+section+'%')
+    return axios.get(base_url + '/api/tas/section?section=%' + section + '%')
         .then(response => response.data)
         .catch(err => error(err));
 };
 
-function getAssignedModules(staff_id){
-    return axios.get('http://localhost:8080/api/module/assign/'+staff_id)
-    .then(response => response.data)
-    .catch(err => error(err));
+function getAssignedModules(staff_id) {
+    return axios.get(base_url + '/api/module/assign/' + staff_id)
+        .then(response => response.data)
+        .catch(err => error(err));
 }
 
-async function checkAssignedModule(staff_id,module_code){
+function getPreference(staff_id) {
+    return axios.get(base_url + '/api/module/preference/' + staff_id)
+        .then(response => response.data)
+        .catch(err => error(err));
+}
+
+function getStaffByID(staff_id) {
+    return axios.get(base_url + '/api/staff/' + staff_id)
+        .then(response => response.data[0])
+        .catch(err => error(err));
+};
+
+function assignModule(staff_id, mod_code) {
+    return axios.post(base_url + '/api/module/assign/',
+        {
+            staff_id: staff_id,
+            ma_lecture: 0,
+            ma_tutorial: 0,
+            ma_practical: 0,
+            semester_code: "AY 2021/2022 SEM2", //SAMPLE DATA
+            module_code: mod_code
+        })
+        .then(() => success("assigned"))
+        .catch(err => error(err));
+}
+
+function unassignModule(ma_id) {
+    return axios.delete(base_url + '/api/module/assign/' + ma_id)
+    .then(() => success("unassigned"))
+    .catch(err => error(err));
+
+}
+
+function updateAssignedModule(data) {
+    return axios.put(base_url + '/api/module/assign', 
+    {
+        staff_id : data.staff_id,
+        semester_code : "AY 2021/2022 SEM2", //SAMPLE DATA
+        module_code : data.mod_code,
+        ma_lecture : data.lecture_hours,
+        ma_tutorial : data.tutorial_hours,
+        ma_practical : data.practical_hours
+    })
+    .then(() => {
+        $("#submit-requests-success-confirm").modal('hide')
+        success("confirm")
+    })
+    .catch(err => {
+        error(err)
+    });
+}
+
+async function checkAssignedModule(staff_id, module_code) {
     let data = await getAssignedModules(staff_id);
     let assigned = false;
+    let assignment_id = null;
     let lecture_hours = 0;
     let tutorial_hours = 0;
     let practical_hours = 0;
+    let total_hours = 0;
     for (let index = 0; index < data.length; index++) {
         const assigned_module = data[index];
         let assigned_code = assigned_module.mod_code;
@@ -42,17 +98,21 @@ async function checkAssignedModule(staff_id,module_code){
             lecture_hours = assigned_module.ma_lecture
             tutorial_hours = assigned_module.ma_tutorial
             practical_hours = assigned_module.ma_practical
+            assignment_id = "MA" + assigned_module.assignment_id
+            total_hours =  lecture_hours + tutorial_hours + practical_hours
         }
     }
     return {
-        "assigned" : assigned,
-        "lecture_hours" : lecture_hours,
-        "tutorial_hours" : tutorial_hours,
-        "practical_hours" : practical_hours
+        "ma_id": assignment_id,
+        "assigned": assigned,
+        "lecture_hours": lecture_hours,
+        "tutorial_hours": tutorial_hours,
+        "practical_hours": practical_hours,
+        "total_hours": total_hours
     };
 }
 
-async function calculateStaffHours(staff_id){
+async function calculateStaffHours(staff_id) {
     let data = await getAssignedModules(staff_id);
     let total_hours = 0;
     for (let index = 0; index < data.length; index++) {
@@ -99,11 +159,11 @@ async function calculateModuleHours(module) {
     }
 }
 
-async function generateSection(){
+async function generateSection() {
     let sections = await getSection();
     for (let index = 0; index < sections.length; index++) {
         const section = sections[index];
-        $("#select-section").append(`<option value="`+section.fk_course_id+`">`+section.section_name+`</option>`)
+        $("#select-section").append(`<option value="` + section.fk_course_id + `">` + section.section_name + `</option>`)
     }
 }
 
@@ -112,7 +172,7 @@ async function generateModuleList() {
     let section = $("#select-section option:selected").val();
     let modules = await getModulesBySection(section);
     $("#caption").empty();
-    $("#caption").append(`Showing `+modules.length+` Results`);
+    $("#caption").append(`Showing ` + modules.length + ` Results`);
     for (let index = 0; index < modules.length; index++) {
         const module = modules[index];
         let hours = await calculateModuleHours(module);
@@ -133,17 +193,77 @@ async function generateModuleList() {
     }
 };
 
-async function generateModal(index) {
+async function generateStaffInfo(staff_id) {
+    let preferences = await getPreference(staff_id);
+    if (preferences.length > 0) {
+        preferences = JSON.parse(preferences[0].preference);
+        for (let index = 0; index < preferences.length; index++) {
+            const preference = preferences[index];
+            let choice = index + 1;
+            if (preference.module != null) {
+                $("#choice-" + choice).val(preference.module)
+            }
+            else {
+                $("#choice-" + choice).val(null)
+            }
+            if (preference.module_coordinator) {
+                $("#mc-" + choice).prop('checked', true)
+            }
+        }
+    }
+    else {
+        for (let count = 1; count <= 6; count++) {
+            $("#choice-" + count).val(null)
+            $("#mc-" + count).prop('checked', false)
+        }
+    }
+    $(".assigned-modules").empty();
+    let assigned = await getAssignedModules(staff_id);
+    let total_hours = 0;
+    for (let index = 0; index < assigned.length; index++) {
+        const module = assigned[index];
+        console.log(module);
+        let hours = module.ma_lecture + module.ma_tutorial + module.ma_practical;
+        total_hours += hours;
+        $(".assigned-modules").append(`
+        <tr>
+            <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) YR ` + module.stage + `/S` + module.fk_semester_code.slice(-1) + `</th>
+            <td>`+ module.ma_lecture.toFixed(1) + `</td>
+            <td>`+ module.ma_tutorial.toFixed(1) + `</td>
+            <td>`+ module.ma_practical.toFixed(1) + `</td>
+            <td>`+ hours.toFixed(1) + `</td>
+        </tr>`);
+        if (parseInt(module.fk_mod_coord) == staff_id) {
+            $("#module-" + index).css("color", "orange");
+        }
+    }
+    $(".total-hours").empty();
+    $(".total-hours").append(`
+    <tr>
+        <th>Total Hours: `+ total_hours + `</th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>`);
+    let staff = await getStaffByID(staff_id);
+    let staff_name = staff.staff_name;
+    $(".staff-name").empty();
+    $(".staff-name").append(staff_name);
+
+}
+
+async function generateModal(module_index) {
     let section = $("#select-section option:selected").val();
     let modules = await getModulesBySection(section);
-    let module = modules[index]
+    let module = modules[module_index]
     let hours = await calculateModuleHours(module);
     let mod_code = module.mod_code;
     $(".modal-information").empty();
     $(".modal-information").append(`
     <!-- Content header -->
     <div class="modal-header">
-        <h5 class="modal-title" id="teaching-assignment-modal">`+module.mod_name+` `+module.mod_code+`</h5>
+        <h5 class="modal-title" id="teaching-assignment-modal">`+ module.mod_name + ` ` + module.mod_code + `</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
     </div>
 
@@ -156,7 +276,7 @@ async function generateModal(index) {
         <table id="admin-table" class="table table-dark rounded-top">
             <thead>
                 <tr>
-                    <th scope="col" class="col-3">`+module.mod_name+`</th>
+                    <th scope="col" class="col-3">`+ module.mod_name + `</th>
                     <th scope="col" class="col-3">Lecture</th>
                     <th scope="col" class="col-3">Tutorial</th>
                     <th scope="col" class="col-3">Practical</th>
@@ -186,7 +306,7 @@ async function generateModal(index) {
     
         <!-- Select Staff -->
         <div class="mb-3">
-            <div class="modal-section-title">Unassigned Staff</div>
+            <div class="modal-section-title">Unassigned Section Staff</div>
             <div class="line2"></div>
         </div>
         <!-- Table -->
@@ -220,26 +340,19 @@ async function generateModal(index) {
                     <th scope="col" class="col-2">Tutorial</th>
                     <th scope="col" class="col-2">Practical</th>
                     <th scope="col" class="col-2">Total Hours</th>
-                    <th scope="col" class="col-1"></th>
+                    <th scope="col" class="col"></th>
                 </tr>
             </thead>
             <tbody class="assigned-staff">
 
             </tbody>
-            <tfoot>
-                <tr>
-                    <td>Hours Assigned</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td></td>
-                </tr>
+            <tfoot class="tba-footer">
+
             </tfoot>
         </table>
 
         <!-- Update Button -->
-        <button type="button" class="btn btn-primary float-end">Confirm Assignment</button>
+        <button type="button" class="btn btn-primary float-end confirm-assignment">Confirm Assignment</button>
     </div>
     `);
     // Filling up Staff List and Assigned Staff in Modal
@@ -253,43 +366,144 @@ async function generateModal(index) {
         let assigned = await checkAssignedModule(staff_id, mod_code)
         if (assigned.assigned) {
             $(".assigned-staff").append(`
-            <tr class="border-bottom border-white align-middle">
-                <td>`+staff_name+`</td>
+            <tr data-staff="`+ staff_id + `" data-code="`+ mod_code + `" data-index="`+module_index+`" class="border-bottom border-white align-middle staff">
+                <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff view-staff-link">` + staff_name + `</a></td>
                 <td>
-                    <input type="text" value="`+assigned.lecture_hours+`" class="form-control form-control-sm" id="input-lecture">
+                    <input type="text" value="`+ assigned.lecture_hours + `" class="form-control form-control-sm" id="input-lecture">
                 </td>
                 <td>
-                    <input type="text" value="`+assigned.tutorial_hours+`" class="form-control form-control-sm" id="input-tutorial">
+                    <input type="text" value="`+ assigned.tutorial_hours + `" class="form-control form-control-sm" id="input-tutorial">
                 </td>
                 <td>
-                    <input type="text" value="`+assigned.practical_hours+`" class="form-control form-control-sm" id="input-practical">
+                    <input type="text" value="`+ assigned.practical_hours + `" class="form-control form-control-sm" id="input-practical">
                 </td>
-                <td class="text-success">0</td>
+                <td class="text-success">`+assigned.total_hours+`</td>
                 <td>
-                    <button class="btn btn-danger unassign-staff" type="button">Unassign</button>
+                    <button class="btn btn-danger unassign-staff" type="button"  data-index="`+module_index+`" data-code="`+ mod_code + `" data-id="`+ assigned.ma_id + `" data-staff="` + staff_id + `">Unassign</button>
                 </td>
             </tr>`);
         }
         else {
             $(".staff-list").append(`
-            <tr class="border-bottom border-white align-middle">
-                
-                <td>`+staff_name+`</td>
-                <td>`+staff_type+`</td>
-                <td>`+staff_hours+`</td>
+            <tr data-staff="`+ staff_id + `" class="border-bottom border-white align-middle">
+                <td><a data-staff="`+ staff_id +`" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff-link view-staff">` + staff_name + `</a></td>
+                <td>`+ staff_type + `</td>
+                <td>`+ staff_hours + `</td>
                 <td>3</td>
                 <td class="text-center px-2 py-3">
-                    <button class="btn btn-success assign-staff" type="button">Assign</button>
+                    <button class="btn btn-success assign-staff" type="button" data-index="`+module_index+`" data-code="`+ mod_code + `" data-staff="` + staff_id + `">Assign</button>
                 </td>
                 <td class="text-center px-2 py-3">
-                    <button class="btn btn-info text-white view-staff"type="button" data-bs-toggle="modal" data-bs-target="#staff-modal">Staff Info</button>
+                    <button class="btn btn-info text-white view-staff"type="button" data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal">Staff Info</button>
                 </td>
             </tr>`);
         }
-
     }
+    $(".tba-footer").append(`
+    <tr>
+        <td>To be assigned</td>
+        <td>`+ hours.tba_lecture + `</td>
+        <td>`+ hours.tba_tutorial + `</td>
+        <td>`+ hours.tba_practical + `</td>
+        <td>`+ hours.to_be_assigned_hours + `</td>
+        <td></td>
+    </tr>`);
 
+}
 
+async function assignStaff(staff_id, mod_code, module_index) {
+    $(".staff-list tr[data-staff='" + staff_id + "']").remove()
+    assignModule(staff_id, mod_code);
+    let staff = await getStaffByID(staff_id);
+    let assigned = await checkAssignedModule(staff_id, mod_code);
+    let staff_name = staff.staff_name;
+    $(".assigned-staff").append(`
+    <tr data-staff="`+ staff_id + `" data-code="`+ mod_code + `" data-index="`+module_index+`" class="border-bottom border-white align-middle staff">
+        <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff-link">` + staff_name + `</a></td>
+        <td>
+            <input type="text" value="`+ assigned.lecture_hours + `" class="form-control form-control-sm" id="input-lecture">
+        </td>
+        <td>
+            <input type="text" value="`+ assigned.tutorial_hours + `" class="form-control form-control-sm" id="input-tutorial">
+        </td>
+        <td>
+            <input type="text" value="`+ assigned.practical_hours + `" class="form-control form-control-sm" id="input-practical">
+        </td>
+        <td class="text-success">0</td>
+        <td>
+            <button class="btn btn-danger unassign-staff" type="button" data-index="`+module_index+`" data-id="`+ assigned.ma_id + `" data-staff="` + staff_id + `">Unassign</button>
+        </td>
+    </tr>`);
+}
+
+async function unassignStaff(staff_id, ma_id, mod_code, module_index) {
+    $(".assigned-staff tr[data-staff='" + staff_id + "']").remove()
+    unassignModule(ma_id);
+    let staff = await getStaffByID(staff_id);
+    let staff_name = staff.staff_name;
+    let staff_type = staff.fk_staff_type;
+    let staff_hours = await calculateStaffHours(staff_id)
+    $(".staff-list").append(`
+    <tr data-staff="`+ staff_id + `" class="border-bottom border-white align-middle">
+        <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff-link view-staff">` + staff_name + `</a></td>
+        <td>`+ staff_type + `</td>
+        <td>`+ staff_hours + `</td>
+        <td>3</td>
+        <td class="text-center px-2 py-3">
+            <button class="btn btn-success assign-staff" type="button" data-index="`+module_index+`" data-code="`+ mod_code + `" data-staff="` + staff_id + `">Assign</button>
+        </td>
+        <td class="text-center px-2 py-3">
+            <button class="btn btn-info text-white view-staff"type="button" data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal">Staff Info</button>
+        </td>
+    </tr>`);
+    let section = $("#select-section option:selected").val();
+    let modules = await getModulesBySection(section);
+    let module = modules[module_index]
+    let hours = await calculateModuleHours(module);
+    $(".tba-footer").empty();
+    $(".tba-footer").append(`
+    <tr>
+        <td>To be assigned</td>
+        <td>`+ hours.tba_lecture + `</td>
+        <td>`+ hours.tba_tutorial + `</td>
+        <td>`+ hours.tba_practical + `</td>
+        <td>`+ hours.to_be_assigned_hours + `</td>
+        <td></td>
+    </tr>`);
+}
+async function confirmAssignment(){
+    let module_index = null;
+    $(".staff").each(async(index,staff)=>{
+        let lecture_hours = $(staff).find("#input-lecture")[0].value;
+        let tutorial_hours = $(staff).find("#input-tutorial")[0].value;
+        let practical_hours = $(staff).find("#input-practical")[0].value;
+        let staff_id = $(staff).data("staff")
+        let mod_code = $(staff).data("code")
+        module_index = $(staff).data("index")
+        let data = {
+            "lecture_hours" : lecture_hours,
+            "tutorial_hours" : tutorial_hours,
+            "practical_hours" : practical_hours,
+            "staff_id" : staff_id,
+            "mod_code" : mod_code
+        }
+        updateAssignedModule(data)
+    })
+
+    let section = $("#select-section option:selected").val();
+    let modules = await getModulesBySection(section);
+    let module = modules[module_index]
+    let hours = await calculateModuleHours(module);
+    $(".tba-footer").empty();
+    $(".tba-footer").append(`
+    <tr>
+        <td>To be assigned</td>
+        <td>`+ hours.tba_lecture + `</td>
+        <td>`+ hours.tba_tutorial + `</td>
+        <td>`+ hours.tba_practical + `</td>
+        <td>`+ hours.to_be_assigned_hours + `</td>
+        <td></td>
+    </tr>`);
 }
 
 generateSection();
@@ -300,7 +514,34 @@ $(document).ready(() => {
         let index = $(e.target).data("id");
         generateModal(index);
     })
-    $("#select-section").on('change', ()=>{
+    $("#select-section").on('change', () => {
         generateModuleList();
     });
+
+    $("#teaching-assignment-modal").on('click', ".view-staff", (e) => {
+        let staff_id = $(e.target).data("staff");
+        generateStaffInfo(staff_id);
+    })
+
+    $("#teaching-assignment-modal").on('click', ".assign-staff", (e) => {
+        let staff_id = $(e.target).data("staff")
+        let mod_code = $(e.target).data("code")
+        let module_index = $(e.target).data("index")
+        assignStaff(staff_id, mod_code, module_index)
+    })
+
+    $("#teaching-assignment-modal").on('click', ".unassign-staff", (e) => {
+        let staff_id = $(e.target).data("staff")
+        let ma_id = $(e.target).data("id")
+        let mod_code = $(e.target).data("code")
+        let module_index = $(e.target).data("index")
+        unassignStaff(staff_id, ma_id, mod_code, module_index)
+    })
+
+    $("#teaching-assignment-modal").on('click', ".confirm-assignment", () => {
+        confirmAssignment()
+
+    })
+
+
 });

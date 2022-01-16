@@ -142,6 +142,7 @@ exports.appRoute = router => {
     router.get('/api/module/assign/', staffController.getAssignedModulesByModule);
     router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
     router.post('/api/module/assign/', staffController.assignModuleByID);
+    router.put('/api/module/assign/', staffController.updateAssignedModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
 
     //STAFF-INFO
