@@ -3,7 +3,7 @@ function downloadReport(file_id, filename) {
     window.open(`${base_url}/reports/download/${file_id}/${filename}`, '_blank')
 };
 function getAllReports() {
-    axios.get(base_url + '/uploads/reports/excel/').then((response) => {
+    axios.get(base_url + '/uploads/reports/').then((response) => {
         console.log(response.data)
         $('#admin-table').append(`<caption id= 'caption'>Showing ${response.data.length} Results</caption>`)
         for (let i = 0; i < response.data.length; i++) {

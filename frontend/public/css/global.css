@@ -298,6 +298,15 @@ caption {
     padding-bottom: 15px;
 }
 
+/* #dvExcel.table>:not(caption)>*>* {
+    padding: 0.5rem 0.5rem;
+    background-color: #22404F;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+} */
+
 .status-unassigned {
     color: #E6FF00;
 }

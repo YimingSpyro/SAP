@@ -2,7 +2,7 @@
 var workbook;
 var jsonArr;
 var base_url = 'http://localhost:8080'
-//functions to handle excel upload locally
+//functions to validate the excel file
 function Upload() {
     //Reference the FileUpload element.
     var fileUpload = document.getElementById("fileUpload");
@@ -12,7 +12,6 @@ function Upload() {
     if (regex.test(fileUpload.value.toLowerCase())) {
         if (typeof (FileReader) != "undefined") {
             var reader = new FileReader();
-
             //For Browsers other than IE.
             if (reader.readAsBinaryString) {
                 reader.onload = function (e) {
@@ -38,6 +37,7 @@ function Upload() {
         alert("Please upload a valid Excel file.");
     }
 };
+//function to format and handle excel upload locally
 function ProcessExcel(data) {
     //Read the Excel File data.
     workbook = XLSX.read(data, {
@@ -48,28 +48,27 @@ function ProcessExcel(data) {
     //Fetch Sheet.
     var firstSheet = workbook.SheetNames;
     //remove select options
-    $("select option").remove();
+    $("option[value*='2']").remove();
+
     firstSheet.forEach(element => {
         $('#select-section').append(`<option value=${element} >${element}</option>`)
     });
-    $('#select-section option:contains(' + firstSheet[0] + ')').prop({ selected: true });
     //console.log(workbook.SheetNames)
     //Read all rows from First Sheet into an JSON array.
     var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[firstSheet[0]]);
     //Create a HTML Table element.
+    $("tbody tr").remove();
     document.createElement('tbody')
     var table = document.getElementById("dvExcel").getElementsByTagName('tbody')[0];
 
     //Add the header row.
     var row = table.insertRow(-1);
-    var header_names = ['Row Num', 'Stage', 'Code', 'Abbrev', 'Full Name', 'Name', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks']
-    //let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: null }), {}, 0)
+    var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Full Name', 'Name', 'Module','Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks'];
     jsonArr = [];
     const testField = /^\d\w/
     //Add the data rows from Excel file.
     //console.log(excelRows)
     for (let i = 0; i < excelRows.length; i++) {
-        let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: null }), {}, 0)
         let objectProperties = Object.getOwnPropertyNames(excelRows[i])
         if (testField.test(excelRows[i][objectProperties[1]])) {
             //Add the data row.
@@ -84,10 +83,7 @@ function ProcessExcel(data) {
                     var cell = row.insertCell(-1);
                     cell.innerHTML = excelRows[i][objectProperties[j]];
                 }
-                let tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]] }
-                Object.assign(obj, tmpObj)
             };
-            jsonArr.push(obj)
         };
     };
     //console.log(jsonArr)
@@ -105,13 +101,13 @@ function selectOption(year) {
     var table = document.getElementById("dvExcel").getElementsByTagName('tbody')[0];
     //Add the header row.
     var row = table.insertRow(-1);
-    var header_names = ['Row Num', 'Stage', 'Code', 'Abbrev', 'Name', 'Type', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks']
+    var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module Type', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks']
     jsonArr = [];
     const testField = /^\d\w/
     //Add the data rows from Excel file.
     //console.log(excelRows)
-    for (let i = 0; i < excelRows.length; i++) {
-        let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: null }), {}, 0)
+    for (let i =0; i < excelRows.length; i++) {
+        let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: year }), {}, 0)
         let objectProperties = Object.getOwnPropertyNames(excelRows[i])
         if (testField.test(excelRows[i][objectProperties[1]])) {
             //Add the data row.
@@ -128,28 +124,56 @@ function selectOption(year) {
                 }
                 let tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]] }
                 Object.assign(obj, tmpObj)
+                tmpObj = { 'Year':year }
+                Object.assign(obj, tmpObj)
             };
             jsonArr.push(obj)
         };
     };
     //console.log(jsonArr)
+};
+//get available semesters
+function getSemesters() {
+    axios.get(base_url + '/api/semester/').then((results) => {
+        console.log(results)
+    })
+};
+
+//get local filename
+function getFileName() {
+    let filename = document.getElementById("fileUpload");
+    let e = document.getElementById("select-section");
+    let year = e.value;
+    let message = `You are currently submitting: ${filename.value.split("\\").pop()} - Sheet ${year}  <br> Confirm Submission?`
+    document.getElementById("confirmation").innerHTML = message
 }
+//getSemesters()
 $(document).ready(() => {
     $("#upload").click(() => {
         document.getElementById("upload-file").hidden = false;
         Upload()
-    })
-    $("#change-semester").click(() => {
+        getFileName()
+    });
+    $('#select-section').on('change',() => {
+        getFileName()
+        //console.log(workbook)
         let e = document.getElementById("select-section");
         let year = e.value;
         selectOption(year)
         document.getElementById("upload-file").hidden = false;
-    })
-    $("#upload-file").click(() => {
+    });
+    $('#upload-file').on('show.bs.modal')
+    $("#uploadModalConfirmation").click(() => {
         console.log(jsonArr)
-        /* axios.post(base_url + '/reports/upload/excel/', {
-            data : jsonArr
-        }).then((result) =>
-            console.log(result)) */
+        axios.post(base_url + '/reports/upload/excel/', {
+            data: jsonArr
+        }).then((result) => {
+            console.log(result)
+            window.alert(result.data.message)
+            location.reload()
+        }).catch((error)=>{
+            window.alert(error.response.data)
+        })
     })
+
 })
