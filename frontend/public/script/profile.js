@@ -1,6 +1,8 @@
 // FUNCTIONS
+let base_url = "http://localhost:8080"
+
 function getProfileInfo(){
-    return axios.get('http://localhost:8080/api/staff/8405')
+    return axios.get(base_url + '/api/staff/8405')
     .then(response => response.data)
     .catch(err => error(err));
 };
@@ -8,10 +10,10 @@ function getProfileInfo(){
 function updateProfileInfo(){
     let config = {
         headers: {
-            'Content_Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data'
         }
     }
-    axios.put('http://localhost:8080/api/staff/8405',
+    axios.put(base_url + '/api/staff/8405',
     {
         staff_name: $("#staff-name")[0].value,
         staff_abbrv: $("#staff-abbrv")[0].value,
@@ -21,7 +23,7 @@ function updateProfileInfo(){
         staff_remarks: $("#staff-remarks")[0].value
     })
     .then(() => {
-        return axios.post('http://localhost:8080/uploads/profile-picture/8405',{},config)
+        return axios.post(base_url + '/uploads/profile-picture/8405',{},config)
     })
     .then(() => success())
     .catch(err => error(err));

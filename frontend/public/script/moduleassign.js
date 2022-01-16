@@ -1,5 +1,7 @@
+let base_url = "http://localhost:8080"
+
 function getAssignedModules(){
-    return axios.get('http://localhost:8080/api/module/assign/8405')
+    return axios.get(base_url + '/api/module/assign/8405')//SAMPLE DATA
     .then(response => response.data)
     .catch(err => error(err));
 }
@@ -13,7 +15,7 @@ async function generateAssignedModules(){
         total_hours += hours;
         $(".assigned-modules").append(`
         <tr>
-            <td id="module-`+index+`">`+module.mod_code+` `+module.fk_course_id+`: `+module.mod_name+` (`+module.mod_abbrv+`) YR `+module.year_offered+`/S</th>
+            <td id="module-`+index+`">`+module.mod_code+` `+module.fk_course_id+`: `+module.mod_name+` (`+module.mod_abbrv+`) YR `+module.stage+`/S`+module.fk_semester_code.slice(-1)+`</th>
             <td>`+module.ma_lecture.toFixed(1)+`</td>
             <td>`+module.ma_tutorial.toFixed(1)+`</td>
             <td>`+module.ma_practical.toFixed(1)+`</td>

@@ -83,7 +83,7 @@ module.exports.getAllStaff = () => {
 module.exports.getStaffByStaffId = (staff_id) => {
     return new Promise((resolve, reject) => {
         pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, fk_designation_id,staff_number, staff_mobile, staff_remarks, fk_staff_type 
-                 FROM staff_information WHERE staff_id = ?;`, [staff_id], (err, results) => {
+                 FROM staff_information WHERE staff_id = ? AND staff_status='Active';`, [staff_id], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -134,7 +134,7 @@ module.exports.updateStaffByStaffId = (staff_id,data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -158,7 +158,7 @@ module.exports.getTeachingRequirementByID = (staff_id) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -180,7 +180,7 @@ module.exports.createTeachingRequirement = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     })
 };
@@ -203,7 +203,7 @@ module.exports.updateTeachingRequirement = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -224,7 +224,7 @@ module.exports.deleteTeachingRequirement = (ptr_id) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -246,7 +246,7 @@ module.exports.getTeachingRequirementRemarks = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -268,7 +268,7 @@ module.exports.createTeachingRequirementRemarks = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -291,7 +291,7 @@ module.exports.updateTeachingRequirementRemarks = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -314,7 +314,7 @@ module.exports.getModuleBySection = (section) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -335,7 +335,7 @@ module.exports.getModuleByCode = (mod_code) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -356,7 +356,7 @@ module.exports.getAllModules = () => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -378,7 +378,7 @@ module.exports.createModule = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -403,7 +403,7 @@ module.exports.getAllModulePreference = () => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -424,7 +424,7 @@ module.exports.getModulePreferenceByID = (staff_id) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -445,7 +445,7 @@ module.exports.submitModulePreference = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -466,7 +466,7 @@ module.exports.updateModulePreferenceByID = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -475,7 +475,7 @@ module.exports.updateModulePreferenceByID = (data) => {
 module.exports.getAssignedModulesByModule = (mod_code) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.year_offered FROM mod_assign
+        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.stage FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
          WHERE fk_mod_code = ?;`, [mod_code], (err, results) => {
@@ -492,14 +492,13 @@ module.exports.getAssignedModulesByModule = (mod_code) => {
 
         });
     }).catch((error) => {
-        console.error(error);
         return error
     });
 };
 module.exports.getAssignedModulesByID = (staff_id) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.year_offered FROM mod_assign
+        pool.query(`SELECT assignment_id,ma_lecture,ma_tutorial,ma_practical,module.fk_semester_code, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.stage FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
          WHERE fk_staff_id = ?;`, [staff_id], (err, results) => {
@@ -516,7 +515,7 @@ module.exports.getAssignedModulesByID = (staff_id) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -537,7 +536,28 @@ module.exports.assignModuleByID = (data) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        return error
+    });
+};
+module.exports.updateAssignedModuleByID = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE mod_assign  
+             SET ma_lecture = ?, ma_tutorial = ?, ma_practical = ?
+             WHERE fk_semester_code = ? AND fk_staff_id = ? AND fk_mod_code = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
         return error
     });
 };
@@ -559,7 +579,7 @@ module.exports.unassignModuleByID = (ma_id) => {
         });
 
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
@@ -572,7 +592,7 @@ module.exports.getStaffBySection = (section) => {
         pool.query(`SELECT staff_id, staff_name, fk_staff_type FROM staff_information
         INNER JOIN designation
         ON fk_designation_id = designation.designation_id
-        WHERE designation.section_name LIKE ?`, [section], (err, results) => {
+        WHERE designation.section_name LIKE ? AND staff_status='Active'`, [section], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -586,7 +606,7 @@ module.exports.getStaffBySection = (section) => {
 
         });
     }).catch((error) => {
-        console.error(error);
+        
         return error
     });
 };
