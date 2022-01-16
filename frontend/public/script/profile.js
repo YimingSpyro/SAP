@@ -21,7 +21,7 @@ function updateProfileInfo(){
         staff_remarks: $("#staff-remarks")[0].value
     })
     .then(() => {
-        return axios.post('http://localhost:8080/uploads/profile-picture/8405',{}),config
+        return axios.post('http://localhost:8080/uploads/profile-picture/8405',{},config)
     })
     .then(() => success())
     .catch(err => error(err));

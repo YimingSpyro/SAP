@@ -80,11 +80,20 @@ module.exports.processRegister = ((req, res) => {
             })
         })
 })
-module.exports.processTestCookie = ((req, res) => {
-    res.cookie("username", "pls work damn it", {
-        httpOnly: true
-    });
-    res.send(req.cookies)
+module.exports.getNavItems =  (async (req, res) => {
+    try {
+        let results = await authManager.getNavItems();
+        console.log('Get All Exams', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
 })
 /* module.exports.getStaffByStaffId = ()=>{
     return new Promise((resolve,reject)=>{

@@ -104,3 +104,25 @@ module.exports.getStaffByStaffId = () => {
         return error
     })
 }
+module.exports.getNavItems= () => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                resolve(err);
+            } else {
+                connection.query('SELECT * FROM nav_items', (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+
+                        resolve(rows);
+                    }
+                    connection.release();
+                })
+            }
+        })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+}

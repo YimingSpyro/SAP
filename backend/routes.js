@@ -110,6 +110,9 @@ exports.appRoute = router => {
     router.post('/register', authController.processRegister);
     //router.get('/checkauthentication',authController.processTestCookie);
 
+    // SECTION
+    router.get('/api/section/', staffController.getAllSections);
+
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);
     router.get('/api/staff/:id', staffController.getStaffByID);
@@ -126,6 +129,8 @@ exports.appRoute = router => {
 
     // MODULE
     router.get('/api/module/', staffController.getAllModules);
+    router.get('/api/module/code/', staffController.getModuleByCode);
+    router.get('/api/module/section/', staffController.getModuleBySection);
     router.post('/api/module/', staffController.createModule);
 
     // MODULE PREFERENCE
@@ -135,6 +140,7 @@ exports.appRoute = router => {
     router.put('/api/module/preference/', staffController.updateModulePreferenceByID);
 
     // ASSIGNED MODULES
+    router.get('/api/module/assign/', staffController.getAssignedModulesByModule);
     router.get('/api/module/assign/:id', staffController.getAssignedModulesByID);
     router.post('/api/module/assign/', staffController.assignModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
@@ -142,6 +148,7 @@ exports.appRoute = router => {
     //STAFF-INFO
     router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
+    router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
 
     //SEMESTER INFO
@@ -167,4 +174,9 @@ exports.appRoute = router => {
     router.get('/api/getExam/:id', examController.getExamByExamId);
     router.post('/api/createExam', examController.createExam);
 
+    // TEACHING ASSIGNMENT SYSTEM
+    router.get('/api/tas/section/', staffController.getStaffBySection);
+
+
+    router.get('/api/nav-items', authController.getNavItems);
 }

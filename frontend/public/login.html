@@ -17,6 +17,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
+        if (sessionStorage.getItem('isLoggedIn')) {
+            window.location.href = "/home"
+        }
         $(document).ready(() => {
             $("#submit-button").click((e) => {
                 var staff_id = $("#staff_id").val();
@@ -33,9 +36,14 @@
                     axios.post('http://localhost:8080/login', {
                         staff_id: staff_id,
                         password: password
-                    },{withCredentials: true}).then((response) => {
+                    }, { withCredentials: true }).then((response) => {
                         if (response.status == 200) {
-                            console.log(response);
+                            var data = response.data.data
+                            sessionStorage.setItem('isLoggedIn', true)
+                            sessionStorage.setItem('staff_id', data.staff_id)
+                            sessionStorage.setItem('staff_name', data.staff_name)
+                            sessionStorage.setItem('staff_role', data.role_id)
+                            sessionStorage.setItem('staff_role_name', data.role_name)
                             window.location.href = "/home"
                             /* const accessToken = response.data.accessToken;
                             storeAccessTokenInLocalStorage(accessToken); */
