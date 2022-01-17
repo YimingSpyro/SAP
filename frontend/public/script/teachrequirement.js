@@ -1,12 +1,14 @@
 // FUNCTIONS
+let base_url = "http://localhost:8080"
+
 function getTeachingRequirements(){
-    return axios.get('http://localhost:8080/api/teaching-requirement/8405')
+    return axios.get(base_url + '/api/teaching-requirement/8405')
     .then(response => response.data)
     .catch(err => error(err));
 };
 
 function addTeachingRequirement(){
-    return axios.post('http://localhost:8080/api/teaching-requirement/', 
+    return axios.post(base_url + '/api/teaching-requirement/', 
     {
         staff_id : 8405, //SAMPLE DATA
         ptr_day : $("#day")[0].value,
@@ -20,19 +22,19 @@ function addTeachingRequirement(){
 }
 
 function deleteTeachingRequirement(ptr_id){
-    return axios.delete('http://localhost:8080/api/teaching-requirement/' + ptr_id)
-    .then(response => response.data)
+    return axios.delete(base_url + '/api/teaching-requirement/' + ptr_id)
+    .then(()=> success("deleted"))
     .catch(err => error(err));
 }
 
 function getRemarks(){
-    return axios.get('http://localhost:8080/api/teaching-requirement/remarks/8405?semester_code=AY 2021/2022 SEM2')
+    return axios.get(base_url + '/api/teaching-requirement/remarks/8405?semester_code=AY 2021/2022 SEM2')
     .then(response => response.data)
     .catch(err => error(err));
 };
 
 function addRemarks(){
-    return axios.post('http://localhost:8080/api/teaching-requirement/remarks', 
+    return axios.post(base_url + '/api/teaching-requirement/remarks', 
     {
         staff_id : 8405, //SAMPLE DATA
         ptr_remarks : $("#additional-requests")[0].value,
@@ -43,7 +45,7 @@ function addRemarks(){
 }
 
 function updateRemarks(){
-    return axios.put('http://localhost:8080/api/teaching-requirement/remarks', 
+    return axios.put(base_url + '/api/teaching-requirement/remarks', 
     {
         staff_id : 8405, //SAMPLE DATA
         ptr_remarks : $("#additional-requests")[0].value,

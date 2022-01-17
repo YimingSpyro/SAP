@@ -23,6 +23,7 @@
     <link href="admincss/navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminteachingassignmentsystem.css">
+
     <script src="/script/teachassign.js"></script>
     <script src="/script/notifications.js"></script>
     <script src="/script/global.js"></script>
@@ -197,7 +198,7 @@
                         </table>
 
 
-                        <!-- Modal -->
+                        <!-- Module Modal -->
                         <div class="modal fade" id="teaching-assignment-modal" tabindex="-1"
                             aria-labelledby="teaching-assignment-modal" aria-hidden="true">
                             <div class="modal-dialog modal-xl">
@@ -206,21 +207,182 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- View Staff Info Modal -->
                         <div class="modal fade" id="staff-modal" tabindex="-1" aria-labelledby="staff-modal"
                             aria-hidden="true">
                             <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
+                                <div class="modal-content staff-information">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title staff-name" id="teaching-assignment-modal"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body row">
+
+                                        <!-- Page Content (left) -->
+                                        <div id="page-content" class="col-7 py-3 align-center">
+                                            <div id="content-view-modal-left" class="mx-2">
+
+                                                <!-- Content Header -->
+                                                <div id="content-header" class="text-center">
+                                                    <p class="mx-0">Assigned Modules</p>
+                                                </div>
+
+                                                <!-- Content Item -->
+                                                <div id="content-item-left">
+                                                    <!-- Tables -->
+                                                    <table class="table table-dark">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Classes</th>
+                                                                <th scope="col">L</th>
+                                                                <th scope="col">T</th>
+                                                                <th scope="col">P</th>
+                                                                <th scope="col">Hours</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="assigned-modules">
+
+                                                        </tbody>
+                                                        <thead class="total-hours">
+
+                                                        </thead>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Page Content (right) -->
+                                        <div id="page-content" class="col-5 py-3 justify-content-center">
+                                            <div id="content-view-modal-right" class="mx-2">
+
+                                                <!-- Content Header -->
+                                                <div id="content-header" class="text-center">
+                                                    <p class="mx-0">Module Preference</p>
+                                                </div>
+
+                                                <!-- Content Item -->
+                                                <div id="content-item-right">
+                                                    <div class="module-preferences">
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-1" class=" col-form-label">1st
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-1" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="1" id="mc-1" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-2" class=" col-form-label">2nd
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-2" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="2" id="mc-2" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-3" class=" col-form-label">3rd
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-3" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="3" id="mc-3" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-4" class=" col-form-label">4th
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-4" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="4" id="mc-4" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-5" class=" col-form-label">5th
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-5" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="5" id="mc-5" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-6" class=" col-form-label">6th
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-6" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="6" id="mc-6" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
 
                                 </div>
                             </div>
                         </div>
                         <!-- Success Modal -->
-                        <div class="modal fade" id="submit-requests-success" tabindex="-1"
+                        <div class="modal fade" id="submit-requests-success-assigned" tabindex="-1"
                             aria-labelledby="submit-requests-success-modal" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header justify-content-center">
-                                        <h5 class="modal-title">Profile Updated</h5>
+                                        <h5 class="modal-title">Staff Assigned</h5>
                                     </div>
                                     <div class="modal-footer justify-content-center">
                                         <button type="button" class="btn btn-primary "
@@ -230,6 +392,35 @@
                             </div>
                         </div>
 
+                        <div class="modal fade" id="submit-requests-success-unassigned" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Staff Unassigned</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-confirm" tabindex="-1"
+                        aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 class="modal-title">Hours Assigned</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary "
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                         <!-- Error Modal -->
                         <div class="modal fade" id="submit-requests-error" tabindex="-1"
                             aria-labelledby="submit-requests-error-modal" aria-hidden="true">
@@ -237,6 +428,9 @@
                                 <div class="modal-content">
                                     <div class="modal-header justify-content-center">
                                         <h5 class="modal-title">An Error has occured</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="error-message text-center"></p>
                                     </div>
                                     <div class="modal-footer justify-content-center">
                                         <button type="button" class="btn btn-primary "

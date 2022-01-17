@@ -1,17 +1,19 @@
+let base_url = "http://localhost:8080"
+
 function getModules(){
-    return axios.get('http://localhost:8080/api/module')
+    return axios.get(base_url + '/api/module')
     .then(response => response.data)
     .catch(err => error(err));
 };
 
 function getPreference(){
-    return axios.get('http://localhost:8080/api/module/preference/8405')
+    return axios.get(base_url + '/api/module/preference/8405')//SAMPLE DATA
     .then(response => response.data)
     .catch(err => error(err));
 }
 
 function uploadPreference(preference){
-    return axios.post('http://localhost:8080/api/module/preference', 
+    return axios.post(base_url + '/api/module/preference', 
     {
         staff_id : 8405, //SAMPLE DATA
         semester_code : "AY 2021/2022 SEM2", //SAMPLE DATA
@@ -22,7 +24,7 @@ function uploadPreference(preference){
 }
 
 function updatePreference(preference){
-    return axios.put('http://localhost:8080/api/module/preference', 
+    return axios.put(base_url + '/api/module/preference', 
     {
         staff_id : 8405, //SAMPLE DATA
         semester_code : "AY 2021/2022 SEM2", //SAMPLE DATA
@@ -77,7 +79,7 @@ async function generateModuleList(){
         <table class="table table-dark">
             <thead>
                 <tr>
-                    <th scope="col" class="module-info">`+ module.mod_code +` `+ module.mod_name +`<br>`+ module.mod_abbrv +` (`+module.fk_course_id+`) `+module.year_offered+`/S</th>
+                    <th scope="col" class="module-info">`+ module.mod_code +` `+ module.mod_name +`<br>`+ module.mod_abbrv +` (`+module.fk_course_id+`) `+module.stage+`/S`+module.fk_semester_code.slice(-1)+`</th>
                     <th scope="col">L</th>
                     <th scope="col">T</th>
                     <th scope="col">P</th>
@@ -116,7 +118,6 @@ async function generateExistingPreference(){
         for (let index = 0; index < data.length; index++) {
             const preference = data[index];
             let choice = index + 1;
-            console.log(preference.module);
             if (preference.module != null) {
                 $("#choice-"+choice).val(preference.module)
             }
