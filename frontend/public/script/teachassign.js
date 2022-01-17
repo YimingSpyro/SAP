@@ -222,12 +222,11 @@ async function generateStaffInfo(staff_id) {
     let total_hours = 0;
     for (let index = 0; index < assigned.length; index++) {
         const module = assigned[index];
-        console.log(module);
         let hours = module.ma_lecture + module.ma_tutorial + module.ma_practical;
         total_hours += hours;
         $(".assigned-modules").append(`
         <tr>
-            <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) YR ` + module.stage + `/S` + module.fk_semester_code.slice(-1) + `</th>
+            <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) YR ` + module.mod_stage + `/S` + module.fk_semester_code.slice(-1) + `</th>
             <td>`+ module.ma_lecture.toFixed(1) + `</td>
             <td>`+ module.ma_tutorial.toFixed(1) + `</td>
             <td>`+ module.ma_practical.toFixed(1) + `</td>

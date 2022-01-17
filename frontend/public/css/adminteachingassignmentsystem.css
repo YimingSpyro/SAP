@@ -88,7 +88,7 @@ p#text {
 }
 
 #staff-modal .modal-dialog {
-    height: 80%;
+    height: 100%;
 }
 #staff-modal .modal-dialog .modal-content{
     height: 100%;
@@ -100,4 +100,8 @@ p#text {
 }
 .view-staff-link:hover {
     color: #212529;
+}
+
+.error-message {
+    color: #22404F;
 }

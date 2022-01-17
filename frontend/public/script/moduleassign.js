@@ -15,7 +15,7 @@ async function generateAssignedModules(){
         total_hours += hours;
         $(".assigned-modules").append(`
         <tr>
-            <td id="module-`+index+`">`+module.mod_code+` `+module.fk_course_id+`: `+module.mod_name+` (`+module.mod_abbrv+`) YR `+module.stage+`/S`+module.fk_semester_code.slice(-1)+`</th>
+            <td id="module-`+index+`">`+module.mod_code+` `+module.fk_course_id+`: `+module.mod_name+` (`+module.mod_abbrv+`) YR `+module.mod_stage+`/S`+module.fk_semester_code.slice(-1)+`</th>
             <td>`+module.ma_lecture.toFixed(1)+`</td>
             <td>`+module.ma_tutorial.toFixed(1)+`</td>
             <td>`+module.ma_practical.toFixed(1)+`</td>
