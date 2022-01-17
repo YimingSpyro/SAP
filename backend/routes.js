@@ -4,6 +4,7 @@ const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
 const examController = require("./controllers/examController")
 const semesterController = require("./controllers/semesterController")
+const courseController = require("./controllers/courseController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -153,6 +154,9 @@ exports.appRoute = router => {
 
     //SEMESTER INFO
     router.get('/api/semester/',semesterController.getAllSemesters);
+
+    //COURSE
+    router.get('/api/courses/',courseController.getAllCourses);
 
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)

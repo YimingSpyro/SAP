@@ -63,7 +63,7 @@ function ProcessExcel(data) {
 
     //Add the header row.
     var row = table.insertRow(-1);
-    var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Full Name', 'Name', 'Module','Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks'];
+    var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks'];
     jsonArr = [];
     const testField = /^\d\w/
     //Add the data rows from Excel file.
@@ -106,7 +106,7 @@ function selectOption(year) {
     const testField = /^\d\w/
     //Add the data rows from Excel file.
     //console.log(excelRows)
-    for (let i =0; i < excelRows.length; i++) {
+    for (let i = 0; i < excelRows.length; i++) {
         let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: year }), {}, 0)
         let objectProperties = Object.getOwnPropertyNames(excelRows[i])
         if (testField.test(excelRows[i][objectProperties[1]])) {
@@ -124,7 +124,7 @@ function selectOption(year) {
                 }
                 let tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]] }
                 Object.assign(obj, tmpObj)
-                tmpObj = { 'Year':year }
+                tmpObj = { 'Year': year }
                 Object.assign(obj, tmpObj)
             };
             jsonArr.push(obj)
@@ -132,36 +132,45 @@ function selectOption(year) {
     };
     //console.log(jsonArr)
 };
-//get available semesters
-function getSemesters() {
-    axios.get(base_url + '/api/semester/').then((results) => {
-        console.log(results)
+
+//get available courses
+function getCourses() {
+    axios.get(base_url + '/api/courses/').then((results) => {
+        $("option[value*='D']").remove();
+        results.data.forEach(element => {
+            $('#select-course').append(`<option value=${element.course_id} >${element.course_id}</option>`)
+        });
     })
-};
+}
+
+getCourses()
 
 //get local filename
-function getFileName() {
+function getFileName(course_id) {
     let filename = document.getElementById("fileUpload");
     let e = document.getElementById("select-section");
     let year = e.value;
-    let message = `You are currently submitting: ${filename.value.split("\\").pop()} - Sheet ${year}  <br> Confirm Submission?`
+    let message = `You are currently submitting: ${filename.value.split("\\").pop()} - Sheet ${year} for ${course_id} <br> Confirm Submission?`
     document.getElementById("confirmation").innerHTML = message
 }
-//getSemesters()
 $(document).ready(() => {
     $("#upload").click(() => {
         document.getElementById("upload-file").hidden = false;
+        //document.getElementById("select-course").hidden = false;
         Upload()
         getFileName()
     });
-    $('#select-section').on('change',() => {
+    $('#select-section').on('change', () => {
         getFileName()
         //console.log(workbook)
         let e = document.getElementById("select-section");
         let year = e.value;
         selectOption(year)
-        document.getElementById("upload-file").hidden = false;
     });
+    /* $('#select-course').on('change', () => {
+        let a = document.getElementById("select-course")
+        console.log(a.value)
+    }); */
     $('#upload-file').on('show.bs.modal')
     $("#uploadModalConfirmation").click(() => {
         console.log(jsonArr)
@@ -171,7 +180,7 @@ $(document).ready(() => {
             console.log(result)
             window.alert(result.data.message)
             location.reload()
-        }).catch((error)=>{
+        }).catch((error) => {
             window.alert(error.response.data)
         })
     })
