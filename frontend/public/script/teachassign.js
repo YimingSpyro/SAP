@@ -5,13 +5,13 @@ function getCourse() {
 };
 
 function getModulesBySection(section) {
-    return axios.get(base_url + '/api/module/section?section=' + section)
+    return axios.get(base_url + '/api/module/section?section=' + section + '&semester_code=' + localStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 };
 
 function getAssignedModulesByCode(mod_code) {
-    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code)
+    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code + '&semester_code=' + localStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -23,13 +23,13 @@ function getAllStaff() {
 };
 
 function getAssignedModules(staff_id) {
-    return axios.get(base_url + '/api/module/assign/' + staff_id)
+    return axios.get(base_url + '/api/module/assign/' + staff_id + '?semester_code=' + localStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 }
 
 function getPreference(staff_id) {
-    return axios.get(base_url + '/api/module/preference/' + staff_id)
+    return axios.get(base_url + '/api/module/preference/' + staff_id + '?semester_code=' + localStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 }
@@ -47,7 +47,7 @@ function assignModule(staff_id, mod_code) {
             ma_lecture: $("#input-lecture-assign")[0].value,
             ma_tutorial: $("#input-tutorial-assign")[0].value,
             ma_practical: $("#input-practical-assign")[0].value,
-            semester_code: "AY 2021/2022 SEM2", //SAMPLE DATA
+            semester_code: localStorage.getItem('semester_code'), //SAMPLE DATA
             module_code: mod_code
         })
         .then(() => success("assigned"))
@@ -81,15 +81,15 @@ function updateModule(mod_code) {
     return axios.put(base_url + '/api/tas/module',
     {
         mod_coord: $("#select-mc option:selected").val(),
-        mod_lecture: $("#input-lecture-hours")[0].value,
-        mod_tutorial: $("#input-tutorial-hours")[0].value,
-        mod_practical: $("#input-practical-hours")[0].value,
+        mod_lecture: $("#input-lecture-hours")[0].value * 15,
+        mod_tutorial: $("#input-tutorial-hours")[0].value * 15,
+        mod_practical: $("#input-practical-hours")[0].value * 15,
         lecture_class: $("#input-lecture-classes")[0].value,
         tutorial_class: $("#input-tutorial-classes")[0].value,
         practical_class: $("#input-practical-classes")[0].value,
         total_students: $("#input-student")[0].value,
         mod_code : mod_code,
-        semester_code : 'AY 2021/2022 SEM2' // SAMPLE DATA
+        semester_code : localStorage.getItem('semester_code') // SAMPLE DATA
     })
     .then(() => {
         $("#module-warning").empty();
@@ -137,7 +137,7 @@ async function calculateStaffHours(staff_id) {
         const module = assigned[index];
         total_hours += module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical;
     }
-    return total_hours;
+    return total_hours / 15;
 }
 
 async function calculateModuleClasses(module) {
@@ -160,9 +160,9 @@ async function calculateModuleClasses(module) {
 
     return {
         // Hours Per Week
-        "lecture_per_week": module.mod_lecture,
-        "tutorial_per_week": module.mod_tutorial,
-        "practical_per_week": module.mod_practical,
+        "lecture_per_week": module.mod_lecture / 15,
+        "tutorial_per_week": module.mod_tutorial / 15,
+        "practical_per_week": module.mod_practical / 15,
         // Number of Classes
         "classes_lecture": module.lecture_class,
         "classes_tutorial": module.tutorial_class,
@@ -172,7 +172,7 @@ async function calculateModuleClasses(module) {
         "assigned_tutorial": assigned_tutorial,
         "assigned_practical": assigned_practical,
         // Module Total Hours Per Week
-        "total_hours": total_hours,
+        "total_hours": total_hours / 15,
         // Total Students taking module
         "total_students": module.total_students,
         // Classes in total to assign
@@ -245,7 +245,7 @@ async function calculateClassesTBA() {
             }
         }
         staff_hours.empty()
-        staff_hours.append(total_hours)
+        staff_hours.append(total_hours / 15)
     })
 
     if (unsaved) {
@@ -281,7 +281,7 @@ async function generateModuleList() {
                 <button class="btn btn-success view-module"type="button" data-id="`+ index + `" data-bs-toggle="modal" data-bs-target="#teaching-assignment-modal">View</button>
             </td>
         </tr>`);
-        if (classes.to_be_assigned_classes != classes.assigned_classes) {
+        if (classes.to_be_assigned_classes != classes.assigned_classes || classes.assigned_classes == 0) {
             $('.module-' + index).addClass("status-unassigned")
         }
     }
@@ -316,7 +316,7 @@ async function generateStaffInfo(staff_id) {
     let total_hours = 0;
     for (let index = 0; index < assigned.length; index++) {
         const module = assigned[index];
-        let hours = module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical;
+        let hours = (module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical) / 15;
         total_hours += hours;
         $(".assigned-modules").append(`
         <tr>
@@ -355,6 +355,7 @@ async function generateModal(module_index) {
     let total_lecture = classes.classes_lecture;
     let total_tutorial = classes.classes_tutorial;
     let total_practical = classes.classes_practical;
+    let total_students = classes.total_students;
     if (classes.classes_lecture == null) {
         total_lecture = 0;
     }
@@ -363,6 +364,9 @@ async function generateModal(module_index) {
     }
     if (classes.classes_practical == null) {
         total_practical = 0;
+    }
+    if (classes.total_students == null) {
+        total_students = 0
     }
     $(".modal-information").empty();
     $(".modal-information").append(`
@@ -382,12 +386,12 @@ async function generateModal(module_index) {
             <div class = "form-group row align-middle py-1">
                 <label for="input-student" class="col-2 col-form-label">Total No. of Students:</label>
                 <div class="col-1">
-                    <input type="number" min="0" value="`+ classes.total_students + `"class="form-control form-control-sm module-input" id="input-student">   
+                    <input type="number" min="0" value="`+ total_students + `"class="form-control form-control-sm module-input" id="input-student">   
                 </div>
                 <label for="select-mc" class="col-2 col-form-label">Module Coordinator:</label>
                 <div class="col-3">
                     <select class="form-select module-input" id="select-mc">
-                        
+                        <option value="not-selected">Select Staff</option>
                     </select>
                 </div>
                 
@@ -395,7 +399,7 @@ async function generateModal(module_index) {
             </div>
             <table id="admin-table" class="table table-dark rounded-top">
                 <thead>
-                    <tr>
+                    <tr class="align-bottom">
                         <th scope="col" class="col-3">`+ module.mod_name + `</th>
                         <th scope="col" class="col-3">Lecture</th>
                         <th scope="col" class="col-3">Tutorial</th>
@@ -652,6 +656,9 @@ async function confirmAssignment(module_index) {
 }
 
 async function updateModuleInformation(mod_code) {
+    if ($("#select-mc option:selected").val() == "not-selected") {
+        throw "Module Coordinator Not Selected";
+    }
     updateModule(mod_code)
     .then(()=>{
         calculateClassesTBA();
@@ -715,7 +722,11 @@ $(document).ready(() => {
 
     $("#teaching-assignment-modal").on('click', ".module-changes", (e) => { 
         let mod_code = $(e.target).data("code");
-        updateModuleInformation(mod_code);
+
+        updateModuleInformation(mod_code)
+        .catch(err => {
+            error(err)
+        });
     })
 
     $("#teaching-assignment-modal").on('change', ".module-input", () => {

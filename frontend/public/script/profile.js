@@ -1,5 +1,5 @@
 function getProfileInfo(){
-    return axios.get(base_url + '/api/staff/8405')
+    return axios.get(base_url + '/api/staff/8405') //SAMPLE
     .then(response => response.data)
     .catch(err => error(err));
 };
@@ -10,18 +10,17 @@ function updateProfileInfo(){
             'Content-Type': 'multipart/form-data'
         }
     }
-    axios.put(base_url + '/api/staff/8405',
+    axios.put(base_url + '/api/staff/personal/8405',
     {
-        staff_name: $("#staff-name")[0].value,
         staff_abbrv: $("#staff-abbrv")[0].value,
         staff_email: $("#staff-email")[0].value,
         staff_number: $("#staff-contactnumber")[0].value,
         staff_mobile: $("#staff-mobilenumber")[0].value,
         staff_remarks: $("#staff-remarks")[0].value
     })
-    .then(() => {
+    /* .then(() => {
         return axios.post(base_url + '/uploads/profile-picture/8405',{},config)
-    })
+    }) */
     .then(() => success())
     .catch(err => error(err));
 }
@@ -33,7 +32,7 @@ async function generateProfile() {
     $("#staff-name")[0].value = data.staff_name;
     $("#staff-abbrv")[0].value = data.staff_abbrv;
     $("#staff-type")[0].value = data.fk_staff_type;
-    $("#staff-des")[0].value = data.fk_designation_id;
+    $("#staff-des")[0].value = data.designation_name;
     $("#staff-email")[0].value = data.staff_email;
     $("#staff-contactnumber")[0].value = data.staff_number;
     $("#staff-mobilenumber")[0].value = data.staff_mobile;
