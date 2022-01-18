@@ -137,7 +137,7 @@ exports.updateReport = (data) => {
 }
 module.exports.uploadJSONReport = (data) => {
     return new Promise((resolve, reject) => {
-        pool.query(`INSERT INTO module (mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks)
+        pool.query(`INSERT INTO module (mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks,fk_semester_code, fk_course_id)
         VALUES ${data}
         ON DUPLICATE KEY UPDATE 
         mod_code=VALUES(mod_code),
@@ -154,7 +154,9 @@ module.exports.uploadJSONReport = (data) => {
         module_type=VALUES(module_type),
         type=VALUES(type),
         total_hours=VALUES(total_hours),
-        remarks=VALUES(remarks);`,
+        remarks=VALUES(remarks),
+        fk_semester_code=VALUES(fk_semester_code),
+        fk_course_id=VALUES(fk_course_id);`,
         (err, rows) => {
             if (err) {
                 reject(err);
