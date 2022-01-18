@@ -1,3 +1,5 @@
+let base_url = "http://localhost:8080"
+
 function getProfilePicture() {
     axios.get(base_url + '/uploads/profile-picture/1144').then((response) => {
         console.log(response.data[0].filename)
