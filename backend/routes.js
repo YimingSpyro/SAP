@@ -4,6 +4,7 @@ const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
 const examController = require("./controllers/examController")
 const semesterController = require("./controllers/semesterController")
+const courseController = require("./controllers/courseController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -156,7 +157,10 @@ exports.appRoute = router => {
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
 
     //SEMESTER INFO
-    router.get('/api/semester/',semesterController.getAllSemesters);
+    router.get('/api/semester/', semesterController.getAllSemesters);
+
+    //COURSE
+    router.get('/api/courses/', courseController.getAllCourses);
 
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
@@ -164,15 +168,17 @@ exports.appRoute = router => {
     router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
 
     //REPORTS
-    router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
-    router.delete('/uploads/reports/', getFields.none(), uploadsController.deleteReport)
-    router.get('/uploads/reports/', getFields.none(), uploadsController.getAllReport)
-    router.get('/uploads/reports/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
-    router.get('/uploads/reports/file/id', getFields.none(), uploadsController.getReportByID)
-    router.put('/uploads/reports/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware,  uploadsController.updateReport)
-    router.get('/reports/download/:file_id/:filename',uploadsController.downloadFile)
-    router.post('/reports/upload/excel/',uploadsController.uploadFileJSON)
-
+    router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)
+    router.post('/reports/upload/excel/', uploadsController.uploadFileJSON)
+    
+    //REPORTS API NOT IN USE
+    //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
+    //router.delete('/uploads/reports/', getFields.none(), uploadsController.deleteReport)
+    //router.get('/uploads/reports/', getFields.none(), uploadsController.getAllReport)
+    //router.get('/uploads/reports/:staff_id', getFields.none(), uploadsController.getReportByStaffID)
+    //router.get('/uploads/reports/file/id', getFields.none(), uploadsController.getReportByID)
+    //router.put('/uploads/reports/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
+    
     //EXAM 
     router.get('/api/getExam', examController.processGetAllExam);
     router.get('/api/getExam/:id', examController.getExamByExamId);

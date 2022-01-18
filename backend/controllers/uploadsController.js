@@ -284,24 +284,27 @@ module.exports.uploadFileJSON = async (req, res) => {
     //in this case, req.body.data will send back the object array from the frontend. iterating through the 
     //array should show each individual object immediately.
     //console.log(req.body.data)
-    let data = req.body.data
+    let data = req.body.data.excelData
+    let course = req.body.data.course_id
+    let semester_code = req.body.data.semester_code
     let stringConcat = "";
     //order of elements for reference 
     //(mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks)
     data.forEach(element => {
       stringConcat += `,('${element['Code']}','${element['Year']}','${element['Stage']}','${element['Name']}',
     '${element['Abbrev']}','${element['DLT']}','${element['L']}','${element['T']}','${element['P']}','${element['CU']}',
-    '${element['Prerequisite (Pass\/Taken)']}','${element['Module Type']}','${element['Type']}','${element['Total']}','${element['Remarks']}')`
+    '${element['Prerequisite (Pass\/Taken)']}','${element['Module Type']}','${element['Type']}','${element['Total']}','${element['Remarks']}',
+    '${semester_code}','${course}')`
     });
     let newStringConcat = stringConcat.replace(',', '')
     let result = await uploadsService.uploadJSONReport(newStringConcat)
     //console.log(stringConcat)
     if (result.changedRows == 0) {
-      return res.status(200).json({ message: "Successfully Inserted New Records" });
+      return res.status(200).json({ message: "Successfully Inserted New Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });
     } else if (result.changedRows > 0) {
-      return res.status(200).json({ message: "Successfully Updated Existing Records" });
+      return res.status(200).json({ message: "Successfully Updated Existing Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });
     } else if (result.errno) {
-      throw "Database Error. SQL Error Code: " + result.errno
+      throw "Database Error. SQL Error Code: " + result.errno + result.code
     }
 
   } catch(error) {
