@@ -2,7 +2,13 @@ function error(err){
     $("#submit-requests-error").modal('show')
     $(".error-message").empty();
     if (err.response) {
-        $(".error-message").append(err.response.data.message);
+        if (err.response.data.message) {
+            $(".error-message").append(err.response.data.message);
+        } 
+        else {
+            $(".error-message").append(err);
+        }
+        
     }
     else if(err.request) {
         $(".error-message").append(err, ". Client side error.");

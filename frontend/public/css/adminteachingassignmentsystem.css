@@ -39,6 +39,14 @@ button {
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+.form-control-sm {
+    width: 50%;
+}
+
+#input-student {
+    width: 100%;
+}
+
 button {
     margin-right: 0;
 }
@@ -102,6 +110,8 @@ p#text {
     color: #212529;
 }
 
-.error-message {
+.warning-message p{
     color: #22404F;
+    font-weight: bold;
+    font-size: .8em;
 }

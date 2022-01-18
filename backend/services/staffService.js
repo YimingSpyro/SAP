@@ -20,8 +20,27 @@ module.exports.getAllSections = () => {
     });
 };
 
+// COURSE
+module.exports.getAllCourses = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT DISTINCT course_id FROM course`, [], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            connection.release();
+        });
+    });
+};
+
 // PERSONAL INFORRATION
-module.exports.createStaff = (data,roles) => {
+module.exports.createStaff = (data, roles) => {
     return new Promise((resolve, reject) => {
         //used pool.getconnnection here to perform multiple queries
         pool.getConnection((err, connection) => {
@@ -113,7 +132,7 @@ module.exports.deleteStaffByStaffId = (staff_id) => {
         });
     });
 };
-module.exports.updateStaffByStaffId = (staff_id,data) => {
+module.exports.updateStaffByStaffId = (staff_id, data) => {
     console.log(data);
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
@@ -134,7 +153,7 @@ module.exports.updateStaffByStaffId = (staff_id,data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -158,7 +177,7 @@ module.exports.getTeachingRequirementByID = (staff_id) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -180,7 +199,7 @@ module.exports.createTeachingRequirement = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     })
 };
@@ -203,7 +222,7 @@ module.exports.updateTeachingRequirement = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -224,7 +243,7 @@ module.exports.deleteTeachingRequirement = (ptr_id) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -246,7 +265,7 @@ module.exports.getTeachingRequirementRemarks = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -268,7 +287,7 @@ module.exports.createTeachingRequirementRemarks = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -291,7 +310,7 @@ module.exports.updateTeachingRequirementRemarks = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -314,7 +333,7 @@ module.exports.getModuleBySection = (section) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -335,7 +354,7 @@ module.exports.getModuleByCode = (mod_code) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -356,7 +375,7 @@ module.exports.getAllModules = () => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -378,7 +397,7 @@ module.exports.createModule = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -403,7 +422,7 @@ module.exports.getAllModulePreference = () => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -424,7 +443,7 @@ module.exports.getModulePreferenceByID = (staff_id) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -445,7 +464,7 @@ module.exports.submitModulePreference = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -466,7 +485,7 @@ module.exports.updateModulePreferenceByID = (data) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -475,7 +494,7 @@ module.exports.updateModulePreferenceByID = (data) => {
 module.exports.getAssignedModulesByModule = (mod_code) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage FROM mod_assign
+        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_lecture, module.mod_tutorial, module.mod_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage, module.lecture_class, module.tutorial_class, module.practical_class, module.total_students FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
          WHERE fk_mod_code = ?;`, [mod_code], (err, results) => {
@@ -498,7 +517,7 @@ module.exports.getAssignedModulesByModule = (mod_code) => {
 module.exports.getAssignedModulesByID = (staff_id) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT assignment_id,ma_lecture,ma_tutorial,ma_practical,module.fk_semester_code, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage FROM mod_assign
+        pool.query(`SELECT assignment_id,ma_lecture,ma_tutorial,ma_practical, module.mod_lecture, module.mod_tutorial, module.mod_practical, module.fk_semester_code, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage, module.lecture_class, module.tutorial_class, module.practical_class, module.total_students FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
          WHERE fk_staff_id = ?;`, [staff_id], (err, results) => {
@@ -515,7 +534,7 @@ module.exports.getAssignedModulesByID = (staff_id) => {
 
         });
     }).catch((error) => {
-        
+
         return error
     });
 };
@@ -544,7 +563,7 @@ module.exports.updateAssignedModuleByID = (data) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE mod_assign  
              SET ma_lecture = ?, ma_tutorial = ?, ma_practical = ?
-             WHERE fk_semester_code = ? AND fk_staff_id = ? AND fk_mod_code = ?;`, data, (err, results) => {
+             WHERE CONCAT(prefix,assignment_id) = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -579,20 +598,18 @@ module.exports.unassignModuleByID = (ma_id) => {
         });
 
     }).catch((error) => {
-        
+
         return error
     });
 };
 
 
 //TAS
-module.exports.getStaffBySection = (section) => {
+module.exports.getAllStaffTAS = (section) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT staff_id, staff_name, fk_staff_type FROM staff_information
-        INNER JOIN designation
-        ON fk_designation_id = designation.designation_id
-        WHERE designation.section_name LIKE ? AND staff_status='Active'`, [section], (err, results) => {
+        pool.query(`SELECT staff_id, staff_name FROM staff_information
+        WHERE staff_status='Active'`, [section], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -606,7 +623,30 @@ module.exports.getStaffBySection = (section) => {
 
         });
     }).catch((error) => {
-        
+
+        return error
+    });
+};
+
+module.exports.updateModuleTAS = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE module  
+             SET fk_mod_coord = ?, mod_lecture = ?, mod_tutorial = ?, mod_practical = ?, lecture_class = ?, tutorial_class = ?, practical_class = ?, total_students = ?
+             WHERE mod_code = ? AND fk_semester_code = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
         return error
     });
 };

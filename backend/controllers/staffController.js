@@ -50,6 +50,27 @@ exports.getAllSections = async (req, res, next) => {
 
 };
 
+/* ==== COURSE API ==== */
+exports.getAllCourses = async (req, res, next) => {
+    try {
+        let results = await staffManager.getAllCourses();
+        console.log('Get Staff Personal Information', results);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
 
 /* ==== PERSONAL INFORMATION API ==== */
 
@@ -644,13 +665,11 @@ exports.getAssignedModulesByID = async (req, res, next) => {
 };
 // API Update Module by Staff ID
 exports.updateAssignedModuleByID = async (req, res, next) => {
-    let module_code = req.body.module_code;
-    let staff_id = req.body.staff_id;
     let ma_lecture = req.body.ma_lecture;
     let ma_tutorial = req.body.ma_tutorial;
     let ma_practical = req.body.ma_practical;
-    let semester_code = req.body.semester_code;
-    let data = [ma_lecture, ma_tutorial, ma_practical, semester_code, staff_id, module_code];
+    let ma_id = req.body.ma_id;
+    let data = [ma_lecture, ma_tutorial, ma_practical, ma_id];
     try {
         let results = await staffManager.updateAssignedModuleByID(data);
         if (results.errno) {
@@ -723,12 +742,44 @@ exports.unassignModuleByID = async (req, res, next) => {
 
 /* ==== TEACHING ASSIGNMENT SYSTEM ==== */
 
-// API Get Staff By Section
-exports.getStaffBySection = async (req, res, next) => {
+// API Get All Staff for TAS
+exports.getAllStaffTAS = async (req, res, next) => {
     let section = req.query.section;
     try {
-        let results = await staffManager.getStaffBySection(section);
+        let results = await staffManager.getAllStaffTAS(section);
         console.log('Get Staff Assigned Module', results);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Update Module By TAS
+exports.updateModuleTAS = async (req, res, next) => {
+    let mod_coord = req.body.mod_coord;
+    let mod_lecture = req.body.mod_lecture;
+    let mod_tutorial = req.body.mod_tutorial;
+    let mod_practical = req.body.mod_practical;
+    let lecture_class = req.body.lecture_class;
+    let tutorial_class = req.body.tutorial_class;
+    let practical_class = req.body.practical_class;
+    let total_students = req.body.total_students;
+    let mod_code = req.body.mod_code;
+    let semester_code = req.body.semester_code;
+    let data = [mod_coord, mod_lecture, mod_tutorial, mod_practical, lecture_class, tutorial_class, practical_class, total_students, mod_code, semester_code];
+    try {
+        let results = await staffManager.updateModuleTAS(data);
         if (results.errno) {
             throw 'Database SQL Error'
         }
