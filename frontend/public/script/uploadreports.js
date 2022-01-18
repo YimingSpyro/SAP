@@ -48,10 +48,17 @@ function ProcessExcel(data) {
     //Fetch Sheet.
     var firstSheet = workbook.SheetNames;
     //remove select options
-    $("option[value*='2']").remove();
+    $("option[value*=2]").remove();
 
-    firstSheet.forEach(element => {
-        $('#select-section').append(`<option value=${element} >${element}</option>`)
+    //retrieve and render new options from the selected sheet
+    let parsedSheet = firstSheet.map(element => parseInt(element))
+    parsedSheet.sort(function (a, b) { return b-a })
+    let studentYears = ["Year 1: ", "Year 2: ", "Year 3: "]
+    for (let index = 0; index < studentYears.length; index++) {
+        studentYears[index] += parsedSheet[index];
+    };
+    studentYears.forEach(element => {
+        $('#select-section').append(`<option value='${element}' >${element}</option>`)
     });
     //console.log(workbook.SheetNames)
     //Read all rows from First Sheet into an JSON array.
@@ -90,12 +97,14 @@ function ProcessExcel(data) {
 
 };
 //change the sheet to the corresponding year selected
-function selectOption(year) {
-    //Read all rows from First Sheet into an JSON array.
-    var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[year]);
+function selectOption(input) {
+    let userInput = input.split(": ");
+    let studentYear = userInput[0].split('');
+    //Read all rows from the Sheet into an JSON array.
+    var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[userInput[1]]);
     //remove table tr elements
     $("tbody tr").remove();
-
+    console.log(studentYear[studentYear.length - 1])
     //Create a HTML Table element.
     document.createElement('tbody')
     var table = document.getElementById("dvExcel").getElementsByTagName('tbody')[0];
@@ -103,11 +112,11 @@ function selectOption(year) {
     var row = table.insertRow(-1);
     var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module Type', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks']
     jsonArr = [];
-    const testField = /^\d\w/
+    const testField = new RegExp(`^${studentYear[studentYear.length - 1]}\\w`);
     //Add the data rows from Excel file.
     //console.log(excelRows)
     for (let i = 0; i < excelRows.length; i++) {
-        let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: year }), {}, 0)
+        let obj = header_names.reduce((o, key) => Object.assign(o, { [key]: userInput[1] }), {}, 0)
         let objectProperties = Object.getOwnPropertyNames(excelRows[i])
         if (testField.test(excelRows[i][objectProperties[1]])) {
             //Add the data row.
@@ -124,7 +133,7 @@ function selectOption(year) {
                 }
                 let tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]] }
                 Object.assign(obj, tmpObj)
-                tmpObj = { 'Year': year }
+                tmpObj = { 'Year': userInput[1] }
                 Object.assign(obj, tmpObj)
             };
             jsonArr.push(obj)
@@ -142,46 +151,65 @@ function getCourses() {
         });
     })
 }
+//get available semesters
+function getSemesters() {
+    axios.get(base_url + '/api/semester/').then((results) => {
+        //$("#select-semester select option[value*='AY']").remove();
+        results.data.forEach(element => {
+            $('#select-semester').append(`<option>${element.semester_code}</option>`)
+        });
+    })
+}
 
+getSemesters()
 getCourses()
 
 //get local filename
-function getFileName(course_id) {
+function getFileName(course_id,semester_code ) {
     let filename = document.getElementById("fileUpload");
     let e = document.getElementById("select-section");
     let year = e.value;
-    let message = `You are currently submitting: ${filename.value.split("\\").pop()} - Sheet ${year} for ${course_id} <br> Confirm Submission?`
+    let message = `You are currently submitting: ${filename.value.split("\\").pop()} - Sheet ${year} for ${course_id} ${semester_code}<br> Confirm Submission?`
     document.getElementById("confirmation").innerHTML = message
 }
 $(document).ready(() => {
     $("#upload").click(() => {
         document.getElementById("upload-file").hidden = false;
-        //document.getElementById("select-course").hidden = false;
+        document.getElementById("select-course").hidden = false;
+        document.getElementById("select-semester").hidden = false;
         Upload()
         getFileName()
     });
     $('#select-section').on('change', () => {
-        getFileName()
-        //console.log(workbook)
         let e = document.getElementById("select-section");
         let year = e.value;
         selectOption(year)
     });
-    /* $('#select-course').on('change', () => {
-        let a = document.getElementById("select-course")
-        console.log(a.value)
-    }); */
+    $('#select-course').on('change', () => {
+        let a = document.getElementById("select-course");
+        let b = $( "#select-semester option:selected" ).text();
+        getFileName(a.value, b)
+    });
+    $('#select-semester').on('change', () => {
+        //console.log(workbook)
+        let a = document.getElementById("select-course");
+        let b = $( "#select-semester option:selected" ).text();
+        console.log()
+        getFileName(a.value, b)
+    });
     $('#upload-file').on('show.bs.modal')
     $("#uploadModalConfirmation").click(() => {
+        let a = document.getElementById("select-course")
+        let b = $( "#select-semester option:selected" ).text();
         console.log(jsonArr)
         axios.post(base_url + '/reports/upload/excel/', {
-            data: jsonArr
+            data: {excelData: jsonArr, course_id: a.value, semester_code: b }
         }).then((result) => {
             console.log(result)
             window.alert(result.data.message)
-            location.reload()
+            //location.reload()
         }).catch((error) => {
-            window.alert(error.response.data)
+            window.alert(error.response.data.message)
         })
     })
 
