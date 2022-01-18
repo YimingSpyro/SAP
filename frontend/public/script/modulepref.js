@@ -1,5 +1,3 @@
-let base_url = "http://localhost:8080"
-
 function getModules(){
     return axios.get(base_url + '/api/module')
     .then(response => response.data)
@@ -79,7 +77,7 @@ async function generateModuleList(){
         <table class="table table-dark">
             <thead>
                 <tr>
-                    <th scope="col" class="module-info">`+ module.mod_code +` `+ module.mod_name +`<br>`+ module.mod_abbrv +` (`+module.fk_course_id+`) `+module.stage+`/S`+module.fk_semester_code.slice(-1)+`</th>
+                    <th scope="col" class="module-info">`+ module.mod_code +` `+ module.mod_name +`<br>`+ module.mod_abbrv +` (`+module.fk_course_id+`) `+module.mod_stage+`</th>
                     <th scope="col">L</th>
                     <th scope="col">T</th>
                     <th scope="col">P</th>

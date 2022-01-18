@@ -1,7 +1,5 @@
-
-let base_url = "http://localhost:8080"
-function getSection() {
-    return axios.get(base_url + '/api/section/')
+function getCourse() {
+    return axios.get(base_url + '/api/course/')
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -18,8 +16,8 @@ function getAssignedModulesByCode(mod_code) {
         .catch(err => error(err));
 };
 
-function getStaffBySection(section) {
-    return axios.get(base_url + '/api/tas/section?section=%' + section + '%')
+function getAllStaff() {
+    return axios.get(base_url + '/api/tas/staff')
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -46,9 +44,9 @@ function assignModule(staff_id, mod_code) {
     return axios.post(base_url + '/api/module/assign/',
         {
             staff_id: staff_id,
-            ma_lecture: 0,
-            ma_tutorial: 0,
-            ma_practical: 0,
+            ma_lecture: $("#input-lecture-assign")[0].value,
+            ma_tutorial: $("#input-tutorial-assign")[0].value,
+            ma_practical: $("#input-practical-assign")[0].value,
             semester_code: "AY 2021/2022 SEM2", //SAMPLE DATA
             module_code: mod_code
         })
@@ -58,24 +56,44 @@ function assignModule(staff_id, mod_code) {
 
 function unassignModule(ma_id) {
     return axios.delete(base_url + '/api/module/assign/' + ma_id)
-    .then(() => success("unassigned"))
-    .catch(err => error(err));
+        .then(() => success("unassigned"))
+        .catch(err => error(err));
 
 }
 
 function updateAssignedModule(data) {
-    return axios.put(base_url + '/api/module/assign', 
+    return axios.put(base_url + '/api/module/assign',
+        {
+            ma_lecture: data.lecture_classes,
+            ma_tutorial: data.tutorial_classes,
+            ma_practical: data.practical_classes,
+            ma_id: data.ma_id
+        })
+        .then(() => {
+            success("confirm")
+        })
+        .catch(err => {
+            error(err)
+        });
+}
+
+function updateModule(mod_code) {
+    return axios.put(base_url + '/api/tas/module',
     {
-        staff_id : data.staff_id,
-        semester_code : "AY 2021/2022 SEM2", //SAMPLE DATA
-        module_code : data.mod_code,
-        ma_lecture : data.lecture_hours,
-        ma_tutorial : data.tutorial_hours,
-        ma_practical : data.practical_hours
+        mod_coord: $("#select-mc option:selected").val(),
+        mod_lecture: $("#input-lecture-hours")[0].value,
+        mod_tutorial: $("#input-tutorial-hours")[0].value,
+        mod_practical: $("#input-practical-hours")[0].value,
+        lecture_class: $("#input-lecture-classes")[0].value,
+        tutorial_class: $("#input-tutorial-classes")[0].value,
+        practical_class: $("#input-practical-classes")[0].value,
+        total_students: $("#input-student")[0].value,
+        mod_code : mod_code,
+        semester_code : 'AY 2021/2022 SEM2' // SAMPLE DATA
     })
     .then(() => {
-        $("#submit-requests-success-confirm").modal('hide')
-        success("confirm")
+        $("#module-warning").empty();
+        success("module");
     })
     .catch(err => {
         error(err)
@@ -86,84 +104,160 @@ async function checkAssignedModule(staff_id, module_code) {
     let data = await getAssignedModules(staff_id);
     let assigned = false;
     let assignment_id = null;
-    let lecture_hours = 0;
-    let tutorial_hours = 0;
-    let practical_hours = 0;
-    let total_hours = 0;
+    let lecture_classes = 0;
+    let tutorial_classes = 0;
+    let practical_classes = 0;
+    let total_classes = 0;
     for (let index = 0; index < data.length; index++) {
         const assigned_module = data[index];
         let assigned_code = assigned_module.mod_code;
         if (assigned_code == module_code) {
             assigned = true;
-            lecture_hours = assigned_module.ma_lecture
-            tutorial_hours = assigned_module.ma_tutorial
-            practical_hours = assigned_module.ma_practical
+            lecture_classes = assigned_module.ma_lecture
+            tutorial_classes = assigned_module.ma_tutorial
+            practical_classes = assigned_module.ma_practical
             assignment_id = "MA" + assigned_module.assignment_id
-            total_hours =  lecture_hours + tutorial_hours + practical_hours
+            total_classes = lecture_classes + tutorial_classes + practical_classes
         }
     }
     return {
         "ma_id": assignment_id,
         "assigned": assigned,
-        "lecture_hours": lecture_hours,
-        "tutorial_hours": tutorial_hours,
-        "practical_hours": practical_hours,
-        "total_hours": total_hours
+        "lecture_classes": lecture_classes,
+        "tutorial_classes": tutorial_classes,
+        "practical_classes": practical_classes,
+        "total_classes": total_classes
     };
 }
 
 async function calculateStaffHours(staff_id) {
-    let data = await getAssignedModules(staff_id);
+    let assigned = await getAssignedModules(staff_id);
     let total_hours = 0;
-    for (let index = 0; index < data.length; index++) {
-        const module = data[index];
-        let hours = module.ma_lecture + module.ma_tutorial + module.ma_practical;
-        total_hours += hours;
+    for (let index = 0; index < assigned.length; index++) {
+        const module = assigned[index];
+        total_hours += module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical;
     }
     return total_hours;
 }
 
-async function calculateModuleHours(module) {
+async function calculateModuleClasses(module) {
     let assigned = await getAssignedModulesByCode(module.mod_code);
-    let assigned_hours = 0;
+    let assigned_classes = 0;
     let assigned_lecture = 0;
     let assigned_tutorial = 0;
     let assigned_practical = 0;
     for (let index = 0; index < assigned.length; index++) {
         const assignment = assigned[index];
-        let assignment_hours = assignment.ma_lecture + assignment.ma_tutorial + assignment.ma_practical;
+        let assignment_classes = assignment.ma_lecture + assignment.ma_tutorial + assignment.ma_practical;
         assigned_lecture += assignment.ma_lecture;
         assigned_tutorial += assignment.ma_tutorial;
         assigned_practical += assignment.ma_practical;
-        assigned_hours += assignment_hours;
+        assigned_classes += assignment_classes;
     }
     let total_hours = module.mod_lecture + module.mod_tutorial + module.mod_practical;
-    let to_be_assigned_hours = total_hours - assigned_hours;
-    let tba_lecture = module.mod_lecture - assigned_lecture;
-    let tba_tutorial = module.mod_tutorial - assigned_tutorial;
-    let tba_practical = module.mod_practical - assigned_practical;
+    let to_be_assigned_classes = module.lecture_class + module.tutorial_class + module.practical_class;
+
 
     return {
+        // Hours Per Week
         "lecture_per_week": module.mod_lecture,
         "tutorial_per_week": module.mod_tutorial,
         "practical_per_week": module.mod_practical,
-        "tba_lecture": tba_lecture,
-        "tba_tutorial": tba_tutorial,
-        "tba_practical": tba_practical,
+        // Number of Classes
+        "classes_lecture": module.lecture_class,
+        "classes_tutorial": module.tutorial_class,
+        "classes_practical": module.practical_class,
+        // Total Assigned to Module
         "assigned_lecture": assigned_lecture,
         "assigned_tutorial": assigned_tutorial,
         "assigned_practical": assigned_practical,
+        // Module Total Hours Per Week
         "total_hours": total_hours,
-        "to_be_assigned_hours": to_be_assigned_hours,
-        "assigned_hours": assigned_hours
+        // Total Students taking module
+        "total_students": module.total_students,
+        // Classes in total to assign
+        "to_be_assigned_classes": to_be_assigned_classes,
+        // Classes assigned in total
+        "assigned_classes": assigned_classes
+    }
+}
+
+async function calculateClassesTBA() {
+    let unsaved = false;
+    if ($(".unsaved-changes").length > 0) {
+        unsaved = true;
+    }
+    $("#assignment-warning").empty();
+    let tba_lecture = 0;
+    let tba_tutorial = 0;
+    let tba_practical = 0;
+    $(".assigned-lecture").each((index, lecture_class) => {
+        tba_lecture += parseInt($(lecture_class).val());
+    })
+    $(".assigned-tutorial").each((index, tutorial_class) => {
+        tba_tutorial += parseInt($(tutorial_class).val());
+    })
+    $(".assigned-practical").each((index, practical_class) => {
+        tba_practical += parseInt($(practical_class).val())
+    })
+    tba_lecture = $("#input-lecture-classes").val() - tba_lecture
+    tba_tutorial = $("#input-tutorial-classes").val() - tba_tutorial
+    tba_practical = $("#input-practical-classes").val() - tba_practical
+    if (tba_lecture < 0) {
+        tba_lecture = 0;
+        $("#assignment-warning").append(`<p>More lecture classes assigned than specified!</p>`);
+    }
+    if (tba_tutorial < 0) {
+        tba_tutorial = 0;
+        $("#assignment-warning").append(`<p>More tutorial classes assigned than specified!</p>`);
+    }
+    if (tba_practical < 0) {
+        tba_practical = 0;
+        $("#assignment-warning").append(`<p>More practical classes assigned than specified!</p>`);
+    }
+    $(".tba-footer").empty();
+    $(".tba-footer").append(`
+    <tr>
+        <td>Classes to Assign</td>
+        <td>`+ tba_lecture + `</td>
+        <td>`+ tba_tutorial + `</td>
+        <td>`+ tba_practical + `</td>
+        <td></td>
+        <td></td>
+    </tr>`);
+
+    $(".staff").each(async (index, staff) => {
+        let staff_id = $(staff).data("staff");
+        let assigned = await getAssignedModules(staff_id);
+        let mod_code = $(staff).data("code");
+        let total_hours = 0;
+        let staff_hours = $(staff).find(".staff-hours");
+        let lecture_classes = $(staff).find("#input-lecture")[0].value;
+        let tutorial_classes = $(staff).find("#input-tutorial")[0].value;
+        let practical_classes = $(staff).find("#input-practical")[0].value;
+        for (let index = 0; index < assigned.length; index++) {
+            const module = assigned[index];
+            if (mod_code == module.mod_code) {
+                total_hours += lecture_classes * module.mod_lecture + tutorial_classes * module.mod_tutorial + practical_classes * module.mod_practical;
+            }
+            else {
+                total_hours += module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical;
+            }
+        }
+        staff_hours.empty()
+        staff_hours.append(total_hours)
+    })
+
+    if (unsaved) {
+        $("#assignment-warning").append(`<p class="unsaved-changes">Changes Not Saved!</p>`);
     }
 }
 
 async function generateSection() {
-    let sections = await getSection();
-    for (let index = 0; index < sections.length; index++) {
-        const section = sections[index];
-        $("#select-section").append(`<option value="` + section.fk_course_id + `">` + section.section_name + `</option>`)
+    let courses = await getCourse();
+    for (let index = 0; index < courses.length; index++) {
+        const section = courses[index];
+        $("#select-section").append(`<option value="` + section.course_id + `">` + section.course_id + `</option>`)
     }
 }
 
@@ -175,19 +269,19 @@ async function generateModuleList() {
     $("#caption").append(`Showing ` + modules.length + ` Results`);
     for (let index = 0; index < modules.length; index++) {
         const module = modules[index];
-        let hours = await calculateModuleHours(module);
+        let classes = await calculateModuleClasses(module);
         $(".module-list").append(`
         <tr class="border-bottom border-white module-`+ index + ` align-middle">
             <td>`+ module.mod_code + `</td>
             <td>`+ module.mod_name + `</td>
-            <td>`+ hours.total_hours + `</td>
-            <td>`+ hours.to_be_assigned_hours + `</td>
-            <td>`+ hours.assigned_hours + `</td>
+            <td>`+ classes.total_hours + `</td>
+            <td>`+ classes.to_be_assigned_classes + `</td>
+            <td>`+ classes.assigned_classes + `</td>
             <td class="text-end">
                 <button class="btn btn-success view-module"type="button" data-id="`+ index + `" data-bs-toggle="modal" data-bs-target="#teaching-assignment-modal">View</button>
             </td>
         </tr>`);
-        if (hours.to_be_assigned_hours != 0) {
+        if (classes.to_be_assigned_classes != classes.assigned_classes) {
             $('.module-' + index).addClass("status-unassigned")
         }
     }
@@ -222,15 +316,14 @@ async function generateStaffInfo(staff_id) {
     let total_hours = 0;
     for (let index = 0; index < assigned.length; index++) {
         const module = assigned[index];
-        console.log(module);
-        let hours = module.ma_lecture + module.ma_tutorial + module.ma_practical;
+        let hours = module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical;
         total_hours += hours;
         $(".assigned-modules").append(`
         <tr>
-            <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) YR ` + module.stage + `/S` + module.fk_semester_code.slice(-1) + `</th>
-            <td>`+ module.ma_lecture.toFixed(1) + `</td>
-            <td>`+ module.ma_tutorial.toFixed(1) + `</td>
-            <td>`+ module.ma_practical.toFixed(1) + `</td>
+            <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) YR ` + module.mod_stage + `</th>
+            <td>`+ module.ma_lecture + `</td>
+            <td>`+ module.ma_tutorial + `</td>
+            <td>`+ module.ma_practical + `</td>
             <td>`+ hours.toFixed(1) + `</td>
         </tr>`);
         if (parseInt(module.fk_mod_coord) == staff_id) {
@@ -257,8 +350,20 @@ async function generateModal(module_index) {
     let section = $("#select-section option:selected").val();
     let modules = await getModulesBySection(section);
     let module = modules[module_index]
-    let hours = await calculateModuleHours(module);
+    let classes = await calculateModuleClasses(module);
     let mod_code = module.mod_code;
+    let total_lecture = classes.classes_lecture;
+    let total_tutorial = classes.classes_tutorial;
+    let total_practical = classes.classes_practical;
+    if (classes.classes_lecture == null) {
+        total_lecture = 0;
+    }
+    if (classes.classes_tutorial == null) {
+        total_tutorial = 0;
+    }
+    if (classes.classes_practical == null) {
+        total_practical = 0;
+    }
     $(".modal-information").empty();
     $(".modal-information").append(`
     <!-- Content header -->
@@ -273,52 +378,110 @@ async function generateModal(module_index) {
         <div class="modal-section-title">Module Information</div>
         <div class="line2"></div>
         <!-- Table -->
-        <table id="admin-table" class="table table-dark rounded-top">
-            <thead>
-                <tr>
-                    <th scope="col" class="col-3">`+ module.mod_name + `</th>
-                    <th scope="col" class="col-3">Lecture</th>
-                    <th scope="col" class="col-3">Tutorial</th>
-                    <th scope="col" class="col-3">Practical</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="border-bottom border-white">
-                    <td>Hours per week</td>
-                    <td>`+ hours.lecture_per_week + `</td>
-                    <td>`+ hours.tutorial_per_week + `</td>
-                    <td>`+ hours.practical_per_week + `</td>
-                </tr>
-                <tr class="border-bottom border-white">
-                    <td>To be assigned</td>
-                    <td>`+ hours.tba_lecture + `</td>
-                    <td>`+ hours.tba_tutorial + `</td>
-                    <td>`+ hours.tba_practical + `</td>
-                </tr>
-                <tr class="border-bottom border-white">
-                    <td>Hours Assigned</td>
-                    <td>`+ hours.assigned_lecture + `</td>
-                    <td>`+ hours.assigned_tutorial + `</td>
-                    <td>`+ hours.assigned_practical + `</td>
-                </tr>
-            </tbody>
-        </table>
-    
-        <!-- Select Staff -->
-        <div class="mb-3">
-            <div class="modal-section-title">Unassigned Section Staff</div>
-            <div class="line2"></div>
-        </div>
-        <!-- Table -->
-        <div class = "staff-table overflow-auto">
+        <div class = "overflow-hidden py-1">
+            <div class = "form-group row align-middle py-1">
+                <label for="input-student" class="col-2 col-form-label">Total No. of Students:</label>
+                <div class="col-1">
+                    <input type="number" min="0" value="`+ classes.total_students + `"class="form-control form-control-sm module-input" id="input-student">   
+                </div>
+                <label for="select-mc" class="col-2 col-form-label">Module Coordinator:</label>
+                <div class="col-3">
+                    <select class="form-select module-input" id="select-mc">
+                        
+                    </select>
+                </div>
+                
+                
+            </div>
             <table id="admin-table" class="table table-dark rounded-top">
                 <thead>
                     <tr>
-                        <th scope="col" class="col-3">Section Members</th>
-                        <th scope="col" class="col-2">Staff Type</th>
-                        <th scope="col" class="col-2">Total Hours</th>
-                        <th scope="col" class="col-2">No. of Classes</th>
-                        <th scope="col"></th>
+                        <th scope="col" class="col-3">`+ module.mod_name + `</th>
+                        <th scope="col" class="col-3">Lecture</th>
+                        <th scope="col" class="col-3">Tutorial</th>
+                        <th scope="col" class="col-3">Practical</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="border-bottom border-white align-middle">
+                        <td>Hours per Week</td>
+                        <td><input type="number" min="0" value="`+ classes.lecture_per_week + `" class="form-control form-control-sm module-input" id="input-lecture-hours"></td>
+                        <td><input type="number" min="0" value="`+ classes.tutorial_per_week + `" class="form-control form-control-sm module-input" id="input-tutorial-hours"></td>
+                        <td><input type="number" min="0" value="`+ classes.practical_per_week + `" class="form-control form-control-sm module-input" id="input-practical-hours"></td>
+                    </tr>
+                    <tr class="border-bottom border-white align-middle">
+                        <td>No. of Classes</td>
+                        <td><input type="number" min="0" value="`+ total_lecture + `" class="form-control form-control-sm module-input" id="input-lecture-classes"></td>
+                        <td><input type="number" min="0" value="`+ total_tutorial + `" class="form-control form-control-sm module-input" id="input-tutorial-classes"></td>
+                        <td><input type="number" min="0" value="`+ total_practical + `" class="form-control form-control-sm module-input" id="input-practical-classes"></td>
+                    </tr>
+                    <tr class="border-bottom border-white classes-assigned">
+                        <td>Classes Assigned</td>
+                        <td>`+ classes.assigned_lecture + `</td>
+                        <td>`+ classes.assigned_tutorial + `</td>
+                        <td>`+ classes.assigned_practical + `</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class = "row py-1">
+            <div class = "col warning-message" id="module-warning">
+                
+            </div>
+            <div class = "col">
+                <!-- Update Button -->
+                <button type="button" class="btn btn-primary float-end module-changes" data-code="`+ mod_code +`" data-index="` + module_index +`">Save Changes</button>
+            </div>
+        </div>
+
+        </div>
+
+        <!-- Teaching Assignment -->
+        <div class="modal-section-title">Teaching Assignment</div>
+        <div class="line2"></div>
+        <!-- Table -->
+        <div class = "overflow-hidden py-1">
+            <table id="admin-table" class="table table-dark rounded-top">
+                <thead>
+                    <tr class = "align-middle">
+                        <th scope="col" class="col-3">Assigned Staff</th>
+                        <th scope="col" class="col-2">Lecture</th>
+                        <th scope="col" class="col-2">Tutorial</th>
+                        <th scope="col" class="col-2">Practical</th>
+                        <th scope="col" class="col-2">Total Module Hours</th>
+                        <th scope="col" class="col"></th>
+                    </tr>
+                </thead>
+                <tbody class="assigned-staff">
+
+                </tbody>
+                <tfoot class="tba-footer">
+
+                </tfoot>
+            </table>
+            <div class = "row py-1">
+                <div class = "col warning-message" id="assignment-warning">
+                    
+                </div>
+                <div class = "col">
+                    <!-- Update Button -->
+                    <button type="button" class="btn btn-primary float-end confirm-assignment" data-index="`+ module_index + `">Confirm Assignment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Select Staff -->
+        <div class="modal-section-title">Assign Staff</div>
+        <div class="line2"></div>
+
+        <!-- Table -->
+        <div class = "staff-table overflow-auto  py-1">
+            <table id="admin-table" class="table table-dark rounded-top">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-4">Staff</th>
+                        <th scope="col" class="col-2">Lecture</th>
+                        <th scope="col" class="col-2">Tutorial</th>
+                        <th scope="col" class="col-2">Practical</th>
                         <th scope="col"></th>
                     </tr>
                 </thead>
@@ -328,182 +491,175 @@ async function generateModal(module_index) {
             </table>
         </div>
 
-        <!-- Teaching Assignment -->
-        <div class="modal-section-title">Teaching Assignment</div>
-        <div class="line2"></div>
-        <!-- Table -->
-        <table id="admin-table" class="table table-dark rounded-top">
-            <thead>
-                <tr>
-                    <th scope="col" class="col-3">Assigned Staff</th>
-                    <th scope="col" class="col-2">Lecture</th>
-                    <th scope="col" class="col-2">Tutorial</th>
-                    <th scope="col" class="col-2">Practical</th>
-                    <th scope="col" class="col-2">Total Hours</th>
-                    <th scope="col" class="col"></th>
-                </tr>
-            </thead>
-            <tbody class="assigned-staff">
 
-            </tbody>
-            <tfoot class="tba-footer">
-
-            </tfoot>
-        </table>
-
-        <!-- Update Button -->
-        <button type="button" class="btn btn-primary float-end confirm-assignment">Confirm Assignment</button>
     </div>
     `);
     // Filling up Staff List and Assigned Staff in Modal
-    let staff_list = await getStaffBySection(section);
+    $(".staff-list").append(`
+    <tr class="border-bottom border-white align-middle">
+        <td>
+            <select class="form-select select-staff">
+                <option selected>Select Staff</option>
+            </select>
+        </td>
+        <td>
+            <input type="number" min="0" value="`+ 0 + `" class="form-control form-control-sm" id="input-lecture-assign">
+        </td>
+        <td>
+            <input type="number" min="0" value="`+ 0 + `" class="form-control form-control-sm" id="input-tutorial-assign">
+        </td>
+        <td>
+            <input type="number" min="0" value="`+ 0 + `" class="form-control form-control-sm" id="input-practical-assign">
+        </td>
+        <td>
+            <button class="btn btn-success assign-staff" type="button"  data-index="`+ module_index + `" data-code="` + mod_code + `">Assign</button>
+        </td>
+    </tr>`)
+    let staff_list = await getAllStaff();
     for (let index = 0; index < staff_list.length; index++) {
         const staff = staff_list[index];
         let staff_id = staff.staff_id
         let staff_name = staff.staff_name
-        let staff_type = staff.fk_staff_type;
-        let staff_hours = await calculateStaffHours(staff_id)
         let assigned = await checkAssignedModule(staff_id, mod_code)
         if (assigned.assigned) {
             $(".assigned-staff").append(`
-            <tr data-staff="`+ staff_id + `" data-code="`+ mod_code + `" data-index="`+module_index+`" class="border-bottom border-white align-middle staff">
+            <tr data-staff="`+ staff_id + `" data-id="` + assigned.ma_id + `" data-code="` + mod_code + `" class="border-bottom border-white align-middle staff">
                 <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff view-staff-link">` + staff_name + `</a></td>
                 <td>
-                    <input type="text" value="`+ assigned.lecture_hours + `" class="form-control form-control-sm" id="input-lecture">
+                    <input type="number" min="0" value="`+ assigned.lecture_classes + `" class="assigned assigned-lecture form-control form-control-sm" id="input-lecture">
                 </td>
                 <td>
-                    <input type="text" value="`+ assigned.tutorial_hours + `" class="form-control form-control-sm" id="input-tutorial">
+                    <input type="number" min="0" value="`+ assigned.tutorial_classes + `" class="assigned assigned-tutorial form-control form-control-sm" id="input-tutorial">
                 </td>
                 <td>
-                    <input type="text" value="`+ assigned.practical_hours + `" class="form-control form-control-sm" id="input-practical">
+                    <input type="number" min="0" value="`+ assigned.practical_classes + `" class="assigned assigned-practical form-control form-control-sm" id="input-practical">
                 </td>
-                <td class="text-success">`+assigned.total_hours+`</td>
+                <td class="text-success staff-hours fw-bold"></td>
                 <td>
-                    <button class="btn btn-danger unassign-staff" type="button"  data-index="`+module_index+`" data-code="`+ mod_code + `" data-id="`+ assigned.ma_id + `" data-staff="` + staff_id + `">Unassign</button>
+                    <button class="btn btn-danger unassign-staff" type="button" data-code="` + mod_code + `" data-id="` + assigned.ma_id + `" data-staff="` + staff_id + `">Unassign</button>
                 </td>
-            </tr>`);
+            </tr>`)
         }
         else {
-            $(".staff-list").append(`
-            <tr data-staff="`+ staff_id + `" class="border-bottom border-white align-middle">
-                <td><a data-staff="`+ staff_id +`" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff-link view-staff">` + staff_name + `</a></td>
-                <td>`+ staff_type + `</td>
-                <td>`+ staff_hours + `</td>
-                <td>3</td>
-                <td class="text-center px-2 py-3">
-                    <button class="btn btn-success assign-staff" type="button" data-index="`+module_index+`" data-code="`+ mod_code + `" data-staff="` + staff_id + `">Assign</button>
-                </td>
-                <td class="text-center px-2 py-3">
-                    <button class="btn btn-info text-white view-staff"type="button" data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal">Staff Info</button>
-                </td>
-            </tr>`);
+            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
         }
+        if (module.fk_mod_coord == staff_id) {
+            $("#select-mc").append(`<option selected value="` + staff_id + `">` + staff_name + `</option>`)
+        }
+        else {
+            $("#select-mc").append(`<option value="` + staff_id + `" >` + staff_name + `</option>`)
+        }
+
     }
-    $(".tba-footer").append(`
-    <tr>
-        <td>To be assigned</td>
-        <td>`+ hours.tba_lecture + `</td>
-        <td>`+ hours.tba_tutorial + `</td>
-        <td>`+ hours.tba_practical + `</td>
-        <td>`+ hours.to_be_assigned_hours + `</td>
-        <td></td>
-    </tr>`);
+    
+    calculateClassesTBA();
 
 }
 
 async function assignStaff(staff_id, mod_code, module_index) {
-    $(".staff-list tr[data-staff='" + staff_id + "']").remove()
     assignModule(staff_id, mod_code);
     let staff = await getStaffByID(staff_id);
     let assigned = await checkAssignedModule(staff_id, mod_code);
     let staff_name = staff.staff_name;
     $(".assigned-staff").append(`
-    <tr data-staff="`+ staff_id + `" data-code="`+ mod_code + `" data-index="`+module_index+`" class="border-bottom border-white align-middle staff">
-        <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff-link">` + staff_name + `</a></td>
+    <tr data-staff="`+ staff_id + `" data-id="` + assigned.ma_id + `" data-code="` + mod_code + `" class="border-bottom border-white align-middle staff">
+        <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff view-staff-link">` + staff_name + `</a></td>
         <td>
-            <input type="text" value="`+ assigned.lecture_hours + `" class="form-control form-control-sm" id="input-lecture">
+            <input type="number" min="0" value="`+ assigned.lecture_classes + `" class="assigned assigned-lecture form-control form-control-sm" id="input-lecture">
         </td>
         <td>
-            <input type="text" value="`+ assigned.tutorial_hours + `" class="form-control form-control-sm" id="input-tutorial">
+            <input type="number" min="0" value="`+ assigned.tutorial_classes + `" class="assigned assigned-tutorial form-control form-control-sm" id="input-tutorial">
         </td>
         <td>
-            <input type="text" value="`+ assigned.practical_hours + `" class="form-control form-control-sm" id="input-practical">
+            <input type="number" min="0" value="`+ assigned.practical_classes + `" class="assigned assigned-practical form-control form-control-sm" id="input-practical">
         </td>
-        <td class="text-success">0</td>
+        <td class="text-success staff-hours fw-bold"></td>
         <td>
-            <button class="btn btn-danger unassign-staff" type="button" data-index="`+module_index+`" data-id="`+ assigned.ma_id + `" data-staff="` + staff_id + `">Unassign</button>
+            <button class="btn btn-danger unassign-staff" type="button" data-code="` + mod_code + `" data-id="` + assigned.ma_id + `" data-staff="` + staff_id + `">Unassign</button>
         </td>
     </tr>`);
+    $(".staff-list").empty();
+    $(".staff-list").append(`
+    <tr class="border-bottom border-white align-middle">
+        <td>
+            <select class="form-select select-staff">
+                <option selected>Select Staff</option>
+            </select>
+        </td>
+        <td>
+            <input type="number" min="0" value="`+ 0 + `" class="form-control form-control-sm" id="input-lecture-assign">
+        </td>
+        <td>
+            <input type="number" min="0" value="`+ 0 + `" class="form-control form-control-sm" id="input-tutorial-assign">
+        </td>
+        <td>
+            <input type="number" min="0" value="`+ 0 + `" class="form-control form-control-sm" id="input-practical-assign">
+        </td>
+        <td>
+            <button class="btn btn-success assign-staff" type="button"  data-index="`+ module_index + `" data-code="` + mod_code + `">Assign</button>
+        </td>
+    </tr>`)
+    let staff_list = await getAllStaff();
+    for (let index = 0; index < staff_list.length; index++) {
+        const staff = staff_list[index];
+        let staff_id = staff.staff_id
+        let staff_name = staff.staff_name
+        let assigned = await checkAssignedModule(staff_id, mod_code)
+        if (!assigned.assigned) {
+            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
+        }
+    }
+    $("#assignment-warning").empty();
+    calculateClassesTBA();
 }
 
-async function unassignStaff(staff_id, ma_id, mod_code, module_index) {
+async function unassignStaff(staff_id, ma_id) {
     $(".assigned-staff tr[data-staff='" + staff_id + "']").remove()
     unassignModule(ma_id);
     let staff = await getStaffByID(staff_id);
     let staff_name = staff.staff_name;
-    let staff_type = staff.fk_staff_type;
-    let staff_hours = await calculateStaffHours(staff_id)
-    $(".staff-list").append(`
-    <tr data-staff="`+ staff_id + `" class="border-bottom border-white align-middle">
-        <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff-link view-staff">` + staff_name + `</a></td>
-        <td>`+ staff_type + `</td>
-        <td>`+ staff_hours + `</td>
-        <td>3</td>
-        <td class="text-center px-2 py-3">
-            <button class="btn btn-success assign-staff" type="button" data-index="`+module_index+`" data-code="`+ mod_code + `" data-staff="` + staff_id + `">Assign</button>
-        </td>
-        <td class="text-center px-2 py-3">
-            <button class="btn btn-info text-white view-staff"type="button" data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal">Staff Info</button>
-        </td>
-    </tr>`);
-    let section = $("#select-section option:selected").val();
-    let modules = await getModulesBySection(section);
-    let module = modules[module_index]
-    let hours = await calculateModuleHours(module);
-    $(".tba-footer").empty();
-    $(".tba-footer").append(`
-    <tr>
-        <td>To be assigned</td>
-        <td>`+ hours.tba_lecture + `</td>
-        <td>`+ hours.tba_tutorial + `</td>
-        <td>`+ hours.tba_practical + `</td>
-        <td>`+ hours.to_be_assigned_hours + `</td>
-        <td></td>
-    </tr>`);
+    $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
+    calculateClassesTBA()
 }
-async function confirmAssignment(){
-    let module_index = null;
-    $(".staff").each(async(index,staff)=>{
-        let lecture_hours = $(staff).find("#input-lecture")[0].value;
-        let tutorial_hours = $(staff).find("#input-tutorial")[0].value;
-        let practical_hours = $(staff).find("#input-practical")[0].value;
-        let staff_id = $(staff).data("staff")
-        let mod_code = $(staff).data("code")
-        module_index = $(staff).data("index")
+
+async function confirmAssignment(module_index) {
+    $(".staff").each((index, staff) => {
+        let lecture_classes = $(staff).find("#input-lecture")[0].value;
+        let tutorial_classes = $(staff).find("#input-tutorial")[0].value;
+        let practical_classes = $(staff).find("#input-practical")[0].value;
+        let ma_id = $(staff).data("id")
         let data = {
-            "lecture_hours" : lecture_hours,
-            "tutorial_hours" : tutorial_hours,
-            "practical_hours" : practical_hours,
-            "staff_id" : staff_id,
-            "mod_code" : mod_code
+            "lecture_classes": lecture_classes,
+            "tutorial_classes": tutorial_classes,
+            "practical_classes": practical_classes,
+            "ma_id": ma_id
         }
         updateAssignedModule(data)
     })
-
+    $("#assignment-warning").empty();
+    calculateClassesTBA();
     let section = $("#select-section option:selected").val();
     let modules = await getModulesBySection(section);
     let module = modules[module_index]
-    let hours = await calculateModuleHours(module);
-    $(".tba-footer").empty();
-    $(".tba-footer").append(`
-    <tr>
-        <td>To be assigned</td>
-        <td>`+ hours.tba_lecture + `</td>
-        <td>`+ hours.tba_tutorial + `</td>
-        <td>`+ hours.tba_practical + `</td>
-        <td>`+ hours.to_be_assigned_hours + `</td>
-        <td></td>
-    </tr>`);
+    let classes = await calculateModuleClasses(module);
+    $(".classes-assigned").empty()
+    $(".classes-assigned").append(`
+        <td>Classes Assigned</td>
+        <td>`+ classes.assigned_lecture + `</td>
+        <td>`+ classes.assigned_tutorial + `</td>
+        <td>`+ classes.assigned_practical + `</td>`)
+
+}
+
+async function updateModuleInformation(mod_code) {
+    updateModule(mod_code)
+    .then(()=>{
+        calculateClassesTBA();
+    })
+    .then(() => {
+        generateModuleList();
+    });
+    
 }
 
 generateSection();
@@ -524,23 +680,47 @@ $(document).ready(() => {
     })
 
     $("#teaching-assignment-modal").on('click', ".assign-staff", (e) => {
-        let staff_id = $(e.target).data("staff")
-        let mod_code = $(e.target).data("code")
-        let module_index = $(e.target).data("index")
+        let staff_id = $(".select-staff option:selected").val();
+        let mod_code = $(e.target).data("code");
+        let module_index = $(e.target).data("index");
         assignStaff(staff_id, mod_code, module_index)
+        .then(() => {
+            generateModuleList();
+        });
     })
 
     $("#teaching-assignment-modal").on('click', ".unassign-staff", (e) => {
-        let staff_id = $(e.target).data("staff")
-        let ma_id = $(e.target).data("id")
-        let mod_code = $(e.target).data("code")
-        let module_index = $(e.target).data("index")
-        unassignStaff(staff_id, ma_id, mod_code, module_index)
+        let staff_id = $(e.target).data("staff");
+        let ma_id = $(e.target).data("id");
+        unassignStaff(staff_id, ma_id)
+        .then(() => {
+            generateModuleList();
+        });
     })
 
-    $("#teaching-assignment-modal").on('click', ".confirm-assignment", () => {
-        confirmAssignment()
+    $("#teaching-assignment-modal").on('click', ".confirm-assignment", (e) => {
+        let module_index = $(e.target).data("index");
+        confirmAssignment(module_index)
+        .then(() => {
+            generateModuleList();
+        });
+    })
 
+    $("#teaching-assignment-modal").on('change', ".assigned", () => {
+        $("#assignment-warning").empty();
+        calculateClassesTBA();
+        $("#assignment-warning").append(`<p class="unsaved-changes">Changes Not Saved!</p>`);
+
+    })
+
+    $("#teaching-assignment-modal").on('click', ".module-changes", (e) => { 
+        let mod_code = $(e.target).data("code");
+        updateModuleInformation(mod_code);
+    })
+
+    $("#teaching-assignment-modal").on('change', ".module-input", () => {
+        $("#module-warning").empty();
+        $("#module-warning").append(`<p>Changes Not Saved!</p>`);
     })
 
 

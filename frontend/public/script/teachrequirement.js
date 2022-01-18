@@ -1,6 +1,3 @@
-// FUNCTIONS
-let base_url = "http://localhost:8080"
-
 function getTeachingRequirements(){
     return axios.get(base_url + '/api/teaching-requirement/8405')
     .then(response => response.data)

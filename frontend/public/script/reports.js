@@ -1,4 +1,3 @@
-const base_url = 'http://localhost:8080'
 function downloadReport(file_id, filename) {
     window.open(`${base_url}/reports/download/${file_id}/${filename}`, '_blank')
 };

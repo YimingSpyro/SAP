@@ -1,8 +1,7 @@
 //global variable so other functions can use data
 var workbook;
 var jsonArr;
-var base_url = 'http://localhost:8080'
-//functions to validate the excel file
+//functions to handle excel upload locally
 function Upload() {
     //Reference the FileUpload element.
     var fileUpload = document.getElementById("fileUpload");
