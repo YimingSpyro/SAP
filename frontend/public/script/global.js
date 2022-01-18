@@ -1,4 +1,5 @@
-let base_url = "http://localhost:8080"
+let base_url = "http://localhost:8080";
+localStorage.setItem('semester_code','AY 2021/2022 SEM2');
 
 function getProfilePicture() {
     axios.get(base_url + '/uploads/profile-picture/1144').then((response) => {

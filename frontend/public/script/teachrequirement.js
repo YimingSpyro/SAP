@@ -1,5 +1,5 @@
 function getTeachingRequirements(){
-    return axios.get(base_url + '/api/teaching-requirement/8405')
+    return axios.get(base_url + '/api/teaching-requirement/8405' + '?semester_code=' + localStorage.getItem('semester_code')) //SAMPLE
     .then(response => response.data)
     .catch(err => error(err));
 };
@@ -12,7 +12,7 @@ function addTeachingRequirement(){
         ptr_time : $("#time")[0].value,
         ptr_duration : $("#duration")[0].value,
         ptr_reason : $("#reason")[0].value,
-        semester_code : "AY 2021/2022 SEM2" //SAMPLE DATA
+        semester_code : localStorage.getItem('semester_code') //SAMPLE DATA
     })
     .then(response => response.data)
     .catch(err => error(err));
@@ -25,7 +25,7 @@ function deleteTeachingRequirement(ptr_id){
 }
 
 function getRemarks(){
-    return axios.get(base_url + '/api/teaching-requirement/remarks/8405?semester_code=AY 2021/2022 SEM2')
+    return axios.get(base_url + '/api/teaching-requirement/remarks/8405' + '?semester_code=' + localStorage.getItem('semester_code')) //SAMPLE
     .then(response => response.data)
     .catch(err => error(err));
 };
@@ -35,7 +35,7 @@ function addRemarks(){
     {
         staff_id : 8405, //SAMPLE DATA
         ptr_remarks : $("#additional-requests")[0].value,
-        semester_code : "AY 2021/2022 SEM2" //SAMPLE DATA
+        semester_code : localStorage.getItem('semester_code') //SAMPLE DATA
     })
     .then(() => success())
     .catch(err => error(err));
@@ -46,7 +46,7 @@ function updateRemarks(){
     {
         staff_id : 8405, //SAMPLE DATA
         ptr_remarks : $("#additional-requests")[0].value,
-        semester_code : "AY 2021/2022 SEM2" //SAMPLE DATA
+        semester_code : localStorage.getItem('semester_code') //SAMPLE DATA
     })
     .then(() => success())
     .catch(err => error(err));
@@ -82,16 +82,14 @@ async function generateTeachingRequirements(){
     <!-- Add Requirement Section -->
     <tr>
         <td>
-            <div class="form-group col-12 my-1">
+            <div class="form-group my-1">
                 <select class="form-control form-control-sm" id="day">
                     <option>Monday</option>
                     <option>Tuesday</option>
                     <option>Wednesday</option>
                     <option>Thursday</option>
                     <option>Friday</option>
-                    <option>Saturday</option>
-                    <option>Sunday</option>
-                  </select>
+                </select>
             </div>
         </td>
         <td>
@@ -110,10 +108,8 @@ async function generateTeachingRequirements(){
             </div>
         </td>
         <td>
-            <div>
-                <!-- Add Button -->
-                <button type="button" class="btn btn-primary float-end m-3 p-0" id="add-requirement">Add</button>
-            </div>
+            <!-- Add Button -->
+            <button type="button" class="btn btn-primary float-end my-3" id="add-requirement">Add</button>
         </td>
     </tr>`);
 
@@ -128,7 +124,7 @@ async function generateTeachingRequirements(){
             <td>
                 <div>
                     <!-- Delete Button -->
-                    <button type="button" class="delete-requirement btn btn-danger float-end m-3 p-0" data-id="`+index+`">Delete</button>
+                    <button type="button" class="delete-requirement btn btn-danger float-end my-3" data-id="`+index+`">Delete</button>
                 </div>
             </td>
         </tr>`);

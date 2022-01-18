@@ -14,7 +14,7 @@ function error(err){
         $(".error-message").append(err, ". Client side error.");
     }
     else {
-        $(".error-message").append(err.message);
+        $(".error-message").append(err);
     }
 
 }

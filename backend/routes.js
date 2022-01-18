@@ -120,6 +120,7 @@ exports.appRoute = router => {
     router.get('/api/staff/', staffController.getAllStaff);
     router.get('/api/staff/:id', staffController.getStaffByID);
     router.put('/api/staff/:id', staffController.updateStaffByID)
+    router.put('/api/staff/personal/:id', staffController.updatePersonalInfoByID)
 
     // PERSONAL TEACHING REQUIREMENT
     router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
