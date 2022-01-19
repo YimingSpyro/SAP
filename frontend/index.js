@@ -68,7 +68,7 @@ app.get("/class-assignment", (req, res) => {
 });
 //SENDFILE FOR COURSE APIS---------------------------
 app.get("/course", (req, res) => {
-    res.sendFile("/view/coursemaintenancesystem.html", { root: __dirname });
+    res.sendFile("/view/admincoursemaintenance.html", { root: __dirname });
 });
 app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`)

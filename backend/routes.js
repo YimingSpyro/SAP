@@ -116,6 +116,11 @@ exports.appRoute = router => {
 
     // COURSE
     router.get('/api/course/', staffController.getAllCourses);
+    router.post('/api/course/', staffController.createCourse);
+    router.put('/api/course/', staffController.updateCourse);
+    router.put('/api/course/disable', staffController.disableCourse);
+    router.put('/api/course/enable', staffController.enableCourse);
+    router.delete('/api/course/', staffController.deleteCourse);
 
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);

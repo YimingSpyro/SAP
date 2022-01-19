@@ -1,5 +1,5 @@
 function getCourse() {
-    return axios.get(base_url + '/api/course/')
+    return axios.get(base_url + '/api/course/?status=active')
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -672,7 +672,7 @@ async function updateModuleInformation(mod_code) {
 generateSection();
 
 $(document).ready(() => {
-    // Delete Requirement 
+    
     $(".module-list").on('click', ".view-module", (e) => {
         let index = $(e.target).data("id");
         generateModal(index);
