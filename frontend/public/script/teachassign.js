@@ -281,7 +281,7 @@ async function generateModuleList() {
                 <button class="btn btn-success view-module"type="button" data-id="`+ index + `" data-bs-toggle="modal" data-bs-target="#teaching-assignment-modal">View</button>
             </td>
         </tr>`);
-        if (classes.to_be_assigned_classes != classes.assigned_classes || classes.assigned_classes == 0) {
+        if (classes.to_be_assigned_classes != classes.assigned_classes || classes.assigned_classes == 0 || classes.assigned_lecture > classes.classes_lecture || classes.assigned_tutorial > classes.classes_tutorial || classes.assigned_practical > classes.classes_practical) {
             $('.module-' + index).addClass("status-unassigned")
         }
     }

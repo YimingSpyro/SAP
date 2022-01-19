@@ -860,3 +860,37 @@ exports.updateModuleTAS = async (req, res, next) => {
     }
 
 };
+
+// API Update Module By CAS - admin support
+exports.updateModuleCAS = async (req, res, next) => {
+    let mod_lecture = req.body.mod_lecture;
+    let mod_tutorial = req.body.mod_tutorial;
+    let mod_practical = req.body.mod_practical;
+    let lecture_class = req.body.lecture_class;
+    let tutorial_class = req.body.tutorial_class;
+    let practical_class = req.body.practical_class;
+    let total_students = req.body.total_students;
+    let mod_code = req.body.mod_code;
+    let semester_code = req.body.semester_code;
+    let data = [mod_lecture, mod_tutorial, mod_practical, lecture_class, tutorial_class, practical_class, total_students, mod_code, semester_code];
+    try {
+        let results = await staffManager.updateModuleCAS(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};

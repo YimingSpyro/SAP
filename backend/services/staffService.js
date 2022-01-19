@@ -653,12 +653,35 @@ module.exports.getAllStaffTAS = (section) => {
         return error
     });
 };
-
 module.exports.updateModuleTAS = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE module  
              SET fk_mod_coord = ?, mod_lecture = ?, mod_tutorial = ?, mod_practical = ?, lecture_class = ?, tutorial_class = ?, practical_class = ?, total_students = ?
+             WHERE mod_code = ? AND fk_semester_code = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        return error
+    });
+};
+
+// CAS - Admin Support
+module.exports.updateModuleCAS = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE module  
+             SET mod_lecture = ?, mod_tutorial = ?, mod_practical = ?, lecture_class = ?, tutorial_class = ?, practical_class = ?, total_students = ?
              WHERE mod_code = ? AND fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);

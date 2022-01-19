@@ -185,9 +185,10 @@ exports.appRoute = router => {
     router.get('/api/getExam/:id', examController.getExamByExamId);
     router.post('/api/createExam', examController.createExam);
 
-    // TEACHING ASSIGNMENT SYSTEM
+    // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);
     router.put('/api/tas/module/', staffController.updateModuleTAS);
+    router.put('/api/tas/cas/module/', staffController.updateModuleCAS);
 
 
     router.get('/api/nav-items', authController.getNavItems);
