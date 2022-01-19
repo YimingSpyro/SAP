@@ -1,5 +1,5 @@
 function getCourse() {
-    return axios.get(base_url + '/api/course/')
+    return axios.get(base_url + '/api/course/?status=active')
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -281,7 +281,7 @@ async function generateModuleList() {
                 <button class="btn btn-success view-module"type="button" data-id="`+ index + `" data-bs-toggle="modal" data-bs-target="#teaching-assignment-modal">View</button>
             </td>
         </tr>`);
-        if (classes.to_be_assigned_classes != classes.assigned_classes || classes.assigned_classes == 0) {
+        if (classes.to_be_assigned_classes != classes.assigned_classes || classes.assigned_classes == 0 || classes.assigned_lecture > classes.classes_lecture || classes.assigned_tutorial > classes.classes_tutorial || classes.assigned_practical > classes.classes_practical) {
             $('.module-' + index).addClass("status-unassigned")
         }
     }
@@ -672,7 +672,7 @@ async function updateModuleInformation(mod_code) {
 generateSection();
 
 $(document).ready(() => {
-    // Delete Requirement 
+    
     $(".module-list").on('click', ".view-module", (e) => {
         let index = $(e.target).data("id");
         generateModal(index);

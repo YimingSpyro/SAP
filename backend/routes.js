@@ -116,6 +116,11 @@ exports.appRoute = router => {
 
     // COURSE
     router.get('/api/course/', staffController.getAllCourses);
+    router.post('/api/course/', staffController.createCourse);
+    router.put('/api/course/', staffController.updateCourse);
+    router.put('/api/course/disable', staffController.disableCourse);
+    router.put('/api/course/enable', staffController.enableCourse);
+    router.delete('/api/course/', staffController.deleteCourse);
 
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);
@@ -185,9 +190,10 @@ exports.appRoute = router => {
     router.get('/api/getExam/:id', examController.getExamByExamId);
     router.post('/api/createExam', examController.createExam);
 
-    // TEACHING ASSIGNMENT SYSTEM
+    // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);
     router.put('/api/tas/module/', staffController.updateModuleTAS);
+    router.put('/api/tas/cas/module/', staffController.updateModuleCAS);
 
 
     router.get('/api/nav-items', authController.getNavItems);
