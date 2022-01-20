@@ -76,7 +76,7 @@ async function generateCourseList() {
                     <button class="btn btn-success view-course"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#view-course">Edit</button>
                 </td>
                 <td class="text-end">
-                <button class="btn btn-danger confirm-delete-course"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#delete-course">Delete</button>
+                <button class="btn btn-danger confirm-delete-course"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#delete-course">Deactivate</button>
             </td>
             </tr>`);
         }
@@ -95,6 +95,8 @@ async function generateCourseList() {
         }
 
     }
+    $("#caption").empty();
+    $("#caption").append(`Showing `+ courses.length +` Results`)
 }
 
 async function generateCreateCourse() {
@@ -153,7 +155,7 @@ async function confirmDeleteCourse(course_index) {
     $("#delete-course .course-name-delete").append(course.course_name, ` (`+course.course_id+`)`);
     $("#delete-course .confirm-delete-button").empty();
     $("#delete-course .confirm-delete-button").append(`
-    <button type="button" class="btn btn-danger delete-course mx-4" data-index="`+course_index+`" data-bs-dismiss="modal">Delete</button>
+    <button type="button" class="btn btn-danger delete-course mx-4" data-index="`+course_index+`" data-bs-dismiss="modal">Deactivate</button>
     <button type="button" class="btn btn-primary mx-4" data-bs-dismiss="modal">Close</button>`);
 }
 

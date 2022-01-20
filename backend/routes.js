@@ -122,6 +122,19 @@ exports.appRoute = router => {
     router.put('/api/course/enable', staffController.enableCourse);
     router.delete('/api/course/', staffController.deleteCourse);
 
+    // SEMESTER
+    router.get('/api/semester/', staffController.getAllSemesters);
+    router.post('/api/semester/', staffController.createSemester);
+    router.put('/api/semester/', staffController.updateSemester);
+    router.put('/api/semester/disable', staffController.disableSemester);
+    router.put('/api/semester/enable', staffController.enableSemester);
+    router.delete('/api/semester/', staffController.deleteSemester);
+
+    // DESIGNATION
+    router.get('/api/designation/', staffController.getAllDesignations);
+    router.post('/api/designation/', staffController.createDesignation);
+    router.delete('/api/designation/', staffController.deleteDesignation);
+
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);
     router.get('/api/staff/:id', staffController.getStaffByID);

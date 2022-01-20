@@ -1,5 +1,5 @@
 function getCourse() {
-    return axios.get(base_url + '/api/course/')
+    return axios.get(base_url + '/api/course/?status=active')
         .then(response => response.data)
         .catch(err => error(err));
 };
