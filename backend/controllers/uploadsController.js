@@ -1,6 +1,8 @@
 const uploadsService = require('../services/uploadsService')
-const fs = require('fs')
 const staffService = require('../services/staffService')
+//npm packages
+const fs = require('fs')
+
 
 //LOCAL FUNCTIONS-----------------------------
 function rmLocal(file_id, location) {
@@ -131,7 +133,43 @@ module.exports.uploadProfilePicture = async (req, res) => {
 };
 //END APIS FOR PROFILE PICTURES----------------------------------
 
-//APIS FOR REPORTS----------------------------------
+//APIS FOR REPORTS (IN USE)
+//download reports post processing from frontend (JSON Format)
+module.exports.uploadFileJSON = async (req, res) => {
+  try {
+    console.log('Entering Upload JSON')
+    //in this case, req.body.data will send back the object array from the frontend. 
+    //console.log(req.body.data)
+    let data = req.body.data.excelData
+    let course = req.body.data.course_id
+    let semester_code = req.body.data.semester_code
+    let stringConcat = "";
+    //order of elements for reference 
+    //(mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, 
+    // prereq, module_type, type,total_hours, remarks, fk_semester_code, fk_course_id)
+    data.forEach(element => {
+      stringConcat += `,('${element['Code']}','${element['Year']}','${element['Stage']}','${element['Name']}',
+    '${element['Abbrev']}','${element['DLT']}','${element['L']}','${element['T']}','${element['P']}','${element['CU']}',
+    '${element['Prerequisite (Pass\/Taken)']}','${element['Module Type']}','${element['Type']}','${element['Total']}','${element['Remarks']}',
+    '${semester_code}','${course}')`
+    });
+    let newStringConcat = stringConcat.replace(',', '')
+    let result = await uploadsService.uploadJSONReport(newStringConcat)
+    //console.log(stringConcat)
+    if (result.changedRows == 0) {
+      return res.status(200).json({ message: "Successfully Inserted New Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });
+    } else if (result.changedRows > 0) {
+      return res.status(200).json({ message: "Successfully Updated Existing Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });
+    } else if (result.errno) {
+      throw "Database Error. SQL Error Code: " + result.errno + result.code;
+    };
+
+  } catch (error) {
+    return res.status(500).json({ message: error });
+  }
+
+};
+//APIS FOR REPORTS (NOT IN USE)----------------------------------
 //uploading reports
 module.exports.insertNewReport = async (req, res) => {
   try {
@@ -277,41 +315,6 @@ module.exports.downloadFile = async (req, res) => {
   res.status(200).download(base_path, filename)
 }
 
-//download reports post processing from frontend (JSON Format)
-module.exports.uploadFileJSON = async (req, res) => {
-  try {
-    console.log('Entering Upload JSON')
-    //in this case, req.body.data will send back the object array from the frontend. iterating through the 
-    //array should show each individual object immediately.
-    //console.log(req.body.data)
-    let data = req.body.data.excelData
-    let course = req.body.data.course_id
-    let semester_code = req.body.data.semester_code
-    let stringConcat = "";
-    //order of elements for reference 
-    //(mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks)
-    data.forEach(element => {
-      stringConcat += `,('${element['Code']}','${element['Year']}','${element['Stage']}','${element['Name']}',
-    '${element['Abbrev']}','${element['DLT']}','${element['L']}','${element['T']}','${element['P']}','${element['CU']}',
-    '${element['Prerequisite (Pass\/Taken)']}','${element['Module Type']}','${element['Type']}','${element['Total']}','${element['Remarks']}',
-    '${semester_code}','${course}')`
-    });
-    let newStringConcat = stringConcat.replace(',', '')
-    let result = await uploadsService.uploadJSONReport(newStringConcat)
-    //console.log(stringConcat)
-    if (result.changedRows == 0) {
-      return res.status(200).json({ message: "Successfully Inserted New Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });
-    } else if (result.changedRows > 0) {
-      return res.status(200).json({ message: "Successfully Updated Existing Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });
-    } else if (result.errno) {
-      throw "Database Error. SQL Error Code: " + result.errno + result.code
-    }
-
-  } catch(error) {
-    return res.status(500).json({ message: error });
-  }
-
-}
 //END APIS FOR REPORTS----------------------------------
 
 //TESING API FOR FILE FIELDS-------------------------

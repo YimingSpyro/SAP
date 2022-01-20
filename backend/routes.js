@@ -5,6 +5,7 @@ const uploadsController = require("./controllers/uploadsController");
 const examController = require("./controllers/examController")
 const semesterController = require("./controllers/semesterController")
 const courseController = require("./controllers/courseController")
+const downloadsController = require("./controllers/downloadsController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -168,9 +169,12 @@ exports.appRoute = router => {
     router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
 
     //REPORTS
-    router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)
+    //router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)
     router.post('/reports/upload/excel/', uploadsController.uploadFileJSON)
-    
+
+    //DOWNLOADS
+    router.get('/reports/download/assignment-report/:acad_sem', downloadsController.getAssignmentReport)
+
     //REPORTS API NOT IN USE
     //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
     //router.delete('/uploads/reports/', getFields.none(), uploadsController.deleteReport)
