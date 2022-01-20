@@ -1,5 +1,15 @@
+function getSemester() {
+    return axios.get(base_url + '/api/semester/?status=active')
+        .then(response => response.data[0])
+        .catch(err => error(err));
+};
+async function setCurrentSemester(){
+    let semester = await getSemester();
+    let semester_code = semester.semester_code
+    localStorage.setItem('semester_code',semester_code);
+}
 let base_url = "http://localhost:8080";
-localStorage.setItem('semester_code','AY 2021/2022 SEM2');
+
 
 function getProfilePicture() {
     axios.get(base_url + '/uploads/profile-picture/1144').then((response) => {
@@ -10,5 +20,5 @@ function getProfilePicture() {
         }
     });
 }
-
+setCurrentSemester()
 getProfilePicture()

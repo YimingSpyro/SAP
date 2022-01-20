@@ -186,7 +186,6 @@ exports.deleteCourse = async (req, res, next) => {
 
 /* ==== SEMESTER API ==== */
 
-
 exports.getAllSemesters = async (req, res, next) => {
     let status = req.query.status;
     try {
