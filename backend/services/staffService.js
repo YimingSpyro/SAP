@@ -4,7 +4,7 @@ const pool = require('../config/database')
 // SECTION
 module.exports.getAllSections = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT section_name, fk_course_id FROM designation`, [], (err, results) => {
+        pool.query(`SELECT DISTINCT section_name, fk_course_id FROM designation`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -127,6 +127,175 @@ module.exports.deleteCourse = (course_id) => {
             }
             
         });
+    });
+};
+
+// SEMESTER
+module.exports.getAllSemesters = (status) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT semester_id, semester_code, remarks, latest_sem FROM semester_code WHERE latest_sem = ?`, [status], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.createSemester = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`INSERT INTO semester_code (semester_id,semester_code,remarks,latest_sem) VALUES(?,?,?,"INACTIVE")`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.updateSemester = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`UPDATE semester_code
+         SET semester_id = ?, semester_code = ?, remarks = ?
+         WHERE semester_id = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.disableSemester = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`UPDATE semester_code
+         SET latest_sem = ?
+         WHERE semester_id = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.enableSemester = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`UPDATE semester_code
+         SET latest_sem = ?
+         WHERE semester_id = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.deleteSemester = (semester_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`DELETE FROM semester_code WHERE semester_id = ?;`, [semester_id], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+
+// DESIGNATION
+module.exports.getAllDesignations = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT designation_id, designation_name, fk_course_id, section_name FROM designation
+             INNER JOIN course ON fk_course_id = course.course_id
+             WHERE course.status = "active"`, [], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.createDesignation = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`INSERT INTO designation (designation_name,fk_course_id,section_name) VALUES(?,?,?)`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.deleteDesignation = (designation_id) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`DELETE FROM designation WHERE CONCAT(prefix,designation_id) = ?;`, [designation_id], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
     });
 };
 

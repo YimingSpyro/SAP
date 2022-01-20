@@ -10,18 +10,23 @@
     <title>Semester Maintenance System</title>
 
     <!-- Online scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Offline scripts -->
     <link rel="icon" href="/SVG Icons/scrunge.png">
-    <link href="../public/css/navbar.css" rel="stylesheet">
-    <link href="../public/css/report.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/global.css">
+    <link href="/css/navbar.css" rel="stylesheet">
+    <link href="/css/semestermaintenance.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
     <script src="/script/global.js"></script>
-    <script src="/script/reports.js"></script>
+    <script src="/script/semestermaintenance.js"></script>
+    <script src="/script/notifications.js"></script>
 
 
 
@@ -36,7 +41,9 @@
             <div id="navbar-card" class="container col-4 col-lg-2 ">
                 <div id="navbar-brand" class="navbar-brand row">
                     <div class="col-3">
-                        <img id="profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" alt="Cinque Terre">
+                        <img id="profile-icon"
+                            src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
+                            alt="Cinque Terre">
                     </div>
                     <div id="msg-wrap" class="col-9 ">
                         <p>Welcome,</p>
@@ -47,13 +54,14 @@
 
             <!-- Page Title -->
             <div id="navbar-title" class="navbar-brand col-9">
-                <h2>Maintenance System</h2>
+                <h2>Semester Maintenance System</h2>
             </div>
             <!-- Notification Bell -->
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
-                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false"
+                    aria-controls="notification-bell">
+                    <img id="notifications" src="/SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -85,25 +93,30 @@
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
-                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
 
                         <!-- Page Link -->
                         <li id="nav-item active">
                             <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Maintenance System </span>
                         </li>
 
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Teaching Assignment System</span>
                             </a>
                         </li>
@@ -111,7 +124,8 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Exam Matters
                                 </span>
                             </a>
@@ -120,8 +134,9 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                Announcements   
+                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Announcements
                                 </span>
                             </a>
                         </li>
@@ -129,7 +144,8 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="reports.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
                             </a>
                         </li>
 
@@ -145,19 +161,19 @@
                     <div id="content-header-admin">
                         <p>Semester Maintenance System</p>
 
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#createsemester">Create Semester</button>
-
-                        <div class="form-group row">
-                            <label for="select-section" class="col-sm-2 col-form-label">Select Section</label>
-                            <div class="col">
-                                <select class="form-select-sm col-2" id="select-section">
-                                    <option selected>Section</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
+                        <div class="form-group row justify-content-end mt-4 pb-3 pe-3">
+                            <label for="select-status" class="col-2 col-form-label align-middle">Select Section</label>
+                            <div class="col-4">
+                                <select class="form-select-sm col-4" id="select-status">
+                                    <option value="active" selected>Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
                             </div>
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary float-end create-semester-button"
+                                    data-bs-toggle="modal" data-bs-target="#create-semester">Create Semester</button>
+                            </div>
+
                         </div>
 
                         <div class="line"></div>
@@ -165,139 +181,189 @@
 
                     <!-- Content Item -->
                     <div id="content-item-admin">
-
                         <!-- Module table -->
                         <table id="admin-table" class="table table-dark rounded-top">
-                            <caption>Showing 3 Results</caption>
                             <thead>
-                                <tr>
-                                    <th scope="col" class="col-2">Semester Code</th>
-                                    <th scope="col" class="col-3">Semester Name</th>
-                                    <th scope="col" class="col-2">Status</th>
-                                    <th scope="col" class="col-3"></th>
+                                <tr class="align-middle">
+                                    <th scope="col" class="col-3">Semester ID</th>
+                                    <th scope="col" class="col-4">Semester Code</th>
+                                    <th scope="col" class="col-3">Remarks</th>
+                                    <th scope="col" class="col-1"></th>
+                                    <th scope="col" class="col-1"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>active</td>
-                                    <td class="text-end">
-                                        <div data-bs-toggle="modal" data-bs-target="#viewsemester">View</div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>active</td>
-                                    <td class="text-end">
-                                        <div data-bs-toggle="modal" data-bs-target="#viewsemester">View</div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>active</td>
-                                    <td class="text-end">
-                                        <div data-bs-toggle="modal" data-bs-target="#viewsemester">View</div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <tbody class="semester-list">
 
+                            </tbody>
+                            <caption id="caption"></caption>
+                        </table>
+                        <div class="semester-warning">
+
+                        </div>
                         <!-- Create Semester Modal -->
-                        <div class="modal fade" id="createsemester" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="create-semester" tabindex="-1" aria-labelledby="create-semester"
+                            aria-hidden="true">
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <!-- Content header -->
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Create New Semester</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h5 class="modal-title" id="create-semester-title">Create New Semester</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
 
                                     <!-- Content -->
-                                    <div class="modal-body">
+                                    <div class="modal-body create-semester-content">
 
-                                        <form action="">
-                                            <!-- ======== NOTE: Existing Data should show in the placeholders  ========-->
 
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="semester-code" class="col-sm-2 col-form-label col-form-label-sm">Semester Code:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="semester-code" placeholder="semester code">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="semester-code" class="col-sm-2 col-form-label col-form-label-sm">Semester Code:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="semester-code" placeholder="semester code">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="semester-code" class="col-sm-2 col-form-label col-form-label-sm">Semester Code:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="semester-code" placeholder="semester code">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Update Button -->
-                                            <button type="submit" class="btn btn-primary float-end">Create New Semester</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
                         <!-- View Semester Modal -->
-                        <div class="modal fade" id="viewsemester" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="view-semester" tabindex="-1" aria-labelledby="view-semester"
+                            aria-hidden="true">
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <!-- Content header -->
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Create New Semester</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <h5 class="modal-title" id="view-semester-title"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
                                     </div>
 
                                     <!-- Content -->
+                                    <div class="modal-body view-semester-content">
+
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delete Semester Modal -->
+                        <div class="modal fade" id="delete-semester" tabindex="-1" aria-labelledby="delete-semester"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title confirm-delete-title">Confirm Deactivation</h5>
+                                    </div>
                                     <div class="modal-body">
+                                        <h5 class="semester-name-delete text-center"></h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center confirm-delete-button">
 
-                                        <form action="">
-                                            <!-- ======== NOTE: Existing Data should show in the placeholders  ========-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="delete-semester-forever" tabindex="-1"
+                            aria-labelledby="delete-semester-forever" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title confirm-delete-title">Confirm Delete Forever</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h5 class="semester-name-delete text-center"></h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center confirm-delete-button">
 
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="semester-code" class="col-sm-2 col-form-label col-form-label-sm">Semester Code:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="semester-code" placeholder="semester code">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="semester-code" class="col-sm-2 col-form-label col-form-label-sm">Semester Code:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="semester-code" placeholder="semester code">
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="semester-code" class="col-sm-2 col-form-label col-form-label-sm">Semester Code:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="semester-code" placeholder="semester code">
-                                                </div>
-                                            </div>
-                                            <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Success Modal -->
+                        <div class="modal fade" id="submit-requests-success-created" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Semester Created</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                                            <!-- Update Button -->
-                                            <button type="submit" class="btn btn-primary float-end">Set Active</button>
-                                        </form>
+                        <div class="modal fade" id="submit-requests-success-updated" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Semester Updated</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-disabled" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Semester Deactivated</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-enabled" tabindex="-1"
+                        aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 class="modal-title">Semester is now active</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary "
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="modal fade" id="submit-requests-success-deleted" tabindex="-1"
+                        aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 class="modal-title">Semester Deleted</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary "
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                        <!-- Error Modal -->
+                        <div class="modal fade" id="submit-requests-error" tabindex="-1"
+                            aria-labelledby="submit-requests-error-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">An Error has occured</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="error-message text-center"></p>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>

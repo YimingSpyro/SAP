@@ -14,14 +14,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Offline scripts -->
     <link rel="icon" href="/SVG Icons/scrunge.png">
-    <link href="../public/css/navbar.css" rel="stylesheet">
-    <link href="../public/css/report.css" rel="stylesheet">
-    <link rel="stylesheet" href="../public/css/global.css">
+    <link href="/css/navbar.css" rel="stylesheet">
+    <link href="/css/designationmaintenance.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
     <script src="/script/global.js"></script>
-    <script src="/script/reports.js"></script>
+    <script src="/script/designationmaintenance.js"></script>
+    <script src="/script/notifications.js"></script>
 
 
 
@@ -47,13 +49,13 @@
 
             <!-- Page Title -->
             <div id="navbar-title" class="navbar-brand col-9">
-                <h2>Maintenance System</h2>
+                <h2>Designation Maintenance System</h2>
             </div>
             <!-- Notification Bell -->
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
                 <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                    <img id="notifications" src="/SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -89,21 +91,21 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
 
                         <!-- Page Link -->
                         <li id="nav-item active">
                             <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Maintenance System </span>
                         </li>
 
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Teaching Assignment System</span>
                             </a>
                         </li>
@@ -111,7 +113,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Exam Matters
                                 </span>
                             </a>
@@ -120,7 +122,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                 Announcements   
                                 </span>
                             </a>
@@ -129,7 +131,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="reports.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
                             </a>
                         </li>
 
@@ -142,163 +144,128 @@
                 <div id="content-view-admin" class="container">
 
                     <!-- Content Header -->
-                    <div id="content-header-admin">
-                        <button type="button" class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#createdesignation">Create Designation</button>
+                    <div id="content-header-admin" class="mb-4">
+                        
+                       
                         <p>Designation System</p>
                         <br>
+                        
+                        <div class="form-group row mb-2">
+                            <label for="select-section" class="col-2 col-form-label">Select Section</label>
+                            <div class="col">
+                                <select class="form-select-sm col-6" id="select-section">
+                                    <option value="all sections" selected>All Sections</option>
+                                </select>
+                            </div>
+                            <div class="col">
+                                <button type="button" class="btn btn-primary float-end create-designation mb-2" data-bs-toggle="modal" data-bs-target="#create-designation-modal">Create Designation</button>
+                            </div>
+                        </div>
                         <div class="line"></div>
                     </div>
 
                     <!-- Content Item -->
-                    <div id="content-item-admin">
+                    <div id="content-item-admin" class="mt-2">
 
                         <!-- Module table -->
                         <table id="admin-table" class="table table-dark rounded-top">
-                            <caption>Showing 3 Results</caption>
+                            
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-2">Designation</th>
-                                    <th scope="col" class="col-3">example</th>
-                                    <th scope="col" class="col-2">example</th>
-                                    <th scope="col" class="col-1"></th>
-                                    <th scope="col" class="col-1"></th>
+                                    <th scope="col" class="col-3">Designation</th>
+                                    <th scope="col" class="col-2">Course</th>
+                                    <th scope="col" class="col-4">Section</th>
+                                    <th scope="col" class="col-3"></th>
+
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>active</td>
-                                    <td class="text-end">
-                                        <div data-bs-toggle="modal" data-bs-target="#viewdesignation">View/Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        Delete
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>active</td>
-                                    <td class="text-end">
-                                        <div data-bs-toggle="modal" data-bs-target="#viewdesignation">View/Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        Delete
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>active</td>
-                                    <td class="text-end">
-                                        <div data-bs-toggle="modal" data-bs-target="#viewdesignation">View/Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        Delete
-                                    </td>
-                                </tr>
+                            <tbody class="designation-list">
+
                             </tbody>
+                            <caption id="caption"></caption>
                         </table>
 
-                        <!-- Create Course Modal -->
-                        <div class="modal fade" id="createdesignation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <!-- Create Designation Modal -->
+                        <div class="modal fade" id="create-designation-modal" tabindex="-1" aria-labelledby="create-designation-modal" aria-hidden="true">
                             <div class="modal-dialog modal-xl">
                                 <div class="modal-content">
                                     <!-- Content header -->
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Create New Designation</h5>
+                                        <h5 class="modal-title" id="create-designation">Create New Designation</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
 
                                     <!-- Content -->
-                                    <div class="modal-body">
+                                    <div class="modal-body create-designation-modal">
 
-                                        <form action="">
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="designation-name" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="designation-name" placeholder="enter designation name">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="designation-name" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="designation-name" placeholder="enter designation name">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="designation-name" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="designation-name" placeholder="enter designation name">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Update Button -->
-                                            <button type="submit" class="btn btn-primary float-end">Create Designation</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- View Course Modal -->
-                        <div class="modal fade" id="viewdesignation" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-xl">
+                        <!-- Delete Course Modal -->
+                        <div class="modal fade" id="delete-designation" tabindex="-1" aria-labelledby="delete-designation"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <!-- Content header -->
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Designation Information</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title confirm-delete-title">Confirm Deletion</h5>
                                     </div>
-
-                                    <!-- Content -->
                                     <div class="modal-body">
+                                        <h5 class="designation-name-delete text-center"></h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center confirm-delete-button">
 
-                                        <form action="">
-                                            <!-- ======== NOTE: Existing Data should show in the placeholders  ========-->
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="designation-name" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="designation-name" placeholder="enter designation name">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="designation-name" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="designation-name" placeholder="enter designation name">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Form Item -->
-                                            <div class="form-group row">
-                                                <label for="designation-name" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
-                                                <div class="col-sm-3">
-                                                    <input type="text" class="form-control form-control-sm" id="designation-name" placeholder="enter designation name">
-                                                </div>
-                                            </div>
-                                            <br>
-
-                                            <!-- Update Button -->
-                                            <button type="submit" class="btn btn-primary float-end">Update Designation</button>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- Success Modal -->
+                        <div class="modal fade" id="submit-requests-success-deleted" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Designation Deleted</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-created" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Designation Created</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>  
+                        <!-- Error Modal -->
+                        <div class="modal fade" id="submit-requests-error" tabindex="-1"
+                            aria-labelledby="submit-requests-error-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">An Error has occured</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="error-message text-center"></p>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                  
                     </div>
                 </div>
 
