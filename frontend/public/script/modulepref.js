@@ -1,3 +1,8 @@
+
+$(document).ready(() => {
+    $('#main-list>li').removeClass("active")
+    $('#choose-module-preference').addClass("active")
+})
 function getModules(){
     return axios.get(base_url + '/api/module' + '?semester_code=' + localStorage.getItem('semester_code'))
     .then(response => response.data)

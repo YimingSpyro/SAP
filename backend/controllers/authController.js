@@ -36,18 +36,22 @@ module.exports.processLogin = ((req, res) => {
             bcrypt.compare(password, hash, (err, resp) => {
                 if (resp) {
                     const accessToken = genAccessToken(rows,);
-                    const result = JSON.parse(JSON.stringify(rows[0]));
+                   // const result = JSON.parse(JSON.stringify(rows[0]));
+                   const result = rows;
                     result['token'] = accessToken
-                    var userData = result; 
+                    console.log("ok");
+                    console.log(rows);
+
                     res.cookie("token",result.token, {
                         httpOnly: true
                     });
-
                     res.status(200).json({
                         data: result
                     });
 
                 } else {
+                    console.log("error");
+                    console.log(err);
                     res.status(500).json({
                         error: err
                     });

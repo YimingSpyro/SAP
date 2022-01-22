@@ -22,11 +22,7 @@ p {
     padding: 0;
 }
 
-#navbar-brand {
-    background: #15343F;
-    height: 100%;
-    align-items: center;
-}
+
 
 #top-navbar #profile-icon{
     border-radius: 50%;
@@ -171,4 +167,31 @@ i {
     display: flex;
     justify-content: center;
     flex-direction: column;
+}
+
+#navbar-brand{
+    background: #15343F;
+    height: 100%;
+    align-items: center;
+}
+#navbar-brand button{
+    margin:0;
+    width:auto;
+}
+#navbar-brand button:hover{
+    color: #fff;
+    background: #939393;
+}
+#navbar-brand .dropdown{
+    background-color: #15343F;
+    position: absolute;
+    z-index: 999;
+    top:10%;
+    left: 0;
+    width:100px;
+    display: none;
+
+}
+#navbar-brand:hover .dropdown{
+    display: block; /* Display the dropdown */
 }

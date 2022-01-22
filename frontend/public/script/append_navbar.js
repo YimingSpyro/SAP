@@ -10,7 +10,6 @@ $(window).on('load',()=>{
 $(document).ready(()=>{
     $('#navbar-wrap').load("/shared_views/navbar_profile.html")
     $('#dashboard-view-wrap').load("/homeviews/admin_home.html")
-
     if (!sessionStorage.getItem("navBarAppended")){
         axios.get("http://localhost:8080/api/nav-items").then((response) => {
             var rows = response.data

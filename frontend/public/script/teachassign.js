@@ -1,3 +1,7 @@
+$(document).ready(()=>{
+    $('#main-list>li').removeClass("active")
+    $('#teaching-assignment-system').addClass("active")
+})
 function getCourse() {
     return axios.get(base_url + '/api/course/?status=active')
         .then(response => response.data)
