@@ -1,11 +1,16 @@
+
+$(document).ready(() => {
+    $('#main-list>li').removeClass("active")
+    $('#choose-module-preference').addClass("active")
+})
 function getModules(){
-    return axios.get(base_url + '/api/module')
+    return axios.get(base_url + '/api/module' + '?semester_code=' + localStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 };
 
 function getPreference(){
-    return axios.get(base_url + '/api/module/preference/8405')//SAMPLE DATA
+    return axios.get(base_url + '/api/module/preference/8405' + '?semester_code=' + localStorage.getItem('semester_code'))//SAMPLE DATA
     .then(response => response.data)
     .catch(err => error(err));
 }
@@ -14,7 +19,7 @@ function uploadPreference(preference){
     return axios.post(base_url + '/api/module/preference', 
     {
         staff_id : 8405, //SAMPLE DATA
-        semester_code : "AY 2021/2022 SEM2", //SAMPLE DATA
+        semester_code : localStorage.getItem('semester_code'), //SAMPLE DATA
         preference : preference
     })
     .then(() => success())
@@ -25,7 +30,7 @@ function updatePreference(preference){
     return axios.put(base_url + '/api/module/preference', 
     {
         staff_id : 8405, //SAMPLE DATA
-        semester_code : "AY 2021/2022 SEM2", //SAMPLE DATA
+        semester_code : localStorage.getItem('semester_code'), //SAMPLE DATA
         preference : preference
     })
     .then(() => success())
@@ -77,7 +82,7 @@ async function generateModuleList(){
         <table class="table table-dark">
             <thead>
                 <tr>
-                    <th scope="col" class="module-info">`+ module.mod_code +` `+ module.mod_name +`<br>`+ module.mod_abbrv +` (`+module.fk_course_id+`) `+module.mod_stage+`</th>
+                    <th scope="col" class="module-info">`+ module.mod_code +` `+ module.mod_name +`<br>`+ module.mod_abbrv +` (`+module.fk_course_id+`) Year `+module.mod_stage+`</th>
                     <th scope="col">L</th>
                     <th scope="col">T</th>
                     <th scope="col">P</th>

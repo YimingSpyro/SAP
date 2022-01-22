@@ -23,10 +23,13 @@
     <link rel="icon" href="/SVG Icons/scrunge.png">
     <link href="css/navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/choosemodulepreference.css">
     <script src="/script/global.js"></script>
-    <script src="/script/modulepref.js"></script>
     <script src="/script/notifications.js"></script>
+    <script src="/script/append_navbar.js"></script>
+    <script src="/script/log_out.js"></script>
+    <script src="/script/modulepref.js"></script>
 
 
 
@@ -35,56 +38,6 @@
 <body>
     <!-- Top Bar -->
     <div id="navbar-wrap" class="container-fluid">
-        <nav id="top-navbar" class="row">
-
-            <!-- Profile -->
-            <div id="navbar-card" class="container col-4 col-lg-2 ">
-                <div id="navbar-brand" class="navbar-brand row">
-                    <div class="col-3">
-                        <img id="profile-icon"
-                            src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
-                            alt="Cinque Terre">
-                    </div>
-                    <div id="msg-wrap" class="col-9 ">
-                        <p>Welcome,</p>
-                        <p>User 1</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page Title -->
-            <div id="navbar-title" class="navbar-brand col-9">
-                <h2>Choose Module Preference</h2>
-            </div>
-            <!-- Notification Bell -->
-            <div id="notification-wrap" class="col-1">
-                <!-- Icon -->
-                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false"
-                    aria-controls="notification-bell">
-                    <img id="notifications" src="SVG Icons/notification.svg" class="icons"></img>
-                </a>
-                <!-- Contents -->
-                <div class="collapse" id="notification-bell">
-                    <div class="card card-body important" id="announcementcontent">
-                        <div id="announcementtitle">
-                            Announcement Title
-                        </div>
-                        <div id="announcementmessage">
-                            Message go brrrrr
-                        </div>
-                    </div>
-
-                    <div class="card card-body general" id="announcementcontent">
-                        <div id="announcementtitle">
-                            Announcement Title
-                        </div>
-                        <div id="announcementmessage">
-                            Message go brrrrr
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
     </div>
 
     <div class="container-fluid">
@@ -96,61 +49,7 @@
                     <ul id="main-list"
                         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="userdashboard.html" class="nav-link align-middle px-0">
-                                <img src="SVG Icons/Dashboard.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li id="nav-item">
-                            <a href="teachrequirement.html" class="nav-link align-middle px-0">
-                                <img src="SVG Icons/Maintenance.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Update Teaching Requirement </span>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="personalinformation.html" class="nav-link align-middle px-0">
-                                <img src="SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Update Personal Information</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item active">
-                            <a href="choosemodulepreference.html" class="nav-link align-middle px-0">
-                                <img src="SVG Icons/Exam Matters.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Choose Module Preference
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="viewassignedmodule.html" class="nav-link align-middle px-0">
-                                <img src="SVG Icons/Announcements.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    View Assigned Module
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="changepassword.html" class="nav-link align-middle px-0">
-                                <img src="SVG Icons/Announcements.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Change Password
-                                </span>
-                            </a>
-                        </li>
-
+                    
                     </ul>
                 </div>
             </div>
@@ -165,7 +64,7 @@
                     </div>
 
                     <!-- Content Item -->
-                    <div id="content-item-left" class="overflow-auto">
+                    <div id="content-item-left" class="overflow-auto px-4">
                         <!-- Tables -->
 
 

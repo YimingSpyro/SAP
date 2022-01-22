@@ -117,11 +117,30 @@ exports.appRoute = router => {
 
     // COURSE
     router.get('/api/course/', staffController.getAllCourses);
+    router.post('/api/course/', staffController.createCourse);
+    router.put('/api/course/', staffController.updateCourse);
+    router.put('/api/course/disable', staffController.disableCourse);
+    router.put('/api/course/enable', staffController.enableCourse);
+    router.delete('/api/course/', staffController.deleteCourse);
+
+    // SEMESTER
+    router.get('/api/semester/', staffController.getAllSemesters);
+    router.post('/api/semester/', staffController.createSemester);
+    router.put('/api/semester/', staffController.updateSemester);
+    router.put('/api/semester/disable', staffController.disableSemester);
+    router.put('/api/semester/enable', staffController.enableSemester);
+    router.delete('/api/semester/', staffController.deleteSemester);
+
+    // DESIGNATION
+    router.get('/api/designation/', staffController.getAllDesignations);
+    router.post('/api/designation/', staffController.createDesignation);
+    router.delete('/api/designation/', staffController.deleteDesignation);
 
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);
     router.get('/api/staff/:id', staffController.getStaffByID);
     router.put('/api/staff/:id', staffController.updateStaffByID)
+    router.put('/api/staff/personal/:id', staffController.updatePersonalInfoByID)
 
     // PERSONAL TEACHING REQUIREMENT
     router.get('/api/teaching-requirement/:id', staffController.getTeachingRequirementByID);
@@ -188,9 +207,10 @@ exports.appRoute = router => {
     router.get('/api/getExam/:id', examController.getExamByExamId);
     router.post('/api/createExam', examController.createExam);
 
-    // TEACHING ASSIGNMENT SYSTEM
+    // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);
     router.put('/api/tas/module/', staffController.updateModuleTAS);
+    router.put('/api/tas/cas/module/', staffController.updateModuleCAS);
 
 
     router.get('/api/nav-items', authController.getNavItems);

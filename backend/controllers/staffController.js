@@ -33,12 +33,11 @@ const e = require('express');
 exports.getAllSections = async (req, res, next) => {
     try {
         let results = await staffManager.getAllSections();
-        console.log('Get Staff Personal Information', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID', results);
+            console.log('Get All Sections', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -52,9 +51,326 @@ exports.getAllSections = async (req, res, next) => {
 
 /* ==== COURSE API ==== */
 exports.getAllCourses = async (req, res, next) => {
+    let status = req.query.status;
     try {
-        let results = await staffManager.getAllCourses();
-        console.log('Get Staff Personal Information', results);
+        let results = await staffManager.getAllCourses(status);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Get All Courses', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.createCourse = async (req, res, next) => {
+    let course_id = req.body.course_code;
+    let course_name = req.body.course_name;
+    let data = [course_id, course_name]
+    try {
+        let results = await staffManager.createCourse(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Create Course', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.updateCourse = async (req, res, next) => {
+    let course_id = req.body.course_code;
+    let course_name = req.body.course_name;
+    let old_course_id = req.body.course_code_old
+    let data = [course_id, course_name, old_course_id]
+    try {
+        let results = await staffManager.updateCourse(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Course', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.disableCourse = async (req, res, next) => {
+    let course_id = req.body.course_code;
+    let data = [ "inactive", course_id]
+    try {
+        let results = await staffManager.disableCourse(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Course', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.enableCourse = async (req, res, next) => {
+    let course_id = req.body.course_code;
+    let data = [ "active", course_id]
+    try {
+        let results = await staffManager.enableCourse(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Course', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.deleteCourse = async (req, res, next) => {
+    let course_id = req.query.course_code;
+    try {
+        let results = await staffManager.deleteCourse(course_id);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Delete'
+        }
+        else {
+            console.log('Update Course', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+/* ==== SEMESTER API ==== */
+
+exports.getAllSemesters = async (req, res, next) => {
+    let status = req.query.status;
+    try {
+        let results = await staffManager.getAllSemesters(status);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Get All Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.createSemester = async (req, res, next) => {
+    let semester_id = req.body.semester_id;
+    let semester_code = req.body.semester_code;
+    let remarks = req.body.remarks;
+    let data = [semester_id, semester_code, remarks]
+    try {
+        let results = await staffManager.createSemester(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Create Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.updateSemester = async (req, res, next) => {
+    let semester_id = req.body.semester_id;
+    let semester_code = req.body.semester_code;
+    let remarks = req.body.remarks
+    let old_semester_id = req.body.semester_id_old
+    let data = [semester_id, semester_code, remarks, old_semester_id]
+    try {
+        let results = await staffManager.updateSemester(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.disableSemester = async (req, res, next) => {
+    let semester_id = req.body.semester_id;
+    let data = [ "INACTIVE", semester_id]
+    try {
+        let results = await staffManager.disableSemester(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Disable Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.enableSemester = async (req, res, next) => {
+    let semester_id = req.body.semester_id;
+    let data = [ "ACTIVE", semester_id]
+    try {
+        let results = await staffManager.enableSemester(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Enable Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.deleteSemester = async (req, res, next) => {
+    let semester_id = req.query.semester_id;
+    try {
+        let results = await staffManager.deleteSemester(semester_id);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Delete'
+        }
+        else {
+            console.log('Delete Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+
+/* ==== DESIGNATION API ==== */
+
+
+exports.getAllDesignations = async (req, res, next) => {
+    try {
+        let results = await staffManager.getAllDesignations();
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Get All Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.createDesignation = async (req, res, next) => {
+    let designation_name = req.body.designation_name;
+    let course_id = req.body.course_id;
+    let section_name = req.body.section_name;
+    let data = [designation_name, course_id, section_name]
+    try {
+        let results = await staffManager.createDesignation(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Create Designation', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.deleteDesignation = async (req, res, next) => {
+    let designation_id = req.query.designation_id;
+    try {
+        let results = await staffManager.deleteDesignation(designation_id);
+        console.log('Delete Teaching Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -64,6 +380,7 @@ exports.getAllCourses = async (req, res, next) => {
         }
     } catch (error) {
         let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
         return res.status(500).json({
             message: message
         });
@@ -169,6 +486,37 @@ exports.createStaff = async (req, res, next) => {
     });
 
 };
+// API Personal Information Update Staff Data by ID
+exports.updatePersonalInfoByID = async (req, res, next) => {
+    let staff_id = req.params.id
+    let new_staff_abbrv = req.body.staff_abbrv
+    let new_staff_email = req.body.staff_email
+    let new_staff_number = req.body.staff_number
+    let new_staff_mobile = req.body.staff_mobile
+    let new_staff_remarks = req.body.staff_remarks
+    let data = [new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks,staff_id]
+    try {
+        let results = await staffManager.updatePersonalInfoByID(data);
+        console.log('Update Staff Personal Information by ID', results);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API Admin Delete Staff Data by ID
 exports.deleteStaffByID = async (req, res, next) => {
     console.log("called");
@@ -206,13 +554,16 @@ exports.updateStaffByID = async (req, res, next) => {
     let new_staff_remarks = req.body.staff_remarks
     let new_staff_status = req.body.staff_status
 
-    let data = [new_staff_name, new_staff_abbrv,new_staff_type,new_staff_schedule_id,new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks,new_staff_status]
+    let data = [new_staff_name, new_staff_abbrv,new_staff_type,new_staff_schedule_id,new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks,new_staff_status, staff_id]
     console.log(data);
     try {
-        let results = await staffManager.updateStaffByStaffId(staff_id,data);
+        let results = await staffManager.updateStaffByStaffId(data);
         console.log('Update Staff Personal Information by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
         }
         else {
             console.log('Update Assign Module by Staff ID', results);
@@ -235,8 +586,10 @@ exports.updateStaffByID = async (req, res, next) => {
 // API GET Teaching Requirement by ID
 exports.getTeachingRequirementByID = async (req, res, next) => {
     let staff_id = req.params.id
+    let semester_code = req.query.semester_code
+    let data = [staff_id,semester_code]
     try {
-        let results = await staffManager.getTeachingRequirementByID(staff_id);
+        let results = await staffManager.getTeachingRequirementByID(data);
         console.log('Get Teaching Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -295,6 +648,9 @@ exports.updateTeachingRequirement = async (req, res, next) => {
         console.log('Update Teacing Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
         }
         else {
             console.log('Update Assign Module by Staff ID', results);
@@ -392,6 +748,9 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
         else {
             console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
@@ -413,8 +772,10 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
 // API Get Modules by mod code
 exports.getModuleBySection = async (req, res, next) => {
     let section = req.query.section;
+    let semester_code = req.query.semester_code;
+    let data = [section, semester_code]
     try {
-        let results = await staffManager.getModuleBySection(section);
+        let results = await staffManager.getModuleBySection(data);
         console.log('Get Module by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -434,8 +795,10 @@ exports.getModuleBySection = async (req, res, next) => {
 };
 exports.getModuleByCode = async (req, res, next) => {
     let mod_code = req.query.section;
+    let semester_code = req.query.semester_code;
+    let data = [mod_code, semester_code]
     try {
-        let results = await staffManager.getModuleByCode(mod_code);
+        let results = await staffManager.getModuleByCode(data);
         console.log('Get Module by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -454,9 +817,11 @@ exports.getModuleByCode = async (req, res, next) => {
 
 };
 // API Get All Modules
+
 exports.getAllModules = async (req, res, next) => {
+    let semester_code = req.query.semester_code;
     try {
-        let results = await staffManager.getAllModules();
+        let results = await staffManager.getAllModules(semester_code);
         console.log('Get All Modules', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -522,8 +887,9 @@ exports.createModule = async (req, res, next) => {
 
 // API Get All Module Preferences
 exports.getAllModulePreference = async (req, res, next) => {
+    let semester_code = req.query.semester_code;
     try {
-        let results = await staffManager.getAllModulePreference();
+        let results = await staffManager.getAllModulePreference(semester_code);
         console.log('Get All Module Preference', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -545,7 +911,9 @@ exports.getAllModulePreference = async (req, res, next) => {
 exports.getModulePreferenceByID = async (req, res, next) => {
     try {
         let staff_id = req.params.id;
-        let results = await staffManager.getModulePreferenceByID(staff_id);
+        let semester_code = req.query.semester_code;
+        let data = [staff_id, semester_code]
+        let results = await staffManager.getModulePreferenceByID(data);
         console.log('Get Module Preference By Staff ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -601,6 +969,9 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
         else {
             console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
@@ -622,8 +993,10 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
 // API Get Assigned Modules by module
 exports.getAssignedModulesByModule = async (req, res, next) => {
     let mod_code = req.query.mod_code;
+    let semester_code = req.query.semester_code;
+    let data = [mod_code, semester_code]
     try {
-        let results = await staffManager.getAssignedModulesByModule(mod_code);
+        let results = await staffManager.getAssignedModulesByModule(data);
         console.log('Get Staff Assigned Module', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -644,8 +1017,10 @@ exports.getAssignedModulesByModule = async (req, res, next) => {
 // API Get Assigned Modules by Staff ID
 exports.getAssignedModulesByID = async (req, res, next) => {
     let staff_id = req.params.id;
+    let semester_code = req.query.semester_code;
+    let data = [staff_id, semester_code]
     try {
-        let results = await staffManager.getAssignedModulesByID(staff_id);
+        let results = await staffManager.getAssignedModulesByID(data);
         console.log('Get Staff Assigned Module', results);
         if (results.errno) {
             throw 'Database SQL Error'
@@ -674,6 +1049,9 @@ exports.updateAssignedModuleByID = async (req, res, next) => {
         let results = await staffManager.updateAssignedModuleByID(data);
         if (results.errno) {
             throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
         }
         else {
             console.log('Update Assign Module by Staff ID', results);
@@ -782,6 +1160,43 @@ exports.updateModuleTAS = async (req, res, next) => {
         let results = await staffManager.updateModuleTAS(data);
         if (results.errno) {
             throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Update Module By CAS - admin support
+exports.updateModuleCAS = async (req, res, next) => {
+    let mod_lecture = req.body.mod_lecture;
+    let mod_tutorial = req.body.mod_tutorial;
+    let mod_practical = req.body.mod_practical;
+    let lecture_class = req.body.lecture_class;
+    let tutorial_class = req.body.tutorial_class;
+    let practical_class = req.body.practical_class;
+    let total_students = req.body.total_students;
+    let mod_code = req.body.mod_code;
+    let semester_code = req.body.semester_code;
+    let data = [mod_lecture, mod_tutorial, mod_practical, lecture_class, tutorial_class, practical_class, total_students, mod_code, semester_code];
+    try {
+        let results = await staffManager.updateModuleCAS(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
         }
         else {
             console.log('Update Assign Module by Staff ID', results);
