@@ -16,3 +16,19 @@ module.exports.getAssignmentReport = (acad_sem) => {
         return error
     })
 };
+
+module.exports.getMCList = (acad_sem) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT mod_code, mod_abbrv, fk_mod_coord, staff_name FROM tas.module INNER JOIN staff_information ON fk_mod_coord = staff_id WHERE fk_mod_coord != \'\' AND fk_semester_code = ?;',
+            [acad_sem],(err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+};

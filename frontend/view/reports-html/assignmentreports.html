@@ -182,7 +182,7 @@
                         </div>
                         <div class="line"></div>
                         <div class="form-group d-flex flex-row-reverse p-2 bd-highlight">
-                            <button onclick="ExportToExcel('xlsx')">Export table to excel</button>
+                            <button id="export-table" class="btn btn-outline-info btn-sm" hidden="true">Export Data</button>
                         </div>
                     </div>
 
@@ -191,7 +191,7 @@
                         <table id="admin-table" class="table table-dark">
                             <thead>
                                 <tr>
-                                    <th scope="col">Assignment Report</th>
+                                    <th id = "th-label" scope="col">Assignment Report</th>
                                     <th id="acad-year-head" scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>

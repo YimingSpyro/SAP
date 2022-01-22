@@ -46,8 +46,11 @@ app.get("/profile-picture/:pfp_id", (req, res) => {
     res.sendFile("/profile_picture/" + req.params.pfp_id, { root: __dirname });
 });
 //SENDFILE FOR REPORT APIS---------------------------
-app.get("/reports", (req, res) => {
-    res.sendFile("/view/reports.html", { root: __dirname });
+app.get("/reports/assignment-report", (req, res) => {
+    res.sendFile("/view/reports-html/assignmentreports.html", { root: __dirname });
+});
+app.get("/reports/mc-list", (req, res) => {
+    res.sendFile("/view/reports-html/mclist.html", { root: __dirname });
 });
 app.get("/upload-reports", (req, res) => {
     res.sendFile("/view/uploadReport.html", { root: __dirname });
