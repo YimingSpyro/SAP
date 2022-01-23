@@ -152,7 +152,7 @@ function getCourses() {
 }
 //get available semesters
 function getSemesters() {
-    axios.get(base_url + '/api/semester/').then((results) => {
+    axios.get(base_url + '/api/report/semester/').then((results) => {
         //$("#select-semester select option[value*='AY']").remove();
         results.data.forEach(element => {
             $('#select-semester').append(`<option>${element.semester_code}</option>`)

@@ -15,3 +15,17 @@ module.exports.getAssignmentReport = async (req, res) => {
         return res.status(500).json({ message: error });
     };
 };
+
+module.exports.getMCList = async (req, res) => {
+    try {
+        let acad_sem = decodeURIComponent(req.params.acad_sem)
+        let results = await downloadsService.getMCList(acad_sem)
+        if (results.errno) {
+            throw "Database Error. SQL Error Code: " + results.errno + results.code;
+        } else {
+            return res.status(200).json(results);
+        };
+    } catch (error) {
+        return res.status(500).json({ message: error });
+    };
+};
