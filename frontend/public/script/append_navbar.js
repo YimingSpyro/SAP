@@ -1,4 +1,7 @@
 var role_id = sessionStorage.getItem('staff_role');
+console.log(JSON.parse(role_id));
+role_id = JSON.parse(role_id)
+console.log(Array.isArray(role_id));
 var html = ""
 
 $(window).on('load',()=>{
@@ -16,8 +19,8 @@ $(document).ready(()=>{
             for (let i = 0; i < rows.length; i++) {
                 console.log(rows[i].item_title);
                 var roleIdsArray = JSON.parse(rows[i].role_ids);
-                console.log(roleIdsArray);
-                console.log(role_id);
+/*                 console.log(roleIdsArray);
+                console.log(role_id); */
                 if (roleIdsArray.includes(parseInt(role_id))) {
                     /* html += `
                     <li id="maintenence-system">
