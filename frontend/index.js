@@ -52,6 +52,12 @@ app.get("/reports/assignment-report", (req, res) => {
 app.get("/reports/mc-list", (req, res) => {
     res.sendFile("/view/reports-html/mclist.html", { root: __dirname });
 });
+app.get("/reports/summary-by-module", (req, res) => {
+    res.sendFile("/view/reports-html/summarybymod.html", { root: __dirname });
+});
+app.get("/reports/summary-by-staff", (req, res) => {
+    res.sendFile("/view/reports-html/summarybystaff.html", { root: __dirname });
+});
 app.get("/upload-reports", (req, res) => {
     res.sendFile("/view/uploadReport.html", { root: __dirname });
 });
