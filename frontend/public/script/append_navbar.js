@@ -11,7 +11,7 @@ $(document).ready(()=>{
     $('#navbar-wrap').load("/shared_views/navbar_profile.html")
     $('#dashboard-view-wrap').load("/homeviews/admin_home.html")
     if (!sessionStorage.getItem("navBarAppended")){
-        axios.get("http://localhost:8080/api/nav-items").then((response) => {
+        axios.get(base_url+"/api/nav-items").then((response) => {
             var rows = response.data
             for (let i = 0; i < rows.length; i++) {
                 console.log(rows[i].item_title);
