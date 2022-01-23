@@ -1,11 +1,40 @@
 /* ============================ Notifications ========================= */
+
 .error-message {
     color: #22404F;
 }
 
+
 /* ============================ Navigation ========================= */
 
+button.accordion-button.collapsed {
+    background-color: #15343F;
+}
 
+div.accordion-body {
+    color: white;
+    background-color: #15343F;
+}
+
+.accordion-button:not(.collapsed) {
+    color: white;
+    background: rgb(63, 113, 130);
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 13%);
+}
+
+.accordion-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    color: white;
+    text-align: left;
+    background-color: #fff;
+    border: 0;
+    border-radius: 0;
+    overflow-anchor: none;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out, border-radius .15s ease;
+}
 
 
 /* ============================ Page Content ========================= */
@@ -304,6 +333,7 @@ caption {
     padding-top: 15px;
     padding-bottom: 15px;
 }
+
 
 /* #dvExcel.table>:not(caption)>*>* {
     padding: 0.5rem 0.5rem;

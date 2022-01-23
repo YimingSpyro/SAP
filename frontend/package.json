@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2",
-    "nodemon": "^2.0.15"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15",
+    "xlsx-js-style": "^1.0.0"
   }
 }
