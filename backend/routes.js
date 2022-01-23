@@ -194,6 +194,8 @@ exports.appRoute = router => {
     //DOWNLOADS
     router.get('/reports/download/assignment-report/:acad_sem', downloadsController.getAssignmentReport)
     router.get('/reports/download/mc-list/:acad_sem', downloadsController.getMCList)
+    router.get('/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
+    router.get('/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
 
     //REPORTS API NOT IN USE
     //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
