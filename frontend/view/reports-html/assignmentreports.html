@@ -10,9 +10,12 @@
     <title>Download Reports</title>
 
     <!-- Online scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
@@ -20,9 +23,15 @@
 
 
     <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <!-- Offline scripts -->
     <link rel="icon" href="/SVG Icons/scrunge.png">
@@ -89,43 +98,34 @@
     <div class="container-fluid">
 
         <!-- Side Bar -->
+        <!-- Side Bar -->
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
-                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
-
 
                         <!-- Page Link -->
                         <li id="nav-item">
-                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                            <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
+                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Maintenance System </span>
-                            </a>
-
-                            <div class="collapse" id="collapseExample">
-                                <div class="card card-body">
-                                    <!-- Page Link -->
-                                    <li class="nav-item">
-                                        <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                            <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Teaching Assignment System</span>
-                                        </a>
-                                    </li>
-                                </div>
-                            </div>
                         </li>
-
 
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Teaching Assignment System</span>
                             </a>
                         </li>
@@ -133,7 +133,8 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Exam Matters
                                 </span>
                             </a>
@@ -142,7 +143,8 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
                                     Announcements
                                 </span>
                             </a>
@@ -178,7 +180,7 @@
                         </div>
                         <div class="line"></div>
                         <div class="form-group d-flex flex-row-reverse p-2 bd-highlight">
-                            <button onclick="ExportToExcel('xlsx')">Export table to excel</button>
+                            <button id="export-table" class="btn btn-outline-info btn-sm" hidden="true">Export Data</button>
                         </div>
                     </div>
 
@@ -187,7 +189,7 @@
                         <table id="admin-table" class="table table-dark">
                             <thead>
                                 <tr>
-                                    <th scope="col">Assignment Report</th>
+                                    <th id = "th-label" scope="col">Assignment Report</th>
                                     <th id="acad-year-head" scope="col"></th>
                                     <th scope="col"></th>
                                     <th scope="col"></th>
