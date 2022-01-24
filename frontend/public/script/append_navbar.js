@@ -1,7 +1,7 @@
+
 var role_id = sessionStorage.getItem('staff_role');
 console.log(JSON.parse(role_id));
 role_id = JSON.parse(role_id)
-console.log(Array.isArray(role_id));
 var html = ""
 
 $(window).on('load',()=>{
@@ -19,25 +19,30 @@ $(document).ready(()=>{
             for (let i = 0; i < rows.length; i++) {
                 console.log(rows[i].item_title);
                 var roleIdsArray = JSON.parse(rows[i].role_ids);
-/*                 console.log(roleIdsArray);
-                console.log(role_id); */
-                if (roleIdsArray.includes(parseInt(role_id))) {
-                    /* html += `
-                    <li id="maintenence-system">
-                    <a href="./maintenance" class="nav-link px-0 align-middle">
-                    <div style="width: 100%; display: table">
-                    <div style="display: table-row">
-                    <img src="${[rows[i].item_icon_url]}"" class="icons"></img>
-                    <div class="navbar-title">${rows[i].item_title}</div>
-                    </div>
-                    </div>
-                    </a>
-                    </li>
-                    ` */
-                    //console.log(rows[i].item_html);
-                    html += rows[i].item_html
+                console.log(role_id.length);
+                var tempArray = []
+                /* for(let j = 0;j<role_id.length;j++){
+                    console.log(rows[i]) */
+                    if (roleIdsArray.includes(parseInt(role_id))) {
+                        tempArray.push(rows[i].item_id);
+                        /* html += `
+                        <li id="maintenence-system">
+                        <a href="./maintenance" class="nav-link px-0 align-middle">
+                        <div style="width: 100%; display: table">
+                        <div style="display: table-row">
+                        <img src="${[rows[i].item_icon_url]}"" class="icons"></img>
+                        <div class="navbar-title">${rows[i].item_title}</div>
+                        </div>
+                        </div>
+                        </a>
+                        </li>
+                        ` */
+                        //console.log(rows[i].item_html);
+                       /*  console.log(tempArray);
+                        if(!(tempArray.includes(rows[i].item_id)))  */html += rows[i].item_html
+                    }
                 }
-            }
+            /* } */
             $('#main-list').append(html);
             sessionStorage.setItem("navBarAppended",true)
             sessionStorage.setItem("navBarContent",html)
