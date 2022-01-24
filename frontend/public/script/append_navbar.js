@@ -16,15 +16,20 @@ $(document).ready(()=>{
     if (!sessionStorage.getItem("navBarAppended")){
         axios.get("http://localhost:8080/api/nav-items").then((response) => {
             var rows = response.data
+            var allNavItems = []
+            var staffNavItemsArrayId = []
             for (let i = 0; i < rows.length; i++) {
+                allNavItems.push(rows[i])
+                var roleIdsArrayForItem = [];
                 console.log(rows[i].item_title);
-                var roleIdsArray = JSON.parse(rows[i].role_ids);
-                console.log(role_id.length);
-                var tempArray = []
-                /* for(let j = 0;j<role_id.length;j++){
-                    console.log(rows[i]) */
-                    if (roleIdsArray.includes(parseInt(role_id))) {
-                        tempArray.push(rows[i].item_id);
+                roleIdsArrayForItem = (JSON.parse(rows[i].role_ids))
+           
+                for(let j = 0;j<role_id.length;j++){
+                    if (roleIdsArrayForItem.includes(parseInt(role_id[j]))) {
+                        if(!staffNavItemsArrayId.includes(rows[i].item_id)){
+                            staffNavItemsArrayId.push(rows[i].item_id);
+                            html += rows[i].item_html
+                        }
                         /* html += `
                         <li id="maintenence-system">
                         <a href="./maintenance" class="nav-link px-0 align-middle">
@@ -38,11 +43,12 @@ $(document).ready(()=>{
                         </li>
                         ` */
                         //console.log(rows[i].item_html);
-                       /*  console.log(tempArray);
-                        if(!(tempArray.includes(rows[i].item_id)))  */html += rows[i].item_html
+
+ 
                     }
                 }
-            /* } */
+            }
+            console.log(staffNavItemsArrayId);
             $('#main-list').append(html);
             sessionStorage.setItem("navBarAppended",true)
             sessionStorage.setItem("navBarContent",html)
