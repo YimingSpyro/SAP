@@ -4,13 +4,13 @@ $(document).ready(() => {
     $('#choose-module-preference').addClass("active")
 })
 function getModules(){
-    return axios.get(base_url + '/api/module' + '?semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module' + '?semester_code=' + sessionStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 };
 
 function getPreference(){
-    return axios.get(base_url + '/api/module/preference/8405' + '?semester_code=' + localStorage.getItem('semester_code'))//SAMPLE DATA
+    return axios.get(base_url + '/api/module/preference/8405' + '?semester_code=' + sessionStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 }
@@ -18,8 +18,8 @@ function getPreference(){
 function uploadPreference(preference){
     return axios.post(base_url + '/api/module/preference', 
     {
-        staff_id : 8405, //SAMPLE DATA
-        semester_code : localStorage.getItem('semester_code'), //SAMPLE DATA
+        staff_id : sessionStorage.getItem('staff_id'), 
+        semester_code : sessionStorage.getItem('semester_code'), 
         preference : preference
     })
     .then(() => success())
@@ -29,8 +29,8 @@ function uploadPreference(preference){
 function updatePreference(preference){
     return axios.put(base_url + '/api/module/preference', 
     {
-        staff_id : 8405, //SAMPLE DATA
-        semester_code : localStorage.getItem('semester_code'), //SAMPLE DATA
+        staff_id : sessionStorage.getItem('staff_id'), 
+        semester_code : sessionStorage.getItem('semester_code'),
         preference : preference
     })
     .then(() => success())
