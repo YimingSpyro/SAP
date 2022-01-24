@@ -3,7 +3,7 @@ $(document).ready(() => {
     $('#update-teaching-assignment').addClass("active")
 })
 function getTeachingRequirements() {
-    return axios.get(base_url + '/api/teaching-requirement/8405' + '?semester_code=' + localStorage.getItem('semester_code')) //SAMPLE
+    return axios.get(base_url + '/api/teaching-requirement/8405' + '?semester_code=' + sessionStorage.getItem('semester_code')) 
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -11,12 +11,12 @@ function getTeachingRequirements() {
 function addTeachingRequirement() {
     return axios.post(base_url + '/api/teaching-requirement/',
         {
-            staff_id: 8405, //SAMPLE DATA
+            staff_id: sessionStorage.getItem('staff_id'), 
             ptr_day: $("#day")[0].value,
             ptr_time: $("#time")[0].value,
             ptr_duration: $("#duration")[0].value,
             ptr_reason: $("#reason")[0].value,
-            semester_code: localStorage.getItem('semester_code') //SAMPLE DATA
+            semester_code: sessionStorage.getItem('semester_code') 
         })
         .then(response => response.data)
         .catch(err => error(err));
@@ -29,7 +29,7 @@ function deleteTeachingRequirement(ptr_id) {
 }
 
 function getRemarks() {
-    return axios.get(base_url + '/api/teaching-requirement/remarks/8405' + '?semester_code=' + localStorage.getItem('semester_code')) //SAMPLE
+    return axios.get(base_url + '/api/teaching-requirement/remarks/8405' + '?semester_code=' + sessionStorage.getItem('semester_code')) 
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -37,9 +37,9 @@ function getRemarks() {
 function addRemarks() {
     return axios.post(base_url + '/api/teaching-requirement/remarks',
         {
-            staff_id: 8405, //SAMPLE DATA
+            staff_id: sessionStorage.getItem('staff_id'), 
             ptr_remarks: $("#additional-requests")[0].value,
-            semester_code: localStorage.getItem('semester_code') //SAMPLE DATA
+            semester_code: sessionStorage.getItem('semester_code') 
         })
         .then(() => success())
         .catch(err => error(err));
@@ -48,9 +48,9 @@ function addRemarks() {
 function updateRemarks() {
     return axios.put(base_url + '/api/teaching-requirement/remarks',
         {
-            staff_id: 8405, //SAMPLE DATA
+            staff_id: sessionStorage.getItem('staff_id'), 
             ptr_remarks: $("#additional-requests")[0].value,
-            semester_code: localStorage.getItem('semester_code') //SAMPLE DATA
+            semester_code: sessionStorage.getItem('semester_code') 
         })
         .then(() => success())
         .catch(err => error(err));
