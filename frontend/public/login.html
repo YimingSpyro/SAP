@@ -17,9 +17,9 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
-        /* if (sessionStorage.getItem('isLoggedIn')) {
+        if (sessionStorage.getItem('isLoggedIn')) {
             window.location.href = "/home"
-        } */
+        }
         $(document).ready(() => {
             $("#submit-button").click((e) => {
                 var staff_id = $("#staff_id").val();
@@ -37,34 +37,39 @@
                         staff_id: staff_id,
                         password: password
                     }, { withCredentials: true }).then((response) => {
+                        console.log("respondeed");
                         if (response.status == 200) {
-                            console.log(response);
-                            var data = response.data.data
+                            var data = (response.data.data)[0]
                             sessionStorage.setItem('isLoggedIn', true)
                             sessionStorage.setItem('staff_id', data.staff_id)
                             console.log(data);
+
                             if(data.roles.length>0){
-                                var role_name_text
-                                var role_remarks_text
+                                var role_name_text = ''
+                                var role_remarks_text = ''
                                 var role_ids = [];
-                                for(let i = 0; i <response.roles.length;i++){
-                                    var row = response.roles[i];
-                                    if(i = 0) {
+                                console.log("bruh");
+                                for(let i = 0; i <data.roles.length;i++){
+                                    console.log(data.roles.length);
+                                    console.log(i);
+                                    var row = data.roles[i];
+                                    console.log(row);
+                                    if(i==0){
                                         role_name_text = row.role_name;
-                                        role_remarks_text = row.rermarks;
-                                        
+                                        role_remarks_text = row.remarks;
+                                    }else{
+                                        console.log("if");
+                                        role_name_text+="/"+row.role_name
+                                        role_remarks_text+=","+row.remarks
                                     }
-                                    else{
-                                        role_name_text+=","+row[i].role_name
-                                        role_name_remarks+=","+row[i].remarks
-                                    }
+                                    console.log(role_name_text);
                                     role_ids.push(row.role_id)
                                 }
                             }
                             sessionStorage.setItem('staff_name', data.staff_name)
-                            sessionStorage.setItem('staff_role', role_ids)
+                            sessionStorage.setItem('staff_role', JSON.stringify(role_ids))
                             sessionStorage.setItem('staff_role_name', role_name_text)
-                          //  window.location.href = "/home"
+                            window.location.href = "/home"
                             /* const accessToken = response.data.accessToken;
                             storeAccessTokenInLocalStorage(accessToken);*/
                         }
