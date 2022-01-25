@@ -191,13 +191,14 @@ exports.appRoute = router => {
 
     //REPORTS
     //router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)
-    router.post('/reports/upload/excel/', uploadsController.uploadFileJSON)
+    router.post('/api/reports/upload/excel/', uploadsController.uploadFileJSON)
 
     //DOWNLOADS
-    router.get('/reports/download/assignment-report/:acad_sem', downloadsController.getAssignmentReport)
-    router.get('/reports/download/mc-list/:acad_sem', downloadsController.getMCList)
-    router.get('/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
-    router.get('/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
+    router.get('/api/reports/download/assignment-report/:acad_sem', downloadsController.getAssignmentReport)
+    router.get('/api/reports/download/mc-list/:acad_sem', downloadsController.getMCList)
+    router.get('/api/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
+    router.get('/api/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
+    router.get('/api/reports/download/staff-hours/:acad_sem', downloadsController.getTotalHoursByStaff)
 
     //REPORTS API NOT IN USE
     //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)

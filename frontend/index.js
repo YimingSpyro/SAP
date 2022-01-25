@@ -62,6 +62,9 @@ app.get("/reports/summary-by-module", (req, res) => {
 app.get("/reports/summary-by-staff", (req, res) => {
     res.sendFile("/view/reports-html/summarybystaff.html", { root: __dirname });
 });
+app.get("/reports/examiner-and-verifier-report", (req, res) => {
+    res.sendFile("/view/reports-html/examnverifier.html", { root: __dirname });
+});
 app.get("/upload-reports", (req, res) => {
     res.sendFile("/view/uploadReport.html", { root: __dirname });
 });
