@@ -5,13 +5,13 @@ function getCourse() {
 };
 
 function getModulesBySection(section) {
-    return axios.get(base_url + '/api/module/section?section=' + section + '&semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/section?section=' + section + '&semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 };
 
 function getAssignedModulesByCode(mod_code) {
-    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code + '&semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code + '&semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -27,7 +27,7 @@ function updateModule(mod_code) {
         practical_class: $("#input-practical-classes")[0].value,
         total_students: $("#input-student")[0].value,
         mod_code : mod_code,
-        semester_code : localStorage.getItem('semester_code') // SAMPLE DATA
+        semester_code : sessionStorage.getItem('semester_code')
     })
     .then(() => {
         $("#module-warning").empty();

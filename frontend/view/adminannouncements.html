@@ -14,14 +14,18 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
     <!-- Offline scripts -->
     <link href="admincss/navbar.css" rel="stylesheet">
     <link rel="icon" href="/SVG Icons/scrunge.png">
-    <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="adminexammatters.css">
-    <link rel="stylesheet" href="../public/css/global.css">
-    <link rel="stylesheet" href="../public/css/adminannouncement.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/adminexammatters.css">
+    <link rel="stylesheet" href="/css/adminannouncement.css">
+    <script src="/script/global.js"></script>
+    <script src="/script/announcements.js"></script>
+    <script src="/script/notifications.js"></script>
 
 </head>
 
@@ -51,7 +55,7 @@
             <div id="notification-wrap" class="col-1">
                 <!-- Icon -->
                 <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../SVG Icons/notification.svg" class="icons"></img>
+                    <img id="notifications" src="SVG Icons/notification.svg" class="icons"></img>
                 </a>
                 <!-- Contents -->
                 <div class="collapse" id="notification-bell">
@@ -87,21 +91,21 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                                <img src="SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
                             </a>
                         </li>
 
                         <!-- Page Link -->
                         <li id="nav-item">
                             <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Maintenance System </span>
                         </li>
 
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Teaching Assignment System</span>
                             </a>
                         </li>
@@ -109,7 +113,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                     Exam Matters
                                 </span>
                             </a>
@@ -118,7 +122,7 @@
                         <!-- Page Link -->
                         <li class="nav-item active">
                             <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                <img src="SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
                                 Announcements   
                                 </span>
                             </a>
@@ -126,7 +130,7 @@
                         <!-- Page Link -->
                         <li class="nav-item">
                             <a href="reports.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
                             </a>
                         </li>
                     </ul>
@@ -145,71 +149,6 @@
                     <!-- Content Item -->
                     <div id="content-item-admin">
 
-                        <!-- Admin Announcement Bar -->
-                        <div id="announcement-bar-admin">
-
-                            <!-- Actions -->
-                            <div id="announcementactions" class="float-end important">
-                                <div id="editannouncement">
-                                    Edit
-                                </div>
-                                <div id="deleteannouncement">
-                                    Delete
-                                </div>
-                            </div>
-                            <!-- Contents -->
-                            <div id="announcementcontent" class="important">
-                                <!-- To -->
-                                <div id="announcementto" class="float-end">
-                                    All Staff
-                                </div>
-                                <!-- Title -->
-                                <div id="announcementtitle">
-                                    Announcement Title
-                                </div>
-                                <!-- Duration -->
-                                <div id="announcementduration" class="float-end">
-                                    28 Feb 2022 - 30 Feb2022
-                                </div>
-                                <!-- Message -->
-                                <div id="announcementmessage">
-                                    Message go brrrrr
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Admin Announcement Bar -->
-                        <div id="announcement-bar-admin">
-
-                            <!-- Actions -->
-                            <div id="announcementactions" class="float-end maintenance">
-                                <div id="editannouncement">
-                                    Edit
-                                </div>
-                                <div id="deleteannouncement">
-                                    Delete
-                                </div>
-                            </div>
-                            <!-- Contents -->
-                            <div id="announcementcontent" class="maintenance">
-                                <!-- To -->
-                                <div id="announcementto" class="float-end">
-                                    All Staff
-                                </div>
-                                <!-- Title -->
-                                <div id="announcementtitle">
-                                    Announcement Title
-                                </div>
-                                <!-- Duration -->
-                                <div id="announcementduration" class="float-end">
-                                    28 Feb 2022 - 30 Feb2022
-                                </div>
-                                <!-- Message -->
-                                <div id="announcementmessage">
-                                    Message go brrrrr
-                                </div>
-                            </div>
-                        </div>
 
                         <!-- Admin Announcement Bar -->
                         <div id="announcement-bar-admin">
@@ -244,38 +183,6 @@
                             </div>
                         </div>
 
-                        <!-- Admin Announcement Bar -->
-                        <div id="announcement-bar-admin">
-
-                            <!-- Actions -->
-                            <div id="announcementactions" class="float-end success">
-                                <div id="editannouncement">
-                                    Edit
-                                </div>
-                                <div id="deleteannouncement">
-                                    Delete
-                                </div>
-                            </div>
-                            <!-- Contents -->
-                            <div id="announcementcontent" class="success">
-                                <!-- To -->
-                                <div id="announcementto" class="float-end">
-                                    All Staff
-                                </div>
-                                <!-- Title -->
-                                <div id="announcementtitle">
-                                    Announcement Title
-                                </div>
-                                <!-- Duration -->
-                                <div id="announcementduration" class="float-end">
-                                    28 Feb 2022 - 30 Feb2022
-                                </div>
-                                <!-- Message -->
-                                <div id="announcementmessage">
-                                    Message go brrrrr
-                                </div>
-                            </div>
-                        </div>
 
 
                         <!-- Show More -->

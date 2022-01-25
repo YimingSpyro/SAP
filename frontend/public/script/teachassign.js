@@ -9,13 +9,13 @@ function getCourse() {
 };
 
 function getModulesBySection(section) {
-    return axios.get(base_url + '/api/module/section?section=' + section + '&semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/section?section=' + section + '&semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 };
 
 function getAssignedModulesByCode(mod_code) {
-    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code + '&semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/assign?mod_code=' + mod_code + '&semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -27,13 +27,13 @@ function getAllStaff() {
 };
 
 function getAssignedModules(staff_id) {
-    return axios.get(base_url + '/api/module/assign/' + staff_id + '?semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/assign/' + staff_id + '?semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 }
 
 function getPreference(staff_id) {
-    return axios.get(base_url + '/api/module/preference/' + staff_id + '?semester_code=' + localStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/preference/' + staff_id + '?semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
         .catch(err => error(err));
 }
@@ -51,7 +51,7 @@ function assignModule(staff_id, mod_code) {
             ma_lecture: $("#input-lecture-assign")[0].value,
             ma_tutorial: $("#input-tutorial-assign")[0].value,
             ma_practical: $("#input-practical-assign")[0].value,
-            semester_code: localStorage.getItem('semester_code'), //SAMPLE DATA
+            semester_code: sessionStorage.getItem('semester_code'), 
             module_code: mod_code
         })
         .then(() => success("assigned"))
@@ -93,7 +93,7 @@ function updateModule(mod_code) {
         practical_class: $("#input-practical-classes")[0].value,
         total_students: $("#input-student")[0].value,
         mod_code : mod_code,
-        semester_code : localStorage.getItem('semester_code') // SAMPLE DATA
+        semester_code : sessionStorage.getItem('semester_code') 
     })
     .then(() => {
         $("#module-warning").empty();

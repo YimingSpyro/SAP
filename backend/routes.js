@@ -115,21 +115,7 @@ exports.appRoute = router => {
     // SECTION
     router.get('/api/section/', staffController.getAllSections);
 
-    // COURSE
-    router.get('/api/course/', staffController.getAllCourses);
-    router.post('/api/course/', staffController.createCourse);
-    router.put('/api/course/', staffController.updateCourse);
-    router.put('/api/course/disable', staffController.disableCourse);
-    router.put('/api/course/enable', staffController.enableCourse);
-    router.delete('/api/course/', staffController.deleteCourse);
 
-    // SEMESTER
-    router.get('/api/semester/', staffController.getAllSemesters);
-    router.post('/api/semester/', staffController.createSemester);
-    router.put('/api/semester/', staffController.updateSemester);
-    router.put('/api/semester/disable', staffController.disableSemester);
-    router.put('/api/semester/enable', staffController.enableSemester);
-    router.delete('/api/semester/', staffController.deleteSemester);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);
@@ -175,12 +161,27 @@ exports.appRoute = router => {
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
     router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
+    
+    // COURSE
+    router.get('/api/courses/', courseController.getAllCourses);
+    router.get('/api/course/', courseController.getAllCoursesByStatus);
+    router.post('/api/course/', courseController.createCourse);
+    router.put('/api/course/', courseController.updateCourse);
+    router.put('/api/course/disable', courseController.disableCourse);
+    router.put('/api/course/enable', courseController.enableCourse);
+    router.delete('/api/course/', courseController.deleteCourse);
 
-    //SEMESTER INFO
+    // SEMESTER
+    router.get('/api/semester/', semesterController.getAllSemestersByStatus);
+    router.post('/api/semester/', semesterController.createSemester);
+    router.put('/api/semester/', semesterController.updateSemester);
+    router.put('/api/semester/disable', semesterController.disableSemester);
+    router.put('/api/semester/enable', semesterController.enableSemester);
+    router.delete('/api/semester/', semesterController.deleteSemester);
     router.get('/api/report/semester/', semesterController.getAllSemesters);
 
-    //COURSE
-    router.get('/api/courses/', courseController.getAllCourses);
+
+
 
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)

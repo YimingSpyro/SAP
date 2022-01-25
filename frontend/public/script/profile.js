@@ -1,6 +1,6 @@
 const staff_id = sessionStorage.getItem("staff_id");
 function getProfileInfo(){
-    return axios.get(base_url + '/api/staff/'+staff_id+'') //SAMPLE
+    return axios.get(base_url + '/api/staff/'+staff_id+'')
     .then(response => response.data)
     .catch(err => error(err));
 };
