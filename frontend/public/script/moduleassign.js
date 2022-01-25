@@ -1,5 +1,5 @@
 function getAssignedModules(){
-    return axios.get(base_url + '/api/module/assign/8405' + '?semester_code=' + localStorage.getItem('semester_code')) //SAMPLE DATA
+    return axios.get(base_url + '/api/module/assign/8405' + '?semester_code=' + sessionStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 }
@@ -19,8 +19,7 @@ async function generateAssignedModules(){
             <td>`+module.ma_practical+`</td>
             <td>`+hours.toFixed(1)+`</td>
         </tr>`);
-        //SAMPLE DATA USED HERE PLEASE UPDATE TO USE COOKIE STAFF_ID
-        if (parseInt(module.fk_mod_coord) == 8405) {
+        if (parseInt(module.fk_mod_coord) == sessionStorage.getItem('staff_id')) {
             $("#module-"+index).css("color","orange");
         }
     }
