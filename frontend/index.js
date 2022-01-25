@@ -45,6 +45,10 @@ app.get("/change-password", (req, res) => {
 app.get("/profile-picture/:pfp_id", (req, res) => {
     res.sendFile("/profile_picture/" + req.params.pfp_id, { root: __dirname });
 });
+
+app.get("/announcements", (req, res) => {
+    res.sendFile("/view/adminannouncements.html", { root: __dirname });
+});
 //SENDFILE FOR REPORT APIS---------------------------
 app.get("/reports", (req, res) => {
     res.sendFile("/view/reports.html", { root: __dirname });
