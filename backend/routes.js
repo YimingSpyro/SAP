@@ -141,6 +141,7 @@ exports.appRoute = router => {
     router.get('/api/module/', staffController.getAllModules);
     router.get('/api/module/code/', staffController.getModuleByCode);
     router.get('/api/module/section/', staffController.getModuleBySection);
+    router.get('/api/module/section/stage', staffController.getModuleBySectionAndStage);
     router.post('/api/module/', staffController.createModule);
 
     // MODULE PREFERENCE
@@ -215,7 +216,9 @@ exports.appRoute = router => {
     // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);
     router.put('/api/tas/module/', staffController.updateModuleTAS);
-    router.put('/api/tas/cas/module/', staffController.updateModuleCAS);
+    router.put('/api/cas/module/', staffController.updateModuleCAS);
+    router.get('/api/cas/module/stage', staffController.getModuleStage);
+    router.put('/api/cas/module/stage', staffController.updateNormalStudents);
 
 
     router.get('/api/nav-items', authController.getNavItems);
