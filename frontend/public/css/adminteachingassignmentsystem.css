@@ -20,6 +20,10 @@ button {
     margin-right: 75px;
 }
 
+.submit-normal {
+    width: 150px;
+}
+
 .form-control {
     display: block;
     width: 100%;
@@ -111,6 +115,12 @@ p#text {
 }
 
 .warning-message p{
+    color: #22404F;
+    font-weight: bold;
+    font-size: .8em;
+}
+
+#normal-warning p{
     color: #22404F;
     font-weight: bold;
     font-size: .8em;
