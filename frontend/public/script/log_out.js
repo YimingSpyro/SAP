@@ -10,5 +10,5 @@ function logOut(){
     window.sessionStorage.removeItem("navBarContent")
     window.sessionStorage.clear()
     localStorage.clear()
-    window.location.href="./login"
+    window.location.href="/login"
 }
