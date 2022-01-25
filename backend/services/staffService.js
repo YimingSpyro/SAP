@@ -407,6 +407,27 @@ module.exports.getModuleBySection = (data) => {
         return error
     });
 };
+module.exports.getModuleBySectionAndStage = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT * FROM module WHERE fk_course_id = ? AND fk_semester_code = ? AND mod_stage = ?`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
 module.exports.getModuleByCode = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
@@ -564,7 +585,7 @@ module.exports.updateModulePreferenceByID = (data) => {
 module.exports.getAssignedModulesByModule = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_lecture, module.mod_tutorial, module.mod_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage, module.lecture_class, module.tutorial_class, module.practical_class, module.total_students FROM mod_assign
+        pool.query(`SELECT * FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
          WHERE fk_mod_code = ? AND module.fk_semester_code = ?;`, data, (err, results) => {
@@ -725,7 +746,7 @@ module.exports.updateModuleCAS = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE module  
-             SET mod_lecture = ?, mod_tutorial = ?, mod_practical = ?, lecture_class = ?, tutorial_class = ?, practical_class = ?, total_students = ?
+             SET normal_students = ?, os_students = ?, total_students = ?
              WHERE mod_code = ? AND fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
@@ -740,6 +761,51 @@ module.exports.updateModuleCAS = (data) => {
 
         });
     }).catch((error) => {
+        console.error("SQL Error: ",error);
+        return error
+    });
+};
+module.exports.getModuleStage = (semester_code) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT DISTINCT mod_stage FROM module WHERE fk_semester_code = ?`, [semester_code], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
+module.exports.updateNormalStudents = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE module  
+             SET normal_students = ?
+             WHERE fk_course_id = ? AND fk_semester_code = ? AND mod_stage = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
         return error
     });
 };

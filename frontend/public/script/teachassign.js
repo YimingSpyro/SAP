@@ -389,7 +389,7 @@ async function generateModal(module_index) {
         <div class = "overflow-hidden py-1">
             <div class = "form-group row align-middle py-1">
                 <label for="input-student" class="col-2 col-form-label">Total No. of Students:</label>
-                <div class="col-1">
+                <div class="col-2">
                     <input type="number" min="0" value="`+ total_students + `"class="form-control form-control-sm module-input" id="input-student">   
                 </div>
                 <label for="select-mc" class="col-2 col-form-label">Module Coordinator:</label>

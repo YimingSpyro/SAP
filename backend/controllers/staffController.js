@@ -524,6 +524,30 @@ exports.getModuleBySection = async (req, res, next) => {
     }
 
 };
+exports.getModuleBySectionAndStage = async (req, res, next) => {
+    let section = req.query.section;
+    let semester_code = req.query.semester_code;
+    let mod_stage = req.query.mod_stage;
+    let data = [section, semester_code,mod_stage]
+    try {
+        let results = await staffManager.getModuleBySectionAndStage(data);
+        console.log('Get Module by ID', results);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 exports.getModuleByCode = async (req, res, next) => {
     let mod_code = req.query.section;
     let semester_code = req.query.semester_code;
@@ -548,7 +572,6 @@ exports.getModuleByCode = async (req, res, next) => {
 
 };
 // API Get All Modules
-
 exports.getAllModules = async (req, res, next) => {
     let semester_code = req.query.semester_code;
     try {
@@ -911,16 +934,12 @@ exports.updateModuleTAS = async (req, res, next) => {
 
 // API Update Module By CAS - admin support
 exports.updateModuleCAS = async (req, res, next) => {
-    let mod_lecture = req.body.mod_lecture;
-    let mod_tutorial = req.body.mod_tutorial;
-    let mod_practical = req.body.mod_practical;
-    let lecture_class = req.body.lecture_class;
-    let tutorial_class = req.body.tutorial_class;
-    let practical_class = req.body.practical_class;
+    let normal_students = req.body.normal_students;
+    let os_students = req.body.os_students;
     let total_students = req.body.total_students;
     let mod_code = req.body.mod_code;
     let semester_code = req.body.semester_code;
-    let data = [mod_lecture, mod_tutorial, mod_practical, lecture_class, tutorial_class, practical_class, total_students, mod_code, semester_code];
+    let data = [normal_students,os_students,total_students,mod_code,semester_code];
     try {
         let results = await staffManager.updateModuleCAS(data);
         if (results.errno) {
@@ -931,6 +950,55 @@ exports.updateModuleCAS = async (req, res, next) => {
         }
         else {
             console.log('Update Assign Module by Staff ID', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Get Module Stage
+exports.getModuleStage = async (req, res, next) => {
+    let semester_code = req.query.semester_code;
+    try {
+        let results = await staffManager.getModuleStage(semester_code);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Get Module Stages', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Update Module By CAS - admin support
+exports.updateNormalStudents = async (req, res, next) => {
+    let normal_students = req.body.normal_students;
+    let course_id = req.body.course_id
+    let semester_code = req.body.semester_code;
+    let mod_stage = req.body.mod_stage;
+    let data = [normal_students,course_id,semester_code,mod_stage];
+    try {
+        let results = await staffManager.updateNormalStudents(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Normal Students by Mod Stage and Section', results);
             return res.status(200).json(results);
         }
     } catch (error) {
