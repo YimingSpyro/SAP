@@ -51,7 +51,7 @@ module.exports.processLogin = ((req, res) => {
                     });
 
                 } else {
-                    console.log("error");
+                    console.log("BCRYPT error");
                     console.log(err);
                     res.status(500).json({
                         error: err
