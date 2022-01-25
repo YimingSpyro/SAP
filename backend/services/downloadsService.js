@@ -70,7 +70,31 @@ module.exports.getSummaryByStaff = (acad_sem) => {
                     ON designation.designation_id = staff_information.fk_designation_id
                     WHERE mod_assign.fk_semester_code = ? AND module.fk_semester_code = ?
                     GROUP BY staff_name, mod_code, mod_stage
-                    ORDER BY designation.section_name, designation.fk_course_id;`,
+                    ORDER BY staff_name, course;`,
+            [acad_sem, acad_sem], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+};
+
+module.exports.getTotalHoursByStaff = (acad_sem) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT staff_name,fk_staff_id, SUM(ma_lecture), SUM(ma_tutorial), SUM(ma_practical), SUM(FLOOR(mod_lecture/15)*ma_lecture) AS classhrL, SUM(FLOOR(mod_tutorial/15)*ma_tutorial) AS classhrT, SUM(FLOOR(mod_practical/15)*ma_practical) AS classhrP
+                    FROM mod_assign 
+                    INNER JOIN staff_information
+                    ON mod_assign.fk_staff_id = staff_information.staff_id
+                    INNER JOIN  module
+                    ON mod_assign.fk_mod_code = module.mod_code
+                    WHERE mod_assign.fk_semester_code = ? AND module.fk_semester_code = ? 
+                    GROUP BY staff_name
+                    ORDER BY staff_name;`,
             [acad_sem, acad_sem], (err, rows) => {
                 if (err) {
                     reject(err);
