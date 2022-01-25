@@ -1,6 +1,18 @@
 const config = require('../config/config');
 const pool = require('../config/database')
-
+async function appendRoleToObject(rows, rows1) {
+    var roles = [];
+    for (let i = 0; i < rows1.length; i++) {
+        var row = rows1[i];
+        roles.push({
+            role_id: row.role_id,
+            role_name: row.role_name,
+            remarks: row.remarks
+        })
+    }
+    rows[0]["roles"] = roles;
+    return rows
+}
 module.exports.login = ([staff_id, password]) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -19,25 +31,15 @@ module.exports.login = ([staff_id, password]) => {
                                     reject(err);
                                 } else {
                                     if (rows1) {
-                                        var roles = [];
-                                        for(let i = 0;i<rows1.length;i++){
-                                            var row = rows1[i];
-                                            roles.push({
-                                                role_id: row.role_id,
-                                                role_name: row.role_name,
-                                                remarks: row.remarks
-                                            })
-                                        }
-                                        rows[0]["roles"] = roles;
-                                        return resolve(rows);
+                                        const finalRows = appendRoleToObject(rows, rows1)
+                                        console.log(finalRows);
+                                        if(!finalRows) return resolve('Error Message');
+                                        else return resolve(finalRows);
                                     } else {
                                         console.log("error");
-                                        return resolve('Error Message');
                                     }
                                 }
                             })
-
-                            return resolve(rows);
                         } else {
                             return resolve('Error Message');
                         }

@@ -22,7 +22,8 @@ function insertJwtRecord(row,token){
 const saltRounds = 10;
 const authManager = require('../services/authService');
 const config = require('../config/config');
-const pool = require('../config/database')
+const pool = require('../config/database');
+const { LONGLONG } = require('mysql/lib/protocol/constants/types');
 
 module.exports.processLogin = ((req, res) => {
     console.log("login called")
@@ -32,6 +33,9 @@ module.exports.processLogin = ((req, res) => {
     console.log(password);
     var data = authManager.login([staff_id, password])
         .then((rows) => {
+            console.log("authmanager");
+            console.log(rows);
+            console.log(rows[0].staff_name);
             var hash = rows[0].staff_password;
             bcrypt.compare(password, hash, (err, resp) => {
                 if (resp) {
@@ -39,9 +43,6 @@ module.exports.processLogin = ((req, res) => {
                    // const result = JSON.parse(JSON.stringify(rows[0]));
                    const result = rows;
                     result['token'] = accessToken
-                    console.log("ok");
-                    console.log(rows);
-
                     res.cookie("token",result.token, {
                         httpOnly: true
                     });

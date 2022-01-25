@@ -6,7 +6,7 @@ function getSemester() {
 async function setCurrentSemester(){
     let semester = await getSemester();
     let semester_code = semester.semester_code
-    localStorage.setItem('semester_code',semester_code);
+    sessionStorage.setItem('semester_code',semester_code);
 }
 let base_url = "http://localhost:8080";
 
