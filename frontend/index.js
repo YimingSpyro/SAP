@@ -45,6 +45,10 @@ app.get("/change-password", (req, res) => {
 app.get("/profile-picture/:pfp_id", (req, res) => {
     res.sendFile("/profile_picture/" + req.params.pfp_id, { root: __dirname });
 });
+
+app.get("/announcements", (req, res) => {
+    res.sendFile("/view/adminannouncements.html", { root: __dirname });
+});
 //SENDFILE FOR REPORT APIS---------------------------
 app.get("/reports/assignment-report", (req, res) => {
     res.sendFile("/view/reports-html/assignmentreports.html", { root: __dirname });
@@ -57,6 +61,9 @@ app.get("/reports/summary-by-module", (req, res) => {
 });
 app.get("/reports/summary-by-staff", (req, res) => {
     res.sendFile("/view/reports-html/summarybystaff.html", { root: __dirname });
+});
+app.get("/reports/examiner-and-verifier-report", (req, res) => {
+    res.sendFile("/view/reports-html/examnverifier.html", { root: __dirname });
 });
 app.get("/upload-reports", (req, res) => {
     res.sendFile("/view/uploadReport.html", { root: __dirname });
@@ -75,6 +82,7 @@ app.get("/teaching-assignment", (req, res) => {
 app.get("/class-assignment", (req, res) => {
     res.sendFile("/view/classassignmentsystem.html", { root: __dirname });
 });
+
 //SENDFILE FOR COURSE PLANNING APIS---------------------------
 app.get("/course", (req, res) => {
     res.sendFile("/view/admincoursemaintenance.html", { root: __dirname });
@@ -85,6 +93,10 @@ app.get("/semester", (req, res) => {
 app.get("/designation", (req, res) => {
     res.sendFile("/view/admindesignationmaintenance.html", { root: __dirname });
 });
+app.get("/staff-hours", (req, res) => {
+    res.sendFile("/view/adminstaffhoursmaintenance.html", { root: __dirname });
+});
+
 app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`)
 });

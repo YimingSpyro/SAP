@@ -310,6 +310,22 @@ div.accordion-body > a:hover {
     padding: 0;
 }
 
+#workloadtable {
+    background-color: #E9E9E9;
+    margin: 2%;
+}
+
+#tabletitle {
+    background-color: #969696;
+    padding: 6px 5% 4px 5%;
+    color: white;
+    font-weight: bold;
+}
+
+#workloadtablecontent {
+    padding: 1% 5% 2% 5%;
+}
+
 
 /* ============================ Buttons ================================ */
 

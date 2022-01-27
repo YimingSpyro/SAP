@@ -1,5 +1,6 @@
 // Import controlers
 const authController = require("./controllers/authController");
+const announcementController = require("./controllers/announcementController");
 const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
 const examController = require("./controllers/examController")
@@ -115,26 +116,20 @@ exports.appRoute = router => {
     // SECTION
     router.get('/api/section/', staffController.getAllSections);
 
-    // COURSE
-    router.get('/api/course/', staffController.getAllCourses);
-    router.post('/api/course/', staffController.createCourse);
-    router.put('/api/course/', staffController.updateCourse);
-    router.put('/api/course/disable', staffController.disableCourse);
-    router.put('/api/course/enable', staffController.enableCourse);
-    router.delete('/api/course/', staffController.deleteCourse);
+    // STAFF TYPES
+    router.get('/api/staff/types', staffController.getStaffTypes);
+    router.post('/api/staff/types/', staffController.createStaffType);
+    router.delete('/api/staff/types/', staffController.deleteStaffType);
+    router.put('/api/staff/types/', staffController.updateStaffType);
 
-    // SEMESTER
-    router.get('/api/semester/', staffController.getAllSemesters);
-    router.post('/api/semester/', staffController.createSemester);
-    router.put('/api/semester/', staffController.updateSemester);
-    router.put('/api/semester/disable', staffController.disableSemester);
-    router.put('/api/semester/enable', staffController.enableSemester);
-    router.delete('/api/semester/', staffController.deleteSemester);
+    // ANNOUNCEMENT
+    router.get('/api/announcements/', announcementController.getAllAnnouncements);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);
     router.post('/api/designation/', staffController.createDesignation);
     router.delete('/api/designation/', staffController.deleteDesignation);
+    router.put('/api/designation/', staffController.updateDesignation);
 
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);
@@ -155,6 +150,7 @@ exports.appRoute = router => {
     router.get('/api/module/', staffController.getAllModules);
     router.get('/api/module/code/', staffController.getModuleByCode);
     router.get('/api/module/section/', staffController.getModuleBySection);
+    router.get('/api/module/section/stage', staffController.getModuleBySectionAndStage);
     router.post('/api/module/', staffController.createModule);
 
     // MODULE PREFERENCE
@@ -175,12 +171,27 @@ exports.appRoute = router => {
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
     router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
+    
+    // COURSE
+    router.get('/api/courses/', courseController.getAllCourses);
+    router.get('/api/course/', courseController.getAllCoursesByStatus);
+    router.post('/api/course/', courseController.createCourse);
+    router.put('/api/course/', courseController.updateCourse);
+    router.put('/api/course/disable', courseController.disableCourse);
+    router.put('/api/course/enable', courseController.enableCourse);
+    router.delete('/api/course/', courseController.deleteCourse);
 
-    //SEMESTER INFO
+    // SEMESTER
+    router.get('/api/semester/', semesterController.getAllSemestersByStatus);
+    router.post('/api/semester/', semesterController.createSemester);
+    router.put('/api/semester/', semesterController.updateSemester);
+    router.put('/api/semester/disable', semesterController.disableSemester);
+    router.put('/api/semester/enable', semesterController.enableSemester);
+    router.delete('/api/semester/', semesterController.deleteSemester);
     router.get('/api/report/semester/', semesterController.getAllSemesters);
 
-    //COURSE
-    router.get('/api/courses/', courseController.getAllCourses);
+
+
 
     //PROFILE PICTURE
     router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
@@ -189,13 +200,14 @@ exports.appRoute = router => {
 
     //REPORTS
     //router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)
-    router.post('/reports/upload/excel/', uploadsController.uploadFileJSON)
+    router.post('/api/reports/upload/excel/', uploadsController.uploadFileJSON)
 
     //DOWNLOADS
-    router.get('/reports/download/assignment-report/:acad_sem', downloadsController.getAssignmentReport)
-    router.get('/reports/download/mc-list/:acad_sem', downloadsController.getMCList)
-    router.get('/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
-    router.get('/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
+    router.get('/api/reports/download/assignment-report/:acad_sem', downloadsController.getAssignmentReport)
+    router.get('/api/reports/download/mc-list/:acad_sem', downloadsController.getMCList)
+    router.get('/api/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
+    router.get('/api/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
+    router.get('/api/reports/download/staff-hours/:acad_sem', downloadsController.getTotalHoursByStaff)
 
     //REPORTS API NOT IN USE
     //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
@@ -213,7 +225,9 @@ exports.appRoute = router => {
     // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);
     router.put('/api/tas/module/', staffController.updateModuleTAS);
-    router.put('/api/tas/cas/module/', staffController.updateModuleCAS);
+    router.put('/api/cas/module/', staffController.updateModuleCAS);
+    router.get('/api/cas/module/stage', staffController.getModuleStage);
+    router.put('/api/cas/module/stage', staffController.updateNormalStudents);
 
 
     router.get('/api/nav-items', authController.getNavItems);

@@ -170,6 +170,29 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="select-stage" class="col-2 col-form-label">Select Stage</label>
+                            <div class="col">
+                                <select class="form-select-sm col-4" id="select-stage">
+                                    <option selected>Select Stage</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row pt-2">
+                            <label for="input-student" class="col-3 col-form-label">No. of Normal Students:</label>
+                            <div class="col-3">
+                                <input type="number" min="0" value="" class="form-control form-control-sm" id="input-module-normal">   
+                            </div>
+                            <div class="col mb-2">
+                                <button class="btn btn-primary submit-normal float-end" type="button">Submit Changes</button>
+                            </div>
+                            <div class = "col-12 normal-message" id="normal-warning">
+                            </div>
+                        </div>
+
+                        
+
                         <div class="line"></div>
                     </div>
 
@@ -183,10 +206,9 @@
                                 <tr class="align-middle">
                                     <th scope="col" class="col-2">Module Code</th>
                                     <th scope="col" class="col-4">Module Name</th>
-                                    <th scope="col" class="col-2">Hours per week</th>
-                                    <th scope="col" class="col-1">Lecture</th>
-                                    <th scope="col" class="col-1">Tutorial</th>
-                                    <th scope="col" class="col-1">Practical</th>
+                                    <th scope="col" class="col-2">Normal Students</th>
+                                    <th scope="col" class="col-2">Out of Sync Students</th>
+                                    <th scope="col" class="col-1">Total Students</th>
                                     <th scope="col" class="col-1"></th>
                                 </tr>
                             </thead>
@@ -223,6 +245,21 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="modal fade" id="submit-requests-success-normal" tabindex="-1"
+                        aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header justify-content-center">
+                                    <h5 class="modal-title">Number of Normal Students Updated</h5>
+                                </div>
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-primary "
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                         <!-- Error Modal -->
                         <div class="modal fade" id="submit-requests-error" tabindex="-1"

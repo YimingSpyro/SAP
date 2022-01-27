@@ -207,6 +207,10 @@
     margin-bottom: 30px;
 }
 
+#content-item-admin {
+    height: 100%;
+}
+
 button {
     margin-top: 20px;
     margin-right: 60px;

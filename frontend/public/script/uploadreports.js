@@ -201,7 +201,7 @@ $(document).ready(() => {
         let a = document.getElementById("select-course")
         let b = $( "#select-semester option:selected" ).text();
         console.log(jsonArr)
-        axios.post(base_url + '/reports/upload/excel/', {
+        axios.post(base_url + '/api/reports/upload/excel/', {
             data: {excelData: jsonArr, course_id: a.value, semester_code: b }
         }).then((result) => {
             console.log(result)

@@ -20,10 +20,11 @@ module.exports.getAllSections = () => {
     });
 };
 
-// COURSE
-module.exports.getAllCourses = (status) => {
+
+// STAFF TYPES
+module.exports.getStaffTypes = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT DISTINCT course_id, course_name, status FROM course WHERE status = ?`, [status], (err, results) => {
+        pool.query(`SELECT * FROM staff_types`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -38,9 +39,9 @@ module.exports.getAllCourses = (status) => {
         });
     });
 };
-module.exports.createCourse = (data) => {
+module.exports.createStaffType = (data) => {
     return new Promise((resolve, reject) => {
-        pool.query(`INSERT INTO course VALUES(?,?,"active")`, data, (err, results) => {
+        pool.query(`INSERT INTO staff_types VALUES(?,?,?,?)`, data, (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -55,11 +56,10 @@ module.exports.createCourse = (data) => {
         });
     });
 };
-module.exports.updateCourse = (data) => {
+module.exports.deleteStaffType = (staff_type) => {
     return new Promise((resolve, reject) => {
-        pool.query(`UPDATE course
-         SET course_id = ?, course_name = ?
-         WHERE course_id = ?;`, data, (err, results) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`DELETE FROM staff_types WHERE staff_type = ?;`, [staff_type], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -70,16 +70,22 @@ module.exports.updateCourse = (data) => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
+    }).catch((error) => {
+
+        return error
     });
 };
-module.exports.disableCourse = (data) => {
+module.exports.updateStaffType = (data) => {
+    console.log(data);
     return new Promise((resolve, reject) => {
-        pool.query(`UPDATE course
-         SET status = ?
-         WHERE course_id = ?;`, data, (err, results) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE staff_types 
+                     SET staff_type = ?, staff_description = ?, hours = ?, remarks = ?
+                     WHERE staff_type = ?;`, data, (err, results) => {
             if (err) {
+                console.log("error");
                 reject(err);
             } else {
                 if (results) {
@@ -89,156 +95,14 @@ module.exports.disableCourse = (data) => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
-    });
-};
-module.exports.enableCourse = (data) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`UPDATE course
-         SET status = ?
-         WHERE course_id = ?;`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
-module.exports.deleteCourse = (course_id) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`DELETE FROM course WHERE course_id = ?;`, [course_id], (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
+    }).catch((error) => {
+
+        return error
     });
 };
 
-// SEMESTER
-module.exports.getAllSemesters = (status) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`SELECT semester_id, semester_code, remarks, latest_sem FROM semester_code WHERE latest_sem = ?`, [status], (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
-module.exports.createSemester = (data) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`INSERT INTO semester_code (semester_id,semester_code,remarks,latest_sem) VALUES(?,?,?,"INACTIVE")`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
-module.exports.updateSemester = (data) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`UPDATE semester_code
-         SET semester_id = ?, semester_code = ?, remarks = ?
-         WHERE semester_id = ?;`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
-module.exports.disableSemester = (data) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`UPDATE semester_code
-         SET latest_sem = ?
-         WHERE semester_id = ?;`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
-module.exports.enableSemester = (data) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`UPDATE semester_code
-         SET latest_sem = ?
-         WHERE semester_id = ?;`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
-module.exports.deleteSemester = (semester_id) => {
-    return new Promise((resolve, reject) => {
-        pool.query(`DELETE FROM semester_code WHERE semester_id = ?;`, [semester_id], (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-            
-        });
-    });
-};
 
 // DESIGNATION
 module.exports.getAllDesignations = () => {
@@ -298,6 +162,32 @@ module.exports.deleteDesignation = (designation_id) => {
         return error
     });
 };
+module.exports.updateDesignation = (data) => {
+    console.log(data);
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE designation 
+                     SET designation_name = ?, fk_course_id = ?, section_name = ?
+                     WHERE CONCAT(prefix,designation_id) = ?;`, data, (err, results) => {
+            if (err) {
+                console.log("error");
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
+
 
 // PERSONAL INFORRATION
 module.exports.createStaff = (data, roles) => {
@@ -623,6 +513,27 @@ module.exports.getModuleBySection = (data) => {
         return error
     });
 };
+module.exports.getModuleBySectionAndStage = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT * FROM module WHERE fk_course_id = ? AND fk_semester_code = ? AND mod_stage = ?`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
 module.exports.getModuleByCode = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
@@ -780,7 +691,7 @@ module.exports.updateModulePreferenceByID = (data) => {
 module.exports.getAssignedModulesByModule = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT ma_lecture,ma_tutorial,ma_practical, module.mod_lecture, module.mod_tutorial, module.mod_practical, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage, module.lecture_class, module.tutorial_class, module.practical_class, module.total_students FROM mod_assign
+        pool.query(`SELECT * FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
          WHERE fk_mod_code = ? AND module.fk_semester_code = ?;`, data, (err, results) => {
@@ -941,7 +852,7 @@ module.exports.updateModuleCAS = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE module  
-             SET mod_lecture = ?, mod_tutorial = ?, mod_practical = ?, lecture_class = ?, tutorial_class = ?, practical_class = ?, total_students = ?
+             SET normal_students = ?, os_students = ?, total_students = ?
              WHERE mod_code = ? AND fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
@@ -956,6 +867,51 @@ module.exports.updateModuleCAS = (data) => {
 
         });
     }).catch((error) => {
+        console.error("SQL Error: ",error);
+        return error
+    });
+};
+module.exports.getModuleStage = (semester_code) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT DISTINCT mod_stage FROM module WHERE fk_semester_code = ?`, [semester_code], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
+module.exports.updateNormalStudents = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE module  
+             SET normal_students = ?
+             WHERE fk_course_id = ? AND fk_semester_code = ? AND mod_stage = ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
         return error
     });
 };
