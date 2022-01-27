@@ -32,11 +32,27 @@ function deleteDesignation(id) {
     .catch(err => error(err));
 }
 
+function updateDesignation(id){
+    let designation_id = "DESIG" + id;
+    return axios.put(base_url + '/api/designation/',
+    {
+        designation_name :  $("#designation-name-update")[0].value,
+        course_id :  $("#select-section-update option:selected").val(),
+        section_name : $("#section-name-update")[0].value,
+        designation_id : designation_id
+    })
+    .then(() => {
+        success("updated");
+        generateDesignationList()
+    })
+    .catch(err => error(err));
+}
+
 async function generateSectionList() {
     let sections = await getCourse();
     for (let index = 0; index < sections.length; index++) {
         const section = sections[index];
-        $("#select-section").append(`<option value="` + section.course_id + `">`+ section.course_id +`</option`)
+        $("#select-section").append(`<option value="` + section.course_id + `">`+ section.course_id +`</option>`)
     }
 }
 
@@ -52,6 +68,9 @@ async function generateDesignationList(section) {
                 <td>`+ designation.designation_name + `</td>
                 <td>`+ designation.fk_course_id + `</td>
                 <td>`+ designation.section_name + `</td>
+                <td class="text-end">
+                    <button class="btn btn-success update-designation"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#update-designation-modal">Edit</button>
+                </td>
                 <td class="text-end">
                 <button class="btn btn-danger confirm-delete-designation"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#delete-designation">Delete</button>
                 </td>
@@ -70,6 +89,9 @@ async function generateDesignationList(section) {
                     <td>`+ designation.designation_name + `</td>
                     <td>`+ designation.fk_course_id + `</td>
                     <td>`+ designation.section_name + `</td>
+                    <td class="text-end">
+                        <button class="btn btn-success update-designation"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#update-designation-modal">Edit</button>
+                    </td>
                     <td class="text-end">
                     <button class="btn btn-danger confirm-delete-designation"type="button" data-index="`+ index + `" data-bs-toggle="modal" data-bs-target="#delete-designation">Delete</button>
                     </td>
@@ -114,25 +136,64 @@ async function generateCreateDesignation() {
     let sections = await getCourse();
     for (let index = 0; index < sections.length; index++) {
         const section = sections[index];
-        $("#select-section-create").append(`<option value="` + section.course_id + `">`+ section.course_id +`</option`)
+        $("#select-section-create").append(`<option value="` + section.course_id + `">`+ section.course_id +`</option>`)
     }
 }
 
-async function confirmDeleteDesignation(designation_index) {
+async function generateUpdateDesignation(designation_index) {
+    let designations = await getDesignation();
+    let designation = designations[designation_index];
+    $(".update-designation-modal").empty();
+    $(".update-designation-modal").append(`
+    <div class="form-group my-3">
+        <div class="row my-4">
+            <label for="select-section-update" class="col-2 col-form-label col-form-label-sm">Select Course</label>
+            <div class="col-4">
+                <select class="form-select form-select-sm col-4" id="select-section-update">
+                    
+                </select>
+            </div>
+        </div>
+        <div class="row my-4">
+            <label for="designation-name-update" class="col-sm-2 col-form-label col-form-label-sm">Designation Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="designation-name-update" value="`+designation.designation_name+`">
+            </div>
+        </div>
+        <div class="row my-4">
+            <label for="section-name-update" class="col-sm-2 col-form-label col-form-label-sm">Section Name:</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control form-control-sm" id="section-name-update" value="`+designation.section_name+`">
+            </div>
+        </div>
+
+    </div>
+    <button type="submit" class="btn btn-primary float-end update-designation-button" data-bs-dismiss="modal" data-id="`+designation.designation_id+`">Update designation</button>`);
+    let sections = await getCourse();
+    for (let index = 0; index < sections.length; index++) {
+        const section = sections[index];
+        if (section.course_id == designation.fk_course_id) {
+            $("#select-section-update").append(`<option value="` + section.course_id + `" selected>`+ section.course_id +`</option>`)
+        } 
+        else {
+            $("#select-section-update").append(`<option value="` + section.course_id + `">`+ section.course_id +`</option>`)
+        }
+        
+    }
+}
+
+async function generateDeleteDesignation(designation_index) {
     $("#delete-designation .designation-name-delete").empty();
     let designations = await getDesignation();
     let designation = designations[designation_index];
     $("#delete-designation .designation-name-delete").append(designation.designation_name + ` - ` + designation.fk_course_id + ` - ` + designation.section_name);
     $("#delete-designation .confirm-delete-button").empty();
     $("#delete-designation .confirm-delete-button").append(`
-    <button type="button" class="btn btn-danger delete-designation mx-4" data-index="`+ designation_index +`" data-bs-dismiss="modal">Delete</button>
+    <button type="button" class="btn btn-danger delete-designation mx-4" data-id="`+ designation.designation_id +`" data-bs-dismiss="modal">Delete</button>
     <button type="button" class="btn btn-primary mx-4" data-bs-dismiss="modal">Close</button>`);
 }
 
-async function confirmedDelete(designation_index){
-    let designations = await getDesignation();
-    let designation = designations[designation_index];
-    let designation_id = designation.designation_id
+async function confirmedDelete(designation_id){
     let section = $("#select-section option:selected").val()
     deleteDesignation(designation_id)
     .then(()=>{ 
@@ -149,6 +210,14 @@ async function confirmedCreation(){
     });
 }
 
+async function submitUpdateDesignation(designation_id){
+    let section = $("#select-section option:selected").val()
+    updateDesignation(designation_id)
+    .then(()=>{ 
+        generateDesignationList(section)
+    });
+}
+
 
 $(document).ready(()=>{
     generateSectionList();
@@ -161,12 +230,22 @@ $(document).ready(()=>{
 
     $(".designation-list").on('click', ".confirm-delete-designation", (e) => {
         let designation_index = $(e.target).data("index");
-        confirmDeleteDesignation(designation_index);
+        generateDeleteDesignation(designation_index);
+    })
+
+    $(".designation-list").on('click', ".update-designation", (e) => {
+        let designation_index = $(e.target).data("index");
+        generateUpdateDesignation(designation_index);
     })
 
     $("#delete-designation").on('click', ".delete-designation", (e) => {
-        let designation_index = $(e.target).data("index");
-        confirmedDelete(designation_index);
+        let designation_id = $(e.target).data("id");
+        confirmedDelete(designation_id);
+    })
+
+    $("#update-designation-modal").on('click', ".update-designation-button", (e) => {
+        let designation_id = $(e.target).data("id");
+        submitUpdateDesignation(designation_id);
     })
 
     $(".create-designation").click(()=>{

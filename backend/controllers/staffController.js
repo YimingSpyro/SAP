@@ -50,7 +50,94 @@ exports.getAllSections = async (req, res, next) => {
 };
 
 
+/* ==== STAFF TYPES API ==== */
+exports.getStaffTypes = async (req, res, next) => {
+    try {
+        let results = await staffManager.getStaffTypes();
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Get All Sections', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
 
+};
+exports.createStaffType = async (req, res, next) => {
+    let staff_type = req.body.staff_type;
+    let staff_description = req.body.staff_description;
+    let hours = req.body.hours;
+    let remarks = req.body.remarks;
+    let data = [staff_type, staff_description, hours, remarks]
+    try {
+        let results = await staffManager.createStaffType(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Create Staff Type', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.deleteStaffType = async (req, res, next) => {
+    let staff_type = req.query.staff_type;
+    try {
+        let results = await staffManager.deleteStaffType(staff_type);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Delete Staff Type', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.updateStaffType = async (req, res, next) => {
+    let staff_type = req.body.staff_type;
+    let staff_description = req.body.staff_description;
+    let hours = req.body.hours;
+    let remarks = req.body.remarks;
+    let data = [staff_type, staff_description, hours, remarks, staff_type]
+    try {
+        let results = await staffManager.updateStaffType(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Semester', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 
 
 
@@ -112,6 +199,32 @@ exports.deleteDesignation = async (req, res, next) => {
     } catch (error) {
         let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.updateDesignation = async (req, res, next) => {
+    let designation_name = req.body.designation_name;
+    let course_id = req.body.course_id;
+    let section_name = req.body.section_name;
+    let designation_id = req.body.designation_id;
+    let data = [designation_name, course_id, section_name, designation_id]
+    try {
+        let results = await staffManager.updateDesignation(data);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0){
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Designation', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
         return res.status(500).json({
             message: message
         });
