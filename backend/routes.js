@@ -7,6 +7,7 @@ const examController = require("./controllers/examController")
 const semesterController = require("./controllers/semesterController")
 const courseController = require("./controllers/courseController")
 const downloadsController = require("./controllers/downloadsController")
+const moduleController = require("./controllers/moduleController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -152,6 +153,7 @@ exports.appRoute = router => {
     router.get('/api/module/section/', staffController.getModuleBySection);
     router.get('/api/module/section/stage', staffController.getModuleBySectionAndStage);
     router.post('/api/module/', staffController.createModule);
+    router.get('/api/all-modules/', moduleController.getEveryModule);
 
     // MODULE PREFERENCE
     router.get('/api/module/preference', staffController.getAllModulePreference);

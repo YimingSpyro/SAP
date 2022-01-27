@@ -687,6 +687,7 @@ exports.getModuleByCode = async (req, res, next) => {
 // API Get All Modules
 exports.getAllModules = async (req, res, next) => {
     let semester_code = req.query.semester_code;
+    console.log(semester_code)
     try {
         let results = await staffManager.getAllModules(semester_code);
         console.log('Get All Modules', results);
