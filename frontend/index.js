@@ -82,6 +82,7 @@ app.get("/teaching-assignment", (req, res) => {
 app.get("/class-assignment", (req, res) => {
     res.sendFile("/view/classassignmentsystem.html", { root: __dirname });
 });
+
 //SENDFILE FOR COURSE PLANNING APIS---------------------------
 app.get("/course", (req, res) => {
     res.sendFile("/view/admincoursemaintenance.html", { root: __dirname });
@@ -92,6 +93,10 @@ app.get("/semester", (req, res) => {
 app.get("/designation", (req, res) => {
     res.sendFile("/view/admindesignationmaintenance.html", { root: __dirname });
 });
+app.get("/staff-hours", (req, res) => {
+    res.sendFile("/view/adminstaffhoursmaintenance.html", { root: __dirname });
+});
+
 app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`)
 });
