@@ -145,3 +145,6 @@ h3{
     justify-content: center;
 
 }
+tr.row-hide{
+    display:none;
+}
