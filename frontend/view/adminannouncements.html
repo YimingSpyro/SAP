@@ -145,14 +145,10 @@
                     <div id="content-header-admin">
                         <p>Active Announcements</p>
                     </div>
-
                     <!-- Content Item -->
-                    <div id="content-item-admin">
-
-
+                    <div id="content-item-admin" class="active-announcements">
                         <!-- Admin Announcement Bar -->
                         <div id="announcement-bar-admin">
-
                             <!-- Actions -->
                             <div id="announcementactions" class="float-end general">
                                 <div id="editannouncement">
@@ -182,17 +178,30 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                         <!-- Show More -->
                         <div id="showmore" class="d-flex justify-content-center">
                             <div>
-                                show more
+                                Show More
                             </div>
                             <div class="triangle-down"></div>
                         </div>
                     </div>
+
+                    <!-- Content Header -->
+                    <div id="content-header-admin">
+                        <p>Old Announcements</p>
+                    </div>
+
+                    <div id="content-item-admin" class="old-announcements">
+                        <!-- Show More -->
+                        <div id="showmore" class="d-flex justify-content-center">
+                            <div>
+                                Show Old Announcements
+                            </div>
+                            <div class="triangle-down"></div>
+                        </div>
+                    </div>
+
 
                     <!-- Content Header -->
                     <div id="content-header-admin">
@@ -208,110 +217,93 @@
 
                         <!-- Content Item -->
                         <div id="content-item">
-                            <!-- Form items -->
-                            <form action="">
 
-                                <!-- ======== NOTE: Existing Staff Data should show in the placeholders  ========-->
+                            <!-- ======== NOTE: Existing Staff Data should show in the placeholders  ========-->
 
-                                <!-- Form Item -->
-                                <div class="form-group row">
-                                    <label for="announcement-type" class="col-sm-3 col-form-label">Announcement Type:</label>
-                                    <div class="col-sm">
-                                        <select class="form-select-sm" id="announcement-type">
-                                    <option selected></option>
-                                    <option>Important</option>
-                                    <option>General Info</option>
-                                    <option>Maintenance</option>
-                                    <option>Success</option>
-                                  </select>
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="announcement-type" class="col-sm-3 col-form-label">Announcement Type:</label>
+                                <div class="col-sm">
+                                    <select class="form-select-sm" id="announcement-type">
+                                <option selected></option>
+                                <option>Important</option>
+                                <option>General Info</option>
+                                <option>Maintenance</option>
+                                <option>Success</option>
+                                </select>
+                                </div>
+                            </div>
+
+                            <!-- Form Item -->
+                            <div class="form-group row ">
+                                <div class="col-sm-3">
+                                    <label for="lecturers" class="col-form-label ">Announcement To:</label>
+                                </div>
+                                <div class="col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="lecturers">
+                                        <label class="form-check-label" for="lecturers">
+                                            Lecturers
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class=" form-check-input " type="checkbox" value=" " id="modulecoordinator">
+                                        <label class="form-check-label " for="modulecoordinator">
+                                            Module Coordinators
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input " type="checkbox" value=" " id="examrep">
+                                        <label class="form-check-label " for="examrep">
+                                            Examp Reps
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input " type="checkbox" value=" " id="adminsupport">
+                                        <label class="form-check-label " for="adminsupport">
+                                            Admin Support
+                                        </label>
                                     </div>
                                 </div>
 
-                                <!-- Form Item -->
-                                <div class="form-group row ">
-                                    <div class="col-sm-3">
-                                        <label for="lecturers" class="col-form-label ">Announcement To:</label>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="lecturers">
-                                            <label class="form-check-label" for="lecturers">
-                                                Lecturers
-                                            </label>
-                                        </div>
+                            </div>
 
-                                        <div class="form-check">
-                                            <input class=" form-check-input " type="checkbox" value=" " id="modulecoordinator">
-                                            <label class="form-check-label " for="modulecoordinator">
-                                                Module Coordinators
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input " type="checkbox" value=" " id="examrep">
-                                            <label class="form-check-label " for="examrep">
-                                                Examp Reps
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input " type="checkbox" value=" " id="adminsupport">
-                                            <label class="form-check-label " for="adminsupport">
-                                                Admin Support
-                                            </label>
-                                        </div>
-                                    </div>
-
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="start-date" class="col-sm-3 col-form-label">Announcement Period:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control form-control-sm" id="start-date" placeholder="Start Date">
                                 </div>
 
-                                <!-- Form Item -->
-                                <div class="form-group row">
-                                    <label for="announcement-type" class="col-sm-3 col-form-label">Send Email:</label>
-                                    <div class="col-sm">
-                                        <select class="form-select-sm" id="announcement-type">
-                                    <option selected>Yes</option>
-                                    <option>No</option>
-                                  </select>
-                                    </div>
+                                <label for="end-date" class="col-sm-1 col-form-label">to</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control form-control-sm" id="end-date" placeholder="End Date">
                                 </div>
+                            </div>
 
-                                <!-- Form Item -->
-                                <div class="form-group row">
-                                    <label for="start-date" class="col-sm-3 col-form-label">Announcement Period:</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control form-control-sm" id="start-date" placeholder="Start Date">
-                                    </div>
-
-                                    <label for="end-date" class="col-sm-1 col-form-label">to</label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control form-control-sm" id="end-date" placeholder="End Date">
-                                    </div>
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="message" class="col-sm-3 col-form-label">Subject:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control form-control-sm" id="subject" placeholder="Subject"></input>
                                 </div>
+                            </div>
 
-                                <!-- Form Item -->
-                                <div class="form-group row">
-                                    <label for="message" class="col-sm-3 col-form-label">Message:</label>
-                                    <div class="col-sm-8">
-                                        <textarea type="text" class="form-control form-control-sm" id="message" rows="3" placeholder="Message"></textarea>
-                                    </div>
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="message" class="col-sm-3 col-form-label">Message:</label>
+                                <div class="col-sm-8">
+                                    <textarea type="text" class="form-control form-control-sm" id="message" rows="3" placeholder="Message"></textarea>
                                 </div>
+                            </div>
 
-                                <!-- Update Button -->
-                                <button type="submit " class="btn btn-primary float-end ">Create New Announcement</button>
-                            </form>
+                            <!-- Update Button -->
+                            <button type="submit " class="btn btn-primary float-end ">Create New Announcement</button>
                         </div>
                     </div>
 
-                    <!-- Content Header -->
-                    <div id="content-header-admin">
-                        <p>Old Announcements</p>
-                    </div>
 
-                    <!-- Show More -->
-                    <div id="showmore" class="d-flex justify-content-center">
-                        <div>
-                            show old announcements
-                        </div>
-                        <div class="triangle-down"></div>
-                    </div>
                 </div>
             </div>
 

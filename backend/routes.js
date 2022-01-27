@@ -1,5 +1,6 @@
 // Import controlers
 const authController = require("./controllers/authController");
+const announcementController = require("./controllers/announcementController");
 const staffController = require("./controllers/staffController");
 const uploadsController = require("./controllers/uploadsController");
 const examController = require("./controllers/examController")
@@ -115,12 +116,20 @@ exports.appRoute = router => {
     // SECTION
     router.get('/api/section/', staffController.getAllSections);
 
+    // STAFF TYPES
+    router.get('/api/staff/types', staffController.getStaffTypes);
+    router.post('/api/staff/types/', staffController.createStaffType);
+    router.delete('/api/staff/types/', staffController.deleteStaffType);
+    router.put('/api/staff/types/', staffController.updateStaffType);
 
+    // ANNOUNCEMENT
+    router.get('/api/announcements/', announcementController.getAllAnnouncements);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);
     router.post('/api/designation/', staffController.createDesignation);
     router.delete('/api/designation/', staffController.deleteDesignation);
+    router.put('/api/designation/', staffController.updateDesignation);
 
     // PERSONAL INFORMATION
     router.get('/api/staff/', staffController.getAllStaff);
