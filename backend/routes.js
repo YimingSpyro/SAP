@@ -181,13 +181,10 @@ exports.appRoute = router => {
     router.delete('/api/semester/', semesterController.deleteSemester);
     router.get('/api/report/semester/', semesterController.getAllSemesters);
 
-
-
-
     //PROFILE PICTURE
-    router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
-    router.get('/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
-    router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
+    router.post('/api/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
+    router.get('/api/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
+    //router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
 
     //REPORTS
     //router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)

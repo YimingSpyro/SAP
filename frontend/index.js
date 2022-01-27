@@ -65,8 +65,22 @@ app.get("/reports/summary-by-staff", (req, res) => {
 app.get("/reports/examiner-and-verifier-report", (req, res) => {
     res.sendFile("/view/reports-html/examnverifier.html", { root: __dirname });
 });
+app.get("/reports/examiner-and-moderator-report", (req, res) => {
+    res.sendFile("/view/reports-html/examnmoderator.html", { root: __dirname });
+});
+app.get("/reports/workload-summary", (req, res) => {
+    res.sendFile("/view/reports-html/workloadsummaryreport.html", { root: __dirname });
+});
 app.get("/upload-reports", (req, res) => {
     res.sendFile("/view/uploadReport.html", { root: __dirname });
+});
+
+//SENDFILE FOR EXAM MATTERS AND WORKLOAD SUMMARY-----------------
+/* app.get("/exam/module-workload-summary", (req, res) => {
+    res.sendFile("/view/adminexammatters.html", { root: __dirname });
+}); */
+app.get("/exam/module-workload-summary", (req, res) => {
+    res.sendFile("/view/template 2.html", { root: __dirname });
 });
 
 //SENDFILE FOR MODULE APIS---------------------------
