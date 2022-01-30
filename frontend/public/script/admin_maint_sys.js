@@ -12,6 +12,15 @@ function _getSemesters() {
     });
 };
 
+//get available courses
+function _getCourses() {
+    axios.get(base_url + '/api/course?status=Active').then((results) => {
+        results.data.forEach(element => {
+            $('#course-offered-to').append(`<option value= ${element.course_id}>${element.course_id}</option>`)
+        });
+    });
+};
+
 //get available staff
 function _getStaff() {
     axios.get(base_url + '/api/admin/maintenance/staff-names').then((results) => {
@@ -149,6 +158,7 @@ async function _updateModule(current_sem) {
     });
 };
 //prepare the website with all this data
+_getCourses()
 _getStaff()
 _getSemesters()
 $(document).ready(() => {
