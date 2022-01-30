@@ -249,6 +249,23 @@ module.exports.getAllStaff = () => {
         });
     });
 };
+module.exports.getStaffNames = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT staff_id, staff_name FROM staff_information WHERE staff_status='Active';`, [], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
 module.exports.getStaffByStaffId = (staff_id) => {
     return new Promise((resolve, reject) => {
         pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, designation.designation_name ,staff_number, staff_mobile, staff_remarks, fk_staff_type 
@@ -490,115 +507,6 @@ module.exports.updateTeachingRequirementRemarks = (data) => {
         return error
     });
 };
-
-// MODULE 
-module.exports.getModuleBySection = (data) => {
-    return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT * FROM module WHERE fk_course_id = ? AND fk_semester_code = ?`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-
-        });
-    }).catch((error) => {
-
-        return error
-    });
-};
-module.exports.getModuleBySectionAndStage = (data) => {
-    return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT * FROM module WHERE fk_course_id = ? AND fk_semester_code = ? AND mod_stage = ?`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-
-        });
-    }).catch((error) => {
-
-        return error
-    });
-};
-module.exports.getModuleByCode = (data) => {
-    return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT * FROM module WHERE mod_code = ? AND fk_semester_code = ?`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-
-        });
-    }).catch((error) => {
-
-        return error
-    });
-};
-module.exports.getAllModules = (semester_code) => {
-    return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT * FROM module WHERE fk_semester_code = ?;`, [semester_code], (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-
-        });
-    }).catch((error) => {
-
-        return error
-    });
-};
-module.exports.createModule = (data) => {
-    return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`INSERT INTO module (mod_code,mod_name,mod_abbrv,mass_lect,fk_mod_coord,mod_dlt,mod_lecture,mod_tutorial,mod_practical,fk_cluster_ldr,fk_semester_code,odd_lechr,even_lechr,odd_prachr,even_prachr,odd_tuthr,even_tuthr,fk_course_id)
-                                 VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);`, data, (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
-            }
-
-        });
-    }).catch((error) => {
-
-        return error
-    });
-};
-
 
 // MODULE PREFERENCE
 

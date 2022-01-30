@@ -148,12 +148,13 @@ exports.appRoute = router => {
     router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
 
     // MODULE
-    router.get('/api/module/', staffController.getAllModules);
-    router.get('/api/module/code/', staffController.getModuleByCode);
-    router.get('/api/module/section/', staffController.getModuleBySection);
-    router.get('/api/module/section/stage', staffController.getModuleBySectionAndStage);
-    router.post('/api/module/', staffController.createModule);
+    router.get('/api/module/', moduleController.getAllModules);
+    router.get('/api/module/code/', moduleController.getModuleByCode);
+    router.get('/api/module/section/', moduleController.getModuleBySection);
+    router.get('/api/module/section/stage', moduleController.getModuleBySectionAndStage);
+    router.post('/api/module/', moduleController.createModule);
     router.get('/api/all-modules/', moduleController.getEveryModule);
+    router.put('/api/update-module/', moduleController.updateModule);
 
     // MODULE PREFERENCE
     router.get('/api/module/preference', staffController.getAllModulePreference);
@@ -173,6 +174,7 @@ exports.appRoute = router => {
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
     router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
+    router.get('/api/admin/maintenance/staff-names', staffController.getStaffNames);
     
     // COURSE
     router.get('/api/courses/', courseController.getAllCourses);
