@@ -704,7 +704,6 @@ exports.submitModulePreference = async (req, res, next) => {
     }
 
 };
-
 // API Select Module Preference
 exports.updateModulePreferenceByID = async (req, res, next) => {
     let staff_id = req.body.staff_id;
@@ -890,7 +889,6 @@ exports.getAllStaffTAS = async (req, res, next) => {
     }
 
 };
-
 // API Update Module By TAS
 exports.updateModuleTAS = async (req, res, next) => {
     let mod_coord = req.body.mod_coord;
@@ -925,7 +923,6 @@ exports.updateModuleTAS = async (req, res, next) => {
     }
 
 };
-
 // API Update Module By CAS - admin support
 exports.updateModuleCAS = async (req, res, next) => {
     let normal_students = req.body.normal_students;
