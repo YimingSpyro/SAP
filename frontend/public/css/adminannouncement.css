@@ -19,9 +19,12 @@
 
 #announcementto,
 #announcementduration {
-    margin-right: 15px;
+    margin-right: 55px;
 }
 
+#announcementmessage {
+    line-height: 1.8;
+}
 
 /* Important */
 
@@ -33,8 +36,8 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 15px;
-    padding-bottom: 15px;
-    height: 100%;
+    padding-bottom: 10px;
+    height: 75px;
 }
 
 #announcementcontent.important {
@@ -71,8 +74,8 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 15px;
-    padding-bottom: 15px;
-    height: 100%;
+    padding-bottom: 150px;
+    height: 75px;
 }
 
 #announcementcontent.maintenance {
@@ -109,8 +112,8 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 15px;
-    padding-bottom: 15px;
-    height: 100%;
+    padding-bottom: 10px;
+    height: 75px;
 }
 
 #announcementcontent.general {
@@ -137,42 +140,6 @@
 }
 
 
-/* success  */
-
-#announcementactions.success {
-    background-color: #1B682F;
-    color: white;
-    font-weight: bold;
-    border-radius: 5px;
-    padding-top: 10px;
-    padding-left: 20px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-    height: 100%;
-}
-
-#announcementcontent.success {
-    width: 90%;
-    background-color: #BBF5B9;
-    border-radius: 5px;
-    padding-top: 10px;
-    padding-left: 59px;
-    padding-right: 15px;
-    padding-bottom: 15px;
-}
-
-.success #announcementtitle {
-    color: #1B682F;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.success #announcementmessage,
-.success #announcementto,
-.success #announcementduration {
-    color: #1B682F;
-    font-size: 14px;
-}
 
 
 /* =========================== Create Announcement ========================= */
@@ -215,4 +182,14 @@ button {
     margin-top: 20px;
     margin-right: 60px;
     width: 300px;
+}
+
+.edit-button,
+.delete-button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
 }
