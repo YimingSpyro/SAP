@@ -1,4 +1,4 @@
-function ExportToExcel(table_head, type, fn, dl) {
+function _ExportToExcel(table_head, type, fn, dl) {
     //using the npm package SheetJS, we will export the whole html table
     var table_data = document.getElementById('admin-table');
     var ws_name = table_head;
@@ -215,7 +215,7 @@ function ExportToExcel(table_head, type, fn, dl) {
         XLSX.writeFile(wb, fn || (ws_name + '.' + (type || 'xlsx')));
 };
 //get available semesters
-function getSemesters() {
+function _getSemesters() {
     axios.get(base_url + '/api/report/semester/').then((results) => {
         //$("#select-semester select option[value*='AY']").remove();
         results.data.forEach(element => {
@@ -225,7 +225,7 @@ function getSemesters() {
 };
 
 //get teaching assignment reports
-function getTAReports(acad_sem) {
+function _getTAReports(acad_sem) {
     axios.get(base_url + '/api/reports/download/assignment-report/' + encodeURIComponent(acad_sem)).then((response) => {
         let results = response.data
         console.log(results)
@@ -266,7 +266,7 @@ function getTAReports(acad_sem) {
 };
 
 //get module coordinators list
-function getMCList(acad_sem) {
+function _getMCList(acad_sem) {
     axios.get(base_url + '/api/reports/download/mc-list/' + encodeURIComponent(acad_sem)).then((response) => {
         let results = response.data
         //console.log(results)
@@ -288,7 +288,7 @@ function getMCList(acad_sem) {
 };
 
 //get summary by module
-async function getSummaryList(acad_sem) {
+async function _getSummaryList(acad_sem) {
     const assignment_report = await axios.get(base_url + '/api/reports/download/assignment-report/' + encodeURIComponent(acad_sem)).then((response) => { return response.data })
     const summary_by_module = await axios.get(base_url + '/api/reports/download/summary-by-module/' + encodeURIComponent(acad_sem)).then((response) => { return response.data })
     //console.log(assignment_report)
@@ -350,12 +350,12 @@ async function getSummaryList(acad_sem) {
 };
 
 //get summary by module
-async function getSummaryByStaff(acad_sem) {
+async function _getSummaryByStaff(acad_sem) {
 
     const summary_by_staff = await axios.get(base_url + '/api/reports/download/summary-by-staff/' + encodeURIComponent(acad_sem)).then((response) => { return response.data })
     const hours_summary_by_staff = await axios.get(base_url + '/api/reports/download/staff-hours/' + encodeURIComponent(acad_sem)).then((response) => { return response.data })
     let row_entry = "";
-    function _appendLastRow(index) {
+    function __appendLastRow(index) {
         hours_summary_by_staff.forEach(element => {
             let total = element['classhrL'] + element['classhrT'] + element['classhrP']
             if (element['fk_staff_id'] == summary_by_staff[index - 1]['fk_staff_id']) {
@@ -407,7 +407,7 @@ async function getSummaryByStaff(acad_sem) {
             </tr>`
             $('#summary-by-staff-table').append(row_entry)
         } else if (summary_by_staff[i - 1]['fk_staff_id'] != summary_by_staff[i]['fk_staff_id']) {
-            _appendLastRow(i)
+            __appendLastRow(i)
             //if the previous name does not match the current name, make a new row
             row_entry += `
             <tr>
@@ -447,12 +447,12 @@ async function getSummaryByStaff(acad_sem) {
             $('#summary-by-staff-table').append(row_entry)
         }
     };
-    _appendLastRow(summary_by_staff.length)
+    __appendLastRow(summary_by_staff.length)
     document.getElementById("acad-year-head").innerHTML = acad_sem;
     $('#admin-table').append(`<caption id= 'caption'>Showing ${summary_by_staff.length} Module Summaries</caption>`)
 };
 
-getSemesters()
+_getSemesters()
 $(document).ready(() => {
     $('#select-semester').on('change', () => {
         //console.log(workbook)
@@ -462,24 +462,24 @@ $(document).ready(() => {
         if (table_head == "Assignment Report") {
             $("tbody tr").remove();
             $("caption").remove();
-            getTAReports(b)
+            _getTAReports(b)
         } else if (table_head == "MC List") {
             $("tbody tr").remove();
             $("caption").remove();
-            getMCList(b)
+            _getMCList(b)
         } else if (table_head == "Summary By Module") {
             $("tbody tr").remove();
             $("caption").remove();
-            getSummaryList(b)
+            _getSummaryList(b)
         } else if (table_head == "Summary By Staff") {
             $("tbody tr").remove();
             $("caption").remove();
-            getSummaryByStaff(b)
+            _getSummaryByStaff(b)
         }
     });
     $('#export-table').on('click', () => {
         let table_head = document.getElementById("th-label").innerHTML;
         //console.log(workbook)
-        ExportToExcel(table_head, 'xlsx')
+        _ExportToExcel(table_head, 'xlsx')
     });
 })

@@ -18,56 +18,27 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+        </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+        </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+
     <!-- Offline scripts -->
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
     <link rel="stylesheet" href="/css/navbar.css">
+    <script src="/script/global.js"></script>
     <script src="/script/notifications.js"></script>
     <script src="/script/append_navbar.js"></script>
     <script src="/script/log_out.js"></script>
-
-    <script>
-        function getModuleAndAppend() {
-            $('#module-row-table').empty();
-            axios.get('http://localhost:8080/api/module?'+'semester_code=AY 2021/2022 SEM2', { withCredentials: true }).then((response) => {
-                if (response.status == 200) {
-                    var rows = response.data
-                    console.log(rows);
-                    var html;
-                    console.log(rows);
-                    for (let i = 0; i < rows.length; i++) {
-                        html += `<tr class="border-bottom border-white">
-                                        <td>${rows[i].mod_code}</td>
-                                        <td>${rows[i].mod_name}</td>
-                                        <td class="email-col"><span>${rows[i].staff_email}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img><br><span>${rows[i].staff_mobile}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img></td>
-                                        <td>${rows[i].designation_name}</td>
-                                        <td>${rows[i].section_name}</td>
-                                        <td></td>
-                                    <td class="text-end">
-                                    </td>
-                                    <td class="text-end">
-                                    </td>
-                                    <td class="text-end">
-                                    </td>
-                                    <td class="text-end">
-                                    </td>
-                                    </tr>`
-                    } 
-                     $('#module-row-table').append(html).then(appendStaffFormValues(rows))
-                    //fill in staff-inf-edit modal values
-                }
-            }).catch((error) => {
-                $("#error_message_content").text('Invalid Login credientals, please try again.')
-                $("#error_message").css("display", "block");
-            });
-        }
-        $(document).ready(()=>{
-            getModuleAndAppend()
-            $('#main-list>li').removeClass("active")
-            $('#maintenence-system').addClass("active")
-        })
-    </script>
+    <script src="/script/admin_maint_sys.js"></script>
 </head>
 
 
@@ -98,7 +69,7 @@
                     <div id="tabs">
                         <a href="/maintenance"><button type="button"
                                 class="btn btn-secondary btn-sm">Module</button></a>
-                        <a href="/maintenance/staff-info"><button type="button"
+                        <a href="/maintenance/module-info"><button type="button"
                                 class="btn btn-primary btn-sm">Staff</button></a>
                     </div>
 
@@ -108,19 +79,9 @@
                         <div class="form-group row">
                             <label for="select-section" class="col-sm-2 col-form-label">Select Section:</label>
                             <div class="col">
-                                <!-- <div class="col-9" style="background:yellow"> -->
-                                <select class="form-select" id="select-section">
-                                    <option selected>ABCD</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <img src="/SVG Icons/Chevron Down.svg" class="filter-icons"></img>
+                                <select class="form-select" id="select-semester">
+                                    <option>No Semester Selected</option>
                                 </select>
-                                <!--   </div> -->
-                                <!-- <div class="col-3" style="background:red">
-                                      <img src="/SVG Icons/Chevron Down.svg" class="filter-icons"></img>
-                                </div> -->
                             </div>
                             <label for="select-section" class="col-sm-2 col-form-label">Order By:</label>
                             <div class="col">
@@ -132,10 +93,6 @@
                                     <option>4</option>
                                 </select>
                             </div>
-                            <div class="col filter-button-wrap">
-                                <button data-bs-toggle="modal" data-bs-target="#createModuleModal" class="filter-button">
-                                    Create Module</button>
-                            </div>
                         </div>
                         <div class="line"></div>
                     </div>
@@ -145,89 +102,614 @@
 
                         <!-- Module table -->
                         <table id="admin-table" class="table table-dark rounded-top">
-                            <caption>Showing 3 Results</caption>
                             <thead>
                                 <tr>
-                                    <th scope="col" class="col-2">Module Code</th>
-                                    <th scope="col" class="col-4">Module Name</th>
-                                    <th scope="col" class="col-2">Lecture</th>
-                                    <th scope="col" class="col-2">Tutotrial</th>
-                                    <th scope="col" class="col-2">Practical</th>
-                                    <th scope="col" class="col-2">Status</th>
-                                    <th scope="col" class="col-1"></th>
-                                    <th scope="col" class="col-1"></th>
-                                    <th scope="col" class="col-1"></th>
-                                    <th scope="col" class="col-1"></th>
+                                    <th scope="col" class="col-1">Course</th>
+                                    <th scope="col" class="col-1">Code</th>
+                                    <th scope="col" class="col-3">Module Name</th>
+                                    <th scope="col" class="col-2">Uploaded For</th>
+                                    <th scope="col" class="col">Status</th>
+                                    <th scope="col" class="col-2">Actions</th>
+                                    <th scope="col" class="col-2"></th>
                                 </tr>
                             </thead>
-                            <tbody id="module-row-table">
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>0</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td>Assigned</td>
-                                    <td></td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Delete</div>
-                                    </td>
-                                </tr>
-
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>0</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td>Assigned</td>
-                                    <td></td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Delete</div>
-                                    </td>
-                                </tr>
-
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>0</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td>Assigned</td>
-                                    <td></td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Edit</div>
-                                    </td>
-                                    <td class="text-end">
-                                        <div>Delete</div>
-                                    </td>
-                                </tr>
-
-
+                            <tbody id="module-table">
                             </tbody>
 
                         </table>
 
+                        <!-- Modal -->
+                        <div class="modal fade" id="editModuleModal" tabindex="-1"
+                            aria-labelledby="editModuleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header row">
+                                        <h3 class="col">Module Information</h3>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-module-code">Module
+                                                    Code:</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" id="edit-module-code"
+                                                    name="edit-module-code">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-module-name">Module
+                                                    Name:</label>
+                                            </div>
+                                            <div class="col-6">
+                                                <input class="form-control" type="text" id="edit-module-name"
+                                                    name="edit-module-name">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-module-stage">Module
+                                                    Abbrv:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="text" id="edit-module-abbrv"
+                                                    name="edit-module-abbrv">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="course-offered-to">Offered
+                                                    To:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="text" id="course-offered-to"
+                                                    name="course-offered-to">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-module-coord">Module
+                                                    Coordinator:</label>
+                                            </div>
+                                            <div class="col-4">
+                                                <select class="form-select" id="module-coord-name">
+                                                </select>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="text" id="edit-module-coord"
+                                                    name="edit-module-coord" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-1">
+                                                <label class="module-info-label" for="edit-module-stage">Stage</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="text" id="edit-module-stage"
+                                                    name="edit-module-stage">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="module-year-created">Uploaded for
+                                                    Yr:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number" id="module-year-created"
+                                                    name="module-year-created" readonly>
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-semester-code">Semester
+                                                    Code:</label>
+                                            </div>
+                                            <div class="col-3">
+                                                <select class="form-select" id="edit-semester-code">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-students">Normal
+                                                    Students:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="number" id="edit-students"
+                                                    name="edit-students">
+                                            </div>
+                                            <div class="col-3">
+                                                <label class="module-info-label" for="edit-oos-students">Students out of
+                                                    Sync</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="number" id="edit-oos-students"
+                                                    name="edit-oos-students">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="edit-total-students">Total
+                                                    Students</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="number" id="edit-total-students"
+                                                    name="edit-total-students" readonly>
+                                            </div>
 
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col">
+                                                <label for="mod-remarks">Remarks:</label>
+                                                <textarea class="form-control" id="mod-remarks" rows="2"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <p class="col">
+                                                The following fields are in total hours/classes for the module
+                                            </p>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-lect-hours">Lecture
+                                                    Hours:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number" id="mod-lect-hours"
+                                                    name="mod-lect-hours">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-tut-hours">
+                                                    Tutorial Hours:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number" id="mod-tut-hours"
+                                                    name="mod-tut-hours">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-prac-hours">Practical
+                                                    Hours:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number"
+                                                    id="mod-prac-hours" name="mod-prac-hours">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-total-hr">Total Hours:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number" id="mod-total-hr"
+                                                    name="mod-total-hr" readonly>
+                                            </div>
+                                            <div class="col-1">
+                                                <label class="module-info-label" for="mod-dlt">DLT:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="text" id="mod-dlt" name="mod-dlt">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-lect-classes">Lecture
+                                                    Classes:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="number" id="mod-lect-classes"
+                                                    name="mod-lect-classes">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-tut-classes">Practical
+                                                    Classes:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="number" id="mod-tut-classes"
+                                                    name="mod-tut-classes">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-prac-classes">Tutorial
+                                                    Classes:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="number" id="mod-prac-classes"
+                                                    name="mod-prac-classes">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-prereq">Prerequisite:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="text" id="mod-prereq"
+                                                    name="mod-prereq">
+                                            </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-mod-type">Module
+                                                    Type</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="text" id="mod-mod-type"
+                                                    name="mod-mod-type">
+                                            </div>
+                                            <div class="col-1">
+                                                <label class="module-info-label" for="mod-type">Type:</label>
+                                            </div>
+                                            <div class="col-1">
+                                                <input class="form-control" type="text" id="mod-type" name="mod-type">
+                                            </div>
+                                            <div class="col-1">
+                                                <label class="module-info-label" for="mod-cu">CU:</label>
+                                            </div>
+                                            <div class="col-1 ">
+                                                <input class="form-control" type="number" id="mod-cu" name="mod-cu">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <p class="col">
+                                                The following fields are only modifiable by Module Coordinator
+                                            </p>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <legend class="col-form-label col-sm-2 pt-0">Mass Lecture</legend>
+                                            <div class="col-sm-10">
+                                                <div class="form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                        id="masslectradio1" value="Yes" disabled>
+                                                    <label class="form-check-label" for="gridRadios1" disabled>
+                                                        Yes
+                                                    </label>
+                                                </div>
+                                                <div class="form-check-inline">
+                                                    <input class="form-check-input" type="radio" name="gridRadios"
+                                                        id="masslectradio2" value="No" disabled>
+                                                    <label class="form-check-label" for="gridRadios2">
+                                                        No
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center row p-2">
+                                                <div class="col-3">
+                                                    <label class="module-info-label" for="odd-lechr">Odd Wk Lecture
+                                                        Hours:</label>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input class="form-control" type="text" id="odd-lechr"
+                                                        name="odd-lechr" readonly>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="module-info-label" for="even-lechr">Even Wk Lecture
+                                                        Hours:</label>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input class="form-control" type="text" id="even-lechr"
+                                                        name="even-lechr" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center row p-2">
+                                                <div class="col-3">
+                                                    <label class="module-info-label" for="odd-prachr">Odd Wk Practical
+                                                        Hours:</label>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input class="form-control" type="text" id="odd-prachr"
+                                                        name="odd-prachr" readonly>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="module-info-label" for="even-prachr">Even Wk Practical
+                                                        Hours:</label>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input class="form-control" type="text" id="even-prachr"
+                                                        name="even-prachr" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="d-flex align-items-center row p-2">
+                                                <div class="col-3">
+                                                    <label class="module-info-label" for="odd-tuthr">Odd Wk Tutorial
+                                                        Hours:</label>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input class="form-control" type="text" id="odd-tuthr"
+                                                        name="odd-tuthr" readonly>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label class="module-info-label" for="even-tuthr">Even Wk Practical
+                                                        Hours:</label>
+                                                </div>
+                                                <div class="col-1">
+                                                    <input class="form-control" type="text" id="even-tuthr"
+                                                        name="even-tuthr" readonly>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Update Button -->
+                                    <div class="modal-footer">
+                                        <button type="button" id="update-module" class="btn btn-primary float-end">Update
+                                            Module</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <!-- Content header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Module: EP1234 ABC</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="modal-body">
+
+                        <form action="">
+
+                            <h5>Module Weightages</h5>
+                            <br>
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="componenetcode" class="col-sm-2 col-form-label col-form-label-sm">Component
+                                    Code:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="componenetcode"
+                                        placeholder="">
+                                </div>
+                                <label for="nrc" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="nrc" placeholder="">
+                                </div>
+                                <label for="weightage"
+                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="weightage"
+                                        placeholder="">
+                                </div>
+                            </div>
+
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="componenetcode" class="col-sm-2 col-form-label col-form-label-sm">Component
+                                    Code:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="componenetcode"
+                                        placeholder="">
+                                </div>
+                                <label for="nrc" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="nrc" placeholder="">
+                                </div>
+                                <label for="weightage"
+                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="weightage"
+                                        placeholder="">
+                                </div>
+                            </div>
+
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="componenetcode" class="col-sm-2 col-form-label col-form-label-sm">Component
+                                    Code:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="componenetcode"
+                                        placeholder="">
+                                </div>
+                                <label for="nrc" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="nrc" placeholder="">
+                                </div>
+                                <label for="weightage"
+                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="weightage"
+                                        placeholder="">
+                                </div>
+                            </div>
+
+                            <!-- Form Item -->
+                            <div class="form-group row">
+                                <label for="componenetcode" class="col-sm-2 col-form-label col-form-label-sm">Component
+                                    Code:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="componenetcode"
+                                        placeholder="">
+                                </div>
+                                <label for="nrc" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="nrc" placeholder="">
+                                </div>
+                                <label for="weightage"
+                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                <div class="col-sm-1">
+                                    <input type="text" class="form-control form-control-sm" id="weightage"
+                                        placeholder="">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Content header -->
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Module: EP1234 ABC</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <h5>Enter Module Workload</h5>
+                        <br>
+
+                        <div id="workloadtable">
+                            <div id="tabletitle">
+                                <h6>CA1</h6>
+                            </div>
+                            <div id="workloadtablecontent" class="col-12">
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="group-size" class="col-sm-2 col-form-label col-form-label-sm">Group
+                                        Size:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="group-size"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="start-week" class="col-sm-2 col-form-label col-form-label-sm">Start
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="start-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="end-week" class="col-sm-2 col-form-label col-form-label-sm">End
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="end-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="remarks"
+                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control form-control-sm" id="remarks" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="workloadtable">
+                            <div id="tabletitle">
+                                <h6>CA2</h6>
+                            </div>
+                            <div id="workloadtablecontent" class="col-12">
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="group-size" class="col-sm-2 col-form-label col-form-label-sm">Group
+                                        Size:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="group-size"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="start-week" class="col-sm-2 col-form-label col-form-label-sm">Start
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="start-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="end-week" class="col-sm-2 col-form-label col-form-label-sm">End
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="end-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="remarks"
+                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control form-control-sm" id="remarks" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="workloadtable">
+                            <div id="tabletitle">
+                                <h6>TST1</h6>
+                            </div>
+                            <div id="workloadtablecontent" class="col-12">
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="group-size" class="col-sm-2 col-form-label col-form-label-sm">Group
+                                        Size:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="group-size"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="start-week" class="col-sm-2 col-form-label col-form-label-sm">Start
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="start-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="end-week" class="col-sm-2 col-form-label col-form-label-sm">End
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="end-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="remarks"
+                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control form-control-sm" id="remarks" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="workloadtable">
+                            <div id="tabletitle">
+                                <h6>TST9</h6>
+                            </div>
+                            <div id="workloadtablecontent" class="col-12">
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="group-size" class="col-sm-2 col-form-label col-form-label-sm">Group
+                                        Size:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="group-size"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="start-week" class="col-sm-2 col-form-label col-form-label-sm">Start
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="start-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="end-week" class="col-sm-2 col-form-label col-form-label-sm">End
+                                        Week:</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control form-control-sm" id="end-week"
+                                            placeholder="">
+                                    </div>
+                                </div>
+                                <!-- Input Item -->
+                                <div class="form-group row">
+                                    <label for="remarks"
+                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control form-control-sm" id="remarks" rows="2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 </body>
 
