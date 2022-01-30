@@ -694,7 +694,7 @@ exports.getAllModules = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID', results);
+            console.log('Get All Modules', results);
             return res.status(200).json(results);
         }
     } catch (error) {

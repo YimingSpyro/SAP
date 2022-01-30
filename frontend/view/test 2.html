@@ -95,25 +95,25 @@
                         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
                         <!-- Page Link -->
-                        <li class="nav-item active">
+                        <li class="nav-item-dropdown active">
                             <div class="accordion accordion-flush" id="accordion">
                                 <div class="accordion-item">
-                                    <h2 class="accordion-header" id="flush-headingOne ">
+                                    <h3 class="accordion-header" id="flush-headingOne ">
                                         <button class="accordion-button collapsed" type="button"
                                             data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
                                             aria-expanded="false" aria-controls="flush-collapseOne">
-                                            <img src="../SVG Icons/Update Personal Info Icon.svg" class="icons"></img>
+                                            <img src="../SVG Icons/Maintenance.svg" class="icons"></img>
                                             <span class="nav-item-text ms-1 d-none d-sm-inline">Maintenance
                                                 System</span>
                                         </button>
-                                    </h2>
+                                    </h3>
                                     <div id="flush-collapseOne" class="accordion-collapse collapse"
                                         aria-labelledby="flush-headingOne" data-bs-parent="#accordion">
                                         <div class="accordion-body">
-                                            <a href="#" class="nav-link align-middle px-0">
+                                            <a href="/maintenance/" class="nav-link align-middle px-0">
                                                 Module information
                                             </a>
-                                            <a href="#" class="nav-link align-middle px-0">
+                                            <a href="/maintenance/staff-info" class="nav-link align-middle px-0">
                                                 Staff information
                                             </a>
                                             <a href="#" class="nav-link align-middle px-0">
@@ -133,12 +133,14 @@
                                 </div>
                             </div>
                         </li>
-                        <li class="nav-item">
-                            <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
-                            </a>
-                        </li>
+                        <li class="nav-item active"> <a href="/home" class="nav-link align-middle px-0">
+                                <div style="width: 100%; display: table">
+                                    <div style="display: table-row"> <img src="/SVG Icons/Dashboard.svg"
+                                            class="icons"></img>
+                                        <div class="navbar-title">Dashboard</div>
+                                    </div>
+                                </div>
+                            </a> </li>
 
                         <!-- Page Link -->
                         <li class="nav-item">

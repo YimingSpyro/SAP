@@ -17,13 +17,12 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    
     <!-- Offline scripts -->
-    <link href="/admincss/navbar.css" rel="stylesheet">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="/css/navbar.css">
     <script src="/script/notifications.js"></script>
     <script src="/script/append_navbar.js"></script>
     <script src="/script/log_out.js"></script>
@@ -31,9 +30,10 @@
     <script>
         function getModuleAndAppend() {
             $('#module-row-table').empty();
-            axios.get('http://localhost:8080/api/module/', { withCredentials: true }).then((response) => {
+            axios.get('http://localhost:8080/api/module?'+'semester_code=AY 2021/2022 SEM2', { withCredentials: true }).then((response) => {
                 if (response.status == 200) {
                     var rows = response.data
+                    console.log(rows);
                     var html;
                     console.log(rows);
                     for (let i = 0; i < rows.length; i++) {
