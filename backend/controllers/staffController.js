@@ -256,6 +256,27 @@ exports.getAllStaff = async (req, res, next) => {
     }
 
 };
+//API GET Only Some Columns
+exports.getStaffNames = async (req, res, next) => {
+    try {
+        let results = await staffManager.getStaffNames();
+        console.log('Get Staff Names');
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Getting Staff Names Successful');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API GET Staff Data by ID
 exports.getStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
@@ -608,146 +629,6 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
     }
 
 };
-
-
-
-/* ==== MODULES API ==== */
-
-// API Get Modules by mod code
-exports.getModuleBySection = async (req, res, next) => {
-    let section = req.query.section;
-    let semester_code = req.query.semester_code;
-    let data = [section, semester_code]
-    try {
-        let results = await staffManager.getModuleBySection(data);
-        console.log('Get Module by ID', results);
-        if (results.errno) {
-            throw 'Database SQL Error'
-        }
-        else {
-            console.log('Update Assign Module by Staff ID', results);
-            return res.status(200).json(results);
-        }
-    } catch (error) {
-        let message = 'Server is unable to process your request. Error: ' + error;
-        console.error('Server is unable to process the request', { 'Error': error })
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-};
-exports.getModuleBySectionAndStage = async (req, res, next) => {
-    let section = req.query.section;
-    let semester_code = req.query.semester_code;
-    let mod_stage = req.query.mod_stage;
-    let data = [section, semester_code,mod_stage]
-    try {
-        let results = await staffManager.getModuleBySectionAndStage(data);
-        console.log('Get Module by ID', results);
-        if (results.errno) {
-            throw 'Database SQL Error'
-        }
-        else {
-            console.log('Update Assign Module by Staff ID', results);
-            return res.status(200).json(results);
-        }
-    } catch (error) {
-        let message = 'Server is unable to process your request. Error: ' + error;
-        console.error('Server is unable to process the request', { 'Error': error })
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-};
-exports.getModuleByCode = async (req, res, next) => {
-    let mod_code = req.query.section;
-    let semester_code = req.query.semester_code;
-    let data = [mod_code, semester_code]
-    try {
-        let results = await staffManager.getModuleByCode(data);
-        console.log('Get Module by ID', results);
-        if (results.errno) {
-            throw 'Database SQL Error'
-        }
-        else {
-            console.log('Update Assign Module by Staff ID', results);
-            return res.status(200).json(results);
-        }
-    } catch (error) {
-        let message = 'Server is unable to process your request. Error: ' + error;
-        console.error('Server is unable to process the request', { 'Error': error })
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-};
-// API Get All Modules
-exports.getAllModules = async (req, res, next) => {
-    let semester_code = req.query.semester_code;
-    try {
-        let results = await staffManager.getAllModules(semester_code);
-        console.log('Get All Modules', results);
-        if (results.errno) {
-            throw 'Database SQL Error'
-        }
-        else {
-            console.log('Get All Modules', results);
-            return res.status(200).json(results);
-        }
-    } catch (error) {
-        let message = 'Server is unable to process your request. Error: ' + error;
-        console.error('Server is unable to process the request', { 'Error': error })
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-};
-// API Create Modules
-exports.createModule = async (req, res, next) => {
-    let mod_code = req.body.mod_code;
-    let mod_name = req.body.mod_name;
-    let mod_abbrv = req.body.mod_abbrv;
-    let mass_lect = req.body.mass_lect;
-    let fk_mod_coord = req.body.fk_mod_coord;
-    let mod_dlt = req.body.mod_dlt;
-    let mod_lecture = req.body.mod_lecture;
-    let mod_tutorial = req.body.mod_tutorial;
-    let mod_practical = req.body.mod_practical;
-    let fk_cluster_ldr = req.body.fk_cluster_ldr;
-    let fk_semester_code = req.body.fk_semester_code;
-    let odd_lechr = req.body.odd_lechr;
-    let even_lechr = req.body.even_lechr;
-    let odd_prachr = req.body.odd_prachr;
-    let even_prachr = req.body.even_prachr;
-    let odd_tuthr = req.body.odd_tuthr;
-    let even_tuthr = req.body.even_tuthr;
-    let fk_course_id = req.body.fk_course_id;
-    let data = [mod_code, mod_name, mod_abbrv, mass_lect, fk_mod_coord, mod_dlt, mod_lecture, mod_tutorial, mod_practical, fk_cluster_ldr, fk_semester_code,
-        odd_lechr, even_lechr, odd_prachr, even_prachr, odd_tuthr, even_tuthr, fk_course_id]
-    try {
-        let results = await staffManager.createModule(data);
-        console.log('Create Module', results);
-        if (results.errno) {
-            throw 'Database SQL Error'
-        }
-        else {
-            console.log('Update Assign Module by Staff ID', results);
-            return res.status(200).json(results);
-        }
-    } catch (error) {
-        let message = 'Server is unable to process your request. Error: ' + error;
-        console.error('Server is unable to process the request', { 'Error': error })
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-};
-
 
 /* ==== MODULE PREFERENCE API ==== */
 
