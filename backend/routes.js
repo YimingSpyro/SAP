@@ -7,6 +7,7 @@ const examController = require("./controllers/examController")
 const semesterController = require("./controllers/semesterController")
 const courseController = require("./controllers/courseController")
 const downloadsController = require("./controllers/downloadsController")
+const moduleController = require("./controllers/moduleController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -125,6 +126,7 @@ exports.appRoute = router => {
 
     // ANNOUNCEMENT
     router.get('/api/announcements/', announcementController.getAllAnnouncements);
+    router.post('/api/announcements/', announcementController.createAnnouncement);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);
@@ -148,11 +150,13 @@ exports.appRoute = router => {
     router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
 
     // MODULE
-    router.get('/api/module/', staffController.getAllModules);
-    router.get('/api/module/code/', staffController.getModuleByCode);
-    router.get('/api/module/section/', staffController.getModuleBySection);
-    router.get('/api/module/section/stage', staffController.getModuleBySectionAndStage);
-    router.post('/api/module/', staffController.createModule);
+    router.get('/api/module/', moduleController.getAllModules);
+    router.get('/api/module/code/', moduleController.getModuleByCode);
+    router.get('/api/module/section/', moduleController.getModuleBySection);
+    router.get('/api/module/section/stage', moduleController.getModuleBySectionAndStage);
+    router.post('/api/module/', moduleController.createModule);
+    router.get('/api/all-modules/', moduleController.getEveryModule);
+    router.put('/api/update-module/', moduleController.updateModule);
 
     // MODULE PREFERENCE
     router.get('/api/module/preference', staffController.getAllModulePreference);
@@ -172,6 +176,7 @@ exports.appRoute = router => {
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
     router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
+    router.get('/api/admin/maintenance/staff-names', staffController.getStaffNames);
     
     // COURSE
     router.get('/api/courses/', courseController.getAllCourses);
@@ -191,13 +196,10 @@ exports.appRoute = router => {
     router.delete('/api/semester/', semesterController.deleteSemester);
     router.get('/api/report/semester/', semesterController.getAllSemesters);
 
-
-
-
     //PROFILE PICTURE
-    router.post('/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
-    router.get('/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
-    router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
+    router.post('/api/uploads/profile-picture/:staff_id', uploadPFP.single('profile_picture'), uploadsController.uploadProfilePicture)
+    router.get('/api/uploads/profile-picture/:staff_id', uploadsController.getProfilePicture)
+    //router.post('/uploads/test', upload.single('file'), uploadsController.testFiles)
 
     //REPORTS
     //router.get('/reports/download/:file_id/:filename', uploadsController.downloadFile)
