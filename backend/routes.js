@@ -111,6 +111,7 @@ exports.appRoute = router => {
     // LOGIN
     router.post('/login', authController.processLogin);
     router.post('/register', authController.processRegister);
+    router.post('/change-password', checkUserFn.checkJWT, authController.processChangePassword);
     //router.get('/checkauthentication',authController.processTestCookie);
 
     // SECTION

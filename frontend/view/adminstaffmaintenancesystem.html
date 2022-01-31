@@ -33,6 +33,14 @@
             var copyText = element.previousElementSibling.textContent;
             navigator.clipboard.writeText(copyText);
         }
+
+
+        let rows;
+        let filteredRows;
+        var currentPage = 0;
+        var rowsShown = 4;
+        var totalRows = 0;
+        var totalPages = 0;
         function deleteStaffById(element) {
             var staff_id = $(element).attr("data-staff-id")
             customConfirm("This will remove this staff with staff id: " + staff_id,
@@ -41,6 +49,8 @@
                         $('#custom-reconfirm').modal('hide');
                         customMessage("Successfully Deleted!")
                         getStaffandAppend();
+                        currentPage = 0;
+                        console.log("deleted");
                         appendPaginationNav();
                         paginateRows();
                     }).catch((e) => {
@@ -53,28 +63,22 @@
 
                 })
         }
-
-        let rows;
-        let filteredRows;
-        var currentPage = 0;
-        var rowsShown = 4;
-        var totalRows = 0;
-        var totalPages = 0;
         function getStaffandAppend() {
             $('#staff-row-table').empty();
             axios.get('http://localhost:8080/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
                 if (response.status == 200) {
                     rows = response.data
-                    if (rows.length <= 0) $('#staff-row-table').append(`<tr style="text-align:center" class=" border-bottom border-white">
+                    if (rows==null||rows.length <= 0) $('#staff-row-table').append(`<tr style="text-align:center" class=" border-bottom border-white">
                         <td colspan="8">No records found</td>
                         
                         </tr>`)
-                    totalRows = rows.length;
-                    var html;
-                    var sectionArray = [];
-                    var section_options = `<option value="default">Showing All Sections</option>`;
-                    for (let i = 0; i < rows.length; i++) {
-                        html += `<tr class="staff-row border-bottom border-white">
+                    else {
+                        totalRows = rows.length;
+                        var html;
+                        var sectionArray = [];
+                        var section_options = `<option value="default">Showing All Sections</option>`;
+                        for (let i = 0; i < rows.length; i++) {
+                            html += `<tr class="staff-row border-bottom border-white">
                                         <td>${rows[i].staff_id}</td>
                                         <td>${rows[i].staff_name}</td>
                                         <td class="email-col"><span>${rows[i].staff_email}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img><br><span>${rows[i].staff_mobile}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img></td>
@@ -88,17 +92,18 @@
                                             <a  class="btn btn-danger delete-staff" onclick="deleteStaffById(this)" data-staff-id="${rows[i].staff_id}" > <div >Delete</div></a>
                                         </td>
                                     </tr>`
-                        if (!sectionArray.includes(rows[i].section_name)) sectionArray.push(rows[i].section_name);
+                            if (!sectionArray.includes(rows[i].section_name)) sectionArray.push(rows[i].section_name);
+                        }
+                        for (const i of sectionArray) {
+                            section_options += `<option class="section-select-options" value="${i}">${i}</option>`
+                        }
+
+                        /*   window.location.href = "./home.html" */
+                        /* const accessToken = response.data.accessToken;
+                        storeAccessTokenInLocalStorage(accessToken); */
+                        $('#section-select').append(section_options)
+                        $('#staff-row-table').append(html).then(appendStaffFormValues(rows))
                     }
-                    for (const i of sectionArray) {
-                        section_options += `<option class="section-select-options" value="${i}">${i}</option>`
-                    }
-                    $("#results-length").text(rows.length)
-                    /*   window.location.href = "./home.html" */
-                    /* const accessToken = response.data.accessToken;
-                    storeAccessTokenInLocalStorage(accessToken); */
-                    $('#section-select').append(section_options)
-                    $('#staff-row-table').append(html).then(appendStaffFormValues(rows))
                     //fill in staff-inf-edit modal values
                 }
             }).catch((error) => {
@@ -116,7 +121,7 @@
             }
             pagination_html += '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="add" class="page-link" href="#">Next</a></li>'
             $('.pagination').append(pagination_html)
-            $('li:nth-child(2) .page-no').css("background","#a5c6fa") 
+            $('li:nth-child(2) .page-no').css("background", "#a5c6fa")
         }
         function pageChange(element) {
             if (element.textContent == "Previous") {
@@ -139,6 +144,7 @@
             ($('tr.staff-row:contains(' + select + ')')).removeClass("row-hide")
             filteredRows = $('tr.staff-row').not('.row-hide');
             totalRows = filteredRows.length
+            currentPage = 0;
             appendPaginationNav();
             paginateRows();
         }
@@ -154,14 +160,16 @@
         function paginateRows() {
             if (!filteredRows) filteredRows = $('tr.staff-row')
             // var dataRows = $('tr.staff-row:not(row-hide)');
+            console.log(currentPage * rowsShown + "," + (currentPage * rowsShown + rowsShown));
             var showRows = filteredRows.slice(currentPage * rowsShown, currentPage * rowsShown + rowsShown);
             filteredRows.addClass("row-hide")
             for (let i = 0; i < showRows.length; i++) {
+                console.log(i);
                 showRows[i].classList.remove("row-hide")
             }
-            console.log("current page is " + (currentPage + 1) + " index is " + currentPage);
-            console.log(currentPage * 4 + rowsShown);
-            console.log(totalRows);
+            let showRowsNumber = rowsShown;
+            if((currentPage * rowsShown + rowsShown)>rows.length) showRowsNumber = rows.length-((currentPage * rowsShown + rowsShown)-rowsShown)
+            $("#results-length").text(showRowsNumber+" out of "+rows.length)
         }
         function appendStaffFormValues(rows) {
             $('.view-staff').on('click', function () {
@@ -227,8 +235,6 @@
                 $(this).addClass('active');
             });
             getStaffandAppend()
-            appendPaginationNav();
-            paginateRows();
             $('#main-list>li').removeClass("active")
             $('#maintenence-system').addClass("active")
             $('.accordion-body a:nth-child(2)').addClass("text-active")
@@ -551,9 +557,9 @@
                                 <button data-bs-toggle="modal" data-bs-target="#createStaffModal" class="filter-button">
                                     Create Staff</button>
                             </div>
-                            <div class="col filter-button-wrap">
+                            <!-- <div class="col filter-button-wrap">
                                 <button class="filter-button"> Module Preferences</button>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="line"></div>
                     </div>
