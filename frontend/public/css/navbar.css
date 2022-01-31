@@ -1,5 +1,4 @@
 body {
-
     font-family: 'Open Sans', sans-serif;
     font-size: 100%;
 }
@@ -67,6 +66,13 @@ i {
 .nav-link {
     color: white
 }
+.navbar-item-outer-wrap{
+    width:100%;
+    display:table-cell
+}
+.navbar-item-wrap{
+    display:table-row
+}
 
 #dashboard-wrap {
     box-sizing: border-box;
@@ -128,17 +134,26 @@ i {
 
 }
 .icons{
+
     display:table-cell;
     height: 45px;
     width: 45px;
 
 }
 .navbar-title{
+    padding-left:13px;
     overflow: hidden;
     max-width: 140px;
     width:140px;
     display:table-cell;
+    font-size:1rem;
     vertical-align: middle;
+}
+#main-list h3{
+    font-size:1rem;
+}
+.navbar-title-text{
+
 }
 #ul-collapse {
     transition: 2s;
@@ -202,9 +217,9 @@ i {
 }
 #navbar-brand .dropdown{
     background-color: #15343F;
-    position: absolute;
+    position: relative;
     z-index: 999;
-    top:10%;
+    margin-top:10px;
     left: 0;
     width:100px;
     display: none;
