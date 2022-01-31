@@ -1,4 +1,3 @@
-const excel = require('exceljs');
 const downloadsService = require('../services/downloadsService')
 
 //download exceljs generated reports
