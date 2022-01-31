@@ -12,12 +12,12 @@ function genAccessToken(rows) {
     const accessToken = jwt.sign(tokenPayload, JWT_SECRET_KEY);
 
     //insert record into jwt records table
-    insertJwtRecord(row,accessToken);
+    insertJwtRecord(row, accessToken);
     console.log(accessToken)
     return accessToken;
 }
-function insertJwtRecord(row,token){
-    authManager.insertJwtRecord([row.staff_id,token])
+function insertJwtRecord(row, token) {
+    authManager.insertJwtRecord([row.staff_id, token])
 }
 const saltRounds = 10;
 const authManager = require('../services/authService');
@@ -40,10 +40,10 @@ module.exports.processLogin = ((req, res) => {
             bcrypt.compare(password, hash, (err, resp) => {
                 if (resp) {
                     const accessToken = genAccessToken(rows,);
-                   // const result = JSON.parse(JSON.stringify(rows[0]));
-                   const result = rows;
+                    // const result = JSON.parse(JSON.stringify(rows[0]));
+                    const result = rows;
                     result['token'] = accessToken
-                    res.cookie("token",result.token, {
+                    res.cookie("token", result.token, {
                         httpOnly: true
                     });
                     res.status(200).json({
@@ -85,7 +85,63 @@ module.exports.processRegister = ((req, res) => {
             })
         })
 })
-module.exports.getNavItems =  (async (req, res) => {
+module.exports.processChangePassword = ((req, res) => {
+    var staff_id = req.staff_id;
+    console.log(staff_id);
+    var old_password = req.body.old_password;
+    console.log(old_password);
+    var new_password = req.body.new_password;
+    var re_new_password = req.body.re_new_password;
+    if (new_password != re_new_password) return res.status(500).send({success: false, error: {message: 'New Passwords do not match'}});
+
+    var data = authManager.login([staff_id, old_password])
+        .then((rows) => {
+            var old_password_hashed = rows[0].staff_password;
+            bcrypt.compare(old_password, old_password_hashed, (err, resp) => {
+                if (resp) {
+                    bcrypt.compare(new_password, old_password_hashed, (err, resp) => {
+                        if (resp) {
+                            res.status(500).send({success: false, error: {message: "New password cannot be the same as old password!"}});
+                        }
+                    });
+                    bcrypt.hash(new_password, saltRounds, function (err, hash) {
+                        if (err) {
+                           /*  return callback(err, null); */
+                           return res.status(500).send({
+                            error: "Error"
+                        });
+                        }
+                        var new_password_hashed = hash;
+                        authManager.changePassword([staff_id, new_password_hashed]).then((rows) => {
+                            if (rows.affectedRows == 1) {
+                                return res.status(200).json({
+                                    message: "Succesfully updated password"
+                                });
+                            }
+                        }), ((error) => {
+                            console.log(error)
+                            return res.status(500).send({success: false, error: {message: 'No blah Found'}});
+                        })
+                    });
+
+
+                } else {
+                    console.log("wrong password");
+                    console.log(err);
+                    return res.status(500).json({
+                        error: err
+                    });
+                }
+            });
+
+        }).catch((error) => {
+            console.log(error)
+            return res.status(500).json({
+                error: error
+            });
+        })
+})
+module.exports.getNavItems = (async (req, res) => {
     try {
         let results = await authManager.getNavItems();
         console.log('Get All Exams', results);
