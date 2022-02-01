@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
+const JWT_SECRET_KEY = 'tassystem';
 module.exports={
     getClientUserId :(req, res, next) => {
         let message = 'Unauthorized access';
@@ -34,5 +35,23 @@ module.exports={
                 }
             }
         })
-    }
+    },checkJWT : (req, res, next) => {
+        console.log("checking jwt");
+        const token = req.cookies.token;
+        console.log(token);
+        if (!token) {
+            console.log("no token");
+          return res.sendStatus(403);
+        }
+        try {
+          const data = jwt.verify(token, JWT_SECRET_KEY);
+          req.staff_name = data.staff_name;
+          req.staff_id = data.staff_id;
+          req.role_name = data.role_name;
+          return next();
+        } catch(e) {
+            console.log(e);
+          return res.sendStatus(403);
+        }
+      }
 }
