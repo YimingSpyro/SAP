@@ -83,12 +83,12 @@ module.exports.getModuleByCode = (data) => {
 module.exports.getAllModules = (semester_code) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT tas.module.*, tas.staff_information.staff_name FROM module INNER JOIN tas.staff_information ON fk_mod_coord = staff_id WHERE fk_semester_code = ?;`, [semester_code], (err, results) => {
+        pool.query(`SELECT tas.module.*, tas.staff_information.staff_name FROM module LEFT OUTER JOIN tas.staff_information ON fk_mod_coord = staff_id WHERE fk_semester_code = ?;`, [semester_code], (err, results) => {
             if (err) {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');

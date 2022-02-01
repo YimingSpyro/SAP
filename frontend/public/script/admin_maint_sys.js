@@ -195,6 +195,11 @@ $(document).ready(() => {
         let lecthr = parseInt($('#mod-lect-hours').val());
         let tuthr = parseInt($('#mod-tut-hours').val());
         let prachr = parseInt($('#mod-prac-hours').val());
-        $('#mod-total-hr').val(lecthr+tuthr+prachr)
+        $('#mod-total-hr').val(lecthr + tuthr + prachr);
+    });
+    $('#edit-students, #edit-oos-students').on('change', () => {
+        let students = parseInt($('#edit-students').val());
+        let oos_students = parseInt($('#edit-oos-students').val());
+        $('#edit-total-students').val(students + oos_students);
     });
 })
