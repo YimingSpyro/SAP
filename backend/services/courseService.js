@@ -25,7 +25,7 @@ module.exports.getAllCoursesByStatus = (status) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');

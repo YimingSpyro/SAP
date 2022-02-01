@@ -21,7 +21,8 @@ exports.getAllCoursesByStatus = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Courses', results);
+            console.log('Get All Courses');
+            //console.log(results);
             return res.status(200).json(results);
         }
     } catch (error) {
