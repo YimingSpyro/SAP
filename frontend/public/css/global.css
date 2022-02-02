@@ -311,11 +311,10 @@ div.accordion-body > a:hover {
 }
 
 #workloadtable {
-    background-color: #E9E9E9;
     margin: 2%;
 }
 
-#tabletitle {
+.tabletitle {
     background-color: #969696;
     padding: 6px 5% 4px 5%;
     color: white;
@@ -460,8 +459,8 @@ caption {
     transition: 1s;
 }
 
-.report-item-wrap p {
-    color: #15343F;
+p {
+    color: #15343F !important;
     text-align: left;
 }
 
