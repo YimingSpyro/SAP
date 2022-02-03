@@ -128,6 +128,8 @@ exports.appRoute = router => {
     // ANNOUNCEMENT
     router.get('/api/announcements/', announcementController.getAllAnnouncements);
     router.post('/api/announcements/', announcementController.createAnnouncement);
+    router.put('/api/announcements/', announcementController.updateAnnouncement);
+    router.delete('/api/announcements/', announcementController.deleteAnnouncement);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);

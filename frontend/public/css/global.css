@@ -1,3 +1,9 @@
+p {
+    color: #15343F;
+    text-align: left;
+}
+
+
 /* ============================ Notifications ========================= */
 
 .error-message {
@@ -459,10 +465,7 @@ caption {
     transition: 1s;
 }
 
-p {
-    color: #15343F !important;
-    text-align: left;
-}
+
 
 .report-item-wrap:hover .report-item-title {
     color: white

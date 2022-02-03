@@ -141,8 +141,6 @@ async function generateModal(module_index) {
             <div class="line2"></div>
             <!-- Table -->
             <div class = "overflow-hidden py-1">
-
-
                 <div class="form-group row mt-4 mb-3">
                     <div class="row col-5 me-2">
                         <label for="select-module-type" class="col-sm-5 col-form-label col-form-label-sm">Type:</label>
