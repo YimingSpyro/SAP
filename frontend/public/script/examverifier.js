@@ -443,8 +443,7 @@ $(document).ready(() => {
                 generateModal(module_index)
             });
     })
-    $(window).on('load',()=>{
-        $('#page-title').text("ok")
-    })
-    
+})
+$(window).on('load',()=>{
+    $('#page-title').text("WHYU DOESNT WORK")
 })
