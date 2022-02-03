@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
     <link rel="stylesheet" href="/css/navbar.css">
+    <script src="/script/global.js"></script>
     <script src="/script/notifications.js"></script>
     <script src="/script/append_navbar.js"></script>
     <script src="/script/log_out.js"></script>
@@ -48,11 +49,21 @@
                     axios.put('http://localhost:8080/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
                         $('#custom-reconfirm').modal('hide');
                         customMessage("Successfully Deleted!")
-                        getStaffandAppend();
+                        location.reload();
+                        /* getStaffandAppend();
                         currentPage = 0;
-                        console.log("deleted");
+                        console.log(rows.length);
+                        for (const i in rows) {
+                            if (rows[i].staff_id == staff_id) {
+                                console.log(staff_id);
+                                rows.splice(i, 1)
+
+                            }
+                        }
+                        console.log(filteredRows);
+                        console.log(rows);
                         appendPaginationNav();
-                        paginateRows();
+                        paginateRows(); */
                     }).catch((e) => {
                         customMessage("Unable to delete")
                         console.log(e);
@@ -66,9 +77,10 @@
         function getStaffandAppend() {
             $('#staff-row-table').empty();
             axios.get('http://localhost:8080/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
+                console.log(response.data);
                 if (response.status == 200) {
                     rows = response.data
-                    if (rows==null||rows.length <= 0) $('#staff-row-table').append(`<tr style="text-align:center" class=" border-bottom border-white">
+                    if (rows == null || rows.length <= 0) $('#staff-row-table').append(`<tr style="text-align:center" class=" border-bottom border-white">
                         <td colspan="8">No records found</td>
                         
                         </tr>`)
@@ -84,7 +96,7 @@
                                         <td class="email-col"><span>${rows[i].staff_email}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img><br><span>${rows[i].staff_mobile}</span> <img src="/SVG Icons/Copy.svg" onclick="copyText(this)" style="width:13px;height:13px"></img></td>
                                         <td>${rows[i].designation_name}</td>
                                         <td>${rows[i].section_name}</td>
-                                        <td></td>
+                                        <td>${rows[i].staff_status}</td>
                                         <td class="text-end">
                                             <a  class="btn btn-success view-staff" data-bs-toggle="modal" data-bs-target="#editStaffModal" data-staff-id="${rows[i].staff_id}"><div>View/Edit</div></a>
                                         </td>
@@ -112,16 +124,19 @@
             });
         }
         function appendPaginationNav() {
-            console.log("called append");
-            $('.pagination').empty();
-            totalPages = Math.ceil(totalRows / rowsShown);
-            var pagination_html = '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="minus"  class="page-link" href="#">Previous</a></li>'
-            for (let i = 0; i < totalPages; i++) {
-                pagination_html += '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="' + i + '" class="page-link page-no" href="#">' + (i + 1) + '</a></li>'
+            try {
+                $('.pagination').empty();
+                totalPages = Math.ceil(totalRows / rowsShown);
+                var pagination_html = '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="minus"  class="page-link" href="#">Previous</a></li>'
+                for (let i = 0; i < totalPages; i++) {
+                    pagination_html += '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="' + i + '" class="page-link page-no" href="#">' + (i + 1) + '</a></li>'
+                }
+                pagination_html += '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="add" class="page-link" href="#">Next</a></li>'
+                $('.pagination').append(pagination_html)
+                $('li:nth-child(2) .page-no').css("background", "#a5c6fa")
+            } catch (e) {
+                console.log(e);
             }
-            pagination_html += '<li class="page-item"><a onclick="pageChange(this)" data-pagination-id="add" class="page-link" href="#">Next</a></li>'
-            $('.pagination').append(pagination_html)
-            $('li:nth-child(2) .page-no').css("background", "#a5c6fa")
         }
         function pageChange(element) {
             if (element.textContent == "Previous") {
@@ -130,7 +145,6 @@
                 if (currentPage < totalPages - 1) currentPage++;
             } else {
                 currentPage = parseInt(element.textContent) - 1;
-                console.log($('.page-no')[currentPage]);
             }
             $('.page-no').css("background", "none");
             $('.page-no')[currentPage].style.background = "#a5c6fa"
@@ -158,18 +172,24 @@
             paginateRows();
         }
         function paginateRows() {
-            if (!filteredRows) filteredRows = $('tr.staff-row')
-            // var dataRows = $('tr.staff-row:not(row-hide)');
-            console.log(currentPage * rowsShown + "," + (currentPage * rowsShown + rowsShown));
-            var showRows = filteredRows.slice(currentPage * rowsShown, currentPage * rowsShown + rowsShown);
-            filteredRows.addClass("row-hide")
-            for (let i = 0; i < showRows.length; i++) {
-                console.log(i);
-                showRows[i].classList.remove("row-hide")
+            try {
+                if (!filteredRows)
+                { filteredRows = $('tr.staff-row');
+                 console.log("filteredrows undefined");}
+                // var dataRows = $('tr.staff-row:not(row-hide)');
+                var showRows = filteredRows.slice(currentPage * rowsShown, currentPage * rowsShown + rowsShown);
+                console.log(filteredRows);
+                filteredRows.addClass("row-hide")
+                for (let i = 0; i < showRows.length; i++) {
+                    console.log("for loop");
+                    showRows[i].classList.remove("row-hide")
+                }
+                let showRowsNumber = rowsShown;
+                if ((currentPage * rowsShown + rowsShown) > rows.length) showRowsNumber = rows.length - ((currentPage * rowsShown + rowsShown) - rowsShown)
+                $("#results-length").text(showRowsNumber + " out of " + rows.length)
+            }catch(e){
+                console.log(e);
             }
-            let showRowsNumber = rowsShown;
-            if((currentPage * rowsShown + rowsShown)>rows.length) showRowsNumber = rows.length-((currentPage * rowsShown + rowsShown)-rowsShown)
-            $("#results-length").text(showRowsNumber+" out of "+rows.length)
         }
         function appendStaffFormValues(rows) {
             $('.view-staff').on('click', function () {
@@ -402,16 +422,16 @@
                                     <label class="staff-info-label" for="fname">Staff Password:</label>
                                     <input class="staff-info-input" type="text" id="staff-password-edit-input"
                                         name="staff-password-edit-input"
-                                        placeholder="Please specify the new password"><br><br>
+                                        placeholder="Please specify the new pass.word"><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff Abbrv:</label>
-                                    <input class="staff-info-input" type="text" id="staff-abbrv-edit-input"
+                                    <label class="staff-info-label" for="fname">.Staff Abbrv:</label>
+                                    <input class="staff-info-input" type="text" .id="staff-abbrv-edit-input"
                                         name="staff-abbrv-edit-input"><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff Type:</label>
-                                    <select name="staff-type-edit-input" id="staff-type-edit-input"
+                                    <label class="staff-info-label" for="fname">.Staff Type:</label>
+                                    <select name="staff-type-edit-input" id="sta.ff-type-edit-input"
                                         class="staff-info-input">
                                         <option value="FT">FT</option>
                                         <option value="AL">AL</option>
@@ -583,7 +603,7 @@
                                     <th scope="col" class="col-2">Email/Mobile</th>
                                     <th scope="col" class="col-1">Designation</th>
                                     <th scope="col" class="col-1">Section</th>
-                                    <th scope="col" class="col-1"></th>
+                                    <th scope="col" class="col-1">Status</th>
                                     <th scope="col" class="col-1"></th>
                                     <th scope="col" class="col-1"></th>
                                 </tr>
