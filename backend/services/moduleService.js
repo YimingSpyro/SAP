@@ -80,6 +80,28 @@ module.exports.getModuleByCode = (data) => {
         return error
     });
 };
+// MODULE 
+module.exports.getModuleByModCoord = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT * FROM module INNER JOIN semester_code ON fk_semester_code = semester_code WHERE fk_mod_coord = ? AND latest_sem = 'ACTIVE'`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
 module.exports.getAllModules = (semester_code) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
@@ -132,6 +154,29 @@ module.exports.updateModule = (data) => {
         lecture_class=?,tutorial_class=?,practical_class=?,
         type=?,module_type=?,prereq=?,remarks=?,credit_unit=?,
         normal_students=?,os_students=?,total_students=?
+        WHERE fk_semester_code= ? AND  mod_code= ?  AND year_offered= ? AND mod_stage= ?;`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    //console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        return error
+    });
+};
+module.exports.updateMCModule = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE tas.module
+        SET odd_lechr=?,even_lechr=?,odd_prachr=?,even_prachr=?,
+        odd_tuthr=?,even_tuthr=?, mass_lect=?
         WHERE fk_semester_code= ? AND  mod_code= ?  AND year_offered= ? AND mod_stage= ?;`, data, (err, results) => {
             if (err) {
                 reject(err);

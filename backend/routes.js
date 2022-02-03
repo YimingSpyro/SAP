@@ -8,6 +8,7 @@ const semesterController = require("./controllers/semesterController")
 const courseController = require("./controllers/courseController")
 const downloadsController = require("./controllers/downloadsController")
 const moduleController = require("./controllers/moduleController")
+const workloadController = require("./controllers/workloadController")
 const checkUserFn = require("./middlewares/checkUserFn");
 const multer = require('multer')
 const getFields = multer();
@@ -127,6 +128,8 @@ exports.appRoute = router => {
     // ANNOUNCEMENT
     router.get('/api/announcements/', announcementController.getAllAnnouncements);
     router.post('/api/announcements/', announcementController.createAnnouncement);
+    router.put('/api/announcements/', announcementController.updateAnnouncement);
+    router.delete('/api/announcements/', announcementController.deleteAnnouncement);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);
@@ -157,6 +160,8 @@ exports.appRoute = router => {
     router.post('/api/module/', moduleController.createModule);
     router.get('/api/all-modules/', moduleController.getEveryModule);
     router.put('/api/update-module/', moduleController.updateModule);
+    router.get('/api/mod-coord/modules', moduleController.getModuleByModCoord);
+    router.put('/api/mod-coord/update-module/', moduleController.updateMCModule);
 
     // MODULE PREFERENCE
     router.get('/api/module/preference', staffController.getAllModulePreference);
@@ -170,6 +175,10 @@ exports.appRoute = router => {
     router.post('/api/module/assign/', staffController.assignModuleByID);
     router.put('/api/module/assign/', staffController.updateAssignedModuleByID);
     router.delete('/api/module/assign/:id', staffController.unassignModuleByID);
+
+    //MODULE WORKLOAD 
+    router.get('/api/module-workload/mc',workloadController.getWorkloadByMC)
+    router.post('/api/module-workload/mc',workloadController.createWorkload)
 
     //STAFF-INFO
     router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
@@ -221,9 +230,9 @@ exports.appRoute = router => {
     //router.put('/uploads/reports/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
     
     //EXAM 
-    router.get('/api/getExam', examController.processGetAllExam);
-    router.get('/api/getExam/:id', examController.getExamByExamId);
-    router.post('/api/createExam', examController.createExam);
+    router.get('/api/exam/module', examController.getExamByModule);
+    router.post('/api/exam', examController.createExam);
+    router.put('/api/exam', examController.updateExam);
 
     // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);
@@ -231,7 +240,6 @@ exports.appRoute = router => {
     router.put('/api/cas/module/', staffController.updateModuleCAS);
     router.get('/api/cas/module/stage', staffController.getModuleStage);
     router.put('/api/cas/module/stage', staffController.updateNormalStudents);
-
 
     router.get('/api/nav-items', authController.getNavItems);
 }
