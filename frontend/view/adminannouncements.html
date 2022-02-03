@@ -26,10 +26,11 @@
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminexammatters.css">
     <link rel="stylesheet" href="/css/adminannouncement.css">
-    <link href="css/navbar.css" rel="stylesheet">   
-    
-    
+    <link href="css/navbar.css" rel="stylesheet">
+
+
     <script src="/script/global.js"></script>
+    <script src="/script/log_out.js"></script>
     <script src="/script/announcements.js"></script>
     <script src="/script/notifications.js"></script>
     <script src="/script/append_navbar.js"></script>
@@ -100,7 +101,7 @@
                     <ul id="main-list"
                         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
-                        
+
                         <!--                         <li class="nav-item active">
                             <a href="#" class="nav-link align-middle px-0">
                                 <div style="width: 100%; display: table">
@@ -165,6 +166,31 @@
 
 
                 </div>
+                <!-- Module Modal -->
+                <div class="modal fade" id="edit-modal" tabindex="-1" aria-labelledby="edit-modal" aria-hidden="true">
+                    <div class="modal-dialog modal-xl">
+                        <div class="modal-content modal-information">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Delete Announcement Modal -->
+                <div class="modal fade" id="delete-announcement" tabindex="-1" aria-labelledby="delete-announcement"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header justify-content-center">
+                                <h5 class="modal-title confirm-delete-title">Confirm Delete</h5>
+                            </div>
+                            <div class="modal-body">
+                                <h5 class="announcement-name-delete text-center"></h5>
+                            </div>
+                            <div class="modal-footer justify-content-center confirm-delete-button">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- Success Modal -->
                 <div class="modal fade" id="submit-requests-success-created" tabindex="-1"
                     aria-labelledby="submit-requests-success-modal" aria-hidden="true">
@@ -172,6 +198,32 @@
                         <div class="modal-content">
                             <div class="modal-header justify-content-center">
                                 <h5 class="modal-title">Announcement Created</h5>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-primary " data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="submit-requests-success-updated" tabindex="-1"
+                    aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header justify-content-center">
+                                <h5 class="modal-title">Announcement Updated</h5>
+                            </div>
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-primary " data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="submit-requests-success-deleted" tabindex="-1"
+                    aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header justify-content-center">
+                                <h5 class="modal-title">Announcement Deleted</h5>
                             </div>
                             <div class="modal-footer justify-content-center">
                                 <button type="button" class="btn btn-primary " data-bs-dismiss="modal">Close</button>
