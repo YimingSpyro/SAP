@@ -84,18 +84,18 @@ exports.getModuleByCode = async (req, res, next) => {
     }
 
 };
-// API Get All Modules
-exports.getAllModules = async (req, res, next) => {
-    let semester_code = req.query.semester_code;
-    console.log(semester_code)
+// API Get Modules by Semester and Coordinator
+exports.getModuleByModCoord = async (req, res, next) => {
+    //let semester_code = req.query.semester_code;
+    let fk_mod_coord = req.query.mod_coord;
     try {
-        let results = await moduleService.getAllModules(semester_code);
+        let results = await moduleService.getModuleByModCoord([fk_mod_coord]);
         //console.log('Get All Modules', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Modules', results);
+            console.log('Get Module by Mod Coord');
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -107,7 +107,30 @@ exports.getAllModules = async (req, res, next) => {
     }
 
 };
-// API Create Modules
+// API Get All Modules
+exports.getAllModules = async (req, res, next) => {
+    let semester_code = req.query.semester_code;
+    console.log(semester_code)
+    try {
+        let results = await moduleService.getAllModules(semester_code);
+        //console.log('Get All Modules', results);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            //console.log('Get All Modules', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+// API Create Modules NOT IN USE
 exports.createModule = async (req, res, next) => {
     let mod_code = req.body.mod_code;
     let mod_name = req.body.mod_name;
@@ -180,19 +203,58 @@ exports.updateModule = async (req, res, next) => {
     let current_stage = req.body.data.current_stage;
     let old_mod_code = req.body.data.old_mod_code;
     //arrange the data for sql query
-    let data = [mod_code,mod_name,mod_abbrv,mod_stage,
-        fk_mod_coord,fk_semester_code,fk_course_id,
-        mod_dlt,mod_lecture,mod_tutorial,mod_practical,total_hours,
-        lecture_class,tutorial_class,practical_class,
-        type,mod_type,prereq,remarks,credit_unit,
-        normal_students,os_students,total_students,
-        current_sem,old_mod_code,year_offered,current_stage
+    let data = [mod_code, mod_name, mod_abbrv, mod_stage,
+        fk_mod_coord, fk_semester_code, fk_course_id,
+        mod_dlt, mod_lecture, mod_tutorial, mod_practical, total_hours,
+        lecture_class, tutorial_class, practical_class,
+        type, mod_type, prereq, remarks, credit_unit,
+        normal_students, os_students, total_students,
+        current_sem, old_mod_code, year_offered, current_stage
     ]
     try {
         let results = await moduleService.updateModule(data);
         console.log('Updating Moduling Info');
         if (results.errno) {
             throw 'Database SQL Error'
+        }
+        else {
+            console.log('Updated Module Successfully');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+// API Update Modules for MC (important)
+exports.updateMCModule = async (req, res, next) => {
+    //data to be updated
+    let mass_lect = req.body.data.mass_lect;
+    let odd_lechr = req.body.data.odd_lechr;
+    let even_lechr = req.body.data.even_lechr;
+    let odd_prachr = req.body.data.odd_prachr;
+    let even_prachr = req.body.data.even_prachr;
+    let odd_tuthr = req.body.data.odd_tuthr;
+    let even_tuthr = req.body.data.even_tuthr;
+    //old data to be referenced in update query
+    let year_offered = req.body.data.year_offered;
+    let current_sem = req.body.data.current_sem;
+    let current_stage = req.body.data.current_stage;
+    let old_mod_code = req.body.data.old_mod_code;
+    //arrange the data for sql query
+    let data = [odd_lechr, even_lechr, odd_prachr, even_prachr, odd_tuthr, even_tuthr, mass_lect,
+        current_sem, old_mod_code, year_offered, current_stage
+    ]
+    try {
+        let results = await moduleService.updateMCModule(data);
+        console.log('Updating MC Module Info');
+        if (results.errno) {
+            throw 'Database Timeout Error'
         }
         else {
             console.log('Updated Module Successfully');
