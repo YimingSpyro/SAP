@@ -40,12 +40,25 @@
     <script src="/script/append_navbar.js"></script>
     <script src="/script/log_out.js"></script>
     <script src="/script/mod_coord/coord_maint_sys.js"></script>
+
     <style>
-        .col-sm-1 > button {
+        .col-sm-1>button {
             width: 60px;
         }
+
         .workload-entry {
             background-color: #E9E9E9;
+        }
+
+        .modal-title,
+        h3 {
+            color: #15343F
+        }
+
+        .alert {
+            position: absolute;
+            top: 50px;
+            z-index: 2000;
         }
     </style>
 </head>
@@ -71,9 +84,10 @@
             </div>
 
             <!-- Page Content -->
-            <div id="page-content" class="col-10 py-3">
+            <div id="page-content" class="col-10 py-3 d-flex justify-content-center">
+                
                 <div id="content-view-admin" class="container">
-
+                    
                     <!-- Content Header -->
                     <div id="content-header-admin">
                         <p>Module Maintenance System</p>
@@ -113,6 +127,9 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <p>
+                                            The following fields can only be edited by Administrators
+                                        </p>
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-module-code">Module
@@ -123,6 +140,7 @@
                                                     name="edit-module-code" readonly>
                                             </div>
                                         </div>
+
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-module-name">Module
@@ -132,11 +150,14 @@
                                                 <input class="form-control" type="text" id="edit-module-name"
                                                     name="edit-module-name" readonly>
                                             </div>
+
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-module-stage">Module
                                                     Abbrv:</label>
                                             </div>
-                                            <div class="col-2">
+                                            <div class="col-6">
                                                 <input class="form-control" type="text" id="edit-module-abbrv"
                                                     name="edit-module-abbrv" readonly>
                                             </div>
@@ -150,11 +171,20 @@
                                                 <select class="form-select" id="course-offered-to" disabled>
                                                 </select>
                                             </div>
+                                            <div class="col-1">
+                                                <label class="module-info-label" for="edit-module-stage">Stage</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="text" id="edit-module-stage"
+                                                    name="edit-module-stage" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-module-coord">Module
                                                     Coordinator:</label>
                                             </div>
-                                            <div class="col-4">
+                                            <div class="col-6">
                                                 <select class="form-select" id="module-coord-name" disabled>
                                                 </select>
                                             </div>
@@ -164,13 +194,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
-                                            <div class="col-1">
-                                                <label class="module-info-label" for="edit-module-stage">Stage</label>
-                                            </div>
-                                            <div class="col-2">
-                                                <input class="form-control" type="text" id="edit-module-stage"
-                                                    name="edit-module-stage" readonly>
-                                            </div>
+                                            
                                             <div class="col-2">
                                                 <label class="module-info-label" for="module-year-created">Uploaded for
                                                     Yr:</label>
@@ -216,10 +240,11 @@
 
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
-                                            <div class="col">
+                                            <div class="col-2">
                                                 <label for="mod-remarks">Remarks:</label>
-                                                <textarea class="form-control" id="mod-remarks" rows="2"
-                                                    readonly></textarea>
+                                            </div>
+                                            <div class="col-10">
+                                                <textarea class="form-control" id="mod-remarks" rows="2" readonly></textarea>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -255,18 +280,19 @@
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
+                                                <label class="module-info-label" for="mod-dlt">DLT:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="text" id="mod-dlt" name="mod-dlt" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
                                                 <label class="module-info-label" for="mod-total-hr">Total Hours:</label>
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-total-hr"
                                                     name="mod-total-hr" readonly>
-                                            </div>
-                                            <div class="col-1">
-                                                <label class="module-info-label" for="mod-dlt">DLT:</label>
-                                            </div>
-                                            <div class="col-1">
-                                                <input class="form-control" type="text" id="mod-dlt" name="mod-dlt"
-                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -274,32 +300,33 @@
                                                 <label class="module-info-label" for="mod-lect-classes">Lecture
                                                     Classes:</label>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-lect-classes"
                                                     name="mod-lect-classes" readonly>
-                                            </div>
-                                            <div class="col-2">
-                                                <label class="module-info-label" for="mod-tut-classes">Practical
-                                                    Classes:</label>
-                                            </div>
-                                            <div class="col-1">
-                                                <input class="form-control" type="number" id="mod-tut-classes"
-                                                    name="mod-tut-classes" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-prac-classes">Tutorial
                                                     Classes:</label>
                                             </div>
-                                            <div class="col-1">
+                                            <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-prac-classes"
                                                     name="mod-prac-classes" readonly>
                                             </div>
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-tut-classes">Practical
+                                                    Classes:</label>
+                                            </div>
+                                            <div class="col-2">
+                                                <input class="form-control" type="number" id="mod-tut-classes"
+                                                    name="mod-tut-classes" readonly>
+                                            </div>
+                                            
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-prereq">Prerequisite:</label>
                                             </div>
-                                            <div class="col-6">
+                                            <div class="col-10">
                                                 <input class="form-control" type="text" id="mod-prereq"
                                                     name="mod-prereq" readonly>
                                             </div>
@@ -313,19 +340,23 @@
                                                 <input class="form-control" type="text" id="mod-mod-type"
                                                     name="mod-mod-type" readonly>
                                             </div>
-                                            <div class="col-1">
+                                           
+                                            
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
                                                 <label class="module-info-label" for="mod-type">Type:</label>
                                             </div>
                                             <div class="col-2">
-                                                <input class="form-control" type="text" id="mod-type" name="mod-type"
-                                                    readonly>
+                                                <input class="form-control" type="text" id="mod-type" name="mod-type" readonly>
                                             </div>
-                                            <div class="col-1">
-                                                <label class="module-info-label" for="mod-cu">CU:</label>
+                                        </div>
+                                        <div class="d-flex align-items-center row p-2">
+                                            <div class="col-2">
+                                                <label class="module-info-label" for="mod-cu">Credit Unit:</label>
                                             </div>
-                                            <div class="col-1 ">
-                                                <input class="form-control" type="number" id="mod-cu" name="mod-cu"
-                                                    readonly>
+                                            <div class="col-2 ">
+                                                <input class="form-control" type="number" id="mod-cu" name="mod-cu" readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -427,7 +458,7 @@
                 <div class="modal-content">
                     <!-- Content header -->
                     <div class="modal-header">
-                        <h5 class="modal-title" id="workload-name">Module: EP1234 ABC</h5>
+                        <h5 class="modal-title" id="workload-module-code">Module: EP1234 ABC</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -443,6 +474,11 @@
                                         successful submisson of component code.
                                         <br>
                                         Examples include: EST, MST, CA1, CA9 etc.
+                                        <br>
+                                        Fields with * are required to create a new workload.
+                                        <br>
+                                        Once the field has been saved, it can no longer be edited, but it can be
+                                        deleted.
                                     </p>
                                 </div>
                                 <div class="col-2">
@@ -459,10 +495,6 @@
                     </div>
 
                     <!-- Content header -->
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="moduleName">Module: EP1234 ABC</h5>
-                    </div>
-
                     <div class="modal-body">
                         <h5>Enter Module Workload</h5>
 
