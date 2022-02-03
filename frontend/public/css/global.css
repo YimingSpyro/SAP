@@ -145,7 +145,6 @@ div.accordion-body > a:hover {
 
 #notification-bell #announcementcontent.maintenance {
     background-color: #F3D353;
-    position: absolute;
     width: 200px;
     padding-left: 15px;
     margin-right: 10px;
@@ -393,6 +392,9 @@ caption {
 
 
 /* Modals */
+.modal-title {
+    color: #22404F;
+}
 
 .modal-content {
     background-color: #B5D0DD;
@@ -590,3 +592,7 @@ a {
 }
 
 #dashboard-module-maintenance .table {}
+
+#page-title {
+    color: white;
+}
