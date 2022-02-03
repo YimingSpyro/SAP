@@ -128,6 +128,8 @@ exports.appRoute = router => {
     // ANNOUNCEMENT
     router.get('/api/announcements/', announcementController.getAllAnnouncements);
     router.post('/api/announcements/', announcementController.createAnnouncement);
+    router.put('/api/announcements/', announcementController.updateAnnouncement);
+    router.delete('/api/announcements/', announcementController.deleteAnnouncement);
 
     // DESIGNATION
     router.get('/api/designation/', staffController.getAllDesignations);
@@ -230,9 +232,9 @@ exports.appRoute = router => {
     //router.put('/uploads/reports/file/:staff_id', updateReport.single('report_file'), uploadsController.checkFileMiddleware, uploadsController.updateReport)
     
     //EXAM 
-    router.get('/api/getExam', examController.processGetAllExam);
-    router.get('/api/getExam/:id', examController.getExamByExamId);
-    router.post('/api/createExam', examController.createExam);
+    router.get('/api/exam/module', examController.getExamByModule);
+    router.post('/api/exam', examController.createExam);
+    router.put('/api/exam', examController.updateExam);
 
     // TEACHING ASSIGNMENT SYSTEM + CAS - ADMIN SUPPORT
     router.get('/api/tas/staff/', staffController.getAllStaffTAS);

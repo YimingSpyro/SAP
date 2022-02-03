@@ -16,6 +16,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <script src="/script/global.js"></script>
+
     <script>
         if (sessionStorage.getItem('isLoggedIn')) {
             window.location.href = "/home"
@@ -33,7 +35,7 @@
                     $("#error_message").css("display", "block");
                     $("input#password").focus()
                 } else {
-                    axios.post('http://localhost:8080/login', {
+                    axios.post(base_url+'/login', {
                         staff_id: staff_id,
                         password: password
                     }, { withCredentials: true }).then((response) => {
