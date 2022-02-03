@@ -12,7 +12,12 @@
     margin-bottom: 5px;
 }
 
-button {
-    margin-top: 40px;
-    margin-right: 75px;
+.modal-title {
+    color: #22404F;
+}
+
+.warning-message p{
+    color: #22404F;
+    font-weight: bold;
+    font-size: .8em;
 }
