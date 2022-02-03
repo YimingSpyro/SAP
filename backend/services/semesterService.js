@@ -24,7 +24,6 @@ module.exports.getAllSemestersByStatus = (status) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -41,7 +40,6 @@ module.exports.createSemester = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -60,7 +58,6 @@ module.exports.updateSemester = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -79,7 +76,6 @@ module.exports.disableSemester = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -98,7 +94,6 @@ module.exports.enableSemester = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -115,7 +110,6 @@ module.exports.deleteSemester = (semester_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
