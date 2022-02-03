@@ -176,7 +176,9 @@ exports.appRoute = router => {
 
     //MODULE WORKLOAD 
     router.get('/api/module-workload/mc',workloadController.getWorkloadByMC)
+    router.get('/api/module-workload/admin',workloadController.getWorkloadByAdmin)
     router.post('/api/module-workload/mc',workloadController.createWorkload)
+    router.delete('/api/module-workload/mc',workloadController.deleteWorkload)
 
     //STAFF-INFO
     router.get('/api/admin/maintenance/staff-info', staffController.getAllStaff);
