@@ -444,3 +444,6 @@ $(document).ready(() => {
             });
     })
 })
+$(window).on('load',()=>{
+    $('#page-title').text("WHYU DOESNT WORK")
+})

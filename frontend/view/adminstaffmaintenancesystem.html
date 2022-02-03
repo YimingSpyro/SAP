@@ -46,7 +46,7 @@
             var staff_id = $(element).attr("data-staff-id")
             customConfirm("This will remove this staff with staff id: " + staff_id,
                 () => {
-                    axios.put('http://localhost:8080/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
+                    axios.put(base_url+'/api/admin/maintenance/staff/deactivate/' + staff_id).then((response) => {
                         $('#custom-reconfirm').modal('hide');
                         customMessage("Successfully Deleted!")
                         location.reload();
@@ -76,7 +76,7 @@
         }
         function getStaffandAppend() {
             $('#staff-row-table').empty();
-            axios.get('http://localhost:8080/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
+            axios.get(base_url+'/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
                 console.log(response.data);
                 if (response.status == 200) {
                     rows = response.data
@@ -226,7 +226,7 @@
                 staff_remarks: $('#staff-remarks-edit-input').val(),
                 staff_status: $('#staff-status-edit-input').val(),
             }
-            axios.put('http://localhost:8080/api/admin/maintenance/staff/update/' + staff_id, data)
+            axios.put(base_url+'/api/admin/maintenance/staff/update/' + staff_id, data)
                 .then((response) => {
                     $('#editStaffModal').modal('hide');
                     customMessage("Successfully Updated!")
