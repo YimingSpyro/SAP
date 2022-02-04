@@ -48,6 +48,38 @@ function updateDesignation(id){
     .catch(err => error(err));
 }
 
+async function inputValidation(type) {
+    let sections = await getCourse();
+    let courses = []
+    let alpha_num = new RegExp('^[A-Za-z0-9- ]+$')
+    for (let index = 0; index < sections.length; index++) {
+        const section = sections[index];
+        courses.push(section.course_id);
+    }
+    if (type == "create") {
+        let create_course = $("#select-section-create option:selected").val()
+        if (!courses.includes(create_course)) {
+            throw "Invalid Input Detected"
+        }
+        let create_name = $("#designation-name-create")[0].value;
+        let create_section = $("#section-name-create")[0].value
+        if (!alpha_num.test(create_name) || !alpha_num.test(create_section)) {
+            throw "Invalid Input Detected. Only Alphanumerics and '-' are allowed."
+        }
+    }
+    if (type == "update") {
+        let update_course = $("#select-section-update option:selected").val()
+        if (!courses.includes(update_course)) {
+            throw "Invalid Input Detected"
+        }
+        let update_name = $("#designation-name-update")[0].value;
+        let update_section = $("#section-name-update")[0].value
+        if (!alpha_num.test(update_name) || !alpha_num.test(update_section)) {
+            throw "Invalid Input Detected. Only Alphanumerics and '-' are allowed."
+        }
+    } 
+}
+
 async function generateSectionList() {
     let sections = await getCourse();
     for (let index = 0; index < sections.length; index++) {
@@ -168,7 +200,7 @@ async function generateUpdateDesignation(designation_index) {
         </div>
 
     </div>
-    <button type="submit" class="btn btn-primary float-end update-designation-button" data-bs-dismiss="modal" data-id="`+designation.designation_id+`">Update designation</button>`);
+    <button type="submit" class="btn btn-primary float-end update-designation-button" data-id="`+designation.designation_id+`">Update designation</button>`);
     let sections = await getCourse();
     for (let index = 0; index < sections.length; index++) {
         const section = sections[index];
@@ -203,20 +235,30 @@ async function confirmedDelete(designation_id){
 
 async function confirmedCreation(){
     let section = $("#select-section option:selected").val()
-    await createDesignation()
+    await inputValidation("create")
+    .then(async()=>{
+        await createDesignation()
+    })
     .then(()=>{
         generateDesignationList(section)
         $("#create-designation-modal").modal('hide')
-    });
+    })
+    .catch(err => error(err));
 }
 
 async function submitUpdateDesignation(designation_id){
     let section = $("#select-section option:selected").val()
-    updateDesignation(designation_id)
+    await inputValidation("update")
+    .then(async()=>{
+        await updateDesignation(designation_id)
+    })
     .then(()=>{ 
         generateDesignationList(section)
-    });
+        $("#update-designation-modal").modal('hide');
+    })
+    .catch(err => error(err));
 }
+
 
 
 $(document).ready(()=>{

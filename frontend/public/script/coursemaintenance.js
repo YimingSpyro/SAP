@@ -61,6 +61,31 @@ function enableCourse(course_code) {
     .catch(err => error(err));
 }
 
+async function inputValidation(type) {
+    let code_check = new RegExp('^[A-Z]+$')
+    let name_check = new RegExp('^[A-Za-z ]+$')
+    if (type == "create") {
+        let code_create = $("#course-code-create")[0].value;
+        let name_create = $("#course-name-create")[0].value;
+        if (!code_check.test(code_create)) {
+            throw "Course Code only allows uppercase letters and no spacing."
+        }
+        if (!name_check.test(name_create)) {
+            throw "Course name only allows uppercase or lowercase letters."
+        }
+    }
+    if (type == "update") {
+        let code_update = $("#course-code-update")[0].value;
+        let name_update = $("#course-name-update")[0].value;
+        if (!code_check.test(code_update)) {
+            throw "Course Code only allows uppercase letters and no spacing."
+        }
+        if (!name_check.test(name_update)) {
+            throw "Course name only allows uppercase or lowercase letters."
+        }
+    } 
+}
+
 async function generateCourseList() {
     let status = $("#select-status option:selected").val()
     $(".course-list").empty();
@@ -204,7 +229,11 @@ $(document).ready(() => {
     });
 
     $(".create-course-content").on('click', ".create-course", ()=>{
-        createCourse();
+        inputValidation("create")
+        .then(async()=>{
+            await createCourse();
+        })
+        .catch(err => error(err))
     });
 
     $(".course-list").on('click', ".view-course", (e) => {
@@ -215,11 +244,15 @@ $(document).ready(() => {
     $("#view-course").on('click', ".update-course", (e) => {
         let course_index = $(e.target).data("index");
         let course_code_old = $(e.target).data("code");
-        updateCourse(course_code_old)
+        inputValidation("update")
+        .then(async()=>{
+            await updateCourse(course_code_old)
+        })
         .then(()=>{
             generateCourseList();
             generateCourseUpdate(course_index);
-        });
+        })
+        .catch(err => error(err));
     })
 
     $(".course-list").on('click', ".confirm-delete-course", (e) => {
