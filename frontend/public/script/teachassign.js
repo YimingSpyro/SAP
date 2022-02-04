@@ -549,13 +549,13 @@ async function generateModal(module_index) {
             </tr>`)
         }
         else {
-            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
+            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + ` (` + staff_id + `)</option>`)
         }
         if (module.fk_mod_coord == staff_id) {
-            $("#select-mc").append(`<option selected value="` + staff_id + `">` + staff_name + `</option>`)
+            $("#select-mc").append(`<option selected value="` + staff_id + `">` + staff_name + ` (` + staff_id + `)</option>`)
         }
         else {
-            $("#select-mc").append(`<option value="` + staff_id + `" >` + staff_name + `</option>`)
+            $("#select-mc").append(`<option value="` + staff_id + `" >` + staff_name + ` (` + staff_id + `)</option>`)
         }
 
     }

@@ -10,6 +10,16 @@
     margin-left: 4px;
 }
 
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #15343F;
+    margin-top: 7px;
+    margin-left: 4px;
+}
+
 
 /* Admin Announcements */
 
@@ -74,7 +84,7 @@
     padding-top: 10px;
     padding-left: 20px;
     padding-right: 15px;
-    padding-bottom: 150px;
+    padding-bottom: 10px;
     height: 75px;
 }
 
@@ -185,7 +195,9 @@ button {
 }
 
 .edit-button,
-.delete-button {
+.delete-button,
+.show-more-button,
+.show-less-button {
     width: 100%;
     margin: 0;
     padding: 0;
@@ -194,10 +206,22 @@ button {
     font-weight: bold;
 }
 
-.accordion-button {
-    margin: 0;
+.show-more-button {
+    color: #22404F;
 }
 
-#maintenence-system {
-    padding: 0;
+.show-less-button {
+    color: #22404F;
+}
+
+#showless {
+    display: none !important;
+}
+
+.show-more-item {
+    display: none;
+}
+
+.confirm-delete-button button {
+    width: 150px;
 }

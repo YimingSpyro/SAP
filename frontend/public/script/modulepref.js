@@ -10,7 +10,7 @@ function getModules(){
 };
 
 function getPreference(){
-    return axios.get(base_url + '/api/module/preference/8405' + '?semester_code=' + sessionStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/preference/' + sessionStorage.getItem('staff_id') + '?semester_code=' + sessionStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 }

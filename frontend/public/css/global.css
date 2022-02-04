@@ -1,3 +1,9 @@
+p {
+    color: #15343F;
+    text-align: left;
+}
+
+
 /* ============================ Notifications ========================= */
 
 .error-message {
@@ -138,7 +144,6 @@ div.accordion-body > a:hover {
 
 #notification-bell #announcementcontent.maintenance {
     background-color: #F3D353;
-    position: absolute;
     width: 200px;
     padding-left: 15px;
     margin-right: 10px;
@@ -386,6 +391,9 @@ caption {
 
 
 /* Modals */
+.modal-title {
+    color: #22404F;
+}
 
 .modal-content {
     background-color: #B5D0DD;
@@ -458,10 +466,7 @@ caption {
     transition: 1s;
 }
 
-p {
-    color: #15343F !important;
-    text-align: left;
-}
+
 
 .report-item-wrap:hover .report-item-title {
     color: white
@@ -586,3 +591,7 @@ a {
 }
 
 #dashboard-module-maintenance .table {}
+
+#page-title {
+    color: white;
+}
