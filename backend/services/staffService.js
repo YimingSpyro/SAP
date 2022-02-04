@@ -249,9 +249,9 @@ module.exports.getAllStaff = () => {
         });
     });
 };
-module.exports.getStaffNames = () => {
+module.exports.getAllStaffNames = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT staff_id, staff_name FROM staff_information WHERE staff_status='Active';`, [], (err, results) => {
+        pool.query(`SELECT staff_id, staff_name FROM staff_information;`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {

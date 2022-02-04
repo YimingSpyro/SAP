@@ -2,6 +2,17 @@
 const exam_pattern = /.+ST$/
 const ca_pattern = /^CA\d/
 
+var staff_names;
+
+//staff names to be used for exam and verifier report
+async function _getStaffNames() {
+    const names = await axios.get(base_url + '/api/admin/maintenance/all-staff-names').then((results) => {
+        return results.data
+    }).catch((error) => { console.log(error) })
+    staff_names = names
+    console.log(staff_names)
+};
+
 function _ExportToExcel(table_head, type, fn, dl) {
     //using the npm package SheetJS, we will export the whole html table
     var table_data = document.getElementById('admin-table');
@@ -40,6 +51,11 @@ function _ExportToExcel(table_head, type, fn, dl) {
     //text alignments
     var horizontalAlign = {
         horizontal: "center",
+        vertical: "center"
+    };
+
+    var alignLeft = {
+        horizontal: "left",
         vertical: "center"
     };
 
@@ -226,14 +242,14 @@ function _ExportToExcel(table_head, type, fn, dl) {
             if (typeof (ws[i]) != "object") continue;
             let cell = XLSX.utils.decode_cell(i);
             if (cell.r != 0) { ws[i].s = { border: style } }//style all the columns except first
-            
-            if(testModCode.test(ws[i].v) || testMC.test(ws[i].v)){
+
+            if (testModCode.test(ws[i].v) || testMC.test(ws[i].v)) {
                 ws[i].s = {
                     fill: fillffcc00,
                     font: setbold,
                     border: style
                 }
-            }else if (testDigit.test(ws[i].v)) {
+            } else if (testDigit.test(ws[i].v)) {
                 ws[i].s = {
                     border: style,
                     alignment: horizontalAlign
@@ -244,8 +260,58 @@ function _ExportToExcel(table_head, type, fn, dl) {
             }
         }
         ws_name = "Workload Summary"
-    }
-
+    }else if (table_head == "Exam And Moderator Report") {
+        var wscols = [
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 20 }
+        ];
+        ws['!cols'] = wscols;
+        for (const i in ws) {
+            if (typeof (ws[i]) != "object") continue;
+            let cell = XLSX.utils.decode_cell(i);
+            if (cell.r != 0) { ws[i].s = { border: style, alignment:alignLeft} }; //style all the columns except first
+            ws["A1"].s = {
+                font: styleheader
+            }
+        }
+    }else if (table_head == "Exam And Verfier Report") {
+        var wscols = [{ wch: 12 },{ wch: 12 },{ wch: 12 },{ wch: 12 },{ wch: 12 },{ wch: 12 },{ wch: 12 },{ wch: 12 },{ wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 12 },
+            { wch: 20 }
+        ];
+        ws['!cols'] = wscols;
+        for (const i in ws) {
+            if (typeof (ws[i]) != "object") continue;
+            let cell = XLSX.utils.decode_cell(i);
+            if (cell.r != 0) { ws[i].s = { border: style, alignment:alignLeft } }; //style all the columns except first
+            ws["A1"].s = {
+                font: styleheader
+            }
+        }
+    };
     var wb = XLSX.utils.book_new();
 
     XLSX.utils.book_append_sheet(wb, ws, ws_name);
@@ -588,7 +654,119 @@ async function _getWorkloadSummaryByModule(acad_sem) {
     $('#admin-table').append(`<caption id= 'caption'>Showing ${workload.length} Workloads</caption>`)
 };
 
+//get examiner and modator report
+async function _getExamnModReport(acad_sem) {
+    const examiner_report = await axios.get(base_url + '/api/reports/download/examiner-reports?acad_sem=' + encodeURIComponent(acad_sem)).then((response) => { return response.data })
+    console.log(examiner_report)
+    examiner_report.forEach(element => {
+        let report_arr = ['chief_examiner', 'co_examiner', 'moderator', 'module_mcl'];
+        let name_arr = [];
+        report_arr.forEach(values => {
+            let name = staff_names.filter(obj => {
+                return obj['staff_id'] == element[values]
+            });
+            if (name.length == 0) {
+                name_arr.push("NIL")
+            } else {
+                name_arr.push(name[0]['staff_name'])
+            }
+
+        });
+        for (const key in element) {
+            if (Object.hasOwnProperty.call(element, key)) {
+                let obj_value = element[key];
+                if (obj_value == null) {
+                    element[key] = "NIL"
+                }
+            }
+        }
+        //console.log(name_arr)
+        let table_row = `
+            <tr> 
+            <td>${element['fk_course_id']}</td>
+            <td>${element['fk_module_code']}</td>
+            <td>${element['mod_abbrv']}</td>
+            <td>${element['chief_examiner']}</td>
+            <td>${name_arr[0]}</td>
+            <td>${element['co_examiner']}</td>
+            <td>${name_arr[1]}</td>
+            <td>${element['moderator']}</td>
+            <td>${name_arr[2]}</td>
+            <td>${element['module_mcl']}</td>
+            <td>${name_arr[3]}</td>
+            <td>${element['shared_paper']}</td>
+            <td>${element['shared_question']}</td>
+            <td>${element['type_of_module']}</td>
+            <td>${element['external']}</td>
+            </tr>`
+        $('#exam-moderator-report-table').append(table_row)
+    });
+    document.getElementById("acad-year-head").innerHTML = acad_sem;
+    $('#admin-table').append(`<caption id= 'caption'>Showing ${examiner_report.length} Workloads</caption>`)
+};
+
+//get examiner and verifier report
+async function _getExamVerifierReport(acad_sem) {
+    const examiner_report = await axios.get(base_url + '/api/reports/download/examiner-reports?acad_sem=' + encodeURIComponent(acad_sem)).then((response) => { return response.data })
+    console.log(examiner_report)
+    examiner_report.forEach(element => {
+        let report_arr = ['chief_examiner', 'mdeo_marker','co_marker','verifier', 'markers_moderator', 'module_mcl'];
+        let name_arr = [];
+        report_arr.forEach(values => {
+            let name = staff_names.filter(obj => {
+                return obj['staff_id'] == element[values]
+            });
+            if (name.length == 0) {
+                name_arr.push("NIL")
+            } else {
+                name_arr.push(name[0]['staff_name'])
+            }
+
+        });
+        for (const key in element) {
+            if (Object.hasOwnProperty.call(element, key)) {
+                let obj_value = element[key];
+                if (obj_value == null) {
+                    element[key] = "NIL"
+                }
+            }
+        }
+        //console.log(name_arr)
+        //['chief_examiner', 'mdeo_marker','co_marker','verifier', 'markers_moderator', 'module_mcl'];
+        let table_row = `
+            <tr> 
+            <td>${element['chief_examiner']}</td>
+            <td>${name_arr[0]}</td>
+
+            <td>${element['mdeo_marker']}</td>
+            <td>${name_arr[1]}</td>
+
+            <td>${element['co_marker']}</td>
+            <td>${name_arr[2]}</td>
+
+            <td>${element['verifier']}</td>
+            <td>${name_arr[3]}</td>
+            
+            <td>${element['markers_moderator']}</td>
+            <td>${name_arr[4]}</td>
+            
+            <td>${element['module_mcl']}</td>
+            <td>${name_arr[5]}</td>
+
+            <td>${element['shared_paper']}</td>
+            <td>${element['type_of_module']}</td>
+            <td>${element['external']}</td>
+            </tr>`
+        $('#exam-verifier-report-table').append(table_row)
+    });
+    document.getElementById("acad-year-head").innerHTML = acad_sem;
+    $('#admin-table').append(`<caption id= 'caption'>Showing ${examiner_report.length} Workloads</caption>`)
+};
+
+//prepare website with all the data
 _getSemesters()
+_getStaffNames()
+
 $(document).ready(() => {
     $('#main-list>li').removeClass("active");
 
@@ -617,7 +795,15 @@ $(document).ready(() => {
             $("tbody tr").remove();
             $("caption").remove();
             _getWorkloadSummaryByModule(b)
-        }
+        } else if (table_head == "Exam And Moderator Report") {
+            $("tbody tr").remove();
+            $("caption").remove();
+            _getExamnModReport(b)
+        }else if (table_head == "Exam And Verfier Report") {
+            $("tbody tr").remove();
+            $("caption").remove();
+            _getExamVerifierReport(b)
+        };
     });
     $('#export-table').on('click', () => {
         let table_head = document.getElementById("th-label").innerHTML;
