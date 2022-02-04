@@ -1,15 +1,20 @@
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken')
-const JWT_SECRET_KEY = 'tassystem';
+const config = require('../config/config');
 
 function genAccessToken(rows) {
     var row = rows[0];
+    console.log(row.roles);
+    console.log(config.JWTExpire);
     var items = {
         staff_name: row.staff_name,
-        staff_id: row.staff_id
+        staff_id: row.staff_id,
+        staff_roles :row.roles
     }
     const tokenPayload = items;
-    const accessToken = jwt.sign(tokenPayload, JWT_SECRET_KEY);
+    const accessToken = jwt.sign(tokenPayload, config.JWTKey,{
+        expiresIn :config.JWTExpire
+    });
 
     //insert record into jwt records table
     insertJwtRecord(row, accessToken);
@@ -21,9 +26,7 @@ function insertJwtRecord(row, token) {
 }
 const saltRounds = 10;
 const authManager = require('../services/authService');
-const config = require('../config/config');
 const pool = require('../config/database');
-const { LONGLONG } = require('mysql/lib/protocol/constants/types');
 
 module.exports.processLogin = ((req, res) => {
     console.log("login called")
@@ -58,7 +61,21 @@ module.exports.processLogin = ((req, res) => {
                     });
                 }
             });
-
+        }).catch((error) => {
+            console.log(error)
+            res.status(500).json({
+                error: error
+            });
+        })
+})
+module.exports.getStaffPrivileges = ((req, res) => {
+    console.log("owdaj");
+    let staff_id = req.params.id;
+    var data = authManager.getStaffPrivileges(staff_id)
+        .then((rows) => {
+            res.status(200).json({
+                data: rows
+            });
         }).catch((error) => {
             console.log(error)
             res.status(500).json({

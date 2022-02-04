@@ -147,6 +147,28 @@ module.exports.getStaffByStaffId = () => {
         return error
     })
 }
+module.exports.getStaffPrivileges = (staff_id) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                resolve(err);
+            } else {
+                connection.query('SELECT * FROM staff_privileges WHERE fk_staff_id=?',[staff_id], (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+
+                        resolve(rows);
+                    }
+                    connection.release();
+                })
+            }
+        })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+}
 module.exports.getNavItems = () => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
