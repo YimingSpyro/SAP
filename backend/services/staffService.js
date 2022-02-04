@@ -205,19 +205,42 @@ module.exports.createStaff = (data, roles) => {
                     } else {
                         console.log("created");
                         if (results) {
-                            connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, roles, (err, results1) => {
-                                if (err) {
-                                    console.log(err);
-                                    reject(err);
-                                } else {
-                                    if (results1) {
-                                        console.log(results1);
-                                        return resolve(results);
-                                    } else {
-                                        return resolve('Error Message');
-                                    }
+                            let role_ids = roles[0];
+                            const staff_id = roles[1];
+                            if(role_ids<=0) return reject("No role specified!");
+                            else{
+                                if(role_ids.length>1){
+                                    console.log("multiple role");
+                                    for(let i = 0;i<role_ids.length;i++){{
+                                        connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[i],staff_id], (err, results1) => {
+                                            if (err) {
+                                                console.log(err);
+                                                reject(err);
+                                            } else {
+                                                if (results1&&i==role_ids.length) {
+                                                    console.log(results1);
+                                                    return resolve(results);
+                                                }
+                                            }
+                                        })
+                                    }}         
+                                }else{
+                                    console.log("one role");
+                                    connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[0],staff_id], (err, results1) => {
+                                        if (err) {
+                                            console.log(err);
+                                            reject(err);
+                                        } else {
+                                            if (results1) {
+                                                console.log(results1);
+                                                return resolve(results);
+                                            } else {
+                                                return resolve('Error Message');
+                                            }
+                                        }
+                                    })
                                 }
-                            })
+                            }
                             console.log(results);
                             return resolve(results);
                         } else {

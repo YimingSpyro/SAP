@@ -12,10 +12,10 @@ const config = require('./config');
     }); */
     const pool = mysql.createPool({
         connectionLimit: 65,
-        host: 'sap-united-db.chaoomqaxpcs.ap-southeast-1.rds.amazonaws.com',
-        user: 'root',
-        password: 'SbFdYtnnFqOjdi2ra5NK',
-        database: 'tas',
+        host: config.databaseHost,
+        user: config.databaseUserName,
+        password: config.databasePassword,
+        database: config.databaseName,
         multipleStatements: true
     });
  module.exports=pool;

@@ -324,21 +324,20 @@ exports.getStaffByID = async (req, res, next) => {
 //CREATE STAFF
 exports.createStaff = async (req, res, next) => {
     console.log(req.body)
-    let body = req.body;
-    let staff_id = req.body["staff-id-input"];
-    let staff_name = req.body["staff-name-input"];
-    let staff_abbrv = req.body["staff-abbrv-input"];
-    let staff_designation_id = req.body["staff-designation-input"];
-    let staff_email = req.body["staff-email-input"];
-    let staff_number = req.body["staff-contact-input"];
-    let staff_mobile = req.body["staff-mobile-input"];
-    let staff_remarks = req.body["staff-remarks-input"];
-    console.log("staff_remarks is " + staff_remarks);
-    let staff_password = req.body["staff-password-input"];
-    let staff_type = req.body["staff-type-input"];
-    let staff_schedule_id = req.body["staff-schedule-input"];
-    let staff_status = req.body["staff-status-input"];
-    let staff_role_id = req.body["staff-role-input"];
+    let data = req.body;
+    let staff_id = data["staff_id"];
+    let staff_name =data["staff_name"];
+    let staff_password = data["staff_password"];
+    let staff_abbrv = data["staff_abbrv"];
+    let staff_type = data["staff_type"];
+    let staff_schedule_id = data["staff_schedule"];
+    let staff_designation_id = data["staff_designation"];
+    let staff_email =data["staff_email"];
+    let staff_number = data["staff_contact"];
+    let staff_mobile =data["staff_mobile"];
+    let staff_remarks = data["staff_remarks"];
+    let staff_status = data["staff_status"];
+    let staff_role_id = data["staff_role"];
 
     bcrypt.hash(staff_password, saltRounds, function (err, hash) {
         if (err) {
