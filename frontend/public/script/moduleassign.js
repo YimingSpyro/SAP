@@ -1,5 +1,5 @@
 function getAssignedModules(){
-    return axios.get(base_url + '/api/module/assign/8405' + '?semester_code=' + sessionStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/assign/' + sessionStorage.getItem('staff_id') + '?semester_code=' + sessionStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 }

@@ -6,11 +6,13 @@ var current_sem;
 var workload_arr;
 var global_indx = 0; //for indexing the module workloads in each modal
 var staff_id = sessionStorage.getItem('staff_id');
+var summary_obj;
 
 //regex patterns for workload summary
 const exam_pattern = /.+ST$/
 const ca_pattern = /^CA\d/
 
+//MODULE MAINTENANCE----------------------------------------------------------------------
 //get available courses
 function _getCourses() {
     axios.get(base_url + '/api/course?status=Active').then((results) => {
@@ -46,19 +48,47 @@ async function _getModuleAndAppend(coord_id) {
         <td class = "text-wrap">${element['fk_semester_code']}</td>
         <td>${element['mod_stage']}</td>
         <td>
-        <button type="button" class= "edit-module-button btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editModuleModal" data-module-index="${index}">Module Info</button>
+        <button type="button" class= "edit-module-button btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editModuleModal" 
+        data-module-index="${index}" >Module Info</button>
         </td>
         <td>
         <button type="button" class= "edit-workload-button btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editWorkloadSummary" 
-        data-module-code="${element['mod_code']}">Workload</button>
+        data-module-code="${element['mod_code']}" 
+        data-module-name="${element['mod_name']}"
+        data-sem-code="${element['fk_semester_code']}"
+        data-mod-stage="${element['mod_stage']}">Workload</button>
         </td>
         </tr>`
         $('#module-table').append(table_row)
     });
     $('#admin-table').append(`<caption id= 'caption'>Showing ${filtered_modules.length} Modules </caption>`)
 };
+//update db record
+async function _updateModuleCoord(mass_lect) {
+    let _data = {
+        //old data to be used for composite key in database
+        old_mod_code: old_mod_code,
+        current_sem: current_sem,
+        current_stage: current_stage,
+        mass_lect: mass_lect,
+        year_offered: $('#module-year-created').val(),
+        odd_lechr: $('#odd-lechr').val(),
+        even_lechr: $('#even-lechr').val(),
+        odd_prachr: $('#odd-prachr').val(),
+        even_prachr: $('#even-prachr').val(),
+        odd_tuthr: $('#odd-tuthr').val(),
+        even_tuthr: $('#even-tuthr').val(),
+    }
+    axios.put(base_url + '/api/mod-coord/update-module/', {
+        data: _data
+    }).then((response) => {
+        window.alert("Module Successfully Updated.")
+    }).catch((error) => {
+        window.alert(error.response.data.message)
+    });
+};
 
-//find and replace the values of the workload summary modal
+//WORKLOAD-------------------------------------------------------
 //find and replace the values of the module details modal
 function _findTextFields(modal, index) {
     //sample: modal.find('#sample').val(selected_val['mod_name'])
@@ -116,68 +146,44 @@ function _findTextFields(modal, index) {
 
     $(`input[name^="masslectradio"][value='${selected_val['mass_lect']}']`).prop("checked", true);
 };
-
-//update db record
-async function _updateModuleCoord(mass_lect) {
-    let _data = {
-        //old data to be used for composite key in database
-        old_mod_code: old_mod_code,
-        current_sem: current_sem,
-        current_stage: current_stage,
-        mass_lect: mass_lect,
-        year_offered: $('#module-year-created').val(),
-        odd_lechr: $('#odd-lechr').val(),
-        even_lechr: $('#even-lechr').val(),
-        odd_prachr: $('#odd-prachr').val(),
-        even_prachr: $('#even-prachr').val(),
-        odd_tuthr: $('#odd-tuthr').val(),
-        even_tuthr: $('#even-tuthr').val(),
-    }
-    axios.put(base_url + '/api/mod-coord/update-module/', {
-        data: _data
-    }).then((response) => {
-        window.alert("Module Successfully Updated.")
-    }).catch((error) => {
-        window.alert(error.response.data.message)
-    });
-};
-
 //get mod workload requirements
 async function _getWorkload(coord_id) {
     const workload = await axios.get(base_url + '/api/module-workload/mc?mod_coord=' + coord_id, { withCredentials: true }).then((response) => { return response.data });
     workload_arr = workload
-    console.log(workload)
+    //console.log(workload)
 };
 
-async function _appendWorkloads(modal, mod_code) {
+//dynamic appending of workloads from previously retrieved data
+async function _appendWorkloads(modal, mod_code, mod_name) {
     global_indx = 0
+    document.getElementById("workload-module-code").innerHTML = `Module: ${mod_code} ${mod_name}`
     workload_arr.forEach((element, index) => {
-        if (element['fk_mod_code'] == mod_code) {
+        if (element['fk_mod_code'] == mod_code && element['mod_stage'] == summary_obj['mod_stage']) {
             let new_req = `<div class="form-group row" id="cc-form-group-${global_indx}">
-            <label for="component-code-${index}" class="col-sm-2 col-form-label col-form-label-sm">Component
+            <label for="component-code-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Component
                 Code:</label>
             <div class="col-sm-1">
                 <input type="text" class="form-control  form-control-sm" id="component-code-${global_indx}"
-                    value="${element['component_code']}">
+                    value="${element['component_code']}" readonly>
             </div>
             <label for="nrc-${index}" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 <input type="text" class="form-control form-control-sm" id="nrc-${global_indx}" 
-                value="${element['nrc']}" >
+                value="${element['nrc']}" readonly>
             </div>
             <label for="weightage-${global_indx}"
                 class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
             <div class="col-sm-1">
                 <input type="text" class="form-control form-control-sm" id="weightage-${global_indx}"
-                value="${element['weightage']}">
+                value="${element['weightage']}" readonly>
             </div>
             <div class="col-sm-1">
             <button type="button" class= "btn btn-outline-dark btn-sm" name="save-requirement" value="${global_indx}" 
-            onclick="__saveComponent(this.value)">Save</button>
+            onclick="_updateRequirement(event, this.value)" disabled>Save</button>
             </div>
             <div class="col-sm-1">
             <button type="button" class= "btn btn-outline-danger btn-sm" name="delete-requirement" value="${global_indx}" 
-            onclick="_deleteComponent(this.value)">Delete</button>
+            onclick="_deleteComponent(event, this.value)">Delete</button>
             </div>
             </div>`
             $('#requirement-container').append(new_req)
@@ -200,7 +206,7 @@ async function _appendWorkloads(modal, mod_code) {
                 </div>
                 <!-- Input Item -->
                 <div class="form-group row">
-                    <label for="start-week-${index}" class="col-sm-2 col-form-label col-form-label-sm">Start
+                    <label for="start-week-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Start
                         Week:</label>
                     <div class="col-sm-2">
                         <input type="text" class="form-control form-control-sm" id="start-week-${global_indx}"
@@ -222,11 +228,12 @@ async function _appendWorkloads(modal, mod_code) {
                         class="col-sm-2 col-form-label col-form-label-sm align-self-center p-2">Remarks:</label>
                     <div class="col-sm-8">
                         <textarea class="form-control form-control-sm" id="remarks-${global_indx}" rows="2"
-                        value="${element['remarks']}"></textarea>
+                        >${element['remarks']}</textarea>
                     </div>
                 </div>
                 <div class="d-flex flex-row-reverse p-2">
-                    <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" name= "save">Save Requirement</button>
+                    <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" 
+                    name= "save" onclick="_saveRequirement(event, ${global_indx})">Save Requirement</button>
                 </div>
                 </div>
                 </div>`
@@ -264,15 +271,16 @@ async function _appendWorkloads(modal, mod_code) {
                 </div>
                 <!-- Input Item -->
                 <div class="form-group row">
-                    <label for="remarks"
+                    <label for="special-requirement-${global_indx}"
                         class="col-sm-2 col-form-label col-form-label-sm align-self-center p-2">Special Requirement:</label>
                     <div class="col-sm-8">
                         <textarea class="form-control form-control-sm" id="special-requirement-${global_indx}" rows="2"
-                        value="${element['special_requirement']}"></textarea>
+                        >${element['special_requirement']}</textarea>
                     </div>
                 </div>
                 <div class="d-flex flex-row-reverse p-2">
-                    <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" name= "save">Save Requirement</button>
+                    <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" 
+                    name= "save" onclick="_saveRequirement(event, ${global_indx})">Save Requirement</button>
                 </div>
                 </div>
                 </div>`
@@ -282,39 +290,55 @@ async function _appendWorkloads(modal, mod_code) {
         }
     });
 };
-//append new form row
+//append new form row locally
 function _appendNewRequirement() {
     let new_req = `<div class="form-group row" id="cc-form-group-${global_indx}">
     <label for="component-code-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Component
-        Code:</label>
+        Code:*</label>
     <div class="col-sm-1">
-        <input type="text" class="form-control  form-control-sm" id="component-code-${global_indx}"
-            placeholder="EST">
+        <input type="text" class="form-control  form-control-sm needs-validation" id="component-code-${global_indx}"
+            placeholder="EST" required="true">
     </div>
-    <label for="nrc-${global_indx}" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
-    <div class="col-sm-1">
-        <input type="text" class="form-control form-control-sm" id="nrc-${global_indx}" 
-        placeholder="Yes" >
+    <label for="nrc-${global_indx}" class="col-sm-1 col-form-label col-form-label-sm">NRC:*</label>
+    <div class="col-sm-2">
+        <select class="form-select form-select-sm" id="nrc-${global_indx}">
+            <option value= 'Yes' selected>Yes</option>
+            <option value= 'No'>No</option>
+        </select>
     </div>
     <label for="weightage-${global_indx}"
-        class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+        class="col-sm-1 col-form-label col-form-label-sm">Weightage:*</label>
     <div class="col-sm-1">
-        <input type="text" class="form-control form-control-sm" id="weightage-${global_indx}"
-        placeholder="30">
+        <input type="text" class="form-control form-control-sm needs-validation" id="weightage-${global_indx}"
+        placeholder="30" required="true">
     </div>
     <div class="col-sm-1">
-        <button type="button" class= "btn btn-outline-dark btn-sm" name="save-requirement" value="${global_indx}" 
-        onclick="_saveComponent(this.value)">Save</button>
+        <button type="submit" class= "btn btn-outline-dark btn-sm" name="save-requirement" value="${global_indx}" 
+        onclick="_saveComponent(event, this.value);">Save</button>
     </div>
     <div class="col-sm-1">
         <button type="button" class= "btn btn-outline-danger btn-sm" name="delete-requirement" value="${global_indx}" 
-        onclick="_deleteComponent(this.value)">Delete</button>
+        onclick="_deleteComponent(event, this.value)">Delete</button>
     </div>
     </div>`
     $('#requirement-container').append(new_req)
     global_indx++
 };
-function _saveComponent(button_value) {
+//save button for components
+function _saveComponent(event, button_value) {
+    let arr = [$('#component-code-' + button_value).val(), $('#weightage-' + button_value).val(), $('#nrc-' + button_value).val()]
+    //console.log(arr)
+    for (let index = 0; index < arr.length; index++) {
+        const element = arr[index];
+        if (element === '') {
+            return false
+        }
+    }
+    $('button[name="save-requirement"][value="' + button_value + '"]').prop('disabled', true)
+    event.preventDefault()
+    $('#component-code-' + button_value).prop('readonly', true)
+    $('#nrc-' + button_value).prop('disabled', true)
+    $('#weightage-' + button_value).prop('readonly', true)
     let component_code = $('#component-code-' + button_value).val()
     if (ca_pattern.test(component_code)) {
         let new_workload = `
@@ -360,12 +384,13 @@ function _saveComponent(button_value) {
             </div>
         </div>
         <div class="d-flex flex-row-reverse p-2">
-            <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" name= "save">Save Requirement</button>
+            <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" name= "save"
+            value="${button_value}" onclick="_saveRequirement(event, this.value)">Save Requirement</button>
         </div>
         </div>
         </div>`
-        $('#workloadtable').append(new_workload)
-        
+        $('#workloadtable').prepend(new_workload)
+
     } else if (exam_pattern.test(component_code)) {
         let new_workload = `
         <div id ="workload-table-entry-${button_value}" class="mb-3 mt-3 pb-2 workload-entry">
@@ -378,7 +403,7 @@ function _saveComponent(button_value) {
             <label for="testwk-type-${button_value}" class="col-sm-2 col-form-label col-form-label-sm">Testwk Type:</label>
             <div class="col-sm-2">
                     <select class="form-select" id="testwk-type-${button_value}">
-                    <option value= 'Mid Semester Test'>Mid Semester Test</option>
+                    <option value= 'Mid Semester Test' selected>Mid Semester Test</option>
                     <option value= 'End Semester Test'>End Semester Test</option>
                     </select>
             </div>
@@ -388,7 +413,7 @@ function _saveComponent(button_value) {
             <label for="type-${button_value}" class="col-sm-2 col-form-label col-form-label-sm">Type:</label>
             <div class="col-sm-2">
                 <select class="form-select" id="type-${button_value}">
-                    <option value= 'Written'>Written</option>
+                    <option value= 'Written' selected>Written</option>
                     <option value= 'Practical'>Practical</option>
                     </select>
             </div>
@@ -411,23 +436,116 @@ function _saveComponent(button_value) {
             </div>
         </div>
         <div class="d-flex flex-row-reverse p-2">
-            <button type="button" class= "col-2 btn btn-outline-dark btn-sm p-2" name= "save">Save Requirement</button>
+            <button type="submit" class= "col-2 btn btn-outline-dark btn-sm p-2" name="save"
+            value="${button_value}" onclick="_saveRequirement(event, this.value)">Save Requirement</button>
         </div>
         </div>
         </div>`
-        $('#workloadtable').append(new_workload)
+        $('#workloadtable').prepend(new_workload)
     }
-}
-function _deleteComponent(button_value) {
+};
+//delete button for components
+function _deleteComponent(event, button_value) {
+    console.log(summary_obj)
+    let _component_code = $('#component-code-' + button_value).val()
+    axios.delete(base_url + '/api/module-workload/mc?mod_coord=' + staff_id, {
+        data: {
+            mod_code: summary_obj['mod_code'],
+            semester_code: summary_obj['semester_code'],
+            mod_stage: summary_obj['mod_stage'],
+            component_code: _component_code
+        }
+    }).then((response) => {
+        let message = `<div id= "delete-alert" class="d-flex justify-content-center alert alert-danger col-4" role="alert" >
+        <h6 id="alert-heading" class="alert-heading"> Module ${summary_obj['mod_code']} ${_component_code} Successfully Deleted</h6>
+        </div>`
+        $("#page-content").prepend(message)
+        setTimeout(function () {
+            $('#delete-alert').remove();
+        }, 5000);
+
+    }).catch((error) => {
+        console.log(error)
+    })
     $('#cc-form-group-' + button_value).remove()
     $('#workload-table-entry-' + button_value).remove()
+}
+//save button for requirements
+function _saveRequirement(event, button_value) {
+    let _data = {};
+    event.preventDefault()
+    //declare component code values
+    let _component_code = $('#component-code-' + button_value).val()
+    let _weightage = $('#weightage-' + button_value).val()
+    let _nrc = $('#nrc-' + button_value).val()
+    //declare data values
+    if (ca_pattern.test(_component_code)) {
+        let _group_size = $('#group-size-' + button_value).val();
+        let _start_week = $('#start-week-' + button_value).val()
+        let _end_week = $('#end-week-' + button_value).val()
+        let _remarks = $('#remarks-' + button_value).val();
+        _data = {
+            mod_code: summary_obj['mod_code'],
+            semester_code: summary_obj['semester_code'],
+            mod_stage: summary_obj['mod_stage'],
+            component_code: _component_code,
+            weightage: _weightage,
+            nrc: _nrc,
+            group_size: _group_size,
+            start_week: _start_week,
+            end_week: _end_week,
+            remarks: _remarks
+        };
+    } else if (exam_pattern.test(_component_code)) {
+        let _testwk_type = $('#testwk-type-' + button_value).val();
+        let _type = $('#type-' + button_value).val();
+        let _duration = $('#duration-' + button_value).val();
+        let _special_requirement = $('#special-requirement-' + button_value).val();
+        //console.log(_special_requirement)
+        _data = {
+            mod_code: summary_obj['mod_code'],
+            semester_code: summary_obj['semester_code'],
+            mod_stage: summary_obj['mod_stage'],
+            component_code: _component_code,
+            weightage: _weightage,
+            nrc: _nrc,
+            testwk_type: _testwk_type,
+            type: _type,
+            duration: _duration,
+            special_requirement: _special_requirement
+        };
+    };
+    for (const key in _data) {
+        if (Object.hasOwnProperty.call(_data, key)) {
+            let element = _data[key];
+            if (element == undefined || element === '' || element == null) {
+                _data[key] = "NIL"
+                //console.log(element)
+            }
+        };
+    }
+    axios.post(base_url + '/api/module-workload/mc?mod_coord=' + staff_id, {
+        data: _data
+    }).then((response) => {
+        let message = `<div id= "success-alert" class="d-flex justify-content-center alert alert-success col-4" role="alert" >
+        <h6 id="alert-heading" class="alert-heading"  >Module ${_data['mod_code']} Workload Successfully Updated</h6>
+        </div>`
+        $("#page-content").prepend(message)
+        setTimeout(function () {
+            $('#success-alert').remove();
+        }, 5000);
+
+    }).catch((error) => {
+        console.log(error)
+    })
 }
 //prepare the website with all this data
 _getStaff()
 _getCourses()
 _getModuleAndAppend(staff_id)
 _getWorkload(staff_id)
-
+//document.getElementById('page-title').innerHTML = "Exam Matters"
+//console.log(document.getElementById('page-title'))
 $(document).ready(() => {
     $('#main-list>li').removeClass("active");
     $('#maintenence-system').addClass("active");
@@ -449,12 +567,21 @@ $(document).ready(() => {
     });
     $('#editWorkloadSummary').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        let mod_code = button.data('module-code') // Extract info from data-* attributes
+        let mod_code = button.data('module-code'); // Extract info from data-* attributes
+        let mod_name = button.data('module-name');
+        let mod_stage = button.data('mod-stage');
+        let semester_code = button.data('sem-code');
+
+        summary_obj = {
+            mod_code: mod_code,
+            mod_name: mod_name,
+            mod_stage: mod_stage,
+            semester_code: semester_code
+        };
         var modal = $(this)
-        console.log()
         $('#requirement-container').empty();
         $('#workloadtable').empty();
-        _appendWorkloads(modal, mod_code)
+        _appendWorkloads(modal, mod_code, mod_name)
     });
     $('#add-requirement').on('click', () => {
         _appendNewRequirement()

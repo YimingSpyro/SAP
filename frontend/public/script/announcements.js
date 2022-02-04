@@ -224,37 +224,64 @@ async function generateAnnouncements() {
                     }
                 }
                 announcement_to = announcement_to.slice(0, -1)
-                $(".active-announcements").append(`
-                <div id="announcement-bar-admin">
-                    <!-- Actions -->
-                    <div id="announcementactions" class="float-end align-items-center `+ announcement.announcement_type.toLowerCase() + `">
-                        <div id="editannouncement">
-                            <button class="btn btn-link edit-button" data-order="ASC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                if (roles.includes("1")) {
+                    $(".active-announcements").append(`
+                    <div id="announcement-bar-admin">
+                        <!-- Actions -->
+                        <div id="announcementactions" class="float-end align-items-center `+ announcement.announcement_type.toLowerCase() + `">
+                            <div id="editannouncement">
+                                <button class="btn btn-link edit-button" data-order="ASC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                            </div>
+                            <div id="deleteannouncement">
+                                <button class="btn btn-link delete-button" data-order="ASC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#delete-announcement">Delete</button>
+                            </div>
                         </div>
-                        <div id="deleteannouncement">
-                            <button class="btn btn-link delete-button" data-order="ASC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#delete-announcement">Delete</button>
+                        <!-- Contents -->
+                        <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
+                            <!-- Title -->
+                            <div id="announcementtitle" class="float-start">
+                                `+ announcement.announcement_subject + `
+                            </div>
+                            <!-- To -->
+                            <div id="announcementto" class="text-end">
+                                `+ announcement_to + `
+                            </div>
+                            <!-- Duration -->
+                            <div id="announcementduration" class="text-end">
+                            `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                            </div>
+                            <!-- Message -->
+                            <div id="announcementmessage" class="mt-3">
+                                `+ announcement.announcement_message + `
+                            </div>
                         </div>
-                    </div>
-                    <!-- Contents -->
-                    <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
-                        <!-- Title -->
-                        <div id="announcementtitle" class="float-start">
-                            `+ announcement.announcement_subject + `
+                    </div>`)
+                }
+                else {
+                    $(".active-announcements").append(`
+                    <div id="announcement-bar-admin">
+                        <!-- Contents -->
+                        <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
+                            <!-- Title -->
+                            <div id="announcementtitle" class="float-start">
+                                `+ announcement.announcement_subject + `
+                            </div>
+                            <!-- To -->
+                            <div id="announcementto" class="text-end">
+                                `+ announcement_to + `
+                            </div>
+                            <!-- Duration -->
+                            <div id="announcementduration" class="text-end">
+                            `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                            </div>
+                            <!-- Message -->
+                            <div id="announcementmessage" class="mt-3">
+                                `+ announcement.announcement_message + `
+                            </div>
                         </div>
-                        <!-- To -->
-                        <div id="announcementto" class="text-end">
-                            `+ announcement_to + `
-                        </div>
-                        <!-- Duration -->
-                        <div id="announcementduration" class="text-end">
-                        `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
-                        </div>
-                        <!-- Message -->
-                        <div id="announcementmessage" class="mt-3">
-                            `+ announcement.announcement_message + `
-                        </div>
-                    </div>
-                </div>`)
+                    </div>`)
+                }
+
             }
         }
         // UPCOMING Announcements
@@ -358,72 +385,125 @@ async function generateAnnouncements() {
                     }
                 }
                 announcement_to = announcement_to.slice(0, -1)
-                if (old_count >= 3) {
-                    $(".old-announcements").append(`
-                        <div id="announcement-bar-admin" class="show-more-item">
-                            <!-- Actions -->
-                            <div id="announcementactions" class="float-end align-items-center `+ announcement.announcement_type.toLowerCase() + `">
-                                <div id="editannouncement">
-                                    <button class="btn btn-link edit-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                if (roles.includes("1")) {
+                    if (old_count >= 3) {
+                        $(".old-announcements").append(`
+                            <div id="announcement-bar-admin" class="show-more-item">
+                                <!-- Actions -->
+                                <div id="announcementactions" class="float-end align-items-center `+ announcement.announcement_type.toLowerCase() + `">
+                                    <div id="editannouncement">
+                                        <button class="btn btn-link edit-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                                    </div>
+                                    <div id="deleteannouncement">
+                                        <button class="btn btn-link delete-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#delete-announcement">Delete</button>
+                                    </div>
                                 </div>
-                                <div id="deleteannouncement">
-                                    <button class="btn btn-link delete-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#delete-announcement">Delete</button>
+                                <!-- Contents -->
+                                <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
+                                    <!-- Title -->
+                                    <div id="announcementtitle" class="float-start">
+                                        `+ announcement.announcement_subject + `
+                                    </div>
+                                    <!-- To -->
+                                    <div id="announcementto" class="text-end">
+                                        `+ announcement_to + `
+                                    </div>
+                                    <!-- Duration -->
+                                    <div id="announcementduration" class="text-end">
+                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    </div>
+                                    <!-- Message -->
+                                    <div id="announcementmessage" class="mt-3">
+                                        `+ announcement.announcement_message + `
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Contents -->
-                            <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
-                                <!-- Title -->
-                                <div id="announcementtitle" class="float-start">
-                                    `+ announcement.announcement_subject + `
+                            </div>`)
+                    }
+                    else {
+                        $(".old-announcements").append(`
+                            <div id="announcement-bar-admin">
+                                <!-- Actions -->
+                                <div id="announcementactions" class="float-end align-items-center `+ announcement.announcement_type.toLowerCase() + `">
+                                    <div id="editannouncement">
+                                        <button class="btn btn-link edit-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                                    </div>
+                                    <div id="deleteannouncement">
+                                        <button class="btn btn-link delete-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#delete-announcement">Delete</button>
+                                    </div>
                                 </div>
-                                <!-- To -->
-                                <div id="announcementto" class="text-end">
-                                    `+ announcement_to + `
+                                <!-- Contents -->
+                                <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
+                                    <!-- Title -->
+                                    <div id="announcementtitle" class="float-start">
+                                        `+ announcement.announcement_subject + `
+                                    </div>
+                                    <!-- To -->
+                                    <div id="announcementto" class="text-end">
+                                        `+ announcement_to + `
+                                    </div>
+                                    <!-- Duration -->
+                                    <div id="announcementduration" class="text-end">
+                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    </div>
+                                    <!-- Message -->
+                                    <div id="announcementmessage" class="mt-3">
+                                        `+ announcement.announcement_message + `
+                                    </div>
                                 </div>
-                                <!-- Duration -->
-                                <div id="announcementduration" class="text-end">
-                                `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
-                                </div>
-                                <!-- Message -->
-                                <div id="announcementmessage" class="mt-3">
-                                    `+ announcement.announcement_message + `
-                                </div>
-                            </div>
-                        </div>`)
+                            </div>`)
+                    }
                 }
                 else {
-                    $(".old-announcements").append(`
-                        <div id="announcement-bar-admin">
-                            <!-- Actions -->
-                            <div id="announcementactions" class="float-end align-items-center `+ announcement.announcement_type.toLowerCase() + `">
-                                <div id="editannouncement">
-                                    <button class="btn btn-link edit-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#edit-modal">Edit</button>
+                    if (old_count >= 3) {
+                        $(".old-announcements").append(`
+                            <div id="announcement-bar-admin" class="show-more-item">
+                                <!-- Contents -->
+                                <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
+                                    <!-- Title -->
+                                    <div id="announcementtitle" class="float-start">
+                                        `+ announcement.announcement_subject + `
+                                    </div>
+                                    <!-- To -->
+                                    <div id="announcementto" class="text-end">
+                                        `+ announcement_to + `
+                                    </div>
+                                    <!-- Duration -->
+                                    <div id="announcementduration" class="text-end">
+                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    </div>
+                                    <!-- Message -->
+                                    <div id="announcementmessage" class="mt-3">
+                                        `+ announcement.announcement_message + `
+                                    </div>
                                 </div>
-                                <div id="deleteannouncement">
-                                    <button class="btn btn-link delete-button" data-order="DESC" data-index=`+ index +` data-bs-toggle="modal" data-bs-target="#delete-announcement">Delete</button>
+                            </div>`)
+                    }
+                    else {
+                        $(".old-announcements").append(`
+                            <div id="announcement-bar-admin">
+                                <!-- Contents -->
+                                <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
+                                    <!-- Title -->
+                                    <div id="announcementtitle" class="float-start">
+                                        `+ announcement.announcement_subject + `
+                                    </div>
+                                    <!-- To -->
+                                    <div id="announcementto" class="text-end">
+                                        `+ announcement_to + `
+                                    </div>
+                                    <!-- Duration -->
+                                    <div id="announcementduration" class="text-end">
+                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    </div>
+                                    <!-- Message -->
+                                    <div id="announcementmessage" class="mt-3">
+                                        `+ announcement.announcement_message + `
+                                    </div>
                                 </div>
-                            </div>
-                            <!-- Contents -->
-                            <div id="announcementcontent" class="`+ announcement.announcement_type.toLowerCase() + `">
-                                <!-- Title -->
-                                <div id="announcementtitle" class="float-start">
-                                    `+ announcement.announcement_subject + `
-                                </div>
-                                <!-- To -->
-                                <div id="announcementto" class="text-end">
-                                    `+ announcement_to + `
-                                </div>
-                                <!-- Duration -->
-                                <div id="announcementduration" class="text-end">
-                                `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
-                                </div>
-                                <!-- Message -->
-                                <div id="announcementmessage" class="mt-3">
-                                    `+ announcement.announcement_message + `
-                                </div>
-                            </div>
-                        </div>`)
+                            </div>`)
+                    }
                 }
+
             }
         }
         if (index == announcements.length - 1 && old_count >= 2) {

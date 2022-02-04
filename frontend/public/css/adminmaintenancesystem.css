@@ -50,9 +50,13 @@
      width:20px;
      height:20px;
  }
-button {
+ button {
     width: 150px;
 }
+.edit-module-button, .edit-workload-button {
+    width: 120px;
+}
+
 
 button .primary {
     color: #22404F !important;

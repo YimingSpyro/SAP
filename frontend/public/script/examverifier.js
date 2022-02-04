@@ -419,6 +419,8 @@ async function submitChanges(mod_code) {
 
 
 $(document).ready(() => {
+
+    
     generateSection()
 
     $("#select-section").on('change', () => {
@@ -443,7 +445,4 @@ $(document).ready(() => {
                 generateModal(module_index)
             });
     })
-})
-$(window).on('load',()=>{
-    $('#page-title').text("WHYU DOESNT WORK")
 })

@@ -3,7 +3,7 @@ $(document).ready(() => {
     $('#update-teaching-assignment').addClass("active")
 })
 function getTeachingRequirements() {
-    return axios.get(base_url + '/api/teaching-requirement/8405' + '?semester_code=' + sessionStorage.getItem('semester_code')) 
+    return axios.get(base_url + '/api/teaching-requirement/'  + sessionStorage.getItem('staff_id') + '?semester_code=' + sessionStorage.getItem('semester_code')) 
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -29,7 +29,7 @@ function deleteTeachingRequirement(ptr_id) {
 }
 
 function getRemarks() {
-    return axios.get(base_url + '/api/teaching-requirement/remarks/8405' + '?semester_code=' + sessionStorage.getItem('semester_code')) 
+    return axios.get(base_url + '/api/teaching-requirement/remarks/'  + sessionStorage.getItem('staff_id') +  '?semester_code=' + sessionStorage.getItem('semester_code')) 
         .then(response => response.data)
         .catch(err => error(err));
 };
