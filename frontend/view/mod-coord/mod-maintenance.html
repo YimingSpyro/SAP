@@ -7,7 +7,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maintenance System</title>
+    <title>Module Maintenance System</title>
+    <!-- Bootstrap JS -->
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
@@ -30,7 +31,6 @@
 
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- Offline scripts -->
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/adminmaintenancesystem.css">
@@ -39,8 +39,13 @@
     <script src="/script/notifications.js"></script>
     <script src="/script/append_navbar.js"></script>
     <script src="/script/log_out.js"></script>
-    <script src="/script/admin_maint_sys.js"></script>
+    <script src="/script/mod_coord/coord_maint_sys.js"></script>
+
     <style>
+        .col-sm-1>button {
+            width: 60px;
+        }
+
         .workload-entry {
             background-color: #E9E9E9;
         }
@@ -77,35 +82,17 @@
                     </ul>
                 </div>
             </div>
+
             <!-- Page Content -->
-            <div id="page-content" class="col-10 py-3">
+            <div id="page-content" class="col-10 py-3 d-flex justify-content-center">
+
                 <div id="content-view-admin" class="container">
 
-                    <!-- Page Tabs -->
-                    <div id="tabs">
-                        <a href="/maintenance"><button type="button"
-                                class="btn btn-secondary btn-sm">Module</button></a>
-                        <a href="/maintenance/module-info"><button type="button"
-                                class="btn btn-primary btn-sm">Staff</button></a>
-                    </div>
                     <!-- Content Header -->
                     <div id="content-header-admin">
                         <p>Module Maintenance System</p>
-                        <div class="form-group row d-flex justify-content-start">
-                            <label for="select-section" class="col-sm-2 col-form-label">Select Section:</label>
-                            <div class="col-sm-4">
-                                <select class="form-select" id="select-semester">
-                                    <option>No Semester Selected</option>
-                                </select>
-                            </div>
-                            <label for="select-section" class="col-sm-1 col-form-label">Course:</label>
-                            <div class="col-sm-3">
-                                <select class="form-select" id="select-course">
-                                    <option>No Course Selected</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="line"></div>
+                        <p>My Modules</p>
                     </div>
 
                     <!-- Content Item -->
@@ -117,9 +104,9 @@
                                 <tr>
                                     <th scope="col" class="col-1">Course</th>
                                     <th scope="col" class="col-1">Code</th>
-                                    <th scope="col" class="col-3">Module Name</th>
-                                    <th scope="col" class="col-2">Uploaded For</th>
-                                    <th scope="col" class="col">Status</th>
+                                    <th scope="col" class="col-2">Module Name</th>
+                                    <th scope="col" class="col-2">Sem Code</th>
+                                    <th scope="col" class="col-1">Stage</th>
                                     <th scope="col" class="col-2">Actions</th>
                                     <th scope="col" class="col-2"></th>
                                 </tr>
@@ -135,11 +122,14 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header row">
-                                        <h3 class="col">Module Information</h3>
+                                        <h3 class="col" id="module-name">Module Information</h3>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
+                                        <p>
+                                            The following fields can only be edited by Administrators
+                                        </p>
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-module-code">Module
@@ -147,7 +137,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <input class="form-control" type="text" id="edit-module-code"
-                                                    name="edit-module-code">
+                                                    name="edit-module-code" readonly>
                                             </div>
                                         </div>
 
@@ -158,7 +148,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <input class="form-control" type="text" id="edit-module-name"
-                                                    name="edit-module-name">
+                                                    name="edit-module-name" readonly>
                                             </div>
 
                                         </div>
@@ -169,7 +159,7 @@
                                             </div>
                                             <div class="col-6">
                                                 <input class="form-control" type="text" id="edit-module-abbrv"
-                                                    name="edit-module-abbrv">
+                                                    name="edit-module-abbrv" readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -178,7 +168,7 @@
                                                     To:</label>
                                             </div>
                                             <div class="col-2">
-                                                <select class="form-select" id="course-offered-to">
+                                                <select class="form-select" id="course-offered-to" disabled>
                                                 </select>
                                             </div>
                                             <div class="col-1">
@@ -186,7 +176,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="text" id="edit-module-stage"
-                                                    name="edit-module-stage">
+                                                    name="edit-module-stage" readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -195,7 +185,7 @@
                                                     Coordinator:</label>
                                             </div>
                                             <div class="col-6">
-                                                <select class="form-select" id="module-coord-name">
+                                                <select class="form-select" id="module-coord-name" disabled>
                                                 </select>
                                             </div>
                                             <div class="col-2">
@@ -204,7 +194,7 @@
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
-                                            
+
                                             <div class="col-2">
                                                 <label class="module-info-label" for="module-year-created">Uploaded for
                                                     Yr:</label>
@@ -218,7 +208,7 @@
                                                     Code:</label>
                                             </div>
                                             <div class="col-3">
-                                                <select class="form-select" id="edit-semester-code">
+                                                <select class="form-select" id="edit-semester-code" disabled>
                                                 </select>
                                             </div>
                                         </div>
@@ -229,7 +219,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="edit-students"
-                                                    name="edit-students">
+                                                    name="edit-students" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-oos-students">Students out of
@@ -237,7 +227,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="edit-oos-students"
-                                                    name="edit-oos-students">
+                                                    name="edit-oos-students" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="edit-total-students">Total
@@ -254,7 +244,8 @@
                                                 <label for="mod-remarks">Remarks:</label>
                                             </div>
                                             <div class="col-10">
-                                                <textarea class="form-control" id="mod-remarks" rows="2"></textarea>
+                                                <textarea class="form-control" id="mod-remarks" rows="2"
+                                                    readonly></textarea>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -269,7 +260,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-lect-hours"
-                                                    name="mod-lect-hours">
+                                                    name="mod-lect-hours" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-tut-hours">
@@ -277,7 +268,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-tut-hours"
-                                                    name="mod-tut-hours">
+                                                    name="mod-tut-hours" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-prac-hours">Practical
@@ -285,7 +276,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-prac-hours"
-                                                    name="mod-prac-hours">
+                                                    name="mod-prac-hours" readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -293,7 +284,8 @@
                                                 <label class="module-info-label" for="mod-dlt">DLT:</label>
                                             </div>
                                             <div class="col-2">
-                                                <input class="form-control" type="text" id="mod-dlt" name="mod-dlt">
+                                                <input class="form-control" type="text" id="mod-dlt" name="mod-dlt"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -312,7 +304,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-lect-classes"
-                                                    name="mod-lect-classes">
+                                                    name="mod-lect-classes" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-prac-classes">Tutorial
@@ -320,7 +312,7 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-prac-classes"
-                                                    name="mod-prac-classes">
+                                                    name="mod-prac-classes" readonly>
                                             </div>
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-tut-classes">Practical
@@ -328,9 +320,9 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="number" id="mod-tut-classes"
-                                                    name="mod-tut-classes">
+                                                    name="mod-tut-classes" readonly>
                                             </div>
-                                            
+
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
@@ -338,7 +330,7 @@
                                             </div>
                                             <div class="col-10">
                                                 <input class="form-control" type="text" id="mod-prereq"
-                                                    name="mod-prereq">
+                                                    name="mod-prereq" readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -348,17 +340,18 @@
                                             </div>
                                             <div class="col-2">
                                                 <input class="form-control" type="text" id="mod-mod-type"
-                                                    name="mod-mod-type">
+                                                    name="mod-mod-type" readonly>
                                             </div>
-                                           
-                                            
+
+
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
                                             <div class="col-2">
                                                 <label class="module-info-label" for="mod-type">Type:</label>
                                             </div>
                                             <div class="col-2">
-                                                <input class="form-control" type="text" id="mod-type" name="mod-type">
+                                                <input class="form-control" type="text" id="mod-type" name="mod-type"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -366,7 +359,8 @@
                                                 <label class="module-info-label" for="mod-cu">Credit Unit:</label>
                                             </div>
                                             <div class="col-2 ">
-                                                <input class="form-control" type="number" id="mod-cu" name="mod-cu">
+                                                <input class="form-control" type="number" id="mod-cu" name="mod-cu"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="d-flex align-items-center row p-2">
@@ -378,16 +372,16 @@
                                             <legend class="col-form-label col-sm-2 pt-0">Mass Lecture</legend>
                                             <div class="col-sm-10">
                                                 <div class="form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                                        id="masslectradio1" value="Yes" disabled>
-                                                    <label class="form-check-label" for="gridRadios1" disabled>
+                                                    <input class="form-check-input" type="radio" name="masslectradio"
+                                                        id="masslectradio1" value="Yes">
+                                                    <label class="form-check-label" for="masslectradio1">
                                                         Yes
                                                     </label>
                                                 </div>
-                                                <div class="form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="gridRadios"
-                                                        id="masslectradio2" value="No" disabled>
-                                                    <label class="form-check-label" for="gridRadios2">
+                                                <div class="form-check-inline" data-toggle="radio">
+                                                    <input class="form-check-input" type="radio" name="masslectradio"
+                                                        id="masslectradio2" value="No">
+                                                    <label class="form-check-label" for="masslectradio1">
                                                         No
                                                     </label>
                                                 </div>
@@ -399,7 +393,7 @@
                                                 </div>
                                                 <div class="col-1">
                                                     <input class="form-control" type="text" id="odd-lechr"
-                                                        name="odd-lechr" readonly>
+                                                        name="odd-lechr">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="module-info-label" for="even-lechr">Even Wk Lecture
@@ -407,7 +401,7 @@
                                                 </div>
                                                 <div class="col-1">
                                                     <input class="form-control" type="text" id="even-lechr"
-                                                        name="even-lechr" readonly>
+                                                        name="even-lechr">
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center row p-2">
@@ -417,7 +411,7 @@
                                                 </div>
                                                 <div class="col-1">
                                                     <input class="form-control" type="text" id="odd-prachr"
-                                                        name="odd-prachr" readonly>
+                                                        name="odd-prachr">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="module-info-label" for="even-prachr">Even Wk Practical
@@ -425,7 +419,7 @@
                                                 </div>
                                                 <div class="col-1">
                                                     <input class="form-control" type="text" id="even-prachr"
-                                                        name="even-prachr" readonly>
+                                                        name="even-prachr">
                                                 </div>
                                             </div>
                                             <div class="d-flex align-items-center row p-2">
@@ -435,7 +429,7 @@
                                                 </div>
                                                 <div class="col-1">
                                                     <input class="form-control" type="text" id="odd-tuthr"
-                                                        name="odd-tuthr" readonly>
+                                                        name="odd-tuthr">
                                                 </div>
                                                 <div class="col-3">
                                                     <label class="module-info-label" for="even-tuthr">Even Wk Practical
@@ -443,15 +437,15 @@
                                                 </div>
                                                 <div class="col-1">
                                                     <input class="form-control" type="text" id="even-tuthr"
-                                                        name="even-tuthr" readonly>
+                                                        name="even-tuthr">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <!-- Update Button -->
                                     <div class="modal-footer">
-                                        <button type="button" id="update-module"
-                                            class="btn btn-primary float-end" data-bs-dismiss="modal" aria-label="Close">Update
+                                        <button type="button" id="update-module" class="btn btn-primary float-end"
+                                            data-bs-dismiss="modal" aria-label="Close">Update
                                             Module</button>
                                     </div>
                                 </div>
@@ -461,7 +455,6 @@
                 </div>
             </div>
         </div>
-        <!-- Modal -->
         <div class="modal fade" id="editWorkloadSummary" tabindex="-1" aria-labelledby="editWorkloadSummaryLabel"
             aria-hidden="true">
             <div class="modal-dialog modal-xl">
@@ -469,7 +462,8 @@
                     <!-- Content header -->
                     <div class="modal-header">
                         <h5 class="modal-title" id="workload-module-code">Module: EP1234 ABC</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" id="close-workload" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                     </div>
 
                     <!-- Content -->
@@ -479,14 +473,22 @@
                                 <div class="col-10">
                                     <h5>Module Weightages</h5>
                                     <p>
-                                        Please enter *ST or CA* accordingly and press save, the workload fields will be
+                                        Please enter *ST or CA* accordingly and press save, the workload fields will
+                                        be
                                         generated upon
                                         successful submisson of component code.
                                         <br>
                                         Examples include: EST, MST, CA1, CA9 etc.
                                         <br>
-                                        These values can only be edited by the Module Coordinator
+                                        Fields with * are required to create a new workload.
+                                        <br>
+                                        Once the field has been saved, it can no longer be edited, but it can be
+                                        deleted.
                                     </p>
+                                </div>
+                                <div class="col-2">
+                                    <button type="button" class="btn btn-outline-dark btn-sm" id="add-requirement">Add
+                                        Requirement</button>
                                 </div>
                             </div>
                             <!-- Form Item -->
@@ -511,7 +513,7 @@
             </div>
         </div>
 
-    </div>
+
 
 </body>
 

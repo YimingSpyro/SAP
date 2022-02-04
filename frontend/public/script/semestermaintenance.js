@@ -28,6 +28,7 @@ function updateSemester(semester_id_old) {
         semester_id_old : semester_id_old
     })
     .then(() => {
+        $("#view-semester").modal('hide')
         success("updated");
     })
     .catch(err => error(err));
@@ -61,6 +62,40 @@ function enableSemester(semester_id) {
         success("enabled");
     })
     .catch(err => error(err));
+}
+
+async function inputValidation(type) {
+    let id_check = new RegExp('^[A-Za-z0-9]+$')
+    let code_check = new RegExp('^[A-Za-z0-9/ ]+$')
+    let alpha_num = new RegExp('^[A-Za-z0-9 ]+$')
+    if (type == "create") {
+        let create_id = $("#semester-id-create")[0].value
+        let create_code = $("#semester-code-create")[0].value
+        let create_remarks = $("#semester-remarks-create")[0].value
+        if (!id_check.test(create_id)) {
+            throw "Semester ID only allows alphanumerics and no spacing."
+        }
+        if (!code_check.test(create_code)) {
+            throw "Semester Code only allows alphanumerics and '/'."
+        }
+        if (!alpha_num.test(create_remarks)) {
+            throw "Remarks only allows alphanumerics."
+        }
+    }
+    if (type == "update") {
+        let update_id = $("#semester-id-update")[0].value
+        let update_code = $("#semester-code-update")[0].value
+        let update_remarks = $("#semester-remarks-update")[0].value
+        if (!id_check.test(update_id)) {
+            throw "Semester ID only allows alphanumerics and no spacing."
+        }
+        if (!code_check.test(update_code)) {
+            throw "Semester Code only allows alphanumerics and '/'."
+        }
+        if (!alpha_num.test(update_remarks)) {
+            throw "Remarks only allows alphanumerics."
+        }
+    } 
 }
 
 async function generateSemesterList() {
@@ -124,7 +159,7 @@ async function generateCreateSemester() {
         <div class="row col-4 mx-2">
             <label for="semester-code-create" class="col-sm-5 col-form-label col-form-label-sm">Semester Code:</label>
             <div class="col-sm-7">
-                <input type="text" class="form-control form-control-sm" id="semester-code-create" placeholder="Enter Semester Code">
+                <input type="text" class="form-control form-control-sm" id="semester-code-create" placeholder="AY 2021/2022 SEM1">
             </div>
         </div>
         <div class="row col-3 ms-2 mb-4">
@@ -231,7 +266,12 @@ $(document).ready(() => {
     });
 
     $(".create-semester-content").on('click', ".create-semester", ()=>{
-        createSemester();
+        inputValidation("create")
+        .then(()=>{
+            createSemester();
+        })
+        .catch(err => error(err))
+        
     });
 
     $(".semester-list").on('click', ".view-semester", (e) => {
@@ -242,11 +282,15 @@ $(document).ready(() => {
     $("#view-semester").on('click', ".update-semester", (e) => {
         let semester_index = $(e.target).data("index");
         let semester_id_old = $(e.target).data("id");
-        updateSemester(semester_id_old)
+        inputValidation("update")
+        .then(async()=>{
+            await updateSemester(semester_id_old)
+        })
         .then(()=>{
             generateSemesterList();
             generateSemesterUpdate(semester_index);
-        });
+        })
+        .catch(err => error(err));
     })
 
     $(".semester-list").on('click', ".confirm-delete-semester", (e) => {

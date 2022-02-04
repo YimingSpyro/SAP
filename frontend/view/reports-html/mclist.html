@@ -9,6 +9,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Reports</title>
 
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+
     <!-- Online scripts -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -21,23 +33,14 @@
     <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
 
 
-
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-
     <!-- Offline scripts -->
     <link rel="icon" href="/SVG Icons/scrunge.png">
+    <link href="/css/global.css" rel="stylesheet">
     <link href="/css/navbar.css" rel="stylesheet">
     <link href="/css/report.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/global.css">
+
+    <script src="/script/log_out.js"></script>
+    <script src="/script/append_navbar.js"></script>
     <script src="/script/global.js"></script>
     <script src="/script/reports.js"></script>
     <script lang="javascript" src="/script/xlsx-js-style/dist/xlsx.bundle.js"></script>
@@ -46,56 +49,7 @@
 <body>
     <!-- Top Bar -->
     <div id="navbar-wrap" class="container-fluid">
-        <nav id="top-navbar" class="row">
 
-            <!-- Profile -->
-            <div id="navbar-card" class="container col-4 col-lg-2 ">
-                <div id="navbar-brand" class="navbar-brand row">
-                    <div class="col-3">
-                        <img id="profile-icon"
-                            src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
-                            alt="Cinque Terre">
-                    </div>
-                    <div id="msg-wrap" class="col-9 ">
-                        <p>Welcome,</p>
-                        <p>Admin 1</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page Title -->
-            <div id="navbar-title" class="navbar-brand col-9">
-                <h2>Reports</h2>
-            </div>
-            <!-- Notification Bell -->
-            <div id="notification-wrap" class="col-1">
-                <!-- Icon -->
-                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false"
-                    aria-controls="notification-bell">
-                    <img id="notifications" src="SVG Icons/notification.svg" class="icons"></img>
-                </a>
-                <!-- Contents -->
-                <div class="collapse" id="notification-bell">
-                    <div class="card card-body important" id="announcementcontent">
-                        <div id="announcementtitle">
-                            Announcement Title
-                        </div>
-                        <div id="announcementmessage">
-                            Message go brrrrr
-                        </div>
-                    </div>
-
-                    <div class="card card-body general" id="announcementcontent">
-                        <div id="announcementtitle">
-                            Announcement Title
-                        </div>
-                        <div id="announcementmessage">
-                            Message go brrrrr
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
     </div>
 
     <div class="container-fluid">
@@ -107,58 +61,6 @@
                     <ul id="main-list"
                         class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Dashboard.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li id="nav-item">
-                            <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Maintenance.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Maintenance System </span>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Teaching Assignment System</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Exam Matters.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Exam Matters
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Announcements.svg" class="icons"></img> <span
-                                    class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Announcements
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item active">
-                            <a href="reports.html" class="nav-link align-middle px-0">
-                                <img src="/SVG Icons/Teaching Allocation System.svg" class="icons"></img>
-                                <span class="nav-item-text ms-1 d-none d-sm-inline"> Download Reports</span>
-                            </a>
-                        </li>
 
                     </ul>
                 </div>

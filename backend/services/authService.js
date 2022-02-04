@@ -32,11 +32,11 @@ module.exports.login = ([staff_id, password]) => {
                                 } else {
                                     if (rows1) {
                                         const finalRows = appendRoleToObject(rows, rows1)
-                                        console.log(finalRows);
                                         if(!finalRows) return resolve('Error Message');
                                         else return resolve(finalRows);
                                     } else {
                                         console.log("error");
+                                        return reject("error")
                                     }
                                 }
                             })
@@ -84,6 +84,25 @@ module.exports.register = ([staff_id, password]) => {
     })
 
 }
+module.exports.changePassword = ([staff_id, new_password]) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                resolve(err);
+            } else {
+                connection.query('UPDATE staff_information SET staff_password = ? WHERE staff_id=?', [new_password,staff_id], (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(rows);
+                    }
+                    connection.release();
+                });
+            }
+        })
+    })
+
+}
 module.exports.insertJwtRecord = ([staff_id, token]) => {
     return new Promise((resolve, reject) => {
         pool.getConnection((err, connection) => {
@@ -113,6 +132,28 @@ module.exports.getStaffByStaffId = () => {
                 resolve(err);
             } else {
                 connection.query('SELECT * FROM staff_information', (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+
+                        resolve(rows);
+                    }
+                    connection.release();
+                })
+            }
+        })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+}
+module.exports.getStaffPrivileges = (staff_id) => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                resolve(err);
+            } else {
+                connection.query('SELECT * FROM staff_privileges WHERE fk_staff_id=?',[staff_id], (err, rows) => {
                     if (err) {
                         reject(err);
                     } else {

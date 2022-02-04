@@ -49,6 +49,10 @@ app.get("/profile-picture/:pfp_id", (req, res) => {
 app.get("/announcements", (req, res) => {
     res.sendFile("/view/adminannouncements.html", { root: __dirname });
 });
+//SENDFILE FOR MODULE COORDINATOR APIS---------------------------
+app.get("/module-coordinator/maintenance", (req, res) => {
+    res.sendFile("/view/mod-coord/mod-maintenance.html", { root: __dirname });
+});
 //SENDFILE FOR REPORT APIS---------------------------
 app.get("/reports/assignment-report", (req, res) => {
     res.sendFile("/view/reports-html/assignmentreports.html", { root: __dirname });
@@ -76,11 +80,8 @@ app.get("/upload-reports", (req, res) => {
 });
 
 //SENDFILE FOR EXAM MATTERS AND WORKLOAD SUMMARY-----------------
-/* app.get("/exam/module-workload-summary", (req, res) => {
+app.get("/exam-verifier", (req, res) => {
     res.sendFile("/view/adminexammatters.html", { root: __dirname });
-}); */
-app.get("/exam/module-workload-summary", (req, res) => {
-    res.sendFile("/view/template 2.html", { root: __dirname });
 });
 
 //SENDFILE FOR MODULE APIS---------------------------

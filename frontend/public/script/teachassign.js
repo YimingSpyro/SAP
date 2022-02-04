@@ -104,6 +104,39 @@ function updateModule(mod_code) {
     });
 }
 
+async function inputValidation(type,data) {
+    let number = new RegExp('^[0-9]+$')
+    if (type == "create-assigned") {
+        let lecture_create = $("#input-lecture-assign")[0].value
+        let tutorial_create = $("#input-tutorial-assign")[0].value
+        let practical_create = $("#input-practical-assign")[0].value
+        if (!number.test(lecture_create) || !number.test(tutorial_create) || !number.test(practical_create)) {
+            throw "Only numeric inputs allowed."
+        }
+    }
+    if (type == "update-assigned") {
+        let lecture_update = data.lecture_classes
+        let tutorial_update = data.tutorial_classes
+        let practical_update = data.practical_classes
+        if (!number.test(lecture_update) || !number.test(tutorial_update) || !number.test(practical_update)) {
+            throw "Only numeric inputs allowed."
+        }
+    } 
+    if (type == "update-module") {
+        let module_lecture_hours = $("#input-lecture-hours")[0].value
+        let module_tutorial_hours = $("#input-tutorial-hours")[0].value 
+        let module_practical_hours = $("#input-practical-hours")[0].value 
+        let module_lecture_classes = $("#input-lecture-classes")[0].value
+        let module_tutorial_classes = $("#input-tutorial-classes")[0].value
+        let module_practical_classes = $("#input-practical-classes")[0].value
+        let module_student = $("#input-student")[0].value
+        if (!number.test(module_lecture_hours) || !number.test(module_tutorial_hours) || !number.test(module_practical_hours) || !number.test(module_lecture_classes) ||
+        !number.test(module_tutorial_classes) || !number.test(module_practical_classes) || !number.test(module_student)) {
+            throw "Only numeric inputs allowed."
+        }
+    }
+}
+
 async function checkAssignedModule(staff_id, module_code) {
     let data = await getAssignedModules(staff_id);
     let assigned = false;
@@ -549,13 +582,13 @@ async function generateModal(module_index) {
             </tr>`)
         }
         else {
-            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
+            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + ` (` + staff_id + `)</option>`)
         }
         if (module.fk_mod_coord == staff_id) {
-            $("#select-mc").append(`<option selected value="` + staff_id + `">` + staff_name + `</option>`)
+            $("#select-mc").append(`<option selected value="` + staff_id + `">` + staff_name + ` (` + staff_id + `)</option>`)
         }
         else {
-            $("#select-mc").append(`<option value="` + staff_id + `" >` + staff_name + `</option>`)
+            $("#select-mc").append(`<option value="` + staff_id + `" >` + staff_name + ` (` + staff_id + `)</option>`)
         }
 
     }
@@ -642,7 +675,11 @@ async function confirmAssignment(module_index) {
             "practical_classes": practical_classes,
             "ma_id": ma_id
         }
-        updateAssignedModule(data)
+        inputValidation("update-assigned",data)
+        .then(async()=>{
+            await updateAssignedModule(data)
+        })
+        .catch(err => error(err))
     })
     $("#assignment-warning").empty();
     calculateClassesTBA();
@@ -663,13 +700,17 @@ async function updateModuleInformation(mod_code) {
     if ($("#select-mc option:selected").val() == "not-selected") {
         throw "Module Coordinator Not Selected";
     }
-    updateModule(mod_code)
+    inputValidation("update-module")
+    .then(async()=>{
+        await updateModule(mod_code)
+    })
     .then(()=>{
         calculateClassesTBA();
     })
     .then(() => {
         generateModuleList();
-    });
+    })
+    .catch(err => error(err));
     
 }
 
@@ -694,10 +735,14 @@ $(document).ready(() => {
         let staff_id = $(".select-staff option:selected").val();
         let mod_code = $(e.target).data("code");
         let module_index = $(e.target).data("index");
-        assignStaff(staff_id, mod_code, module_index)
+        inputValidation("create-assigned")
+        .then(()=>{
+            assignStaff(staff_id, mod_code, module_index)
+        })
         .then(() => {
             generateModuleList();
-        });
+        })
+        .catch(err => error(err));
     })
 
     $("#teaching-assignment-modal").on('click', ".unassign-staff", (e) => {

@@ -17,132 +17,17 @@
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="/script/global.js"></script>
     <script src="/script/append_navbar.js"></script>
     <script src="/script/log_out.js"></script>
+    <script src="/script/home.js"></script>
 
     <!-- Offline scripts -->
-    <link href="css/navbar.css" rel="stylesheet">   
     <link href="css/global.css" rel="stylesheet">
+    <link href="css/home.css" rel="stylesheet">
+    <link href="css/navbar.css" rel="stylesheet">   
+    
 
-    <style>
-        .dashboard-item {
-            height: 0%;
-        }
-
-        .list-group {
-            height: calc(100% - 50px);
-            border-radius: 0 0 6px 6px;
-        }
-
-        #list-group-report {
-            height: calc(100% - 50px);
-            border-radius: 0 0 6px 6px;
-        }
-
-        .list-group>.list-item:last-child {
-            border-radius: 0 0 6px 6px;
-        }
-
-        .list-group>.list-item:not(:first-child) {
-            border-top: 1px solid white
-        }
-
-        .list-item {
-            min-height: 60px;
-            color: #15343F;
-            background: #D0D2D6;
-            font-size: 1em;
-            font-weight: bold;
-            transition: .4s;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .list-item:hover {
-            color: white;
-            background: #22404F;
-
-        }
-
-        #module-info-item {
-            transition: 1s;
-        }
-
-
-
-        .report-item-wrap p {
-            color: #15343F;
-            text-align: left;
-        }
-
-        .report-item-wrap:hover .report-item-title {
-            color: white
-        }
-
-        .report-item-wrap:hover .report-item-desc {
-            color: white
-        }
-
-        .report-item-title {
-            font-size: 1em;
-        }
-
-        .report-item-desc {
-            font-size: .6em;
-            font-weight: lighter;
-        }
-
-        .download-button {
-            background-color: #15343F;
-            color: #ffffff;
-            height: 65%;
-            border: none;
-            border-radius: 3px;
-            font-size: .7em;
-        }
-
-        #teaching-assignment-title {
-            height: 30%
-        }
-
-        #teaching-assignment-list {
-            height: 60px;
-            margin: auto;
-            position: relative;
-            top: -7px;
-            padding: 0;
-            width: 70%;
-            text-align: center;
-
-        }
-
-        .teaching-assignment-list-item {
-
-            color: #15343F;
-            font-size: .8em;
-            font-weight: lighter;
-        }
-
-        a {
-            text-decoration: none;
-        }
-    </style>
-    <script>
-        if (!sessionStorage.getItem("isLoggedIn")) window.location.href = "./login"
-
-
-        $(document).ready(function () {
-
-
-        })
-/*     $(window).on('load', function () {
-                                        $('.maintenance-system-menu').click(function getMaintenenceSystem() {
-                                            window.location.href="./maintenance-system"
-                                        })
-                                    }); */
-    </script>
 </head>
 
 <body>

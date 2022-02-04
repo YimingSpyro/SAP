@@ -1,13 +1,27 @@
 var results_array;
 var old_mod_code;
 var current_stage;
+var workload_arr;
+var global_indx = 0; //for indexing the module workloads in each modal
 
+//regex patterns for workload summary
+const exam_pattern = /.+ST$/
+const ca_pattern = /^CA\d/
 //get available semesters
 function _getSemesters() {
     axios.get(base_url + '/api/report/semester/').then((results) => {
         results.data.forEach(element => {
             $('#select-semester').append(`<option>${element.semester_code}</option>`)
             $('#edit-semester-code').append(`<option>${element.semester_code}</option>`)
+        });
+    });
+};
+
+//get available courses
+function _getCourses() {
+    axios.get(base_url + '/api/course?status=Active').then((results) => {
+        results.data.forEach(element => {
+            $('#course-offered-to, #select-course').append(`<option value= ${element.course_id}>${element.course_id}</option>`)
         });
     });
 };
@@ -32,13 +46,18 @@ async function _getModuleAndAppend(acad_sem) {
         <td>${element['fk_course_id']}</td>
         <td>${element['mod_code']}</td>
         <td class = "text-wrap">${element['mod_name']}</td>
-        <td>${element['fk_semester_code']}</td>
+        <td class = "text-wrap">${element['fk_semester_code']}</td>
         <td>${element['mod_stage']}</td>
         <td>
-            <div class= "edit-module-button" data-bs-toggle="modal" data-bs-target="#editModuleModal" data-module-index="${index}">Edit Module Info</div>
+        <button type="button" class= "edit-module-button btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editModuleModal" 
+        data-module-index="${index}" >Module Info</button>
         </td>
         <td>
-        <div class= "edit" data-bs-toggle="modal" data-bs-target="#exampleModal">Edit Workload</div>
+        <button type="button" class= "edit-workload-button btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#editWorkloadSummary" 
+        data-module-code="${element['mod_code']}" 
+        data-module-name="${element['mod_name']}"
+        data-sem-code="${element['fk_semester_code']}"
+        data-mod-stage="${element['mod_stage']}">Workload</button>
         </td>
         </tr>`
         $('#module-table').append(table_row)
@@ -143,12 +162,146 @@ async function _updateModule(current_sem) {
     axios.put(base_url + '/api/update-module/', {
         data: _data
     }).then((response) => {
-        window.alert("Module Successfully Updated. Please refresh the page to view changes")
+        let b = $("#select-semester option:selected").text();
+        $("tbody tr").remove();
+        $("caption").remove();
+        _getWorkload(b)
+        _getModuleAndAppend(b)
     }).catch((error) => {
         window.alert(error.response.data.message)
     });
 };
+
+//WORKLOAD------------------------------------------------------------------------
+async function _getWorkload(acad_sem) {
+    const workload = await axios.get(base_url + '/api/module-workload/admin?code=' + acad_sem, { withCredentials: true }).then((response) => { return response.data });
+    workload_arr = workload
+    //console.log(workload)
+};
+
+//dynamic appending of workloads from previously retrieved data
+async function _appendWorkloads(mod_name) {
+    global_indx = 0
+    document.getElementById("workload-module-code").innerHTML = `Module: ${summary_obj['mod_code']} ${mod_name}`
+    workload_arr.forEach((element, index) => {
+        if (element['fk_mod_code'] == summary_obj['mod_code'] && element['mod_stage'] == summary_obj['mod_stage']) {
+            let new_req = `<div class="form-group row" id="cc-form-group-${global_indx}">
+            <label for="component-code-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Component
+                Code:</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control  form-control-sm" id="component-code-${global_indx}"
+                    value="${element['component_code']}" readonly>
+            </div>
+            <label for="nrc-${index}" class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control form-control-sm" id="nrc-${global_indx}" 
+                value="${element['nrc']}" readonly>
+            </div>
+            <label for="weightage-${global_indx}"
+                class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+            <div class="col-sm-1">
+                <input type="text" class="form-control form-control-sm" id="weightage-${global_indx}"
+                value="${element['weightage']}" readonly>
+            </div>
+            </div>`
+            $('#requirement-container').append(new_req)
+
+            if (ca_pattern.test(element['component_code'])) {
+                let new_workload = `
+                <div id ="workload-table-entry-${global_indx}" class="mb-3 mt-3 pb-2 workload-entry">
+                <div class="tabletitle">
+                <h6 class="component-code-workload pt-2">${element['component_code']}</h6>
+                </div>
+                <div id="workloadtablecontent-${global_indx}" class="col-12">
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="group-size-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Group
+                        Size:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control form-control-sm" id="group-size-${global_indx}"
+                            value="${element['group_size']}" readonly>
+                    </div>
+                </div>
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="start-week-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Start
+                        Week:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control form-control-sm" id="start-week-${global_indx}"
+                        value="${element['start_weeks']}" readonly>
+                    </div>
+                </div>
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="end-week-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">End
+                        Week:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control form-control-sm" id="end-week-${global_indx}"
+                        value="${element['end_weeks']}" readonly>
+                    </div>
+                </div>
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="remarks"
+                        class="col-sm-2 col-form-label col-form-label-sm align-self-center p-2">Remarks:</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control form-control-sm" id="remarks-${global_indx}" rows="2"
+                        readonly >${element['remarks']}</textarea>
+                    </div>
+                </div>
+                </div>
+                </div>`
+                $('#workloadtable').append(new_workload)
+            } else if (exam_pattern.test(element['component_code'])) {
+                let new_workload = `
+                <div id ="workload-table-entry-${global_indx}" class="mb-3 mt-3 pb-2 workload-entry">
+                <div class="tabletitle">
+                <h6 class="component-code-workload pt-2">${element['component_code']}</h6>
+                </div>
+                <div id="workloadtablecontent-${global_indx}" class="col-12">
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="group-size-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Testwk Type:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control form-control-sm" id="testwk-type-${global_indx}"
+                            value="${element['testwk_type']}" readonly>
+                    </div>
+                </div>
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="start-week-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Type:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control form-control-sm" id="type-${global_indx}"
+                        value="${element['type']}" readonly>
+                    </div>
+                </div>
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="end-week-${global_indx}" class="col-sm-2 col-form-label col-form-label-sm">Duration:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control form-control-sm" id="duration-${global_indx}"
+                        value="${element['duration']}" readonly>
+                    </div>
+                </div>
+                <!-- Input Item -->
+                <div class="form-group row">
+                    <label for="special-requirement-${global_indx}"
+                        class="col-sm-2 col-form-label col-form-label-sm align-self-center p-2">Special Requirement:</label>
+                    <div class="col-sm-8">
+                        <textarea class="form-control form-control-sm" id="special-requirement-${global_indx}" rows="2"
+                        readonly>${element['special_requirement']}</textarea>
+                    </div>
+                </div>
+                </div>
+                </div>`
+                $('#workloadtable').append(new_workload)
+            }
+            global_indx++
+        }
+    });
+};
 //prepare the website with all this data
+_getCourses()
 _getStaff()
 _getSemesters()
 $(document).ready(() => {
@@ -159,12 +312,30 @@ $(document).ready(() => {
         let b = $("#select-semester option:selected").text();
         $("tbody tr").remove();
         $("caption").remove();
+        _getWorkload(b)
         _getModuleAndAppend(b)
     });
-    $('#exampleModal').on('show.bs.modal', function (event) {
+    $('#editWorkloadSummary').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
-        let index = button.data('module-index') // Extract info from data-* attributes
+        let mod_code = button.data('module-code'); // Extract info from data-* attributes
+        let mod_name = button.data('module-name');
+        let mod_stage = button.data('mod-stage');
+        let semester_code = button.data('sem-code');
+
+        summary_obj = {
+            mod_code: mod_code,
+            mod_name: mod_name,
+            mod_stage: mod_stage,
+            semester_code: semester_code
+        };
         var modal = $(this)
+        $('#requirement-container').empty();
+        $('#workloadtable').empty();
+        _appendWorkloads(mod_name)
+    });
+    $('#editWorkloadSummary').on('hidden.bs.modal', function (event) {
+        let b = $("#select-semester option:selected").text();
+        _getWorkload(b)
     });
     $('#editModuleModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
@@ -185,6 +356,11 @@ $(document).ready(() => {
         let lecthr = parseInt($('#mod-lect-hours').val());
         let tuthr = parseInt($('#mod-tut-hours').val());
         let prachr = parseInt($('#mod-prac-hours').val());
-        $('#mod-total-hr').val(lecthr+tuthr+prachr)
+        $('#mod-total-hr').val(lecthr + tuthr + prachr);
+    });
+    $('#edit-students, #edit-oos-students').on('change', () => {
+        let students = parseInt($('#edit-students').val());
+        let oos_students = parseInt($('#edit-oos-students').val());
+        $('#edit-total-students').val(students + oos_students);
     });
 })
