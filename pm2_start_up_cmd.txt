@@ -1,0 +1,11 @@
+/backend
+pm2 start app.js --name tas_backend --watch --time 
+
+/frontend
+pm2 start index.js --name tas_frontend --watch --time
+
+domain name
+http://soctas2021.irc.sg:8000
+
+to stop everything:
+pm2 stop all
