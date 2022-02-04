@@ -82,7 +82,7 @@ async function _updateModuleCoord(mass_lect) {
     axios.put(base_url + '/api/mod-coord/update-module/', {
         data: _data
     }).then((response) => {
-        window.alert("Module Successfully Updated.")
+        _getModuleAndAppend(staff_id)
     }).catch((error) => {
         window.alert(error.response.data.message)
     });
@@ -555,6 +555,9 @@ $(document).ready(() => {
         let index = button.data('module-index') // Extract info from data-* attributes
         var modal = $(this)
         _findTextFields(modal, index)
+    });
+    $('#editWorkloadSummary').on('hidden.bs.modal', function (event) {
+        _getWorkload(staff_id)
     });
     $('#module-coord-name').on('change', () => {
         let selected_value = $('#module-coord-name').val();
