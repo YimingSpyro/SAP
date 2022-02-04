@@ -107,3 +107,26 @@ module.exports.getTotalHoursByStaff = (acad_sem) => {
         return error
     })
 };
+
+module.exports.getWorkloadSummaryByModule = (acad_sem) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT tas.mod_workload.*, mod_abbrv, module.fk_course_id, fk_mod_coord, 
+                    staff_name FROM tas.mod_workload 
+                    INNER JOIN module
+                    ON fk_mod_code = mod_code
+                    INNER JOIN staff_information
+                    ON fk_mod_coord = staff_id
+                    WHERE mod_workload.fk_semester_code = ? 
+                    ORDER BY fk_mod_code, component_code;`,
+            [acad_sem], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+};

@@ -223,6 +223,7 @@ exports.appRoute = router => {
     router.get('/api/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
     router.get('/api/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
     router.get('/api/reports/download/staff-hours/:acad_sem', downloadsController.getTotalHoursByStaff)
+    router.get('/api/reports/download/workload-summary/', downloadsController.getWorkloadSummaryByModule)
 
     //REPORTS API NOT IN USE
     //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)
