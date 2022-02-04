@@ -1,0 +1,24 @@
+.confirm-delete-title {
+    color: #22404F;
+}
+
+.semester-name-delete {
+    color: #22404F;
+}
+
+.create-semester-button{
+    width: 150px;
+}
+
+.modal-title {
+    color: #22404F;
+}
+
+#select-status {
+    width: 70%;
+}
+
+.semester-warning p{
+    color: #22404F;
+    font-size: .9em;
+}

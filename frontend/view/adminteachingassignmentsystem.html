@@ -7,18 +7,31 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exam Matters</title>
+    <title>Teaching Assignment System</title>
 
     <!-- Online scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <!-- Offline scripts -->
-    <link href="admincss/navbar.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/global.css">
-    <link rel="stylesheet" href="adminexammatters.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/adminteachingassignmentsystem.css">
+
+    <script src="/script/log_out.js"></script>
+    <script src="/script/append_navbar.js"></script>
+    <script src="/script/global.js"></script>
+    <script src="/script/notifications.js"></script>
+    <script src="/script/log_out.js"></script>
+    <script src="/script/teachassign.js"></script>
+
+
 
 
 
@@ -27,53 +40,7 @@
 <body>
     <!-- Top Bar -->
     <div id="navbar-wrap" class="container-fluid">
-        <nav id="top-navbar" class="row">
 
-            <!-- Profile -->
-            <div id="navbar-card" class="container col-4 col-lg-2 ">
-                <div id="navbar-brand" class="navbar-brand row">
-                    <div class="col-3">
-                        <img id="profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" alt="Cinque Terre">
-                    </div>
-                    <div id="msg-wrap" class="col-9 ">
-                        <p>Welcome,</p>
-                        <p>Admin 1</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Page Title -->
-            <div id="navbar-title" class="navbar-brand col-9">
-                <h2>Teaching Assignment System</h2>
-            </div>
-            <!-- Notification Bell -->
-            <div id="notification-wrap" class="col-1">
-                <!-- Icon -->
-                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
-                    <img id="notifications" src="../SVG Icons/notification.svg" class="icons"></img>
-                </a>
-                <!-- Contents -->
-                <div class="collapse" id="notification-bell">
-                    <div class="card card-body important" id="announcementcontent">
-                        <div id="announcementtitle">
-                            Announcement Title
-                        </div>
-                        <div id="announcementmessage">
-                            Message go brrrrr
-                        </div>
-                    </div>
-
-                    <div class="card card-body general" id="announcementcontent">
-                        <div id="announcementtitle">
-                            Announcement Title
-                        </div>
-                        <div id="announcementmessage">
-                            Message go brrrrr
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
     </div>
 
     <div class="container-fluid">
@@ -82,46 +49,11 @@
         <div class="row flex-nowrap">
             <div id="dashboard-wrap" class="col-2">
                 <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
-                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
                         <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="admindashboard.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
-                            </a>
-                        </li>
 
-                        <!-- Page Link -->
-                        <li id="nav-item">
-                            <a href="adminmaintenancesystem.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Maintenance.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Maintenance System </span>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item active">
-                            <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Teaching Assignment System</span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminexammatters.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                    Exam Matters
-                                </span>
-                            </a>
-                        </li>
-
-                        <!-- Page Link -->
-                        <li class="nav-item">
-                            <a href="adminannouncements.html" class="nav-link align-middle px-0">
-                                <img src="../SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
-                                Announcements   
-                                </span>
-                            </a>
-                        </li>
 
                     </ul>
                 </div>
@@ -136,15 +68,11 @@
                         <p>Teaching Assignment System</p>
 
                         <div class="form-group row">
-                            <label for="select-section" class="col-sm-2 col-form-label">Select Section</label>
+                            <label for="select-section" class="col-2 col-form-label">Select Section</label>
                             <div class="col">
-                                <select class="form-select-sm col-2" id="select-section">
-                                    <option selected>Section</option>
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                  </select>
+                                <select class="form-select-sm col-4" id="select-section">
+                                    <option selected>Select Section</option>
+                                </select>
                             </div>
                         </div>
 
@@ -156,55 +84,279 @@
 
                         <!-- Module table -->
                         <table id="admin-table" class="table table-dark rounded-top">
-                            <caption>Showing 3 Results</caption>
+
                             <thead>
-                                <tr>
+                                <tr class="align-middle">
                                     <th scope="col" class="col-2">Module Code</th>
                                     <th scope="col" class="col-3">Module Name</th>
                                     <th scope="col" class="col-2">Hours per week</th>
-                                    <th scope="col" class="col-2">To be assigned</th>
-                                    <th scope="col" class="col-2">assigned</th>
+                                    <th scope="col" class="col-2">Classes to assign</th>
+                                    <th scope="col" class="col-2">Classes assigned</th>
                                     <th scope="col" class="col-3"></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>3</td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                </tr>
-                                <tr class="border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>3</td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                </tr>
-                                <tr class="status-unassigned border-bottom border-white">
-                                    <td>AB1234</td>
-                                    <td>Interesting Lesson</td>
-                                    <td>2</td>
-                                    <td>3</td>
-                                    <td>0</td>
-                                    <td class="text-end">
-                                        <div>View</div>
-                                    </td>
-                                </tr>
+                            <tbody class="module-list">
 
 
                             </tbody>
+                            <caption id="caption"></caption>
 
                         </table>
 
 
+                        <!-- Module Modal -->
+                        <div class="modal fade" id="teaching-assignment-modal" tabindex="-1"
+                            aria-labelledby="teaching-assignment-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content modal-information">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- View Staff Info Modal -->
+                        <div class="modal fade" id="staff-modal" tabindex="-1" aria-labelledby="staff-modal"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content staff-information">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title staff-name" id="teaching-assignment-modal"></h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body row">
+
+                                        <!-- Page Content (left) -->
+                                        <div id="page-content" class="col-7 py-3 align-center">
+                                            <div id="content-view-modal-left" class="mx-2">
+
+                                                <!-- Content Header -->
+                                                <div id="content-header" class="text-center">
+                                                    <p class="mx-4">Assigned Modules</p>
+                                                </div>
+
+                                                <!-- Content Item -->
+                                                <div id="content-item-left">
+                                                    <!-- Tables -->
+                                                    <table class="table table-dark">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Classes</th>
+                                                                <th scope="col">L</th>
+                                                                <th scope="col">T</th>
+                                                                <th scope="col">P</th>
+                                                                <th scope="col">Hours</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody class="assigned-modules">
+
+                                                        </tbody>
+                                                        <thead class="total-hours">
+
+                                                        </thead>
+                                                    </table>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Page Content (right) -->
+                                        <div id="page-content" class="col-5 py-3 justify-content-center">
+                                            <div id="content-view-modal-right" class="mx-2">
+
+                                                <!-- Content Header -->
+                                                <div id="content-header" class="text-center">
+                                                    <p class="mx-4">Module Preference</p>
+                                                </div>
+
+                                                <!-- Content Item -->
+                                                <div id="content-item-right">
+                                                    <div class="module-preferences">
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-1" class=" col-form-label">1st
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-1" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="1" id="mc-1" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-2" class=" col-form-label">2nd
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-2" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="2" id="mc-2" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-3" class=" col-form-label">3rd
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-3" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="3" id="mc-3" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-4" class=" col-form-label">4th
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-4" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="4" id="mc-4" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-5" class=" col-form-label">5th
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-5" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="5" id="mc-5" disabled>
+                                                            </div>
+                                                        </div>
+
+
+                                                        <div class="form-group row py-2 align-items-center">
+                                                            <div class="col-4">
+                                                                <label for="choice-6" class=" col-form-label">6th
+                                                                    choice:</label>
+                                                            </div>
+
+                                                            <div class="col-6">
+                                                                <input id="choice-6" class="form-control" type="text"
+                                                                    value="EP0200" disabled>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <input class="form-check-input module-coordinator"
+                                                                    type="checkbox" value="6" id="mc-6" disabled>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Success Modal -->
+                        <div class="modal fade" id="submit-requests-success-assigned" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Staff Assigned</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-unassigned" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Staff Unassigned</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-confirm" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Classes Assigned</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="submit-requests-success-module" tabindex="-1"
+                            aria-labelledby="submit-requests-success-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">Module Updated</h5>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Error Modal -->
+                        <div class="modal fade" id="submit-requests-error" tabindex="-1"
+                            aria-labelledby="submit-requests-error-modal" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header justify-content-center">
+                                        <h5 class="modal-title">An Error has occured</h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="error-message text-center"></p>
+                                    </div>
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-primary "
+                                            data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

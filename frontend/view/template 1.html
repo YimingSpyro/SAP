@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Page Title -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Matters</title>
+
+    <!-- Online scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Offline scripts -->
+    
+    <link href="../public/css/navbar.css" rel="stylesheet">
+    <link href="../public/css/report.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/global.css">
+    <script src="/script/global.js"></script>
+    <script src="/script/reports.js"></script>
+
+
+
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div id="navbar-wrap" class="container-fluid">
+        <nav id="top-navbar" class="row">
+
+            <!-- Profile -->
+            <div id="navbar-card" class="container col-4 col-lg-2 ">
+                <div id="navbar-brand" class="navbar-brand row">
+                    <div class="col-3">
+                        <img id="profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" alt="Cinque Terre">
+                    </div>
+                    <div id="msg-wrap" class="col-9 ">
+                        <p>Welcome,</p>
+                        <p>Admin 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Title -->
+            <div id="navbar-title" class="navbar-brand col-9">
+                <h2>Exam Matters</h2>
+            </div>
+            <!-- Notification Bell -->
+            <div id="notification-wrap" class="col-1">
+                <!-- Icon -->
+                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false" aria-controls="notification-bell">
+                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                </a>
+                <!-- Contents -->
+                <div class="collapse" id="notification-bell">
+                    <div class="card card-body important" id="announcementcontent">
+                        <div id="announcementtitle">
+                            Announcement Title
+                        </div>
+                        <div id="announcementmessage">
+                            Message go brrrrr
+                        </div>
+                    </div>
+
+                    <div class="card card-body general" id="announcementcontent">
+                        <div id="announcementtitle">
+                            Announcement Title
+                        </div>
+                        <div id="announcementmessage">
+                            Message go brrrrr
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+
+        <!-- Side Bar -->
+        <div class="row flex-nowrap">
+            <div id="dashboard-wrap" class="col-2">
+                <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
+                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="admindashboard.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li id="maintenence-system">
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <img src="../SVG Icons/Update Personal Info Icon.svg" class="icons"></img> <span class="nav-item-text d-none d-sm-inline">Update Personal Information
+                                    System </span><i id="caret-down" class="bi bi-caret-down-fill"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <div class="accordion accordion-flush" id="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                      <img src="../SVG Icons/Update Personal Info Icon.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Maintenance System</span>
+                                    </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Module information
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Staff information
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Course information
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Manage designation
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Manage semester
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Teaching Assignment System</span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item active">
+                            <a href="adminexammatters.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Exam Matters
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="adminannouncements.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">
+                                Announcements   
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="reports.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div id="page-content" class="col-10 py-3">
+                <div id="content-view-admin" class="container">
+
+                    <!-- Content Header -->
+                    <div id="content-header-admin">
+                        <p>Exam Moderator & Verifier System</p>
+
+                        <div class="form-group row">
+                            <label for="select-section" class="col-sm-2 col-form-label">Select Section</label>
+                            <div class="col">
+                                <select class="form-select-sm col-2" id="select-section">
+                                    <option selected>Section</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                  </select>
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- Content Item -->
+                    <div id="content-item-admin">
+
+                        <!-- Module table -->
+                        <table id="admin-table" class="table table-dark rounded-top">
+                            <caption>Showing 3 Results</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-2">Module Code</th>
+                                    <th scope="col" class="col-3">Module Name</th>
+                                    <th scope="col" class="col-2">Offer To</th>
+                                    <th scope="col" class="col-2">Status</th>
+                                    <th scope="col" class="col-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-bottom border-white">
+                                    <td>AB1234</td>
+                                    <td>Interesting Lesson</td>
+                                    <td>DIT Yr2</td>
+                                    <td>Assigned</td>
+                                    <td class="text-end">
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
+                                    </td>
+                                </tr>
+                                <tr class="border-bottom border-white">
+                                    <td>AB1234</td>
+                                    <td>Interesting Lesson</td>
+                                    <td>DIT Yr2</td>
+                                    <td>Assigned</td>
+                                    <td class="text-end">
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
+                                    </td>
+                                </tr>
+                                <tr class="status-unassigned border-bottom border-white">
+                                    <td>AB1234</td>
+                                    <td>Interesting Lesson</td>
+                                    <td>DIT Yr2</td>
+                                    <td>Unassigned</td>
+                                    <td class="text-end">
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <!-- Content header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Module: EP1234 ABC</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="modal-body">
+
+                                        <form action="">
+                                            <!-- ======== NOTE: Existing Data should show in the placeholders  ========-->
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="exam-type" class="col-sm-2 col-form-label col-form-label-sm">Type:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="exam-type" placeholder="Exam Type">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="offered-to" class="col-sm-2 col-form-label col-form-label-sm">Offered To:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="offered-to" placeholder="(DIT) Year 2">
+                                                </div>
+                                            </div>
+
+                                            <br>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="chief-examiner" class="col-sm-2 col-form-label col-form-label-sm">Chief Examiner:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="chief-examiner" placeholder="Chief Examiner Name">
+                                                </div>
+
+                                                <div class="col-sm-1">
+
+                                                </div>
+
+                                                <!-- MDEO & Marker -->
+                                                <label for="mdeo" class="col-sm-2 col-form-label col-form-label-sm">MDEO & Marker:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="mdeo" placeholder="MDEO & Marker">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="co-examiner" class="col-sm-2 col-form-label col-form-label-sm">Add Co-Examiner:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="co-examiner" placeholder="Optional">
+                                                </div>
+                                                <div class="col-sm-1">
+
+                                                </div>
+                                                <!-- Add Marker -->
+                                                <label for="add-marker" class="col-sm-2 col-form-label col-form-label-sm">Add Marker</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="add-marker" placeholder="Optional">
+                                                </div>
+                                            </div>
+
+                                            <br>
+
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="moderator-name" class="col-sm-2 col-form-label col-form-label-sm">Moderator Name:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="moderator-name" placeholder="Moderator Name">
+                                                </div>
+                                                <div class="col-sm-1">
+
+                                                </div>
+                                                <label for="verifier" class="col-sm-2 col-form-label col-form-label-sm">Verifier:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="verifier" placeholder="Verifier">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="external-moderation" class="col-sm-2 col-form-label col-form-label-sm">External Moderation:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="external-moderation" placeholder="Optional">
+                                                </div>
+                                                <div class="col-sm-1">
+
+                                                </div>
+
+                                                <label for="verifier details" class="col-sm-2 col-form-label col-form-label-sm">Verifier Details:</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="verifier-details" placeholder="Verifier Details">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+
+                                                <div class="col-sm-6">
+
+                                                </div>
+
+                                                <label for="marks-moderator" class="col-sm-2 col-form-label col-form-label-sm">Marks Moderator</label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control form-control-sm" id="marks-moderator" placeholder="Marks Moderator">
+                                                </div>
+                                            </div>
+
+
+                                            <!-- Update Button -->
+                                            <button type="submit" class="btn btn-primary float-end">Confirm Assignment</button>
+                                        </form>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

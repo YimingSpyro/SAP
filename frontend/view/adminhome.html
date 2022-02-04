@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <!-- Online scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Offline scripts -->
+    
+        <link rel="stylesheet" href="/css/navbar.css">
+
+    <style>
+        .dashboard-item {
+            height: 0%;
+        }
+        
+        .list-group {
+            height: calc(100% - 50px);
+            border-radius: 0 0 6px 6px;
+        }
+        
+        #list-group-report {
+            height: calc(100% - 50px);
+            border-radius: 0 0 6px 6px;
+        }
+        
+        .list-group>.list-item:last-child {
+            border-radius: 0 0 6px 6px;
+        }
+        
+        .list-group>.list-item:not(:first-child) {
+            border-top: 1px solid white
+        }
+        
+        .list-item {
+            min-height: 60px;
+            color: #15343F;
+            background: #D0D2D6;
+            font-size: 1em;
+            font-weight: bold;
+            transition: .4s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .list-item:hover {
+            color: white;
+            background: #22404F;
+        }
+        
+        #module-info-item {
+            transition: 1s;
+        }
+        
+        .report-item-wrap p {
+            color: #15343F;
+            text-align: left;
+        }
+        
+        .report-item-wrap:hover .report-item-title {
+            color: white
+        }
+        
+        .report-item-wrap:hover .report-item-desc {
+            color: white
+        }
+        
+        .report-item-title {
+            font-size: 1em;
+        }
+        
+        .report-item-desc {
+            font-size: .6em;
+            font-weight: lighter;
+        }
+        
+        .download-button {
+            background-color: #15343F;
+            color: #ffffff;
+            height: 65%;
+            border: none;
+            border-radius: 3px;
+            font-size: .7em;
+        }
+        
+        #teaching-assignment-title {
+            height: 30%
+        }
+        
+        #teaching-assignment-list {
+            height: 60px;
+            margin: auto;
+            position: relative;
+            top: -7px;
+            padding: 0;
+            /* width: 70%; */
+            text-align: center;
+        }
+        
+        .teaching-assignment-list-item {
+            color: #15343F;
+            font-size: .8em;
+            font-weight: lighter;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#maintenence-system").hover(
+                function() {
+                    $('#ul-collapse').addClass("show");
+                    $('#caret-down').toggleClass("bi-caret-down-fill").toggleClass("bi-caret-right-fill");
+
+
+                },
+                function() {
+                    $('#ul-collapse').removeClass("show");
+                    $('#caret-down').toggleClass("bi-caret-right-fill").toggleClass("bi-caret-down-fill");
+                }
+            );
+        })
+    </script>
+</head>
+
+<body>
+    <div id="navbar-wrap" class="container-fluid">
+        <nav id="top-navbar" class="row">
+            <div id="navbar-card" class="container col-4 col-lg-2 ">
+                <div id="navbar-brand" class="navbar-brand row">
+                    <div class="col-3">
+                        <img id="profile-icon" src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png" alt="Cinque Terre">
+                    </div>
+                    <div id="msg-wrap" class="col-9 ">
+                        <p>Welcome,</p>
+                        <p>Adminstrator 1</p>
+                    </div>
+                </div>
+            </div>
+            <div id="navbar-title" class="navbar-brand col-9">
+                <h2>Dashboard</h2>
+            </div>
+            <div id="notification-wrap" class="col-1">
+                <img id="notifications" src="../SVG Icons/notification.svg" class="icons"></img>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            <div id="dashboard-wrap" class="col-2">
+                <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
+                    <ul id="main-list" class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                        <li class="nav-item active">
+                            <a href="home.html" class="nav-link align-middle px-0">
+                                <img src="../SVG Icons/Dashboard.svg" class="icons"></img> <span class="nav-item-text d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="teachrequirement.html" class="nav-link align-middle px-0">
+                                <img src="../SVG Icons/update teaching requirement.svg" class="icons" style="float: left;"></img>
+                                <span class="nav-item-text d-none d-sm-inline">Update Teaching Requirement</span>
+                            </a>
+                        </li>
+
+                        <li id="maintenence-system">
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <img src="../SVG Icons/Update Personal Info Icon.svg" class="icons"></img> <span class="nav-item-text d-none d-sm-inline">Update Personal Information
+                                    <!-- System </span><i id="caret-down" class="bi bi-caret-down-fill"></i> --></a>
+                            <!-- <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="#">Action</a>
+                                        <a class="dropdown-item" href="#">Another action</a>
+                                        <a class="dropdown-item" href="#">Something else here</a>
+                                    </div> -->
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <img src="../SVG Icons/Select Module Pref.svg" class="icons"></img> <span class="nav-item-text d-none d-sm-inline">Choose Module Preference</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link align-middle px-0">
+                                <img src="../SVG Icons/Assigned Module.svg" class="icons"></img> <span class="nav-item-text d-none d-sm-inline">View Assigned Module</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="changepassword.html" class="nav-link align-middle px-0">
+                                <img src="../SVG Icons/Lock Icon.svg" class="icons"></img> <span class="nav-item-text d-none d-sm-inline">Change Password</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div id="dashboard-view-wrap" class="col-10 py-3">
+                <div id="dashboard-view" class="container">
+                    <div class="row">
+                        <div class="col-7">
+                            <div class="d-flex justify-content-center">
+                                <div class="col-6 dashboard-item">
+                                    <div class="col dashboard-item-title">
+                                        Maintenence System
+                                    </div>
+                                    <div class="list-group d-flex flex-column">
+                                        <div id="module-info-item" class="list-item p-2 col"><a>Module Information</a>
+                                        </div>
+
+                                        <div id="staff-info-item" class="list-item p-2 col"><a>Staff Information</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="teaching-assignment" class="col-6 dashboard-item">
+                                    <div class="col dashboard-item-title">
+                                        Teaching Assignment
+                                    </div>
+                                    <div id="teaching-assignment-title" class="list-item p-2 col"><a>Teaching Assignment
+                                            System</a>
+                                    </div>
+                                    <div id="teaching-assignment-list" class="p-2 col">
+                                        <ul id="teaching-assignment-list">
+                                            <li class="w-100">
+                                                <a href="#" class=""> <span class="d-none d-sm-inline teaching-assignment-list-item">View
+                                                        Teaching Schedule</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#" class=""> <span class="d-none d-sm-inline teaching-assignment-list-item">View
+                                                        Module Preference</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-center">
+                                <div class="col-6 dashboard-item">
+                                    <div class="col dashboard-item-title">
+                                        Exam Matters
+                                    </div>
+                                    <div class="list-group d-flex flex-column">
+                                        <div class="list-item p-2 col"><a>Exam Moderator & Verifier</a></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-6 dashboard-item">
+                                    <div class="col dashboard-item-title">
+                                        Announcements
+                                    </div>
+                                    <div class="list-group d-flex flex-column">
+                                        <div class="list-item p-2 col"><a>View Announcements</a></div>
+
+                                        <div class="list-item p-2 col"><a>Create New Accouncements</a></div>
+                                        <div class="list-item p-2 col"><a>Manage Announcements</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div id="dashboard-item-report" class="col">
+                                <div class="col dashboard-item-title">
+                                    Download Reports
+                                </div>
+                                <div id="list-group-report" class="d-flex flex-column">
+                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-1">
+                                                <p class="report-item-title">MC list</p>
+                                                <p class="report-item-desc">Download Module Coordinator List</p>
+                                            </div>
+                                            <a href="../reports/mc_list.xlsx">
+                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-1">
+                                                <p class="report-item-title">Assignment Report</p>
+                                                <p class="report-item-desc">Download all teaching assignments</p>
+                                            </div>
+                                            <a href="../reports/assignment_report.xlsx">
+                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-1">
+                                                <p class="report-item-title">Summary by Module</p>
+                                                <p class="report-item-desc">Download Module Summary</p>
+                                            </div>
+                                            <a href="../reports/summary_by_module.xlsx">
+                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-1">
+                                                <p class="report-item-title">Summary by Staff</p>
+                                                <p class="report-item-desc">Download Staff Summary</p>
+                                            </div>
+                                            <a href="../reports/summary_by_staff.xlsx">
+                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-1">
+                                                <p class="report-item-title">Examiner & Moderator Report</p>
+                                                <p class="report-item-desc">Download Examiner & Moderator Report</p>
+                                            </div>
+                                            <a href="../reports/examiner_moderator_report.xlsx">
+                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="p-1">
+                                                <p class="report-item-title">MDEO Verifier Report</p>
+                                                <p class="report-item-desc">Download MDEO Verifier Report</p>
+                                            </div>
+                                            <a href="../reports/mdeo_verifier_report.xlsx">
+                                                <button id="download-button" class="px-4 download-button" download=>Download</button>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+#profile-icon {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px
+}
+
+.form-group {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #22404F;
+}
+
+
+/* Change height for height of the grey container box */
+
+#content-item {
+    margin: .3em;
+    margin-top: 22px;
+    height: 100%;
+    border-radius: 6px;
+    padding: 0 0 25px 0;
+    margin-left: 59px;
+    margin-right: 59px;
+    margin-bottom: 59px;
+}
+
+button {
+    width: 100%;
+}
+
+
+p#title {
+    color: #22404F;
+    font-size: 15px;
+    margin-right: 40px;
+    margin-bottom: 5px;
+}
+
+
+/* table */
+
+.table>:not(caption)>*>* {
+    padding: 0.5rem 0.5rem;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+thead {
+    background-color: #22404F !important;
+    color: white;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-accent-bg: #E9E9E9;
+    color: #22404F;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-striped>tbody>tr:nth-of-type(even)>* {
+    --bs-table-accent-bg: #DDDDDD;
+    color: #22404F;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+td .form-control-sm {
+    height: 5px;
+    padding: 5px;
+    font-size: 1rem;
+    border-radius: 5px;
+    margin-bottom: 3px;
+}

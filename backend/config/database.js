@@ -10,13 +10,12 @@ const config = require('./config');
         database: 'Htge9DZLeE',
         multipleStatements: true
     }); */
- const pool = mysql.createPool({
-        connectionLimit: 100,
-        host: 'localhost',
-        user: 'root',
-        password: 'TYKdatabase@123',
-        database: 'tas',
+    const pool = mysql.createPool({
+        connectionLimit: 65,
+        host: config.databaseHost,
+        user: config.databaseUserName,
+        password: config.databasePassword,
+        database: config.databaseName,
         multipleStatements: true
     });
-
  module.exports=pool;

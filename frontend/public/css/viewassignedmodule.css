@@ -1,0 +1,22 @@
+/* Change height for height of the grey container box */
+
+#content-item {
+    margin: .3em;
+    margin-top: 22px;
+    height: 100%;
+    border-radius: 6px;
+    padding: 0;
+    margin-left: 59px;
+    margin-right: 59px;
+}
+
+.table>:not(caption)>*>* {
+    padding: 0.5rem 0.5rem;
+    background-color: #22404F;
+    padding-left: 20px;
+}
+
+#text {
+    color:#22404F;
+    font-weight: bolder;
+}

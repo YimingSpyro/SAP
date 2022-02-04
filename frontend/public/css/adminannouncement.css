@@ -1,0 +1,227 @@
+/* Show more button */
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #15343F;
+    margin-top: 7px;
+    margin-left: 4px;
+}
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #15343F;
+    margin-top: 7px;
+    margin-left: 4px;
+}
+
+
+/* Admin Announcements */
+
+#announcement-bar-admin {
+    margin-bottom: 15px;
+}
+
+#announcementto,
+#announcementduration {
+    margin-right: 55px;
+}
+
+#announcementmessage {
+    line-height: 1.8;
+}
+
+/* Important */
+
+#announcementactions.important {
+    background-color: #CA0000;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    height: 75px;
+}
+
+#announcementcontent.important {
+    width: 90%;
+    background-color: #F58E8E;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.important #announcementtitle {
+    color: #CA0000;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.important #announcementmessage,
+.important #announcementto,
+.important #announcementduration {
+    color: #CA0000;
+    font-size: 14px;
+}
+
+
+/* Maintenance  */
+
+#announcementactions.maintenance {
+    background-color: #6D5B14;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    height: 75px;
+}
+
+#announcementcontent.maintenance {
+    width: 90%;
+    background-color: #F3D353;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.maintenance #announcementtitle {
+    color: #6D5B14;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.maintenance #announcementmessage,
+.maintenance #announcementto,
+.maintenance #announcementduration {
+    color: #6D5B14;
+    font-size: 14px;
+}
+
+
+/* general  */
+
+#announcementactions.general {
+    background-color: #22404F;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 15px;
+    padding-bottom: 10px;
+    height: 75px;
+}
+
+#announcementcontent.general {
+    width: 90%;
+    background-color: #D8F4F9;
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-left: 59px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+}
+
+.general #announcementtitle {
+    color: #22404F;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.general #announcementmessage,
+.general #announcementto,
+.general #announcementduration {
+    color: #22404F;
+    font-size: 14px;
+}
+
+
+
+
+/* =========================== Create Announcement ========================= */
+
+.form-group {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #22404F;
+}
+
+.form-select-sm {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.5rem;
+    font-size: .875rem;
+    border-radius: 0.2rem;
+    border-style: none;
+    width: 200px;
+}
+
+
+/* Change height for height of the grey container box */
+
+#content-item {
+    margin: .3em;
+    margin-top: 22px;
+    height: 430px;
+    border-radius: 6px;
+    padding: 0;
+    margin-left: 59px;
+    margin-bottom: 30px;
+}
+
+#content-item-admin {
+    height: 100%;
+}
+
+button {
+    margin-top: 20px;
+    margin-right: 60px;
+    width: 300px;
+}
+
+.edit-button,
+.delete-button,
+.show-more-button,
+.show-less-button {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.show-more-button {
+    color: #22404F;
+}
+
+.show-less-button {
+    color: #22404F;
+}
+
+#showless {
+    display: none !important;
+}
+
+.show-more-item {
+    display: none;
+}
+
+.confirm-delete-button button {
+    width: 150px;
+}

@@ -16,102 +16,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <script>
-        $(document).ready(() => {
-            $("#submit-button").click((e) => {
-                var staff_id = $("#staff_id").val();
-                var password = $("#password").val();
-                if (!staff_id.trim()) {
-                    $("#error_message_content").text("Please fill in all the fields.")
-                    $("#error_message").css("display", "block");
-                    $("input#staff_id").focus()
-                } else if (!password.trim()) {
-                    $("#error_message_content").text("Please fill in all the fields.")
-                    $("#error_message").css("display", "block");
-                    $("input#password").focus()
-                } else {
-                    axios.post('http://localhost:8080/login', {
-                        staff_id: staff_id,
-                        password: password
-                    },{withCredentials: true}).then((response) => {
-                        if (response.status == 200) {
-                            console.log(response);
-                            window.location.href = "./home.html"
-                            /* const accessToken = response.data.accessToken;
-                            storeAccessTokenInLocalStorage(accessToken); */
-                        }
-                    }).catch(() => {
-                        $("#error_message_content").text('Invalid Login credientals, please try again.')
-                        $("#error_message").css("display", "block");
-                    });
-                }
-            })
-        })
-    </script>
+    <!-- Offline scripts -->
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+
+    <script src="/script/global.js"></script>
+    <script src="/script/login.js"></script>
+
     <style>
-        body {
-            font-family: sans-serif;
-            display: flex;
-            justify-content: center;
-            background: #C1C8CB;
-            height: 100%;
-        }
-
-        #content-wrap {
-            margin-top: 10%;
-        }
-
-        body>div {
-            font-size: 1em;
-        }
-
-        #login-title {
-            font-weight: lighter;
-            font-size: 70px;
-            font-style: italic;
-            text-align: center;
-            color: #01709A;
-            margin-block-end: 0px;
-        }
-
-        #login-input-wrap {
-            display: flex;
-            justify-content: center;
-            flex-direction: column;
-            padding: 20px;
-
-        }
-
-        #login-input-wrap input {
-            font-size: .8em;
-            font-weight: bold;
-            width: 280px;
-            height: 25px;
-            margin-top: 20px;
-            border-radius: 3px;
-            border: none;
-            padding: 4px 8px 4px 8px
-        }
-
-        #submit-button {
-            font-weight: 600;
-            padding: 4px 5px 4px 5px;
-            color: white;
-            height: 30px;
-            margin-top: 15px;
-            background: #86C4F1;
-            border-radius: 3px;
-            border: none;
-        }
-
-        #error_message {
-            display: none;
-            font-size: .8em;
-            padding: 10px;
-            border-radius: 3px;
-            width: 280px;
-            background: #f7d2d2;
-        }
+ 
     </style>
 </head>
 

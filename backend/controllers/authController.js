@@ -1,28 +1,32 @@
 var bcrypt = require('bcryptjs');
 var jwt = require('jsonwebtoken')
-const JWT_SECRET_KEY = 'tassystem';
+const config = require('../config/config');
 
 function genAccessToken(rows) {
     var row = rows[0];
+    console.log(row.roles);
+    console.log(config.JWTExpire);
     var items = {
         staff_name: row.staff_name,
-        staff_id: row.staff_id
+        staff_id: row.staff_id,
+        staff_roles :row.roles
     }
     const tokenPayload = items;
-    const accessToken = jwt.sign(tokenPayload, JWT_SECRET_KEY);
+    const accessToken = jwt.sign(tokenPayload, config.JWTKey,{
+        expiresIn :config.JWTExpire
+    });
 
     //insert record into jwt records table
-    insertJwtRecord(row,accessToken);
+    insertJwtRecord(row, accessToken);
     console.log(accessToken)
     return accessToken;
 }
-function insertJwtRecord(row,token){
-    authManager.insertJwtRecord([row.staff_id,token])
+function insertJwtRecord(row, token) {
+    authManager.insertJwtRecord([row.staff_id, token])
 }
 const saltRounds = 10;
 const authManager = require('../services/authService');
-const config = require('../config/config');
-const pool = require('../config/database')
+const pool = require('../config/database');
 
 module.exports.processLogin = ((req, res) => {
     console.log("login called")
@@ -32,28 +36,46 @@ module.exports.processLogin = ((req, res) => {
     console.log(password);
     var data = authManager.login([staff_id, password])
         .then((rows) => {
+            console.log("authmanager");
+            console.log(rows);
+            console.log(rows[0].staff_name);
             var hash = rows[0].staff_password;
             bcrypt.compare(password, hash, (err, resp) => {
                 if (resp) {
                     const accessToken = genAccessToken(rows,);
-                    const result = JSON.parse(JSON.stringify(rows[0]));
+                    // const result = JSON.parse(JSON.stringify(rows[0]));
+                    const result = rows;
                     result['token'] = accessToken
-                    var userData = result; 
-                    res.cookie("token",result.token, {
+                    res.cookie("token", result.token, {
                         httpOnly: true
                     });
-
                     res.status(200).json({
                         data: result
                     });
 
                 } else {
+                    console.log("BCRYPT error");
+                    console.log(err);
                     res.status(500).json({
                         error: err
                     });
                 }
             });
-
+        }).catch((error) => {
+            console.log(error)
+            res.status(500).json({
+                error: error
+            });
+        })
+})
+module.exports.getStaffPrivileges = ((req, res) => {
+    console.log("owdaj");
+    let staff_id = req.params.id;
+    var data = authManager.getStaffPrivileges(staff_id)
+        .then((rows) => {
+            res.status(200).json({
+                data: rows
+            });
         }).catch((error) => {
             console.log(error)
             res.status(500).json({
@@ -80,11 +102,76 @@ module.exports.processRegister = ((req, res) => {
             })
         })
 })
-module.exports.processTestCookie = ((req, res) => {
-    res.cookie("username", "pls work damn it", {
-        httpOnly: true
-    });
-    res.send(req.cookies)
+module.exports.processChangePassword = ((req, res) => {
+    var staff_id = req.staff_id;
+    console.log(staff_id);
+    var old_password = req.body.old_password;
+    console.log(old_password);
+    var new_password = req.body.new_password;
+    var re_new_password = req.body.re_new_password;
+    if (new_password != re_new_password) return res.status(500).send({success: false, error: {message: 'New Passwords do not match'}});
+
+    var data = authManager.login([staff_id, old_password])
+        .then((rows) => {
+            var old_password_hashed = rows[0].staff_password;
+            bcrypt.compare(old_password, old_password_hashed, (err, resp) => {
+                if (resp) {
+                    bcrypt.compare(new_password, old_password_hashed, (err, resp) => {
+                        if (resp) {
+                            res.status(500).send({success: false, error: {message: "New password cannot be the same as old password!"}});
+                        }
+                    });
+                    bcrypt.hash(new_password, saltRounds, function (err, hash) {
+                        if (err) {
+                           /*  return callback(err, null); */
+                           return res.status(500).send({
+                            error: "Error"
+                        });
+                        }
+                        var new_password_hashed = hash;
+                        authManager.changePassword([staff_id, new_password_hashed]).then((rows) => {
+                            if (rows.affectedRows == 1) {
+                                return res.status(200).json({
+                                    message: "Succesfully updated password"
+                                });
+                            }
+                        }), ((error) => {
+                            console.log(error)
+                            return res.status(500).send({success: false, error: {message: 'No blah Found'}});
+                        })
+                    });
+
+
+                } else {
+                    console.log("wrong password");
+                    console.log(err);
+                    return res.status(500).json({
+                        error: err
+                    });
+                }
+            });
+
+        }).catch((error) => {
+            console.log(error)
+            return res.status(500).json({
+                error: error
+            });
+        })
+})
+module.exports.getNavItems = (async (req, res) => {
+    try {
+        let results = await authManager.getNavItems();
+        console.log('Get All Exams', results);
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
 })
 /* module.exports.getStaffByStaffId = ()=>{
     return new Promise((resolve,reject)=>{

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Page Title -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Matters</title>
+
+    <!-- Online scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Offline scripts -->
+    
+    <link href="../public/css/navbar.css" rel="stylesheet">
+    <link href="../public/css/report.css" rel="stylesheet">
+    <link rel="stylesheet" href="../public/css/global.css">
+    <script src="/script/global.js"></script>
+    <script src="/script/reports.js"></script>
+
+
+
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div id="navbar-wrap" class="container-fluid">
+        <nav id="top-navbar" class="row">
+
+            <!-- Profile -->
+            <div id="navbar-card" class="container col-4 col-lg-2 ">
+                <div id="navbar-brand" class="navbar-brand row">
+                    <div class="col-3">
+                        <img id="profile-icon"
+                            src="https://vengreso.com/wp-content/uploads/2016/03/LinkedIn-Profile-Professional-Picture-Sample-Bernie-Borges.png"
+                            alt="Cinque Terre">
+                    </div>
+                    <div id="msg-wrap" class="col-9 ">
+                        <p>Welcome,</p>
+                        <p>Admin 1</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Page Title -->
+            <div id="navbar-title" class="navbar-brand col-9">
+                <h2>Exam Matters</h2>
+            </div>
+            <!-- Notification Bell -->
+            <div id="notification-wrap" class="col-1">
+                <!-- Icon -->
+                <a class="btn" data-bs-toggle="collapse" href="#notification-bell" role="button" aria-expanded="false"
+                    aria-controls="notification-bell">
+                    <img id="notifications" src="../public/SVG Icons/notification.svg" class="icons"></img>
+                </a>
+                <!-- Contents -->
+                <div class="collapse" id="notification-bell">
+                    <div class="card card-body important" id="announcementcontent">
+                        <div id="announcementtitle">
+                            Announcement Title
+                        </div>
+                        <div id="announcementmessage">
+                            Message go brrrrr
+                        </div>
+                    </div>
+
+                    <div class="card card-body general" id="announcementcontent">
+                        <div id="announcementtitle">
+                            Announcement Title
+                        </div>
+                        <div id="announcementmessage">
+                            Message go brrrrr
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container-fluid">
+
+        <!-- Side Bar -->
+        <div class="row flex-nowrap">
+            <div id="dashboard-wrap" class="col-2">
+                <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="admindashboard.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Dashboard.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li id="maintenence-system">
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <img src="../SVG Icons/Update Personal Info Icon.svg" class="icons"></img> <span
+                                    class="nav-item-text d-none d-sm-inline">Update Personal Information
+                                    System </span><i id="caret-down" class="bi bi-caret-down-fill"></i></a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <div class="accordion accordion-flush" id="accordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            <img src="../SVG Icons/Update Personal Info Icon.svg" class="icons"></img>
+                                            <span class="nav-item-text ms-1 d-none d-sm-inline">Maintenance
+                                                System</span>
+                                        </button>
+                                    </h2>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordion">
+                                        <div class="accordion-body">
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Module information
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Staff information
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Course information
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Manage designation
+                                            </a>
+                                            <a href="#" class="nav-link align-middle px-0">
+                                                Manage semester
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="adminteachingassignmentsystem.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Teaching Assignment System</span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item active">
+                            <a href="adminexammatters.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Exam Matters.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Exam Matters
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="adminannouncements.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Announcements.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">
+                                    Announcements
+                                </span>
+                            </a>
+                        </li>
+
+                        <!-- Page Link -->
+                        <li class="nav-item">
+                            <a href="reports.html" class="nav-link align-middle px-0">
+                                <img src="../public/SVG Icons/Teaching Allocation System.svg" class="icons"></img> <span
+                                    class="nav-item-text ms-1 d-none d-sm-inline">Download Reports</span>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div id="page-content" class="col-10 py-3">
+                <div id="content-view-admin" class="container">
+
+                    <!-- Content Header -->
+                    <div id="content-header-admin">
+                        <p>Exam Moderator & Verifier System</p>
+
+                        <div class="form-group row">
+                            <label for="select-section" class="col-sm-2 col-form-label">Select Section</label>
+                            <div class="col">
+                                <select class="form-select-sm col-2" id="select-section">
+                                    <option selected>Section</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- Content Item -->
+                    <div id="content-item-admin">
+
+                        <!-- Module table -->
+                        <table id="admin-table" class="table table-dark rounded-top">
+                            <caption>Showing 3 Results</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="col-2">Module Code</th>
+                                    <th scope="col" class="col-3">Module Name</th>
+                                    <th scope="col" class="col-2">Offer To</th>
+                                    <th scope="col" class="col-2">Status</th>
+                                    <th scope="col" class="col-3"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-bottom border-white">
+                                    <td>AB1234</td>
+                                    <td>Interesting Lesson</td>
+                                    <td>DIT Yr2</td>
+                                    <td>Assigned</td>
+                                    <td class="text-end">
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
+                                    </td>
+                                </tr>
+                                <tr class="border-bottom border-white">
+                                    <td>AB1234</td>
+                                    <td>Interesting Lesson</td>
+                                    <td>DIT Yr2</td>
+                                    <td>Assigned</td>
+                                    <td class="text-end">
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
+                                    </td>
+                                </tr>
+                                <tr class="status-unassigned border-bottom border-white">
+                                    <td>AB1234</td>
+                                    <td>Interesting Lesson</td>
+                                    <td>DIT Yr2</td>
+                                    <td>Unassigned</td>
+                                    <td class="text-end">
+                                        <div data-bs-toggle="modal" data-bs-target="#exampleModal">View</div>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <!-- Content header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Module: EP1234 ABC</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="modal-body">
+
+                                        <form action="">
+
+                                            <h5>Module Weightages</h5>
+                                            <br>
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="componenetcode"
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Component
+                                                    Code:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="componenetcode" placeholder="">
+                                                </div>
+                                                <label for="nrc"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm" id="nrc"
+                                                        placeholder="">
+                                                </div>
+                                                <label for="weightage"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="weightage" placeholder="">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="componenetcode"
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Component
+                                                    Code:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="componenetcode" placeholder="">
+                                                </div>
+                                                <label for="nrc"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm" id="nrc"
+                                                        placeholder="">
+                                                </div>
+                                                <label for="weightage"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="weightage" placeholder="">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="componenetcode"
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Component
+                                                    Code:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="componenetcode" placeholder="">
+                                                </div>
+                                                <label for="nrc"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm" id="nrc"
+                                                        placeholder="">
+                                                </div>
+                                                <label for="weightage"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="weightage" placeholder="">
+                                                </div>
+                                            </div>
+
+                                            <!-- Form Item -->
+                                            <div class="form-group row">
+                                                <label for="componenetcode"
+                                                    class="col-sm-2 col-form-label col-form-label-sm">Component
+                                                    Code:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="componenetcode" placeholder="">
+                                                </div>
+                                                <label for="nrc"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">NRC:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm" id="nrc"
+                                                        placeholder="">
+                                                </div>
+                                                <label for="weightage"
+                                                    class="col-sm-1 col-form-label col-form-label-sm">Weightage:</label>
+                                                <div class="col-sm-1">
+                                                    <input type="text" class="form-control form-control-sm"
+                                                        id="weightage" placeholder="">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                    <!-- Content header -->
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Module: EP1234 ABC</h5>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <h5>Enter Module Workload</h5>
+                                        <br>
+
+                                        <div id="workloadtable">
+                                            <div id="tabletitle">
+                                                <h6>CA1</h6>
+                                            </div>
+                                            <div id="workloadtablecontent" class="col-12">
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="group-size"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Group
+                                                        Size:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="group-size" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="start-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Start
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="start-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="end-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">End
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="end-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="remarks"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="form-control form-control-sm" id="remarks"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="workloadtable">
+                                            <div id="tabletitle">
+                                                <h6>CA2</h6>
+                                            </div>
+                                            <div id="workloadtablecontent" class="col-12">
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="group-size"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Group
+                                                        Size:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="group-size" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="start-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Start
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="start-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="end-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">End
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="end-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="remarks"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="form-control form-control-sm" id="remarks"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="workloadtable">
+                                            <div id="tabletitle">
+                                                <h6>TST1</h6>
+                                            </div>
+                                            <div id="workloadtablecontent" class="col-12">
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="group-size"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Group
+                                                        Size:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="group-size" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="start-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Start
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="start-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="end-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">End
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="end-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="remarks"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="form-control form-control-sm" id="remarks"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div id="workloadtable">
+                                            <div id="tabletitle">
+                                                <h6>TST9</h6>
+                                            </div>
+                                            <div id="workloadtablecontent" class="col-12">
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="group-size"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Group
+                                                        Size:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="group-size" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="start-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Start
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="start-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="end-week"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">End
+                                                        Week:</label>
+                                                    <div class="col-sm-2">
+                                                        <input type="text" class="form-control form-control-sm"
+                                                            id="end-week" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <!-- Input Item -->
+                                                <div class="form-group row">
+                                                    <label for="remarks"
+                                                        class="col-sm-2 col-form-label col-form-label-sm">Remarks:</label>
+                                                    <div class="col-sm-10">
+                                                        <textarea class="form-control form-control-sm" id="remarks"
+                                                            rows="2"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                        <!-- Update Button -->
+                                        <button type="submit" class="btn btn-primary float-end">Create Module</button>
+                                    </div>
+
+                                    
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>

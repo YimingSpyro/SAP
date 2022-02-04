@@ -1,0 +1,23 @@
+/* Change height for height of the grey container box */
+
+#content-header-admin p {
+    color: #22404F;
+}
+
+#content-item-admin {}
+
+.form-group {
+    color: #22404F;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.modal-title {
+    color: #22404F;
+}
+
+.warning-message p{
+    color: #22404F;
+    font-weight: bold;
+    font-size: .8em;
+}

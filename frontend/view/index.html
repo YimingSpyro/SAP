@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Online scripts -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <!-- Local scripts -->
+    
+    <link rel="stylesheet" href="./css/index.css">
+
+    <title>Dashboard</title>
+    <script>
+        function viewCat() {
+            var catUrl;
+            axios.get('http://localhost:3000/test')
+                .then((response) => {
+                    console.log(response.data);
+                    catUrl = response.data.data;
+                    var html = "<ul>";
+                    for (i = 0; i < catUrl.length; i++) {
+                        html += "<li>" + catUrl[i].staff_name + "</li>"
+                    }
+                    html += "</ul>"
+                    // $('body').append('<img class="catImg" src="'+catUrl+'" />')
+                    // $('h1').text("number of cattos :"+ $('.catImg').length);
+                    $('body').append(html);
+
+                });
+
+        }
+    </script>
+</head>
+
+<body>
+    <h1>number of cattos :0</h1>
+    <button onclick=(viewCat())>Click me for catto</button>
+    <button onclick="window.location.href='./view/home.html'">Login</button>
+</body>
+
+</html>

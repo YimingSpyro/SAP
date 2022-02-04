@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Page Title -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Reports</title>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- Online scripts -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+    <!-- Offline scripts -->
+    
+    <link href="/css/global.css" rel="stylesheet">
+    <link href="/css/navbar.css" rel="stylesheet">
+    <link href="/css/report.css" rel="stylesheet">
+
+    <script src="/script/log_out.js"></script>
+    <script src="/script/append_navbar.js"></script>
+    <script src="/script/global.js"></script>
+    <script src="/script/notifications.js"></script>
+    <script src="/script/append_navbar.js"></script>
+    <script src="/script/log_out.js"></script>
+    <script src="/script/reports.js"></script>
+    <style>
+        #admin-table.table>:not(caption)>*>* {
+            padding-right: 15px;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <!-- Top Bar -->
+    <div id="navbar-wrap" class="container-fluid">
+    </div>
+
+    <div class="container-fluid">
+
+        <!-- Side Bar -->
+        <div class="row flex-nowrap">
+            <div id="dashboard-wrap" class="col-2">
+                <div class="d-flex flex-column align-items-center align-items-sm-start text-white min-vh-100">
+                    <ul id="main-list"
+                        class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+                        id="menu">
+
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Page Content -->
+            <div id="page-content" class="col-10 py-3">
+                <div id="content-view-admin" class="container">
+                    <!-- Content Header -->
+                    <div id="content-header-admin">
+                        <p>Generate and Download Report</p>
+                        <div class="form-group d-flex flex-row p-2 bd-highlight">
+                            <div class="col-4 align-self-center">
+                                <label for="select-section">Select Available Academic Semesters</label>
+                            </div>
+                            <div class="col-2">
+                                <select class="form-control form-select" id="select-semester">
+                                    <option>No Semester Selected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="form-group d-flex flex-row-reverse p-2 bd-highlight">
+                            <button id="export-table" class="btn btn-outline-info btn-sm" hidden="true">Export
+                                Data</button>
+                        </div>
+                    </div>
+
+                    <!-- Content Item -->
+                    <div id="content-item-admin">
+                        <table id="admin-table" class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th id="th-label" scope="col" colspan="4">Workload Summary Report By Module</th>
+                                    <th id="acad-year-head" scope="col" colspan="5"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="workload-summary-by-module-table">
+                            </tbody>
+                        </table>
+                    </div>
+
+</body>
+
+</html>

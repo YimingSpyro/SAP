@@ -1,11 +1,10 @@
 const express = require("express");
 const cors = require('cors')
 const config = require('./config/config');
-const formData = require('express-form-data');
 const cookieParser = require("cookie-parser");
 var jwt = require('jsonwebtoken')
 const JWT_SECRET_KEY = 'tassystem';
-
+var fs = require('fs')
 
 //Server Settings
 const PORT = 8080;
@@ -23,7 +22,7 @@ app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
     // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
 
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
@@ -35,25 +34,18 @@ app.use(function (req, res, next) {
 
 app.use(cookieParser());
 
-
-//https://github.com/ortexx/express-form-data#readme
-//Parse data with connect-multiparty. 
-app.use(formData.parse({}));
-//Delete from the request all empty files (size == 0)
-app.use(formData.format());
-//Change the file objects to fs.ReadStream 
-app.use(formData.stream());
-//Union the body and the files
-app.use(formData.union());
-
 /* //Pug Template Engine
 app.set("view engine", "pug");
 app.set("views", path.resolve("./src/views")); */
 
+
 //Request Parsing
+/* var corsOptions = {
+    origin: 'http://localhost:8000',
+}
+app.use(cors(corsOptions)); */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 
 //Express Router
 const router = express.Router();
@@ -63,24 +55,24 @@ app.use(router);
 const rootPath = path.resolve("./dist");
 app.use(express.static(rootPath));
 
-const route = require('./routes')
+const route = require('./routes');
 route.appRoute(app, router);
 
-const isAuthenticated = (req,res,next)=>{
+const isAuthenticated = (req, res, next) => {
     const token = req.cookies.token;
-    if(!token){
+    if (!token) {
         return res.sendStatus(403);
     }
-    try{
-        const data = jwt.verify(token,JWT_SECRET_KEY)
+    try {
+        const data = jwt.verify(token, JWT_SECRET_KEY)
         console.log(data);
-        if(data.staff_name) return res.redirect('http://localhost:8000/home.html')
-    }catch{
+        if (data.staff_name) return res.redirect('http://localhost:8000/home.html')
+    } catch {
         return res.sendStatus(403);
     }
 }
 
-app.get('/getcookie',isAuthenticated, (req, res) => {
+app.get('/getcookie', isAuthenticated, (req, res) => {
     //show the saved cookies
     console.log(req.cookies)
     res.cookie("username", "shesh", {
@@ -122,4 +114,15 @@ process.on('uncaughtException', function (error, origin) {
 app.listen(PORT, err => {
     if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
     console.log(`Server is Listening on: http://localhost:${PORT}/`);
+});
+
+// Connect to the Database
+const pool = require('./config/database')
+pool.getConnection((err) => {
+    if (err) {
+        console.log('Error Message Here', err);
+        resolve(err);
+    } else {
+        console.log("Connected");
+    }
 });

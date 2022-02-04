@@ -1,33 +1,36 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/YimingSpyro/SAP.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/YimingSpyro/SAP/issues"
-  },
-  "homepage": "https://github.com/YimingSpyro/SAP#readme",
-  "dependencies": {
-    "bcrypt": "^5.0.1",
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.1",
-    "express-form-data": "^2.0.17",
-    "jsonwebtoken": "^8.5.1",
-    "mysql": "^2.18.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.15"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/YimingSpyro/SAP.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/YimingSpyro/SAP/issues"
+    },
+    "homepage": "https://github.com/YimingSpyro/SAP#readme",
+    "dependencies": {
+        "bcrypt": "^5.0.1",
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.1",
+        "cookie-parser": "^1.4.6",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "es6-promise": "^4.2.8",
+        "express": "^4.17.2",
+        "isomorphic-fetch": "^3.0.0",
+        "jsonwebtoken": "^8.5.1",
+        "multer": "^1.4.4",
+        "mysql": "^2.18.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.15"
+    }
 }
