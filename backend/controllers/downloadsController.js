@@ -85,3 +85,18 @@ module.exports.getWorkloadSummaryByModule = async (req, res) => {
         return res.status(500).json({ message: error });
     };
 };
+
+module.exports.getExaminerReports = async (req, res) => {
+    try {
+        console.log("getExaminerReports")
+        let acad_sem = decodeURIComponent(req.query.acad_sem)
+        let results = await downloadsService.getExaminerReports(acad_sem)
+        if (results.errno) {
+            throw "Database Error. SQL Error Code: " + results.errno + results.code;
+        } else {
+            return res.status(200).json(results);
+        };
+    } catch (error) {
+        return res.status(500).json({ message: error });
+    };
+};
