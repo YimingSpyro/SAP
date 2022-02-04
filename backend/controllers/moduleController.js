@@ -110,7 +110,7 @@ exports.getModuleByModCoord = async (req, res, next) => {
 // API Get All Modules
 exports.getAllModules = async (req, res, next) => {
     let semester_code = req.query.semester_code;
-    console.log(semester_code)
+    //console.log(semester_code)
     try {
         let results = await moduleService.getAllModules(semester_code);
         //console.log('Get All Modules', results);
@@ -154,12 +154,14 @@ exports.createModule = async (req, res, next) => {
         odd_lechr, even_lechr, odd_prachr, even_prachr, odd_tuthr, even_tuthr, fk_course_id]
     try {
         let results = await moduleService.createModule(data);
-        console.log('Create Module', results);
+        console.log('Create Module');
+        //console.log(results)
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Updated Module', results);
+            console.log('Updated Module');
+            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {

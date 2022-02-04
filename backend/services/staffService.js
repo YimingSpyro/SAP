@@ -9,7 +9,7 @@ module.exports.getAllSections = () => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -29,7 +29,7 @@ module.exports.getStaffTypes = () => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -46,7 +46,7 @@ module.exports.createStaffType = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -64,7 +64,7 @@ module.exports.deleteStaffType = (staff_type) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -78,7 +78,7 @@ module.exports.deleteStaffType = (staff_type) => {
     });
 };
 module.exports.updateStaffType = (data) => {
-    console.log(data);
+    //console.log(data);
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE staff_types 
@@ -89,7 +89,7 @@ module.exports.updateStaffType = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -114,7 +114,7 @@ module.exports.getAllDesignations = () => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -131,7 +131,7 @@ module.exports.createDesignation = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -149,7 +149,7 @@ module.exports.deleteDesignation = (designation_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -163,7 +163,7 @@ module.exports.deleteDesignation = (designation_id) => {
     });
 };
 module.exports.updateDesignation = (data) => {
-    console.log(data);
+    //console.log(data);
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE designation 
@@ -174,7 +174,7 @@ module.exports.updateDesignation = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -218,7 +218,7 @@ module.exports.createStaff = (data, roles) => {
                                                 reject(err);
                                             } else {
                                                 if (results1&&i==role_ids.length) {
-                                                    console.log(results1);
+                                                    //console.log(results1);
                                                     return resolve(results);
                                                 }
                                             }
@@ -232,7 +232,7 @@ module.exports.createStaff = (data, roles) => {
                                             reject(err);
                                         } else {
                                             if (results1) {
-                                                console.log(results1);
+                                                //console.log(results1);
                                                 return resolve(results);
                                             } else {
                                                 return resolve('Error Message');
@@ -241,7 +241,7 @@ module.exports.createStaff = (data, roles) => {
                                     })
                                 }
                             }
-                            console.log(results);
+                            //console.log(results);
                             return resolve(results);
                         } else {
                             return resolve('Error Message');
@@ -336,7 +336,7 @@ module.exports.updateStaffByStaffId = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -360,7 +360,7 @@ module.exports.updatePersonalInfoByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -384,7 +384,7 @@ module.exports.getTeachingRequirementByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -406,7 +406,7 @@ module.exports.createTeachingRequirement = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -429,7 +429,7 @@ module.exports.updateTeachingRequirement = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -450,7 +450,7 @@ module.exports.deleteTeachingRequirement = (ptr_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -472,7 +472,7 @@ module.exports.getTeachingRequirementRemarks = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -494,7 +494,7 @@ module.exports.createTeachingRequirementRemarks = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -517,7 +517,7 @@ module.exports.updateTeachingRequirementRemarks = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -541,7 +541,7 @@ module.exports.getAllModulePreference = (semester_code) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -562,7 +562,7 @@ module.exports.getModulePreferenceByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -583,7 +583,7 @@ module.exports.submitModulePreference = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -604,7 +604,7 @@ module.exports.updateModulePreferenceByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -630,7 +630,7 @@ module.exports.getAssignedModulesByModule = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -653,7 +653,7 @@ module.exports.getAssignedModulesByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -674,7 +674,7 @@ module.exports.assignModuleByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -696,7 +696,7 @@ module.exports.updateAssignedModuleByID = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -716,7 +716,7 @@ module.exports.unassignModuleByID = (ma_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -743,7 +743,7 @@ module.exports.getAllStaffTAS = (section) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -766,7 +766,7 @@ module.exports.updateModuleTAS = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -790,7 +790,7 @@ module.exports.updateModuleCAS = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -811,7 +811,7 @@ module.exports.getModuleStage = (semester_code) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -834,7 +834,7 @@ module.exports.updateNormalStudents = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
