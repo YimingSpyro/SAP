@@ -162,7 +162,11 @@ async function _updateModule(current_sem) {
     axios.put(base_url + '/api/update-module/', {
         data: _data
     }).then((response) => {
-        window.alert("Module Successfully Updated. Please refresh the page to view changes")
+        let b = $("#select-semester option:selected").text();
+        $("tbody tr").remove();
+        $("caption").remove();
+        _getWorkload(b)
+        _getModuleAndAppend(b)
     }).catch((error) => {
         window.alert(error.response.data.message)
     });
@@ -328,6 +332,10 @@ $(document).ready(() => {
         $('#requirement-container').empty();
         $('#workloadtable').empty();
         _appendWorkloads(mod_name)
+    });
+    $('#editWorkloadSummary').on('hidden.bs.modal', function (event) {
+        let b = $("#select-semester option:selected").text();
+        _getWorkload(b)
     });
     $('#editModuleModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
