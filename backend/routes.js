@@ -111,10 +111,10 @@ exports.appRoute = router => {
         router.get('/test', staffController.processGetAllStaff);*/
         
     // LOGIN
-    router.get('/staff-privileges/:id', authController.getStaffPrivileges);
-    router.post('/login', authController.processLogin);
-    router.post('/register', authController.processRegister);
-    router.post('/change-password', checkUserFn.checkJWT, authController.processChangePassword);
+    router.get('/api/staff-privileges/:id', authController.getStaffPrivileges);
+    router.post('/api/login/', authController.processLogin);
+    router.post('/api/register', authController.processRegister);
+    router.post('/api/change-password', checkUserFn.checkJWT, authController.processChangePassword);
     //router.get('/checkauthentication',authController.processTestCookie);
 
     // SECTION

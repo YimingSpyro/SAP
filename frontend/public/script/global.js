@@ -62,7 +62,7 @@ async function generateNavAnnouncements() {
     }
 }
 
-let base_url = "http://soctas2021.irc.sg:8080";
+let base_url = "http://soctas2021.irc.sg";
 
 
 function getProfilePicture() {
