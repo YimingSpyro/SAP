@@ -1,11 +1,21 @@
 const express = require("express");
 const app = express();
 const cookieparser = require("cookie-parser");
-
+var fs = require('fs')
+const https = require('https')
 app.use(express.static('public'))
 app.use(express.static('profile_picture'))
 app.use(cookieparser());
 const myPort = 8000
+
+var options = {
+    key: fs.readFileSync('./cert/key.pem'),
+    cert: fs.readFileSync('./cert/cert.pem')
+};
+https.createServer(options, app).listen(myPort,function(){
+    console.log('Server hosted.')
+});
+
 app.get("/", (req, res) => {
     res.sendFile("/public/login.html", { root: __dirname });
 });
@@ -106,6 +116,6 @@ app.get("/staff-hours", (req, res) => {
     res.sendFile("/view/adminstaffhoursmaintenance.html", { root: __dirname });
 });
 
-app.listen(myPort,() => {
+/* app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`)
-});
+}); */
