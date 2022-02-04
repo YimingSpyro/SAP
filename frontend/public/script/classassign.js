@@ -57,6 +57,24 @@ function updateNormalStudents(section,mod_stage) {
     });
 }
 
+async function inputValidation(type) {
+    let number = new RegExp('^[0-9]+$')
+    if (type == "normal") {
+        let normal_students = $("#input-module-normal")[0].value
+        if (!number.test(normal_students) ) {
+            throw "Only numeric inputs allowed."
+        }
+    }
+    if (type == "os") {
+        let normal = $("#input-student-normal")[0].value
+        let os = $("#input-student-os")[0].value
+        let total = $("#input-student-total")[0].value
+        if (!number.test(normal) || !number.test(os) || !number.test(total)) {
+            throw "Only numeric inputs allowed."
+        }
+    }
+}
+
 
 async function calculateModuleClasses(module) {
     return {
@@ -206,10 +224,14 @@ async function generateModal(module_index) {
 
 
 async function updateModuleInformation(mod_code) {
-    updateModule(mod_code)
+    inputValidation("os")
+    .then(async()=>{
+        await updateModule(mod_code)
+    })
     .then(() => {
         generateModuleList();
-    });
+    })
+    .catch(err => error(err));
     
 }
 
@@ -221,10 +243,14 @@ async function submitNormalStudents(){
         error("There are currently no modules to update")
     }
     else {
-        updateNormalStudents(section,mod_stage)
+        inputValidation("normal")
+        .then(async()=>{
+            await updateNormalStudents(section,mod_stage)
+        })
         .then(() => {
             generateModuleList();
-        });
+        })
+        .catch(err => error(err));
     }
     
 }

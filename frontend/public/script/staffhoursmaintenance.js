@@ -44,6 +44,48 @@ function updateStaffType(){
     .catch(err => error(err));
 }
 
+async function inputValidation(type) {
+    let description_check = new RegExp('^[A-Za-z ]+$')
+    let type_check = new RegExp('^[A-Za-z0-9 ]+$')
+    let hours = new RegExp('^[0-9]+$')
+    if (type == "create") {
+        let create_type = $("#staff-type-create")[0].value
+        let create_description = $("#description-create")[0].value
+        let create_hours = $("#hours-create")[0].value
+        let create_remarks = $("#remarks-create")[0].value
+        if (!hours.test(create_hours) ) {
+            throw "Only numeric inputs allowed for hours."
+        }
+        if (!type_check.test(create_type) ) {
+            throw "Only alphanumerics allowed for staff type."
+        }
+        if (!description_check.test(create_description)) {
+            throw "Only uppercase and lowercase letters allowed for description."
+        }
+        if (!description_check.test(create_remarks)) {
+            throw "Only uppercase and lowercase letters allowed for remarks."
+        }
+    }
+    if (type == "update") {
+        let update_type = $("#staff-type-update")[0].value
+        let update_description = $("#description-update")[0].value
+        let update_hours = $("#hours-update")[0].value
+        let update_remarks = $("#remarks-update")[0].value
+        if (!hours.test(update_hours) ) {
+            throw "Only alphanumerics allowed for staff type."
+        }
+        if (!type_check.test(update_type) ) {
+            throw "Only numeric inputs allowed for hours."
+        }
+        if (!description_check.test(update_description)) {
+            throw "Only uppercase and lowercase letters allowed for description."
+        }
+        if (!description_check.test(update_remarks)) {
+            throw "Only uppercase and lowercase letters allowed for remarks."
+        }
+    }
+}
+
 async function generateStaffTypesList(){
     $(".staff-type-list").empty();
     let types = await getStaffTypes();
@@ -159,7 +201,11 @@ async function confirmedDelete(index){
 }
 
 async function confirmedUpdate(){
-    await updateStaffType();
+    inputValidation("update")
+    .then(async()=>{
+        await updateStaffType();
+    })
+    .catch(err => error(err))
 }
 
 $(document).ready(()=>{
@@ -170,7 +216,11 @@ $(document).ready(()=>{
     })
 
     $("#create-staff-type-modal").on('click', '.submit-create-staff-type',()=>{
-        createStaffType();
+        inputValidation("create")
+        .then(async()=>{
+            await createStaffType();
+        })
+        .catch(err => error(err));
     })
 
     $(".staff-type-list").on('click', ".confirm-delete-type", (e)=>{
