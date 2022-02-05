@@ -344,6 +344,13 @@ $(document).ready(() => {
         _findTextFields(modal, index)
         //modal.find('.modal-title').text('New message to ' + recipient)
     });
+    $('#editModuleModal').on('hidden.bs.modal', function (event) {
+        let b = $("#select-semester option:selected").text();
+        $("tbody tr").remove();
+        $("caption").remove();
+        _getWorkload(b)
+        _getModuleAndAppend(b)
+    });
     $('#module-coord-name').on('change', () => {
         let selected_value = $('#module-coord-name').val();
         $('#edit-module-coord').val(selected_value)
