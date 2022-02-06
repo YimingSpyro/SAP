@@ -189,6 +189,7 @@ exports.appRoute = router => {
     router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
     router.get('/api/admin/maintenance/staff-names', staffController.getStaffNames);
+    router.get('/api/admin/maintenance/all-staff-names', staffController.getAllStaffNames);
     
     // COURSE
     router.get('/api/courses/', courseController.getAllCourses);
@@ -223,6 +224,8 @@ exports.appRoute = router => {
     router.get('/api/reports/download/summary-by-module/:acad_sem', downloadsController.getSummaryByModule)
     router.get('/api/reports/download/summary-by-staff/:acad_sem', downloadsController.getSummaryByStaff)
     router.get('/api/reports/download/staff-hours/:acad_sem', downloadsController.getTotalHoursByStaff)
+    router.get('/api/reports/download/workload-summary/', downloadsController.getWorkloadSummaryByModule)
+    router.get('/api/reports/download/examiner-reports/', downloadsController.getExaminerReports)
 
     //REPORTS API NOT IN USE
     //router.post('/uploads/reports/:staff_id', uploadReport.single('report_file'), uploadsController.insertNewReport)

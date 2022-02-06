@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 require('isomorphic-fetch');
+var base_url = 'http://localhost:8080'
 module.exports = {
     getClientUserId: (req, res, next) => {
         let message = 'Unauthorized access';
@@ -49,7 +50,7 @@ module.exports = {
                 req.staff_name = data.staff_name;
                 req.staff_id = data.staff_id;
                 console.log("staff_id is " + data.staff_id);
-                fetch('http://localhost:8080/staff-privileges/' + data.staff_id)
+                fetch(base_url+'/staff-privileges/' + data.staff_id)
                     .then(res => res.json())
                     .then(res => {
                         if(res.data.length<=0)   return res.status(403).json({ message: message });

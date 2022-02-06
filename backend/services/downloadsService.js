@@ -107,3 +107,45 @@ module.exports.getTotalHoursByStaff = (acad_sem) => {
         return error
     })
 };
+
+module.exports.getWorkloadSummaryByModule = (acad_sem) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT tas.mod_workload.*, mod_abbrv, module.fk_course_id, fk_mod_coord, 
+                    staff_name FROM tas.mod_workload 
+                    INNER JOIN module
+                    ON fk_mod_code = mod_code
+                    INNER JOIN staff_information
+                    ON fk_mod_coord = staff_id
+                    WHERE mod_workload.fk_semester_code = ? 
+                    ORDER BY fk_mod_code, component_code;`,
+            [acad_sem], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+};
+
+module.exports.getExaminerReports = (acad_sem) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT tas.exam_verifier_sys.*, mod_abbrv, mod_name, fk_course_id FROM tas.exam_verifier_sys
+                    INNER JOIN module
+                    ON fk_module_code = mod_code
+                    WHERE tas.exam_verifier_sys.fk_semester_code = ?;`,
+            [acad_sem], (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+};
