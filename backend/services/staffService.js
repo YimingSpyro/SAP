@@ -736,7 +736,7 @@ module.exports.unassignModuleByID = (ma_id) => {
 module.exports.getAllStaffTAS = (section) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT staff_id, staff_name FROM staff_information
+        pool.query(`SELECT staff_id, staff_name, fk_staff_type FROM staff_information
          WHERE staff_status='Active'
          ORDER BY staff_id ASC;`, [section], (err, results) => {
             if (err) {

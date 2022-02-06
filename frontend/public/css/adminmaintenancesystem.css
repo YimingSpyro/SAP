@@ -6,7 +6,6 @@
 
 #content-item-admin {}
 #admin-table{
-    table-layout: fixed;
     width: 100%;
     overflow-x: auto;
     white-space: nowrap;

@@ -653,25 +653,28 @@
                             </nav>
                         </div>
                         <!-- Module table -->
-                        <table id="admin-table" class="table table-dark rounded-top">
-                            <caption>Showing <span id="results-length">0</span> Results</caption>
+                        <div class="table-responsive">
+                            <table id="admin-table" class="table table-dark rounded-top">
+                                <caption>Showing <span id="results-length">0</span> Results</caption>
+    
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="col-1">Staff ID</th>
+                                        <th scope="col" class="col-1">Staff Name</th>
+                                        <th scope="col" class="col-3">Email/Mobile</th>
+                                        <th scope="col" class="col-1">Designation</th>
+                                        <th scope="col" class="col-2">Section</th>
+                                        <th scope="col" class="col-1">Status</th>
+                                        <th scope="col" class="col-1"></th>
+                                        <th scope="col" class="col-1"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="staff-row-table">
+                                </tbody>
+    
+                            </table>
+                        </div>
 
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="col-1">Staff ID</th>
-                                    <th scope="col" class="col-1">Staff Name</th>
-                                    <th scope="col" class="col-2">Email/Mobile</th>
-                                    <th scope="col" class="col-1">Designation</th>
-                                    <th scope="col" class="col-1">Section</th>
-                                    <th scope="col" class="col-1">Status</th>
-                                    <th scope="col" class="col-1"></th>
-                                    <th scope="col" class="col-1"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="staff-row-table">
-                            </tbody>
-
-                        </table>
 
 
                     </div>
