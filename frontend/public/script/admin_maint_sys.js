@@ -310,10 +310,11 @@ $(document).ready(() => {
 
     $('#select-semester').on('change', () => {
         let b = $("#select-semester option:selected").text();
+        let course = $("#select-course option:selected").text();
         $("tbody tr").remove();
         $("caption").remove();
-        _getWorkload(b)
-        _getModuleAndAppend(b)
+        _getWorkload(b,course)
+        _getModuleAndAppend(b,course)
     });
     $('#editWorkloadSummary').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
