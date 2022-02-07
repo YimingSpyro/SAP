@@ -38,7 +38,7 @@ function _getStaff() {
 //get selected semester and append modules accordingly
 async function _getModuleAndAppend(acad_sem) {
     //$('#module-table tbody tr').remove();
-    const filtered_modules = await axios.get(base_url + '/api/module?semester_code=' + acad_sem, { withCredentials: true }).then((response) => { return response.data });
+    const filtered_modules = await axios.get(base_url + '/api/module?semester_code=' + acad_sem +'&course='+course, { withCredentials: true }).then((response) => { return response.data });
     results_array = filtered_modules;
     filtered_modules.forEach((element, index) => {
         let table_row = `
@@ -308,12 +308,12 @@ $(document).ready(() => {
     $('#main-list>li').removeClass("active");
     $('#maintenence-system').addClass("active");
 
-    $('#select-semester').on('change', () => {
+    $('#select-semester, #select-course').on('change', () => {
         let b = $("#select-semester option:selected").text();
         let course = $("#select-course option:selected").text();
         $("tbody tr").remove();
         $("caption").remove();
-        _getWorkload(b,course)
+        _getWorkload(b)
         _getModuleAndAppend(b,course)
     });
     $('#editWorkloadSummary').on('show.bs.modal', function (event) {

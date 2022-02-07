@@ -110,9 +110,11 @@ exports.getModuleByModCoord = async (req, res, next) => {
 // API Get All Modules
 exports.getAllModules = async (req, res, next) => {
     let semester_code = req.query.semester_code;
+    let course_id = req.query.course;
     //console.log(semester_code)
+    console.log(course_id)
     try {
-        let results = await moduleService.getAllModules(semester_code);
+        let results = await moduleService.getAllModules(semester_code, course_id);
         //console.log('Get All Modules', results);
         if (results.errno) {
             throw 'Database SQL Error'
