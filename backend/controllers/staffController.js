@@ -444,6 +444,44 @@ exports.deleteStaffByID = async (req, res, next) => {
     }
 
 };
+
+// API Admin Reset Staff Password by ID
+exports.resetStaffPassword = async (req, res, next) => {
+    let new_password = req.body.new_password;
+    let staff_id = req.body.staff_id
+    try {
+        bcrypt.hash(new_password, saltRounds,async function (err, hash) {
+            if (err) {
+                res.status(500).json({
+                    error: "Unable to Update staff"
+                });
+            } else  {
+                new_password = hash;
+                let data = [new_password,staff_id]
+                let results = await staffManager.resetStaffPassword(data)
+                if (results.errno) {
+                    throw 'Database SQL Error'
+                }
+                else if (results.affectedRows == 0) {
+                    throw 'Could Not Update to Database'
+                }
+                else {
+                    console.log('Update Password by Staff ID', results);
+                    return res.status(200).json(results);
+                }
+            }
+        });
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+
+};
+
 // API Admin Update Staff Data by ID
 exports.updateStaffByID = async (req, res, next) => {
     let staff_id = req.params.id

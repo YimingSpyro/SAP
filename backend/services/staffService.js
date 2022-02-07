@@ -341,6 +341,31 @@ module.exports.deleteStaffByStaffId = (staff_id) => {
         });
     });
 };
+
+module.exports.resetStaffPassword = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE staff_information 
+                     SET staff_password = ?
+                     WHERE staff_id = ?;`, data, (err, results) => {
+            if (err) {
+                console.log("error");
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
 module.exports.updateStaffByStaffId = (data) => {
     console.log(data);
     return new Promise((resolve, reject) => {
