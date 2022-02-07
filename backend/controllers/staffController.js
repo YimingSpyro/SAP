@@ -277,6 +277,28 @@ exports.getStaffNames = async (req, res, next) => {
     }
 
 };
+
+//API GET Only Some Columns
+exports.getAllStaffNames = async (req, res, next) => {
+    try {
+        let results = await staffManager.getAllStaffNames();
+        console.log('Get All Staff Names');
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Getting All Staff Names Successful');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API GET Staff Data by ID
 exports.getStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
