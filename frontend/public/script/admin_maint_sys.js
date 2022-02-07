@@ -36,7 +36,7 @@ function _getStaff() {
 };
 
 //get selected semester and append modules accordingly
-async function _getModuleAndAppend(acad_sem) {
+async function _getModuleAndAppend(acad_sem,course) {
     //$('#module-table tbody tr').remove();
     const filtered_modules = await axios.get(base_url + '/api/module?semester_code=' + acad_sem +'&course='+course, { withCredentials: true }).then((response) => { return response.data });
     results_array = filtered_modules;
@@ -347,10 +347,11 @@ $(document).ready(() => {
     });
     $('#editModuleModal').on('hidden.bs.modal', function (event) {
         let b = $("#select-semester option:selected").text();
+        let course = $("#select-course option:selected").text();
         $("tbody tr").remove();
         $("caption").remove();
         _getWorkload(b)
-        _getModuleAndAppend(b)
+        _getModuleAndAppend(b,course)
     });
     $('#module-coord-name').on('change', () => {
         let selected_value = $('#module-coord-name').val();
