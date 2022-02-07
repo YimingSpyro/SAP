@@ -78,7 +78,6 @@ button .active{
 }
 .modal-body{
 
-    overflow: scroll;
 }
 .modal-header{
     border-bottom: 1px solid white;

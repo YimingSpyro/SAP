@@ -107,9 +107,7 @@ module.exports.updateStaffType = (data) => {
 // DESIGNATION
 module.exports.getAllDesignations = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT designation_id, designation_name, fk_course_id, section_name FROM designation
-             INNER JOIN course ON fk_course_id = course.course_id
-             WHERE course.status = "active"`, [], (err, results) => {
+        pool.query(`SELECT designation_id, designation_name, fk_course_id, section_name FROM designation`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -257,7 +255,7 @@ module.exports.createStaff = (data, roles) => {
 module.exports.getAllStaff = () => {
     return new Promise((resolve, reject) => {
         pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email,staff_number, staff_mobile, staff_remarks,staff_status, fk_staff_type ,designation_id, designation_name,section_name,fk_schedule_id AS 'schedule_id'
-        FROM staff_information t1 INNER JOIN designation t2 WHERE t1.fk_designation_id=t2.designation_id AND t1.staff_status='Active';`, [], (err, results) => {
+        FROM staff_information t1 INNER JOIN designation t2 WHERE t1.fk_designation_id=t2.designation_id;`, [], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -330,6 +328,31 @@ module.exports.updateStaffByStaffId = (data) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
         pool.query(`UPDATE staff_information 
                      SET staff_name= ?, staff_abbrv = ?,fk_staff_type=?,fk_schedule_id=?,fk_designation_id=?, staff_email = ?, staff_number = ?, staff_mobile = ?, staff_remarks = ?,staff_status=? 
+                     WHERE staff_id = ?;`, data, (err, results) => {
+            if (err) {
+                console.log("error");
+                reject(err);
+            } else {
+                if (results) {
+                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
+
+module.exports.resetStaffPassword = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`UPDATE staff_information 
+                     SET staff_password = ?
                      WHERE staff_id = ?;`, data, (err, results) => {
             if (err) {
                 console.log("error");

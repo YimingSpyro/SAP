@@ -188,6 +188,7 @@ exports.appRoute = router => {
     router.post('/api/admin/maintenance/staff/create', staffController.createStaff);
     router.put('/api/admin/maintenance/staff/update/:id', staffController.updateStaffByID);
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
+    router.put('/api/admin/maintenance/staff/password/', staffController.resetStaffPassword);
     router.get('/api/admin/maintenance/staff-names', staffController.getStaffNames);
     router.get('/api/admin/maintenance/all-staff-names', staffController.getAllStaffNames);
     
