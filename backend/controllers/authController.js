@@ -4,8 +4,8 @@ const config = require('../config/config');
 
 function genAccessToken(rows) {
     var row = rows[0];
-    //console.log(row.roles);
-    //console.log(config.JWTExpire);
+    console.log(row.roles);
+    console.log(config.JWTExpire);
     var items = {
         staff_name: row.staff_name,
         staff_id: row.staff_id,
@@ -18,7 +18,7 @@ function genAccessToken(rows) {
 
     //insert record into jwt records table
     insertJwtRecord(row, accessToken);
-    //console.log(accessToken)
+    console.log(accessToken)
     return accessToken;
 }
 function insertJwtRecord(row, token) {
@@ -32,13 +32,13 @@ module.exports.processLogin = ((req, res) => {
     console.log("login called")
     let staff_id = req.body.staff_id;
     let password = req.body.password;
-    //console.log("staff_id is " + staff_id);
-    //console.log(password);
+    console.log("staff_id is " + staff_id);
+    console.log(password);
     var data = authManager.login([staff_id, password])
         .then((rows) => {
             console.log("authmanager");
-            //console.log(rows);
-            //console.log(rows[0].staff_name);
+            console.log(rows);
+            console.log(rows[0].staff_name);
             var hash = rows[0].staff_password;
             bcrypt.compare(password, hash, (err, resp) => {
                 if (resp) {
@@ -104,9 +104,9 @@ module.exports.processRegister = ((req, res) => {
 })
 module.exports.processChangePassword = ((req, res) => {
     var staff_id = req.staff_id;
-    //console.log(staff_id);
+    console.log(staff_id);
     var old_password = req.body.old_password;
-    //console.log(old_password);
+    console.log(old_password);
     var new_password = req.body.new_password;
     var re_new_password = req.body.re_new_password;
     if (new_password != re_new_password) return res.status(500).send({success: false, error: {message: 'New Passwords do not match'}});
@@ -161,8 +161,7 @@ module.exports.processChangePassword = ((req, res) => {
 module.exports.getNavItems = (async (req, res) => {
     try {
         let results = await authManager.getNavItems();
-        console.log('Get All Exams');
-        //console.log(results)
+        console.log('Get All Exams', results);
         if (results) {
             return res.status(200).json(results);
         }
