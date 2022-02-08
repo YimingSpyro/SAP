@@ -9,7 +9,8 @@ exports.getAllAnnouncements = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Announcements', results);
+            console.log('Get All Announcements');
+            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -35,7 +36,8 @@ exports.createAnnouncement = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Announcement', results);
+            console.log('Create Announcement');
+            console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -62,7 +64,8 @@ exports.updateAnnouncement = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Announcement', results);
+            console.log('Create Announcement');
+            console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
