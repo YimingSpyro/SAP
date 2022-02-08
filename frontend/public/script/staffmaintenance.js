@@ -45,7 +45,6 @@ function deleteStaffById(element) {
 }
 function getStaffandAppend() {
     $('#staff-row-table').empty();
-    $('#section-select').empty();
     axios.get(base_url + '/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
         if (response.status == 200) {
             rows = response.data
@@ -104,7 +103,6 @@ function appendPaginationNav() {
         $('.pagination').append(pagination_html)
         $('li:nth-child(2) .page-no').css("background", "#a5c6fa")
     } catch (e) {
-        throw e
     }
 }
 var expanded = false;
@@ -131,21 +129,15 @@ function pageChange(element) {
     $('.page-no')[currentPage].style.background = "#a5c6fa"
     paginateRows()
 }
-function filterSection(page) {
+function filterSection() {
     var select = $('#section-select option:selected').val()
-    var status = $('#select-status option:selected').val()
     if (select === "default") {
         $('tr.staff-row').removeClass("row-hide")
     } else $('tr.staff-row').addClass("row-hide");
     ($('tr.staff-row:contains(' + select + ')')).removeClass("row-hide")
-    if (status != "all") {
-        $('tr.staff-row:contains(' + status + ')').addClass("row-hide")
-    }
-    
-    
     filteredRows = $('tr.staff-row').not('.row-hide');
     totalRows = filteredRows.length
-    currentPage = page;
+    currentPage = 0;
     appendPaginationNav();
     paginateRows();
 }
@@ -196,12 +188,11 @@ function appendStaffFormValues(rows) {
     })
     appendPaginationNav();
     paginateRows();
-    filterSection(0);
 }
 function createStaff() {
     var checkedRoles = $('#role-checkboxes input:checked')
     var selected = new Array()
-    $('#role-checkboxes input:checked').each((i, ob)=>{
+    $('#role-checkboxes input:checked').each((i, ob) => {
         selected.push($(ob).val());
     })
     var data = {
@@ -218,7 +209,7 @@ function createStaff() {
         staff_remarks: $('#staff-remarks-input').val(),
         staff_status: $('#staff-status-input').val(),
         staff_role: selected,
-    }   
+    }
     axios.post(base_url + '/api/admin/maintenance/staff/create', data)
         .then((response) => {
             $('#createStaffModal').modal('hide');
@@ -259,14 +250,9 @@ function updateStaffById(element) {
         .then((response) => {
             $('#editStaffModal').modal('hide');
             customMessage("Successfully Updated!")
-            filterSection(currentPage)
-            let content = {textContent : (currentPage + 1)}
-            pageChange(content)
-
-
+            location.reload();
         }).catch((e) => {
             customMessage("Unable to update")
-            error(e)
         })
 }
 function clearModal() {
@@ -274,44 +260,11 @@ function clearModal() {
     $('.modal-backdrop').remove();
 }
 
-function getDesignation() {
-    return axios.get(base_url + '/api/designation/')
-        .then(response => response.data)
-        .catch(err => error(err));
-};
-
-function getStaffTypes(){
-    return axios.get(base_url + '/api/staff/types')
-        .then(response => response.data)
-        .catch(err => error(err));
-}
-
-async function generateCreateFormData(){
-    let designations = await getDesignation(); 
-    for (let index = 0; index < designations.length; index++) {
-        const designation = designations[index];
-        $("#staff-designation-input").append(`<option value="`+designation.designation_id+`">`+ designation.section_name +`</option>`)
-        $('#staff-designation-edit-input').append(`<option value="`+designation.designation_id+`">`+ designation.section_name +`</option>`)
-    }
-    let types = await getStaffTypes(); 
-    for (let index = 0; index < types.length; index++) {
-        const type = types[index];
-        $("#staff-type-input").append(`<option value="`+type.staff_type+`">`+ type.staff_description +` (`+ type.staff_type +`)</option>`)
-        $("#staff-type-edit-input").append(`<option value="`+type.staff_type+`">`+ type.staff_description +` (`+ type.staff_type +`)</option>`)
-    }
-}
-
-
-
 
 $(document).ready(() => {
-    generateCreateFormData()
-
     $('#section-select').change(() => {
-        filterSection(0)
-    })
-    $('#select-status').change(() => {
-        filterSection(0)
+        filterSection()
+
     })
     $('#btn-module, #btn-staff').click(function () {
         $('#btn-module, #btn-staff').css("background", "white");
@@ -320,12 +273,12 @@ $(document).ready(() => {
         $(this).addClass('active');
     });
     getStaffandAppend()
-    /* $('#main-list>li').removeClass("active")
+    $('#main-list>li').removeClass("active")
     $('#maintenence-system').addClass("active")
     $('.accordion-body a:nth-child(2)').addClass("text-active")
-    $('.accordion-button') */
+    $('.accordion-button')
 
-    $(".reset-password").click((e)=>{
+    $(".reset-password").click((e) => {
         let staff_id = $(e.target).data("staff-id");
         $("#reset-staff-password").attr("data-staff-id", staff_id)
     })
