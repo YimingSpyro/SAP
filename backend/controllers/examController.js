@@ -8,8 +8,7 @@ exports.getExamByModule = async(req, res, next) => {
     let data = [mod_code,semester_code]
     try {
         let results = await examManager.getExamByModule(data);
-        console.log('Get Exam by Module');
-        //console.log(results)
+        console.log('Get Exam by Module', results);
         if (results) {
             return res.status(200).json(results);
         }
@@ -43,8 +42,7 @@ exports.createExam = async(req, res, next) => {
         co_examiner,shared_paper,shared_question,type_of_module,external,module_code,semester_code]
     try {
         let results = await examManager.createExam(data);
-        console.log('Create Exam');
-        //console.log(results)
+        console.log('Create Exam', results);
         if (results) {
             return res.status(200).json(results);
         }
@@ -78,8 +76,7 @@ exports.updateExam = async(req, res, next) => {
         co_examiner,shared_paper,shared_question,type_of_module,external,module_code,semester_code]
     try {
         let results = await examManager.updateExam(data);
-        console.log('Update Exam');
-        //console.log(results)
+        console.log('Update Exam', results);
         if (results) {
             return res.status(200).json(results);
         }
