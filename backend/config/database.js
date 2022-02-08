@@ -18,12 +18,4 @@ const config = require('./config');
         database: config.databaseName,
         multipleStatements: true
     });
-    /* const pool = mysql.createPool({
-        connectionLimit: 65,
-        host: "sap-united-db.chaoomqaxpcs.ap-southeast-1.rds.amazonaws.com",
-        user: "root",
-        password: "SbFdYtnnFqOjdi2ra5NK",
-        database: "tast",
-        multipleStatements: true
-    }); */
  module.exports=pool;
