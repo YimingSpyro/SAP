@@ -27,7 +27,7 @@ exports.getWorkloadByAdmin = async (req, res, next) => {
     try {
         let results = await workloadService.getWorkloadByAdmin(semester_code);
         console.log('Get Workload By Admin');
-        //console.log(results)
+        console.log(results)
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -45,7 +45,7 @@ exports.getWorkloadByAdmin = async (req, res, next) => {
 
 };
 exports.deleteWorkload = async (req, res, next) => {
-    //console.log(req.body)
+    console.log(req.body)
     let staff_id = req.query.mod_coord;
     let mod_code = req.body.mod_code;
     let semester_code = req.body.semester_code;
@@ -57,7 +57,7 @@ exports.deleteWorkload = async (req, res, next) => {
         let results = await workloadService.deleteWorkload(data);
         console.log('Delete Workload');
         if (results.errno) {
-            //console.log(results)
+            console.log(results)
             throw 'Database SQL Error'
         }
         else {
@@ -91,7 +91,7 @@ exports.createWorkload = async (req, res, next) => {
     let type = req.body.data.type;
     let duration = req.body.data.duration;
     let special_requirement = req.body.data.special_requirement;
-    //console.log(req.body.data)
+    console.log(req.body.data)
     let data;
     if (ca_pattern.test(component_code)) {
         //fk_mod_code, fk_semester_code, fk_uploaded_by, mod_stage, component_code, nrc, weightage, group_size, start_weeks, end_weeks, remarks
@@ -104,7 +104,7 @@ exports.createWorkload = async (req, res, next) => {
         let results = await workloadService.createWorkload(component_code, data);
         console.log('Insert New Workload');
         if (results.errno) {
-            //console.log(results)
+            console.log(results)
             throw 'Database SQL Error'
         }
         else {

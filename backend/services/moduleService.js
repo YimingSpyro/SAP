@@ -25,7 +25,7 @@ module.exports.getModuleBySection = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -46,7 +46,7 @@ module.exports.getModuleBySectionAndStage = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -67,7 +67,7 @@ module.exports.getModuleByCode = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -89,7 +89,7 @@ module.exports.getModuleByModCoord = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -131,7 +131,7 @@ module.exports.createModule = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');

@@ -36,8 +36,8 @@ module.exports.processLogin = ((req, res) => {
     //console.log(password);
     var data = authManager.login([staff_id, password])
         .then((rows) => {
-            console.log("authmanager");
-            //console.log(rows);
+            //console.log("authmanager");
+           // console.log(rows);
             //console.log(rows[0].staff_name);
             var hash = rows[0].staff_password;
             bcrypt.compare(password, hash, (err, resp) => {
@@ -54,7 +54,7 @@ module.exports.processLogin = ((req, res) => {
                     });
 
                 } else {
-                    console.log("BCRYPT error");
+                    //console.log("BCRYPT error");
                     console.log(err);
                     res.status(500).json({
                         error: err
@@ -69,7 +69,7 @@ module.exports.processLogin = ((req, res) => {
         })
 })
 module.exports.getStaffPrivileges = ((req, res) => {
-    console.log("owdaj");
+    //console.log("owdaj");
     let staff_id = req.params.id;
     var data = authManager.getStaffPrivileges(staff_id)
         .then((rows) => {
@@ -143,7 +143,7 @@ module.exports.processChangePassword = ((req, res) => {
 
 
                 } else {
-                    console.log("wrong password");
+                    //console.log("wrong password");
                     console.log(err);
                     return res.status(500).json({
                         error: err
@@ -162,7 +162,6 @@ module.exports.getNavItems = (async (req, res) => {
     try {
         let results = await authManager.getNavItems();
         console.log('Get All Exams');
-        //console.log(results)
         if (results) {
             return res.status(200).json(results);
         }

@@ -162,6 +162,7 @@ async function generateCreateDesignation() {
                 <input type="text" class="form-control form-control-sm" id="section-name-create" placeholder="DIT - Staff">
             </div>
         </div>
+        <div><p id ="note">NOTE: Designation can only be created for active courses.</p></div>
 
     </div>
     <button type="submit" class="btn btn-primary float-end create-designation-button">Create designation</button>`);
