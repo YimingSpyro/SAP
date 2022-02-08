@@ -45,6 +45,7 @@ function deleteStaffById(element) {
 }
 function getStaffandAppend() {
     $('#staff-row-table').empty();
+    $('#section-select').empty();
     axios.get(base_url + '/api/admin/maintenance/staff-info', { withCredentials: true }).then((response) => {
         if (response.status == 200) {
             rows = response.data
@@ -200,7 +201,7 @@ function appendStaffFormValues(rows) {
 function createStaff() {
     var checkedRoles = $('#role-checkboxes input:checked')
     var selected = new Array()
-    $('#role-checkboxes input:checked').each((i, ob) => {
+    $('#role-checkboxes input:checked').each((i, ob)=>{
         selected.push($(ob).val());
     })
     var data = {
@@ -230,14 +231,14 @@ function createStaff() {
 function resetPassword(data) {
     let staff_id = $(data).data("staff-id");
     return axios.put(base_url + '/api/admin/maintenance/staff/password/',
-        {
-            new_password: $("#staff-reset-password")[0].value,
-            staff_id: staff_id
-        }, { withCredentials: true })
-        .then(() => {
-            success("reset");
-        })
-        .catch(err => error(err));
+    {
+        new_password : $("#staff-reset-password")[0].value,
+        staff_id : staff_id
+    })
+    .then(() => {
+        success("reset");
+    })
+    .catch(err => error(err));
 }
 function updateStaffById(element) {
     var staff_id = $(element).attr("data-staff-id")

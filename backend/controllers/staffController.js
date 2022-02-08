@@ -4,7 +4,7 @@ exports.processGetOneUserData = async(req, res, next) => {
     let userId = req.headers.user;
     try {
         let results = await userManager.getOneUserData(recordId);
-        console.log('Inspect result variable inside processGetOneUserData code\n');
+        console.log('Inspect result variable inside processGetOneUserData code\n', results);
         if (results) {
             var jsonResult = {
                 'userdata': results[0],
@@ -37,8 +37,7 @@ exports.getAllSections = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Sections');
-            //console.log(results)
+            console.log('Get All Sections', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -59,8 +58,7 @@ exports.getStaffTypes = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Sections');
-            //console.log(results)
+            console.log('Get All Sections', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -83,8 +81,7 @@ exports.createStaffType = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Staff Type');
-            //console.log(results)
+            console.log('Create Staff Type', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -103,8 +100,7 @@ exports.deleteStaffType = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Delete Staff Type');
-            //console.log(results)
+            console.log('Delete Staff Type', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -131,8 +127,7 @@ exports.updateStaffType = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Semester');
-            //console.log(results)
+            console.log('Update Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -156,8 +151,7 @@ exports.getAllDesignations = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Semester');
-            //console.log(results)
+            console.log('Get All Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -179,8 +173,7 @@ exports.createDesignation = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Designation');
-            //console.log(results)
+            console.log('Create Designation', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -195,14 +188,12 @@ exports.deleteDesignation = async (req, res, next) => {
     let designation_id = req.query.designation_id;
     try {
         let results = await staffManager.deleteDesignation(designation_id);
-        console.log('Delete Teaching Requirement by ID');
-        //console.log(results)
+        console.log('Delete Teaching Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -229,8 +220,7 @@ exports.updateDesignation = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Designation');
-            //console.log(results)
+            console.log('Update Designation', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -249,14 +239,12 @@ exports.updateDesignation = async (req, res, next) => {
 exports.getAllStaff = async (req, res, next) => {
     try {
         let results = await staffManager.getAllStaff();
-        console.log('Get Staff Personal Information');
-        //console.log(results)
+        console.log('Get Staff Personal Information', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -316,14 +304,12 @@ exports.getStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
     try {
         let results = await staffManager.getStaffByStaffId(staff_id);
-        console.log('Get Staff Personal Information by ID');
-        //console.log(results)
+        console.log('Get Staff Personal Information by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -397,8 +383,7 @@ exports.updatePersonalInfoByID = async (req, res, next) => {
     let data = [new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, staff_id]
     try {
         let results = await staffManager.updatePersonalInfoByID(data);
-        console.log('Update Staff Personal Information by ID');
-        //console.log(results)
+        console.log('Update Staff Personal Information by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -406,8 +391,7 @@ exports.updatePersonalInfoByID = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -425,14 +409,12 @@ exports.deleteStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
     try {
         let results = await staffManager.deleteStaffByStaffId(staff_id);
-        console.log('Get Staff Personal Information by ID');
-        //console.log(results)
+        console.log('Get Staff Personal Information by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -444,44 +426,6 @@ exports.deleteStaffByID = async (req, res, next) => {
     }
 
 };
-
-// API Admin Reset Staff Password by ID
-exports.resetStaffPassword = async (req, res, next) => {
-    let new_password = req.body.new_password;
-    let staff_id = req.body.staff_id
-    try {
-        bcrypt.hash(new_password, saltRounds,async function (err, hash) {
-            if (err) {
-                res.status(500).json({
-                    error: "Unable to Update staff"
-                });
-            } else  {
-                new_password = hash;
-                let data = [new_password,staff_id]
-                let results = await staffManager.resetStaffPassword(data)
-                if (results.errno) {
-                    throw 'Database SQL Error'
-                }
-                else if (results.affectedRows == 0) {
-                    throw 'Could Not Update to Database'
-                }
-                else {
-                    console.log('Update Password by Staff ID', results);
-                    return res.status(200).json(results);
-                }
-            }
-        });
-    } catch (error) {
-        let message = 'Server is unable to process your request. Error: ' + error;
-        console.error('Server is unable to process the request', { 'Error': error })
-        return res.status(500).json({
-            message: message
-        });
-    }
-
-
-};
-
 // API Admin Update Staff Data by ID
 exports.updateStaffByID = async (req, res, next) => {
     let staff_id = req.params.id
@@ -500,8 +444,7 @@ exports.updateStaffByID = async (req, res, next) => {
     console.log(data);
     try {
         let results = await staffManager.updateStaffByStaffId(data);
-        console.log('Update Staff Personal Information by ID');
-        //console.log(results)
+        console.log('Update Staff Personal Information by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -509,8 +452,7 @@ exports.updateStaffByID = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -571,14 +513,12 @@ exports.getTeachingRequirementByID = async (req, res, next) => {
     let data = [staff_id, semester_code]
     try {
         let results = await staffManager.getTeachingRequirementByID(data);
-        console.log('Get Teaching Requirement by ID');
-        //console.log(results)
+        console.log('Get Teaching Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -601,14 +541,12 @@ exports.createTeachingRequirement = async (req, res, next) => {
     let data = [staff_id, ptr_day, ptr_time, ptr_duration, ptr_reason, semester_code]
     try {
         let results = await staffManager.createTeachingRequirement(data);
-        console.log('Create Teaching Requirement');
-        //console.log(results)
+        console.log('Create Teaching Requirement', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -630,8 +568,7 @@ exports.updateTeachingRequirement = async (req, res, next) => {
     let data = [ptr_day, ptr_time, ptr_duration, ptr_reason, ptr_id]
     try {
         let results = await staffManager.updateTeachingRequirement(data);
-        console.log('Update Teacing Requirement by ID');
-        //console.log(results)
+        console.log('Update Teacing Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -639,8 +576,7 @@ exports.updateTeachingRequirement = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -657,14 +593,12 @@ exports.deleteTeachingRequirement = async (req, res, next) => {
     let ptr_id = req.params.id;
     try {
         let results = await staffManager.deleteTeachingRequirement(ptr_id);
-        console.log('Delete Teaching Requirement by ID');
-        //console.log(results)
+        console.log('Delete Teaching Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -683,14 +617,12 @@ exports.getTeachingRequirementRemarks = async (req, res, next) => {
     let data = [staff_id, semester_code];
     try {
         let results = await staffManager.getTeachingRequirementRemarks(data);
-        console.log('Get Teaching Requirement by ID');
-        //console.log(results)
+        console.log('Get Teaching Requirement by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -710,14 +642,12 @@ exports.createTeachingRequirementRemarks = async (req, res, next) => {
     let data = [staff_id, ptr_remarks, semester_code]
     try {
         let results = await staffManager.createTeachingRequirementRemarks(data);
-        console.log('Create Teaching Requirement');
-        //console.log(results)
+        console.log('Create Teaching Requirement', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -737,8 +667,7 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
     let data = [ptr_remarks, semester_code, staff_id]
     try {
         let results = await staffManager.updateTeachingRequirementRemarks(data);
-        console.log('Update Teacing Requirement Remarks by ID');
-        //console.log(results)
+        console.log('Update Teacing Requirement Remarks by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -746,8 +675,7 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -768,14 +696,12 @@ exports.getAllModulePreference = async (req, res, next) => {
     let semester_code = req.query.semester_code;
     try {
         let results = await staffManager.getAllModulePreference(semester_code);
-        console.log('Get All Module Preference');
-        //console.log(results)
+        console.log('Get All Module Preference', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -794,14 +720,12 @@ exports.getModulePreferenceByID = async (req, res, next) => {
         let semester_code = req.query.semester_code;
         let data = [staff_id, semester_code]
         let results = await staffManager.getModulePreferenceByID(data);
-        console.log('Get Module Preference By Staff ID');
-        //console.log(results)
+        console.log('Get Module Preference By Staff ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -821,14 +745,12 @@ exports.submitModulePreference = async (req, res, next) => {
     let data = [staff_id, semester_code, preference];
     try {
         let results = await staffManager.submitModulePreference(data);
-        console.log('Submit Module Preference');
-        //console.log(results)
+        console.log('Submit Module Preference', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -848,8 +770,7 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
     let data = [preference, staff_id, semester_code];
     try {
         let results = await staffManager.updateModulePreferenceByID(data);
-        console.log('Update Module Preference');
-        //console.log(results)
+        console.log('Update Module Preference', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
@@ -857,8 +778,7 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -882,14 +802,12 @@ exports.getAssignedModulesByModule = async (req, res, next) => {
     let data = [mod_code, semester_code]
     try {
         let results = await staffManager.getAssignedModulesByModule(data);
-        console.log('Get Staff Assigned Module');
-        //console.log(results)
+        console.log('Get Staff Assigned Module', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -908,14 +826,12 @@ exports.getAssignedModulesByID = async (req, res, next) => {
     let data = [staff_id, semester_code]
     try {
         let results = await staffManager.getAssignedModulesByID(data);
-        console.log('Get Staff Assigned Module');
-        //console.log(results)
+        console.log('Get Staff Assigned Module', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -943,8 +859,7 @@ exports.updateAssignedModuleByID = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -967,14 +882,12 @@ exports.assignModuleByID = async (req, res, next) => {
     let data = [module_code, staff_id, ma_lecture, ma_tutorial, ma_practical, semester_code];
     try {
         let results = await staffManager.assignModuleByID(data);
-        console.log('Assign Module to Staff');
-        //console.log(results)
+        console.log('Assign Module to Staff', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -991,14 +904,12 @@ exports.unassignModuleByID = async (req, res, next) => {
     let ma_id = req.params.id;
     try {
         let results = await staffManager.unassignModuleByID(ma_id);
-        console.log('Delete Module Assignmen by ID');
-        //console.log(results)
+        console.log('Delete Module Assignmen by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -1019,14 +930,12 @@ exports.getAllStaffTAS = async (req, res, next) => {
     let section = req.query.section;
     try {
         let results = await staffManager.getAllStaffTAS(section);
-        console.log('Get Staff Assigned Module');
-        //console.log(results)
+        console.log('Get Staff Assigned Module', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -1060,8 +969,7 @@ exports.updateModuleTAS = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -1090,8 +998,7 @@ exports.updateModuleCAS = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Assign Module by Staff ID');
-            //console.log(results)
+            console.log('Update Assign Module by Staff ID', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -1112,8 +1019,7 @@ exports.getModuleStage = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get Module Stages');
-            //console.log(results)
+            console.log('Get Module Stages', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -1141,8 +1047,7 @@ exports.updateNormalStudents = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Normal Students by Mod Stage and Section');
-            //console.log(results)
+            console.log('Update Normal Students by Mod Stage and Section', results);
             return res.status(200).json(results);
         }
     } catch (error) {

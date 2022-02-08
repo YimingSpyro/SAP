@@ -25,7 +25,7 @@ module.exports.getModuleBySection = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -46,7 +46,7 @@ module.exports.getModuleBySectionAndStage = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -67,7 +67,7 @@ module.exports.getModuleByCode = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -89,7 +89,7 @@ module.exports.getModuleByModCoord = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -102,10 +102,10 @@ module.exports.getModuleByModCoord = (data) => {
         return error
     });
 };
-module.exports.getAllModules = (semester_code,course_id) => {
+module.exports.getAllModules = (semester_code) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`SELECT tas.module.*, tas.staff_information.staff_name FROM module LEFT OUTER JOIN tas.staff_information ON fk_mod_coord = staff_id WHERE fk_semester_code = ? AND fk_course_id=?;`, [semester_code,course_id], (err, results) => {
+        pool.query(`SELECT tas.module.*, tas.staff_information.staff_name FROM module LEFT OUTER JOIN tas.staff_information ON fk_mod_coord = staff_id WHERE fk_semester_code = ?;`, [semester_code], (err, results) => {
             if (err) {
                 reject(err);
             } else {
@@ -131,7 +131,7 @@ module.exports.createModule = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
