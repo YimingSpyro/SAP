@@ -24,8 +24,7 @@ exports.getAllSemestersByStatus = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Semester');
-            //console.log(results)
+            console.log('Get All Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -47,8 +46,7 @@ exports.createSemester = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Semester');
-            //console.log(results)
+            console.log('Create Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -74,8 +72,7 @@ exports.updateSemester = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Semester');
-            //console.log(results)
+            console.log('Update Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -98,8 +95,7 @@ exports.disableSemester = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Disable Semester');
-            //console.log(results)
+            console.log('Disable Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -122,8 +118,7 @@ exports.enableSemester = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Enable Semester');
-            //console.log(results)
+            console.log('Enable Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -145,8 +140,7 @@ exports.deleteSemester = async (req, res, next) => {
             throw 'Could Not Delete'
         }
         else {
-            console.log('Delete Semester');
-            //console.log(results)
+            console.log('Delete Semester', results);
             return res.status(200).json(results);
         }
     } catch (error) {
