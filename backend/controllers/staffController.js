@@ -448,7 +448,8 @@ exports.deleteStaffByID = async (req, res, next) => {
 // API Admin Reset Staff Password by ID
 exports.resetStaffPassword = async (req, res, next) => {
     let new_password = req.body.new_password;
-    let staff_id = req.body.staff_id
+    let staff_id = String(req.body.staff_id)
+
     try {
         bcrypt.hash(new_password, saltRounds,async function (err, hash) {
             if (err) {
@@ -460,7 +461,8 @@ exports.resetStaffPassword = async (req, res, next) => {
                 let data = [new_password,staff_id]
                 let results = await staffManager.resetStaffPassword(data)
                 if (results.errno) {
-                    throw 'Database SQL Error'
+                    console.error(results)
+                    throw 'Database SQL Error' + results.errno
                 }
                 else if (results.affectedRows == 0) {
                     throw 'Could Not Update to Database'
