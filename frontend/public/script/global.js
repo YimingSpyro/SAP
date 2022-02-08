@@ -62,13 +62,16 @@ async function generateNavAnnouncements() {
     }
 }
 
-//let base_url = "http://soctas2021.irc.sg";
+//Live URL
 let base_url = "https://soctas2021.irc.sg:8080";
+
+//Localhost Dev URL
+//let base_url = "https://localhost:8080";
 
 
 function getProfilePicture() {
     axios.get(base_url + '/api/uploads/profile-picture/1144').then((response) => {
-        //console.log(response.data[0].filename)
+        console.log(response.data[0].filename)
         document.getElementById("profile-icon").src = '/profile-picture/' + response.data[0].filename;
         if (document.getElementById("form-profile-icon") != null) {
             document.getElementById("form-profile-icon").src = '/profile-picture/' + response.data[0].filename;

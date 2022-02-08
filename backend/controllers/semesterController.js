@@ -25,7 +25,6 @@ exports.getAllSemestersByStatus = async (req, res, next) => {
         }
         else {
             console.log('Get All Semester');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -48,7 +47,6 @@ exports.createSemester = async (req, res, next) => {
         }
         else {
             console.log('Create Semester');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -75,7 +73,6 @@ exports.updateSemester = async (req, res, next) => {
         }
         else {
             console.log('Update Semester');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -99,7 +96,6 @@ exports.disableSemester = async (req, res, next) => {
         }
         else {
             console.log('Disable Semester');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -123,7 +119,6 @@ exports.enableSemester = async (req, res, next) => {
         }
         else {
             console.log('Enable Semester');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -146,7 +141,6 @@ exports.deleteSemester = async (req, res, next) => {
         }
         else {
             console.log('Delete Semester');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {

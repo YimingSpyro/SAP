@@ -278,6 +278,7 @@ async function generateAnnouncements() {
                             <!-- Duration -->
                             <div id="announcementduration" class="text-end">
 
+
                             `+ start_date + `-` + start_month + `-`+ announcement_start.getFullYear() + ` to ` + end_date + `-` + end_month + `-` + announcement_end.getFullYear() + `
 
                             </div>
@@ -472,7 +473,6 @@ async function generateAnnouncements() {
                                     <!-- Duration -->
                                     <div id="announcementduration" class="text-end">
                                     `+ start_date + `-` + start_month + `-`+ announcement_start.getFullYear() + ` to ` + end_date + `-` + end_month + `-` + announcement_end.getFullYear() + `
-
                                     </div>
                                     <!-- Message -->
                                     <div id="announcementmessage" class="mt-3">
@@ -531,7 +531,7 @@ async function generateAnnouncements() {
                                         `+ announcement_to + `
                                     </div>
                                     <!-- Duration -->
-                                    <div id="announcementduration" class="text-end">
+
                                     `+ start_date + `-` + start_month + `-`+ announcement_start.getFullYear() + ` to ` + end_date + `-` + end_month + `-` + announcement_end.getFullYear() + `
 
                                     </div>

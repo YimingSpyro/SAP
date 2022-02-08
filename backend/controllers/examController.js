@@ -9,7 +9,6 @@ exports.getExamByModule = async(req, res, next) => {
     try {
         let results = await examManager.getExamByModule(data);
         console.log('Get Exam by Module');
-        //console.log(results)
         if (results) {
             return res.status(200).json(results);
         }
@@ -44,7 +43,6 @@ exports.createExam = async(req, res, next) => {
     try {
         let results = await examManager.createExam(data);
         console.log('Create Exam');
-        //console.log(results)
         if (results) {
             return res.status(200).json(results);
         }
@@ -79,7 +77,6 @@ exports.updateExam = async(req, res, next) => {
     try {
         let results = await examManager.updateExam(data);
         console.log('Update Exam');
-        //console.log(results)
         if (results) {
             return res.status(200).json(results);
         }

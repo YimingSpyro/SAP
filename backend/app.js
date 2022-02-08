@@ -18,7 +18,11 @@ let app = express();
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+    //Localhost Dev URL
+    //res.setHeader('Access-Control-Allow-Origin', 'https://localhost:8000');
+    
+    //Live URL
+    res.setHeader('Access-Control-Allow-Origin', 'https://soctas2021.irc.sg:8000');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -68,7 +72,7 @@ const isAuthenticated = (req, res, next) => {
     try {
         const data = jwt.verify(token, JWT_SECRET_KEY)
         console.log(data);
-        if (data.staff_name) return res.redirect('http://soctas2021.irc.sg/home.html')
+        if (data.staff_name) return res.redirect('https://soctas2021.irc.sg/home.html')
     } catch {
         return res.sendStatus(403);
     }
