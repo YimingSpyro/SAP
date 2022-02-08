@@ -4,7 +4,10 @@
   "description": "This is the Github Page for SAP Group 10 SP-SOC Teaching System Enhancements",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup" : "npm install && cd .\\frontend\\ && npm install && cd .. && cd .\\backend\\ && npm install && exit 1",
+    "launch" : "cd .\\frontend\\ && pm2 start index.js --name tas_frontend --watch --time  && cd .. && cd .\\backend\\ && pm2 start app.js --name tas_backend --watch --time && exit 1",
+    "stop" : "pm2 stop all"
   },
   "repository": {
     "type": "git",
