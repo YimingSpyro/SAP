@@ -20,12 +20,12 @@ exports.getModuleBySection = async (req, res, next) => {
     let data = [section, semester_code]
     try {
         let results = await moduleService.getModuleBySection(data);
-        console.log('Get Module by ID', results);
+        console.log('Get Module by ID');
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID', results);
+            console.log('Update Assign Module by Staff ID');
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -44,12 +44,12 @@ exports.getModuleBySectionAndStage = async (req, res, next) => {
     let data = [section, semester_code, mod_stage]
     try {
         let results = await moduleService.getModuleBySectionAndStage(data);
-        console.log('Get Module by ID', results);
+        console.log('Get Module by ID');
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID', results);
+            console.log('Update Assign Module by Staff ID');
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -67,12 +67,12 @@ exports.getModuleByCode = async (req, res, next) => {
     let data = [mod_code, semester_code]
     try {
         let results = await moduleService.getModuleByCode(data);
-        console.log('Get Module by ID', results);
+        console.log('Get Module by ID');
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Update Assign Module by Staff ID', results);
+            console.log('Update Assign Module by Staff ID');
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -112,7 +112,7 @@ exports.getAllModules = async (req, res, next) => {
     let semester_code = req.query.semester_code;
     let course_id = req.query.course;
     //console.log(semester_code)
-    console.log(course_id)
+    //console.log(course_id)
     try {
         let results = await moduleService.getAllModules(semester_code, course_id);
         //console.log('Get All Modules', results);
@@ -157,13 +157,11 @@ exports.createModule = async (req, res, next) => {
     try {
         let results = await moduleService.createModule(data);
         console.log('Create Module');
-        //console.log(results)
         if (results.errno) {
             throw 'Database SQL Error'
         }
         else {
             console.log('Updated Module');
-            //console.log(results)
             return res.status(200).json(results);
         }
     } catch (error) {

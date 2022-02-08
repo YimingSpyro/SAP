@@ -3,11 +3,11 @@ const courseService = require('../services/courseService')
 module.exports.getAllCourses = async (req, res) => {
     try {
         let results = await courseService.getAllCourses();
-        console.log('Fetching Available Courses');
+        //console.log(('Fetching Available Courses');
         return res.status(200).json(results);
     }
     catch (error) {
-        console.log(error)
+        //console.log((error)
         return res.status(400).json({ message: "Invalid Input" });
     }
 };
@@ -21,8 +21,8 @@ exports.getAllCoursesByStatus = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Get All Courses');
-            //console.log(results);
+            //console.log(('Get All Courses');
+            ////console.log((results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -43,8 +43,7 @@ exports.createCourse = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Course');
-            //console.log(results)
+            //console.log(('Create Course', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -69,7 +68,7 @@ exports.updateCourse = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Course', results);
+            //console.log(('Update Course', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -92,7 +91,7 @@ exports.disableCourse = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Course', results);
+            //console.log(('Update Course', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -115,7 +114,7 @@ exports.enableCourse = async (req, res, next) => {
             throw 'Could Not Update to Database'
         }
         else {
-            console.log('Update Course', results);
+            ////console.log(('Update Course', results);
             return res.status(200).json(results);
         }
     } catch (error) {
@@ -137,7 +136,7 @@ exports.deleteCourse = async (req, res, next) => {
             throw 'Could Not Delete'
         }
         else {
-            console.log('Update Course', results);
+            ////console.log(('Update Course', results);
             return res.status(200).json(results);
         }
     } catch (error) {

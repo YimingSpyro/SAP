@@ -13,7 +13,7 @@ function login(){
         $("#error_message").css("display", "block");
         $("input#password").focus()
     } else {
-        axios.post(base_url+'/api/user/login', {
+        axios.post(base_url+'/login', {
             staff_id: staff_id,
             password: password
         }, { withCredentials: true }).then((response) => {
