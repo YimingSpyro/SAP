@@ -168,6 +168,7 @@ async function generateCreateSemester() {
                 <input type="text" class="form-control form-control-sm" id="semester-remarks-create" placeholder="Enter Remarks">
             </div>
         </div>
+        <div><p id="create-note">NOTE: New Semesters will be inactive by default.</p></div>
     </div>
     <button type="submit" class="btn btn-primary float-end create-semester">Create Semester</button>`);
 }

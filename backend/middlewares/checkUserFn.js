@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const config = require('../config/config');
 require('isomorphic-fetch');
-var base_url = 'https://soctas2021.irc.sg:8080/'
+var base_url = 'http://localhost:8080'
 module.exports = {
     getClientUserId: (req, res, next) => {
         let message = 'Unauthorized access';

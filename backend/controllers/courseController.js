@@ -43,8 +43,7 @@ exports.createCourse = async (req, res, next) => {
             throw 'Database SQL Error'
         }
         else {
-            console.log('Create Course');
-            //console.log(results)
+            console.log('Create Course', results);
             return res.status(200).json(results);
         }
     } catch (error) {

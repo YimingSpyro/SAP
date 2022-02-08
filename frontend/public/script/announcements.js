@@ -248,7 +248,7 @@ async function generateAnnouncements() {
                             </div>
                             <!-- Duration -->
                             <div id="announcementduration" class="text-end">
-                            `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                            `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                             </div>
                             <!-- Message -->
                             <div id="announcementmessage" class="mt-3">
@@ -272,7 +272,7 @@ async function generateAnnouncements() {
                             </div>
                             <!-- Duration -->
                             <div id="announcementduration" class="text-end">
-                            `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                            `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                             </div>
                             <!-- Message -->
                             <div id="announcementmessage" class="mt-3">
@@ -328,7 +328,7 @@ async function generateAnnouncements() {
                         </div>
                         <!-- Duration -->
                         <div id="announcementduration" class="text-end">
-                        `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                        `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                         </div>
                         <!-- Message -->
                         <div id="announcementmessage" class="mt-3">
@@ -410,7 +410,7 @@ async function generateAnnouncements() {
                                     </div>
                                     <!-- Duration -->
                                     <div id="announcementduration" class="text-end">
-                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                                     </div>
                                     <!-- Message -->
                                     <div id="announcementmessage" class="mt-3">
@@ -443,7 +443,7 @@ async function generateAnnouncements() {
                                     </div>
                                     <!-- Duration -->
                                     <div id="announcementduration" class="text-end">
-                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                                     </div>
                                     <!-- Message -->
                                     <div id="announcementmessage" class="mt-3">
@@ -469,7 +469,7 @@ async function generateAnnouncements() {
                                     </div>
                                     <!-- Duration -->
                                     <div id="announcementduration" class="text-end">
-                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                                     </div>
                                     <!-- Message -->
                                     <div id="announcementmessage" class="mt-3">
@@ -493,7 +493,7 @@ async function generateAnnouncements() {
                                     </div>
                                     <!-- Duration -->
                                     <div id="announcementduration" class="text-end">
-                                    `+ announcement_start.getDate()  + `-` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
+                                    `+ announcement_start.getDate()  + `-0` + (announcement_start.getMonth() + 1) + `-`+ announcement_start.getFullYear() + ` to ` + announcement_end.getDate() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getFullYear() + `
                                     </div>
                                     <!-- Message -->
                                     <div id="announcementmessage" class="mt-3">
@@ -592,12 +592,12 @@ async function generateUpdate(announcement_index, order){
             <div class="form-group row">
                 <label for="start-date" class="col-sm-3 col-form-label">Announcement Period:</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control form-control-sm" id="start-date-update" value="`+ announcement_start.getFullYear() + `-` + (announcement_start.getMonth() + 1) + `-` + announcement_start.getDate() +`">
+                    <input type="date" class="form-control form-control-sm" id="start-date-update" value="`+ announcement_start.getFullYear() + `-0` + (announcement_start.getMonth() + 1) + `-` + announcement_start.getDate() +`">
                 </div>
 
                 <label for="end-date" class="col-sm-1 col-form-label">to</label>
                 <div class="col-sm-3">
-                    <input type="date" class="form-control form-control-sm" id="end-date-update" value="`+ announcement_end.getFullYear() + `-` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getDate() +`">
+                    <input type="date" class="form-control form-control-sm" id="end-date-update" value="`+ announcement_end.getFullYear() + `-0` + (announcement_end.getMonth() + 1) + `-` + announcement_end.getDate() +`">
                 </div>
             </div>
 
