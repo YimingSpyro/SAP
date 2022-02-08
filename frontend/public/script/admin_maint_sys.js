@@ -36,9 +36,9 @@ function _getStaff() {
 };
 
 //get selected semester and append modules accordingly
-async function _getModuleAndAppend(acad_sem) {
+async function _getModuleAndAppend(acad_sem,course) {
     //$('#module-table tbody tr').remove();
-    const filtered_modules = await axios.get(base_url + '/api/module?semester_code=' + acad_sem, { withCredentials: true }).then((response) => { return response.data });
+    const filtered_modules = await axios.get(base_url + '/api/module?semester_code=' + acad_sem +'&course='+course, { withCredentials: true }).then((response) => { return response.data });
     results_array = filtered_modules;
     filtered_modules.forEach((element, index) => {
         let table_row = `
@@ -308,12 +308,13 @@ $(document).ready(() => {
     $('#main-list>li').removeClass("active");
     $('#maintenence-system').addClass("active");
 
-    $('#select-semester').on('change', () => {
+    $('#select-semester, #select-course').on('change', () => {
         let b = $("#select-semester option:selected").text();
+        let course = $("#select-course option:selected").text();
         $("tbody tr").remove();
         $("caption").remove();
         _getWorkload(b)
-        _getModuleAndAppend(b)
+        _getModuleAndAppend(b,course)
     });
     $('#editWorkloadSummary').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
@@ -343,6 +344,13 @@ $(document).ready(() => {
         var modal = $(this)
         _findTextFields(modal, index)
         //modal.find('.modal-title').text('New message to ' + recipient)
+    });
+    $('#editModuleModal').on('hidden.bs.modal', function (event) {
+        let b = $("#select-semester option:selected").text();
+        $("tbody tr").remove();
+        $("caption").remove();
+        _getWorkload(b)
+        _getModuleAndAppend(b)
     });
     $('#module-coord-name').on('change', () => {
         let selected_value = $('#module-coord-name').val();

@@ -123,7 +123,7 @@ exports.updateStaffType = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -216,7 +216,7 @@ exports.updateDesignation = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -326,15 +326,15 @@ exports.createStaff = async (req, res, next) => {
     console.log(req.body)
     let data = req.body;
     let staff_id = data["staff_id"];
-    let staff_name =data["staff_name"];
+    let staff_name = data["staff_name"];
     let staff_password = data["staff_password"];
     let staff_abbrv = data["staff_abbrv"];
     let staff_type = data["staff_type"];
     let staff_schedule_id = data["staff_schedule"];
     let staff_designation_id = data["staff_designation"];
-    let staff_email =data["staff_email"];
+    let staff_email = data["staff_email"];
     let staff_number = data["staff_contact"];
-    let staff_mobile =data["staff_mobile"];
+    let staff_mobile = data["staff_mobile"];
     let staff_remarks = data["staff_remarks"];
     let staff_status = data["staff_status"];
     let staff_role_id = data["staff_role"];
@@ -347,7 +347,7 @@ exports.createStaff = async (req, res, next) => {
         } else {
             try {
                 staff_password = hash;
-                var data = staffManager.createStaff([staff_id, staff_name, staff_abbrv, staff_designation_id, staff_email, staff_number, staff_mobile, staff_remarks, staff_password, staff_type, staff_schedule_id, staff_status],[staff_role_id,staff_id])
+                var data = staffManager.createStaff([staff_id, staff_name, staff_abbrv, staff_designation_id, staff_email, staff_number, staff_mobile, staff_remarks, staff_password, staff_type, staff_schedule_id, staff_status], [staff_role_id, staff_id])
                     .then((value) => {
                         res.status(200).json({
                             data: value
@@ -380,14 +380,14 @@ exports.updatePersonalInfoByID = async (req, res, next) => {
     let new_staff_number = req.body.staff_number
     let new_staff_mobile = req.body.staff_mobile
     let new_staff_remarks = req.body.staff_remarks
-    let data = [new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks,staff_id]
+    let data = [new_staff_abbrv, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, staff_id]
     try {
         let results = await staffManager.updatePersonalInfoByID(data);
         console.log('Update Staff Personal Information by ID', results);
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -440,7 +440,7 @@ exports.updateStaffByID = async (req, res, next) => {
     let new_staff_remarks = req.body.staff_remarks
     let new_staff_status = req.body.staff_status
 
-    let data = [new_staff_name, new_staff_abbrv,new_staff_type,new_staff_schedule_id,new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks,new_staff_status, staff_id]
+    let data = [new_staff_name, new_staff_abbrv, new_staff_type, new_staff_schedule_id, new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, new_staff_status, staff_id]
     console.log(data);
     try {
         let results = await staffManager.updateStaffByStaffId(data);
@@ -448,7 +448,7 @@ exports.updateStaffByID = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -465,6 +465,43 @@ exports.updateStaffByID = async (req, res, next) => {
 
 };
 
+// API Admin Reset Staff Password by ID
+exports.resetStaffPassword = async (req, res, next) => {
+    let new_password = req.body.new_password;
+    let staff_id = String(req.body.staff_id)
+    try {
+        bcrypt.hash(new_password, saltRounds,async function (err, hash) {
+            if (err) {
+                res.status(500).json({
+                    error: "Unable to Update staff"
+                });
+            } else  {
+                new_password = hash;
+                let data = [new_password,staff_id]
+                let results = await staffManager.resetStaffPassword(data)
+                if (results.errno) {
+                    throw 'Database SQL Error'
+                }
+                else if (results.affectedRows == 0) {
+                    throw 'Could Not Update to Database'
+                }
+                else {
+                    console.log('Update Password by Staff ID', results);
+                    return res.status(200).json(results);
+                }
+            }
+        });
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+
+};
+
 
 /* ==== PERSONAL TEACHING REQUIREMENT API ==== */
 
@@ -473,7 +510,7 @@ exports.updateStaffByID = async (req, res, next) => {
 exports.getTeachingRequirementByID = async (req, res, next) => {
     let staff_id = req.params.id
     let semester_code = req.query.semester_code
-    let data = [staff_id,semester_code]
+    let data = [staff_id, semester_code]
     try {
         let results = await staffManager.getTeachingRequirementByID(data);
         console.log('Get Teaching Requirement by ID', results);
@@ -535,7 +572,7 @@ exports.updateTeachingRequirement = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -634,7 +671,7 @@ exports.updateTeachingRequirementRemarks = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -737,7 +774,7 @@ exports.updateModulePreferenceByID = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -818,7 +855,7 @@ exports.updateAssignedModuleByID = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -928,7 +965,7 @@ exports.updateModuleTAS = async (req, res, next) => {
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -951,13 +988,13 @@ exports.updateModuleCAS = async (req, res, next) => {
     let total_students = req.body.total_students;
     let mod_code = req.body.mod_code;
     let semester_code = req.body.semester_code;
-    let data = [normal_students,os_students,total_students,mod_code,semester_code];
+    let data = [normal_students, os_students, total_students, mod_code, semester_code];
     try {
         let results = await staffManager.updateModuleCAS(data);
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
@@ -1000,13 +1037,13 @@ exports.updateNormalStudents = async (req, res, next) => {
     let course_id = req.body.course_id
     let semester_code = req.body.semester_code;
     let mod_stage = req.body.mod_stage;
-    let data = [normal_students,course_id,semester_code,mod_stage];
+    let data = [normal_students, course_id, semester_code, mod_stage];
     try {
         let results = await staffManager.updateNormalStudents(data);
         if (results.errno) {
             throw 'Database SQL Error'
         }
-        else if (results.affectedRows == 0){
+        else if (results.affectedRows == 0) {
             throw 'Could Not Update to Database'
         }
         else {
