@@ -63,8 +63,12 @@ async function generateNavAnnouncements() {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //let base_url = "http://soctas2021.irc.sg";
 let base_url = "http://localhost:8000";
+=======
+let base_url = "http://localhost:8080";
+>>>>>>> parent of 6fa3688 (Merge remote-tracking branch 'origin/hosting-branch' into YJ)
 =======
 let base_url = "http://localhost:8080";
 >>>>>>> parent of 6fa3688 (Merge remote-tracking branch 'origin/hosting-branch' into YJ)
