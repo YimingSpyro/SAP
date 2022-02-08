@@ -347,11 +347,10 @@ $(document).ready(() => {
     });
     $('#editModuleModal').on('hidden.bs.modal', function (event) {
         let b = $("#select-semester option:selected").text();
-        let course = $("#select-course option:selected").text();
         $("tbody tr").remove();
         $("caption").remove();
         _getWorkload(b)
-        _getModuleAndAppend(b,course)
+        _getModuleAndAppend(b)
     });
     $('#module-coord-name').on('change', () => {
         let selected_value = $('#module-coord-name').val();

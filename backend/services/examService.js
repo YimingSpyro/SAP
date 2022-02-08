@@ -9,7 +9,7 @@ module.exports.getExamByModule = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -31,7 +31,7 @@ module.exports.createExam = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -56,7 +56,7 @@ module.exports.updateExam = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    //console.log(results);
+                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
