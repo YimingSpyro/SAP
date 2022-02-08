@@ -18,9 +18,12 @@ let app = express();
 
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://localhost:8000');
-    //res.setHeader('Access-Control-Allow-Origin', 'https://soctas2021.irc.sg:8000');
+    //Localhost Dev URL
+    //res.setHeader('Access-Control-Allow-Origin', 'https://localhost:8000');
     
+    //Live URL
+    res.setHeader('Access-Control-Allow-Origin', 'https://soctas2021.irc.sg:8000');
+
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
 
