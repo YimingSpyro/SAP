@@ -42,7 +42,7 @@ module.exports.createCourse = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -61,7 +61,7 @@ module.exports.updateCourse = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -80,7 +80,7 @@ module.exports.disableCourse = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -99,7 +99,7 @@ module.exports.enableCourse = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -116,7 +116,7 @@ module.exports.deleteCourse = (course_id) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
