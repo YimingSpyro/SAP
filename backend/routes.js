@@ -112,7 +112,7 @@ exports.appRoute = router => {
         
     // LOGIN
     router.get('/staff-privileges/:id', authController.getStaffPrivileges);
-    router.post('/api/user/login/', authController.processLogin);
+    router.post('/login/', authController.processLogin);
     router.post('/register', authController.processRegister);
     router.post('/change-password', checkUserFn.checkJWT, authController.processChangePassword);
     //router.get('/checkauthentication',authController.processTestCookie);

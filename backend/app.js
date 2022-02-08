@@ -70,7 +70,7 @@ const isAuthenticated = (req, res, next) => {
     try {
         const data = jwt.verify(token, JWT_SECRET_KEY)
         console.log(data);
-        if (data.staff_name) return res.redirect('http://soctas2021.irc.sg/home.html')
+        if (data.staff_name) return res.redirect('https://soctas2021.irc.sg/home.html')
     } catch {
         return res.sendStatus(403);
     }
