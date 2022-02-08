@@ -112,7 +112,7 @@ exports.appRoute = router => {
         
     // LOGIN
     router.get('/staff-privileges/:id', authController.getStaffPrivileges);
-    router.post('/login', authController.processLogin);
+    router.post('/api/user/login/', authController.processLogin);
     router.post('/register', authController.processRegister);
     router.post('/change-password', checkUserFn.checkJWT, authController.processChangePassword);
     //router.get('/checkauthentication',authController.processTestCookie);
@@ -142,6 +142,7 @@ exports.appRoute = router => {
     router.get('/api/staff/', staffController.getAllStaff);
     router.get('/api/staff/:id', staffController.getStaffByID);
     router.put('/api/staff/:id', staffController.updateStaffByID)
+    router.put('/api/admin/maintenance/staff/password/', staffController.resetStaffPassword);
     router.put('/api/staff/personal/:id', staffController.updatePersonalInfoByID)
 
     // PERSONAL TEACHING REQUIREMENT
@@ -151,6 +152,7 @@ exports.appRoute = router => {
     router.post('/api/teaching-requirement/remarks', staffController.createTeachingRequirementRemarks);
     router.put('/api/teaching-requirement/remarks', staffController.updateTeachingRequirementRemarks);
     router.put('/api/teaching-requirement/', staffController.updateTeachingRequirement);
+
     router.delete('/api/teaching-requirement/:id', staffController.deleteTeachingRequirement);
 
     // MODULE
