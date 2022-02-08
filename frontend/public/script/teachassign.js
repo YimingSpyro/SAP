@@ -8,12 +8,6 @@ function getCourse() {
         .catch(err => error(err));
 };
 
-function getStaffTypes(){
-    return axios.get(base_url + '/api/staff/types')
-        .then(response => response.data)
-        .catch(err => error(err));
-}
-
 function getModulesBySection(section) {
     return axios.get(base_url + '/api/module/section?section=' + section + '&semester_code=' + sessionStorage.getItem('semester_code'))
         .then(response => response.data)
@@ -273,8 +267,6 @@ async function calculateClassesTBA() {
         let staff_id = $(staff).data("staff");
         let assigned = await getAssignedModules(staff_id);
         let mod_code = $(staff).data("code");
-        let staff_type = $(staff).data("type");
-        let staff_name = $(staff).data("name");
         let total_hours = 0;
         let staff_hours = $(staff).find(".staff-hours");
         let lecture_classes = $(staff).find("#input-lecture")[0].value;
@@ -291,15 +283,6 @@ async function calculateClassesTBA() {
         }
         staff_hours.empty()
         staff_hours.append(total_hours / 15)
-        let types = await getStaffTypes();
-        for (let index = 0; index < types.length; index++) {
-            const type = types[index];
-            if (type.staff_type == staff_type) {
-                if (total_hours / 15> type.hours) {
-                    $("#assignment-warning").append(`<p>Hours assigned exceeded limit for `+staff_name+`</p>`);
-                }
-            }
-        }
     })
 
     if (unsaved) {
@@ -578,11 +561,10 @@ async function generateModal(module_index) {
         const staff = staff_list[index];
         let staff_id = staff.staff_id
         let staff_name = staff.staff_name
-        let staff_type = staff.fk_staff_type
         let assigned = await checkAssignedModule(staff_id, mod_code)
         if (assigned.assigned) {
             $(".assigned-staff").append(`
-            <tr data-name="`+staff_name+`" data-type="`+staff_type+`" data-staff="`+ staff_id + `" data-id="` + assigned.ma_id + `" data-code="` + mod_code + `" class="border-bottom border-white align-middle staff">
+            <tr data-staff="`+ staff_id + `" data-id="` + assigned.ma_id + `" data-code="` + mod_code + `" class="border-bottom border-white align-middle staff">
                 <td><a data-staff="`+ staff_id + `" data-bs-toggle="modal" data-bs-target="#staff-modal" class="view-staff view-staff-link">` + staff_name + `</a></td>
                 <td>
                     <input type="number" min="0" value="`+ assigned.lecture_classes + `" class="assigned assigned-lecture form-control form-control-sm" id="input-lecture">
