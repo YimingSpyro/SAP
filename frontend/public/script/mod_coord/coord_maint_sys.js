@@ -556,11 +556,8 @@ $(document).ready(() => {
         var modal = $(this)
         _findTextFields(modal, index)
     });
-    $('#editModuleModal').on('hidden.bs.modal', function (event) {
-        _getWorkload(staff_id)
-    });
     $('#editWorkloadSummary').on('hidden.bs.modal', function (event) {
-        _getModuleAndAppend(staff_id)
+        _getWorkload(staff_id)
     });
     $('#module-coord-name').on('change', () => {
         let selected_value = $('#module-coord-name').val();
