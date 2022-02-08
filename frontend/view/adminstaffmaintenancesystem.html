@@ -90,7 +90,8 @@
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">Staff Type:</label>
                                     <select name="staff-type-input" id="staff-type-input" class="staff-info-input">
-
+                                        <option value="FT">FT</option>
+                                        <option value="AL">AL</option>
                                     </select><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
@@ -106,6 +107,9 @@
                                     <label class="staff-info-label" for="fname">Designation:</label>
                                     <select name="staff-designation-input" id="staff-designation-input"
                                         class="staff-info-input">
+                                        <option value="1">Admin</option>
+                                        <option value="2">Part-Time Lecturer</option>
+                                        <option value="3">Lecturer</option>
                                     </select><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
@@ -211,14 +215,15 @@
                                 </div>
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">.Staff Abbrv:</label>
-                                    <input class="staff-info-input" type="text" id="staff-abbrv-edit-input"
+                                    <input class="staff-info-input" type="text" .id="staff-abbrv-edit-input"
                                         name="staff-abbrv-edit-input"><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">.Staff Type:</label>
-                                    <select name="staff-type-edit-input" id="staff-type-edit-input"
+                                    <select name="staff-type-edit-input" id="sta.ff-type-edit-input"
                                         class="staff-info-input">
-
+                                        <option value="FT">FT</option>
+                                        <option value="AL">AL</option>
                                     </select><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
@@ -234,6 +239,9 @@
                                     <label class="staff-info-label" for="fname">Designation:</label>
                                     <select name="staff-designation-edit-input" id="staff-designation-edit-input"
                                         class="staff-info-input">
+                                        <option value="1">Admin</option>
+                                        <option value="2">Part-Time Lecturer</option>
+                                        <option value="3">Lecturer</option>
                                     </select><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
@@ -262,7 +270,6 @@
                                         Inactive):</label>
                                     <select name="staff-status-edit-input" id="staff-status-edit-input"
                                         class="staff-info-input">
-                                        <option></option>
                                         <option value="Active">Active</option>
                                         <option value="Inactive">Inactive</option>
                                     </select><br><br>
@@ -400,12 +407,14 @@
                                       <img src="/SVG Icons/Chevron Down.svg" class="filter-icons"></img>
                                 </div> -->
                             </div>
-                            <label for="select-status" class="col-sm-2 col-form-label">Staff Status:</label>
+                            <label for="select-section" class="col-sm-2 col-form-label">Order By:</label>
                             <div class="col">
-                                <select class="form-select" id="select-status" >
-                                    <option value="all">All Status</option>
-                                    <option value="Inactive" selected>Active</option>
-                                    <option value="Active">Inactive</option>
+                                <select class="form-select" id="select-section">
+                                    <option selected>Date</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
                                 </select>
                             </div>
                             <div class="col filter-button-wrap">

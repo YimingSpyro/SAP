@@ -1,12 +1,22 @@
 const express = require("express");
 const app = express();
 const cookieparser = require("cookie-parser");
-
+var fs = require('fs')
+const https = require('https')
 app.use(express.static('public'))
 app.use(express.static('profile_picture'))
 app.use(cookieparser());
 const myPort = 8000
-app.get("/login", (req, res) => {
+
+var options = {
+    key: fs.readFileSync('./cert/key.pem'),
+    cert: fs.readFileSync('./cert/cert.pem')
+};
+https.createServer(options, app).listen(myPort,function(){
+    console.log('Server hosted.')
+});
+
+app.get("/", (req, res) => {
     res.sendFile("/public/login.html", { root: __dirname });
 });
 app.get("/home", (req, res) => {
@@ -17,12 +27,6 @@ app.get("/home", (req, res) => {
 app.get("/test", (req, res) => {
     res.sendFile("/public/home.html", { root: __dirname });
 }); */
-app.get("/login", (req, res) => {
-    res.sendFile("/public/login.html", { root: __dirname });
-});
-app.get("/home", (req, res) => {
-    res.sendFile("/public/home.html", { root: __dirname });
-});
 app.get("/profile", (req, res) => {
     res.sendFile("/view/personalinformation.html", { root: __dirname });
 });
@@ -60,7 +64,7 @@ app.get("/reports/assignment-report", (req, res) => {
 app.get("/reports/mc-list", (req, res) => {
     res.sendFile("/view/reports-html/mclist.html", { root: __dirname });
 });
-app.get("/reports/summary-by-module", (req, res ) => {
+app.get("/reports/summary-by-module", (req, res) => {
     res.sendFile("/view/reports-html/summarybymod.html", { root: __dirname });
 });
 app.get("/reports/summary-by-staff", (req, res) => {
@@ -112,6 +116,6 @@ app.get("/staff-hours", (req, res) => {
     res.sendFile("/view/adminstaffhoursmaintenance.html", { root: __dirname });
 });
 
-app.listen(myPort,() => {
+/* app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`)
-});
+}); */

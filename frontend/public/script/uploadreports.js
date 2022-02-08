@@ -123,7 +123,7 @@ function selectOption(input) {
             //Add the data cells.
             for (let j = 0; j < header_names.length; j++) {
                 if (excelRows[i][objectProperties[j]] == undefined) {
-                    excelRows[i][objectProperties[j]] = 'Nil'
+                    excelRows[i][objectProperties[j]] = 0
                     var cell = row.insertCell(-1);
                     cell.innerHTML = excelRows[i][objectProperties[j]];
                 } else {

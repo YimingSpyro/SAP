@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken')
 const JWT_SECRET_KEY = 'tassystem';
 var fs = require('fs')
 
+const https = require('https')
+
 //Server Settings
 const PORT = 8080;
 const path = require("path");
@@ -66,7 +68,7 @@ const isAuthenticated = (req, res, next) => {
     try {
         const data = jwt.verify(token, JWT_SECRET_KEY)
         console.log(data);
-        if (data.staff_name) return res.redirect('http://localhost:8000/home.html')
+        if (data.staff_name) return res.redirect('http://soctas2021.irc.sg/home.html')
     } catch {
         return res.sendStatus(403);
     }
@@ -85,7 +87,6 @@ app.get('/getcookie', isAuthenticated, (req, res) => {
 
 //Index Page (Home public page)
 router.get('/', (req, res, next) => {
-
     res.send('<html><title>TAS Backend API</title><body>This address is currently used for TAS API</body></html>');
     res.end();
 });
@@ -111,10 +112,17 @@ process.on('uncaughtException', function (error, origin) {
 
 
 
-app.listen(PORT, err => {
+/* app.listen(PORT, err => {
     if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
     console.log(`Server is Listening on: http://localhost:${PORT}/`);
-});
+}); */
+
+console.log(__dirname)
+var options = {
+    key: fs.readFileSync('./cert/key.pem'),
+    cert: fs.readFileSync('./cert/cert.pem')
+};
+https.createServer(options, app).listen(8080);
 
 // Connect to the Database
 const pool = require('./config/database')
