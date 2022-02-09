@@ -131,7 +131,7 @@ CREATE TABLE `jwt_token_storage` (
   PRIMARY KEY (`jwt_id`),
   KEY `fk_jwt_staff_id_idx` (`fk_staff_id`),
   CONSTRAINT `jwt_token_storage_ibfk_1` FOREIGN KEY (`fk_staff_id`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=531 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,21 +209,21 @@ CREATE TABLE `module` (
   `mod_name` mediumtext COLLATE utf8mb4_0900_as_ci NOT NULL,
   `mod_abbrv` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `mod_dlt` decimal(4,1) NOT NULL,
-  `mod_lecture` decimal(3,1) NOT NULL,
-  `mod_tutorial` decimal(3,1) NOT NULL,
-  `mod_practical` decimal(3,1) NOT NULL,
+  `mod_lecture` decimal(4,1) NOT NULL,
+  `mod_tutorial` decimal(4,1) NOT NULL,
+  `mod_practical` decimal(4,1) NOT NULL,
   `credit_unit` int NOT NULL,
   `prereq` mediumtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `module_type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `type` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `total_hours` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `total_hours` decimal(4,1) NOT NULL,
   `mass_lect` enum('Yes','No') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `odd_lechr` decimal(3,1) DEFAULT NULL,
-  `even_lechr` decimal(3,1) DEFAULT NULL,
-  `odd_prachr` decimal(3,1) DEFAULT NULL,
-  `even_prachr` decimal(3,1) DEFAULT NULL,
-  `odd_tuthr` decimal(3,1) DEFAULT NULL,
-  `even_tuthr` decimal(3,1) DEFAULT NULL,
+  `odd_lechr` decimal(4,1) DEFAULT NULL,
+  `even_lechr` decimal(4,1) DEFAULT NULL,
+  `odd_prachr` decimal(4,1) DEFAULT NULL,
+  `even_prachr` decimal(4,1) DEFAULT NULL,
+  `odd_tuthr` decimal(4,1) DEFAULT NULL,
+  `even_tuthr` decimal(4,1) DEFAULT NULL,
   `fk_semester_code` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fk_mod_coord` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `fk_course_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
@@ -486,6 +486,20 @@ CREATE TABLE `system_roles` (
   UNIQUE KEY `role_name` (`role_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `temp_user_accounts`
+--
+
+DROP TABLE IF EXISTS `temp_user_accounts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `temp_user_accounts` (
+  `staff_id` varchar(6) NOT NULL,
+  `staff_password` varchar(255) NOT NULL,
+  PRIMARY KEY (`staff_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -496,4 +510,4 @@ CREATE TABLE `system_roles` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-08 23:01:12
+-- Dump completed on 2022-02-09 17:51:33
