@@ -616,7 +616,7 @@ async function generateModal(module_index) {
 }
 
 async function assignStaff(staff_id, mod_code, module_index) {
-    assignModule(staff_id, mod_code);
+    await assignModule(staff_id, mod_code);
     let staff = await getStaffByID(staff_id);
     let assigned = await checkAssignedModule(staff_id, mod_code);
     let staff_name = staff.staff_name;
