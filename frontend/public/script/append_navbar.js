@@ -4,15 +4,14 @@ var role_id = sessionStorage.getItem('staff_role');
 role_id = JSON.parse(role_id)
 var html = ""
 
-$(window).on('load',()=>{
-    var staff_name = sessionStorage.getItem('staff_name')
-    $('#staff-name-text').text(staff_name);
-    var staff_role = sessionStorage.getItem('staff_role_name')
-    $('#welcome-text').text(`Welcome ${staff_role},`);
-    
-})
+
 $(document).ready(()=>{
-    $('#navbar-wrap').load("/shared_views/navbar_profile.html")
+    $('#navbar-wrap').load("/shared_views/navbar_profile.html", ()=>{
+        var staff_name = sessionStorage.getItem('staff_name')
+        $('#staff-name-text').text(staff_name);
+        var staff_role = sessionStorage.getItem('staff_role_name')
+        $('#welcome-text').text(`Welcome ${staff_role},`);
+    })
     $('#dashboard-view-wrap').load("/homeviews/admin_home.html")
     if (!sessionStorage.getItem("navBarAppended")){
         axios.get(base_url+"/api/nav-items").then((response) => {
@@ -59,3 +58,5 @@ $(document).ready(()=>{
         $('#main-list').append(  sessionStorage.getItem("navBarContent"));
     }
 })
+
+
