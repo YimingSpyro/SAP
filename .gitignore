@@ -4,7 +4,3 @@ index.js
 database.js
 config.js
 .env
-frontend/public/script/global.js
-backend/middlewares/checkUserFn.js
-backend/config/database.js
-backend/app.js
