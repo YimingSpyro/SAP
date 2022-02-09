@@ -1,7 +1,6 @@
 
 
 var role_id = sessionStorage.getItem('staff_role');
-console.log(JSON.parse(role_id));
 role_id = JSON.parse(role_id)
 var html = ""
 
@@ -23,7 +22,6 @@ $(document).ready(()=>{
             for (let i = 0; i < rows.length; i++) {
                 allNavItems.push(rows[i])
                 var roleIdsArrayForItem = [];
-                console.log(rows[i].item_title);
                 roleIdsArrayForItem = (JSON.parse(rows[i].role_ids))
            
                 for(let j = 0;j<role_id.length;j++){
@@ -50,12 +48,12 @@ $(document).ready(()=>{
                     }
                 }
             }
-            console.log(staffNavItemsArrayId);
+
             $('#main-list').append(html);
             sessionStorage.setItem("navBarAppended",true)
             sessionStorage.setItem("navBarContent",html)
         }).catch((e) => {
-            console.log(e);
+            throw e
         })
     }else{
         $('#main-list').append(  sessionStorage.getItem("navBarContent"));
