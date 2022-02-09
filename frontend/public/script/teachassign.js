@@ -665,7 +665,7 @@ async function assignStaff(staff_id, mod_code, module_index) {
         let staff_name = staff.staff_name
         let assigned = await checkAssignedModule(staff_id, mod_code)
         if (!assigned.assigned) {
-            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + + ` (` + staff_id + `)</option>`)
+            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + ` (` + staff_id + `)</option>`)
         }
     }
     $("#assignment-warning").empty();
