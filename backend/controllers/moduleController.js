@@ -132,6 +132,29 @@ exports.getAllModules = async (req, res, next) => {
     }
 
 };
+
+// API Get All Modules
+exports.getAllSemesterModules = async (req, res, next) => {
+    let semester_code = req.query.semester_code;
+    try {
+        let results = await moduleService.getAllSemesterModules(semester_code);
+        //console.log('Get All Modules', results);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            //console.log('Get All Modules', results);
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API Create Modules NOT IN USE
 exports.createModule = async (req, res, next) => {
     let mod_code = req.body.mod_code;

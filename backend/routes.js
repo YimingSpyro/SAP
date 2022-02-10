@@ -157,6 +157,7 @@ exports.appRoute = router => {
 
     // MODULE
     router.get('/api/module/', moduleController.getAllModules);
+    router.get('/api/module/sem', moduleController.getAllSemesterModules);
     router.get('/api/module/code/', moduleController.getModuleByCode);
     router.get('/api/module/section/', moduleController.getModuleBySection);
     router.get('/api/module/section/stage', moduleController.getModuleBySectionAndStage);
@@ -192,6 +193,8 @@ exports.appRoute = router => {
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
     router.get('/api/admin/maintenance/staff-names', staffController.getStaffNames);
     router.get('/api/admin/maintenance/all-staff-names', staffController.getAllStaffNames);
+    //router.post('/api/admin/maintenance/staff/roles', staffController.createStaffRoles);
+    //router.delete('/api/admin/maintenance/staff/roles', staffController.deleteStaffRoles);
     
     // COURSE
     router.get('/api/courses/', courseController.getAllCourses);

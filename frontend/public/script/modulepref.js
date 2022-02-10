@@ -4,7 +4,7 @@ $(document).ready(() => {
     $('#choose-module-preference').addClass("active")
 })
 function getModules(){
-    return axios.get(base_url + '/api/module' + '?semester_code=' + sessionStorage.getItem('semester_code'))
+    return axios.get(base_url + '/api/module/sem' + '?semester_code=' + sessionStorage.getItem('semester_code'))
     .then(response => response.data)
     .catch(err => error(err));
 };
@@ -91,9 +91,9 @@ async function generateModuleList(){
             <tbody>
                 <tr>
                     <td>Hours per week</th>
-                        <td>`+module.mod_lecture.toFixed(1)+`</td>
-                        <td>`+module.mod_lecture.toFixed(1)+`</td>
-                        <td>`+module.mod_lecture.toFixed(1)+`</td>
+                        <td>`+module.mod_lecture.toFixed(1) / 15+`</td>
+                        <td>`+module.mod_lecture.toFixed(1) / 15+`</td>
+                        <td>`+module.mod_lecture.toFixed(1) / 15+`</td>
                 </tr>
 
             </tbody>
@@ -132,7 +132,7 @@ async function generateExistingPreference(){
 }
 
 generateModuleList()
-.then(generateExistingPreference());
+.then(()=>generateExistingPreference());
 
 $(document).ready(() => {
     $("#submit-preference").click(()=>{
