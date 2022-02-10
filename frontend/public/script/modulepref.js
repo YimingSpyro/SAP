@@ -91,9 +91,9 @@ async function generateModuleList(){
             <tbody>
                 <tr>
                     <td>Hours per week</th>
-                        <td>`+module.mod_lecture.toFixed(1) / 15+`</td>
-                        <td>`+module.mod_lecture.toFixed(1) / 15+`</td>
-                        <td>`+module.mod_lecture.toFixed(1) / 15+`</td>
+                        <td>`+(module.mod_lecture / 15).toFixed(1) +`</td>
+                        <td>`+(module.mod_lecture / 15).toFixed(1) +`</td>
+                        <td>`+(module.mod_lecture / 15).toFixed(1) +`</td>
                 </tr>
 
             </tbody>
