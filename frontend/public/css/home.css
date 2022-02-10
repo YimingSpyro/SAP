@@ -1,9 +1,21 @@
-.dashboard-item {
-    height: 0%;
-}
 
+.outer-block { 
+    -moz-column-count: 4;
+    -webkit-column-count: 4;
+    column-count: 4;
+    -moz-column-gap: 1em;
+    -webkit-column-gap: 1em;
+    column-gap: 1em;
+}
+.items { 
+    display: inline-block;
+    margin: 0 0 1em;
+    width: 100%;
+}
 .list-group {
     height: calc(100% - 50px);
+    max-height:200px;
+    overflow-y: scroll;
     border-radius: 0 0 6px 6px;
 }
 
@@ -36,9 +48,13 @@
 .list-item:hover {
     color: white;
     background: #22404F;
-
 }
-
+.list-item a{
+    color:inherit
+}
+.list-item a:visited{
+    color:inherit
+}
 #module-info-item {
     transition: 1s;
 }

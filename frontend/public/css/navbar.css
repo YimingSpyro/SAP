@@ -161,21 +161,17 @@ i {
     transition: 2s;
 }
 
-#dashboard-view-wrap {
-
-}
-
 #dashboard-view {
     margin-top: 3em;
     width: 90%;
 
 }
-
 .dashboard-item {
-    margin: .3em;
-    background: #D0D2D6;
+    background-color: transparent;
+    background-repeat: repeat;
+    height:100%;
     border-radius: 6px;
-    padding: 0;
+    padding: 5px;
 }
 
 #dashboard-item-report {

@@ -99,7 +99,7 @@ const updateReport = multer({
 exports.appRoute = router => {
     /* 
         router.post('/api/user/login', authController.processLogin);
-        router.post('/api/user/register', validName.validateName,emailValidationFn.validateEmail,validationFn.validatePassword,authController.processRegister);
+        router.post('/api/user/api/register', validName.validateName,emailValidationFn.validateEmail,validationFn.validatePassword,authController.processRegister);
         router.post('/api/user/process-submission', checkUserFn.getClientUserId, userController.processDesignSubmission);
         router.put('/api/user/',checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processUpdateOneUser);
         router.put('/api/user/design/',checkUserFn.getClientUserId, userController.processUpdateOneDesign);
@@ -111,10 +111,10 @@ exports.appRoute = router => {
         router.get('/test', staffController.processGetAllStaff);*/
         
     // LOGIN
-    router.get('/staff-privileges/:id', authController.getStaffPrivileges);
-    router.post('/login/', authController.processLogin);
-    router.post('/register', authController.processRegister);
-    router.post('/change-password', checkUserFn.checkJWT, authController.processChangePassword);
+    router.get('/api/staff-privileges/:id', authController.getStaffPrivileges);
+    router.post('/api/login/', authController.processLogin);
+    router.post('/api/register', authController.processRegister);
+    router.post('/api/change-password', checkUserFn.checkJWT, authController.processChangePassword);
     //router.get('/checkauthentication',authController.processTestCookie);
 
     // SECTION

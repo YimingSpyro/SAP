@@ -8,7 +8,7 @@ const checkUserFn = require("../middlewares/checkUser");
 exports.appRoute = router => {
     /* 
         router.post('/api/user/login', authController.processLogin);
-        router.post('/api/user/register', validName.validateName,emailValidationFn.validateEmail,validationFn.validatePassword,authController.processRegister);
+        router.post('/api/user/api/register', validName.validateName,emailValidationFn.validateEmail,validationFn.validatePassword,authController.processRegister);
         router.post('/api/user/process-submission', checkUserFn.getClientUserId, userController.processDesignSubmission);
         router.put('/api/user/',checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processUpdateOneUser);
         router.put('/api/user/design/',checkUserFn.getClientUserId, userController.processUpdateOneDesign);
@@ -23,7 +23,7 @@ exports.appRoute = router => {
         router.get('/api/staff/', staffController.getAllStaff);
         router.get('/api/staff/:id', staffController.getStaffByID);
 
-        router.post('/register', authController.processRegister);
+        router.post('/api/register', authController.processRegister);
         
         router.put('/api/staff/:id', staffController.UpdateStaffByID)
 
