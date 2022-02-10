@@ -323,7 +323,7 @@ exports.getStaffByID = async (req, res, next) => {
 };
 //CREATE STAFF
 exports.createStaff = async (req, res, next) => {
-    console.log(req.body)
+    //console.log(req.body)
     let data = req.body;
     let staff_id = data["staff_id"];
     let staff_name = data["staff_name"];
@@ -405,7 +405,7 @@ exports.updatePersonalInfoByID = async (req, res, next) => {
 };
 // API Admin Delete Staff Data by ID
 exports.deleteStaffByID = async (req, res, next) => {
-    console.log("called");
+    //console.log("called");
     let staff_id = req.params.id
     try {
         let results = await staffManager.deleteStaffByStaffId(staff_id);
@@ -441,7 +441,7 @@ exports.updateStaffByID = async (req, res, next) => {
     let new_staff_status = req.body.staff_status
 
     let data = [new_staff_name, new_staff_abbrv, new_staff_type, new_staff_schedule_id, new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, new_staff_status, staff_id]
-    console.log(data);
+    //console.log(data);
     try {
         let results = await staffManager.updateStaffByStaffId(data);
         console.log('Update Staff Personal Information by ID');

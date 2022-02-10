@@ -287,6 +287,23 @@ module.exports.getAllStaffNames = () => {
         });
     });
 };
+module.exports.getStaffNames = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT staff_id, staff_name FROM staff_information WHERE staff_status='Active' ;`, [], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
 module.exports.getStaffByStaffId = (staff_id) => {
     return new Promise((resolve, reject) => {
         pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, designation.designation_name ,staff_number, staff_mobile, staff_remarks, fk_staff_type 
