@@ -287,6 +287,23 @@ module.exports.getAllStaffNames = () => {
         });
     });
 };
+module.exports.getStaffNames = () => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT staff_id, staff_name FROM staff_information WHERE staff_status='Active' ;`, [], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
 module.exports.getStaffByStaffId = (staff_id) => {
     return new Promise((resolve, reject) => {
         pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email, designation.designation_name ,staff_number, staff_mobile, staff_remarks, fk_staff_type 
@@ -396,7 +413,41 @@ module.exports.updatePersonalInfoByID = (data) => {
         return error
     });
 };
+/* module.exports.createStaffRoles = (data) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`INSERT INTO staff_privileges (fk_role_id, fk_staff_id) VALUES (?,?)`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
 
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+module.exports.deleteStaffRoles = (staff_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`DELETE FROM staff_privileges WHERE fk_staff_id = ?`, [staff_id], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
+ */
 // PERSONAL TEACHING REQUIREMENT
 
 module.exports.getTeachingRequirementByID = (data) => {

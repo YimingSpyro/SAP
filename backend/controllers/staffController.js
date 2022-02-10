@@ -323,7 +323,7 @@ exports.getStaffByID = async (req, res, next) => {
 };
 //CREATE STAFF
 exports.createStaff = async (req, res, next) => {
-    console.log(req.body)
+    //console.log(req.body)
     let data = req.body;
     let staff_id = data["staff_id"];
     let staff_name = data["staff_name"];
@@ -405,7 +405,7 @@ exports.updatePersonalInfoByID = async (req, res, next) => {
 };
 // API Admin Delete Staff Data by ID
 exports.deleteStaffByID = async (req, res, next) => {
-    console.log("called");
+    //console.log("called");
     let staff_id = req.params.id
     try {
         let results = await staffManager.deleteStaffByStaffId(staff_id);
@@ -441,7 +441,7 @@ exports.updateStaffByID = async (req, res, next) => {
     let new_staff_status = req.body.staff_status
 
     let data = [new_staff_name, new_staff_abbrv, new_staff_type, new_staff_schedule_id, new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, new_staff_status, staff_id]
-    console.log(data);
+    //console.log(data);
     try {
         let results = await staffManager.updateStaffByStaffId(data);
         console.log('Update Staff Personal Information by ID');
@@ -464,6 +464,58 @@ exports.updateStaffByID = async (req, res, next) => {
     }
 
 };
+exports.createStaffRoles = async (req, res, next) => {
+    let role = req.body.role;
+    let staff_id = req.body.staff_id;
+    let data = [role, staff_id]
+    try {
+        let results = await staffManager.createStaffRoles(data);
+        console.log('Create Staff Roles');
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0) {
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+exports.deleteStaffRoles = async (req, res, next) => {
+    let staff_id = req.body.staff_id;
+    try {
+        let results = await staffManager.deleteStaffRoles(staff_id);
+        console.log('Delete Staff Roles');
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else if (results.affectedRows == 0) {
+            throw 'Could Not Update to Database'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
+
+
 
 // API Admin Reset Staff Password by ID
 exports.resetStaffPassword = async (req, res, next) => {

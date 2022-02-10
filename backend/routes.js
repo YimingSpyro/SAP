@@ -192,6 +192,8 @@ exports.appRoute = router => {
     router.put('/api/admin/maintenance/staff/deactivate/:id', staffController.deleteStaffByID);
     router.get('/api/admin/maintenance/staff-names', staffController.getStaffNames);
     router.get('/api/admin/maintenance/all-staff-names', staffController.getAllStaffNames);
+    //router.post('/api/admin/maintenance/staff/roles', staffController.createStaffRoles);
+    //router.delete('/api/admin/maintenance/staff/roles', staffController.deleteStaffRoles);
     
     // COURSE
     router.get('/api/courses/', courseController.getAllCourses);

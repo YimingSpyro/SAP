@@ -119,6 +119,17 @@ function showCheckboxes() {
         expanded = false;
     }
 }
+
+function showCheckboxesUpdate() {
+    var checkboxes = document.getElementById("role-checkboxes-edit");
+    if (!expanded) {
+        checkboxes.style.display = "block";
+        expanded = true;
+    } else {
+        checkboxes.style.display = "none";
+        expanded = false;
+    }
+}
 function pageChange(element) {
     if (element.textContent == "Previous") {
         if (currentPage > 0) currentPage--;
@@ -241,6 +252,10 @@ function resetPassword(data) {
     .catch(err => error(err));
 }
 function updateStaffById(element) {
+    var selected = new Array()
+    $('#role-checkboxes-edit input:checked').each((i, ob)=>{
+        selected.push($(ob).val());
+    })
     var staff_id = $(element).attr("data-staff-id")
     var data = {
         staff_id: $('#staff-id-edit-input').val(),
@@ -268,6 +283,7 @@ function updateStaffById(element) {
             customMessage("Unable to update")
             error(e)
         })
+    console.log(selected);
 }
 function clearModal() {
     $('body').removeClass('modal-open');
