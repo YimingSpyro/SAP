@@ -157,6 +157,7 @@ exports.appRoute = router => {
 
     // MODULE
     router.get('/api/module/', moduleController.getAllModules);
+    router.get('/api/module/sem', moduleController.getAllSemesterModules);
     router.get('/api/module/code/', moduleController.getModuleByCode);
     router.get('/api/module/section/', moduleController.getModuleBySection);
     router.get('/api/module/section/stage', moduleController.getModuleBySectionAndStage);
