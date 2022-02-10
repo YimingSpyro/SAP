@@ -172,15 +172,17 @@ tr.row-hide{
     bottom: 0;
   }
   
-  #role-checkboxes {
+  #role-checkboxes, #role-checkboxes-edit {
     display: none;
     border: 1px #dadada solid;
+    background-color: white;
+    padding: 5px;
   }
   
-  #role-checkboxes label {
+  #role-checkboxes label, #role-checkboxes-edit label{
     display: block;
   }
   
-  #role-checkboxes label:hover {
+  #role-checkboxes label:hover, #role-checkboxes-edit label:hover {
     background-color: #1e90ff;
   }
