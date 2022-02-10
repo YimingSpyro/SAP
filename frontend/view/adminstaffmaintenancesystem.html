@@ -147,7 +147,7 @@
                                     </select><br><br>
                                 </div> -->
                                 <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff account role ):</label>
+                                    <label class="staff-info-label" for="fname">Staff account role:</label>
                                     <div class="multiselect">
                                         <div class="selectBox staff-info-input" onclick="showCheckboxes()">
                                             <select id="staff-role-input" class="staff-info-input">
@@ -268,14 +268,29 @@
                                     </select><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
-                                    <label class="staff-info-label" for="fname">Staff account role ):</label>
-                                    <select name="staff-role-input" id="staff-role-input" class="staff-info-input">
-                                        <option value="1">admin</option>
-                                        <option value="2">lecturer</option>
-                                        <option value="3">exam_rep</option>
-                                        <option value="4">mod_coord</option>
-                                        <option value="5">admin_support</option>
-                                    </select><br><br>
+                                    <label class="staff-info-label" for="fname">Staff account role:</label>
+                                    <div class="multiselect">
+                                        <div class="selectBox staff-info-input" onclick="showCheckboxesUpdate()">
+                                            <select id="staff-role-input" class="staff-info-input">
+                                                <option>Please check the roles for this user</option>
+                                            </select>
+                                            <div class="overSelect"></div>
+                                        </div>
+                                        <div id="role-checkboxes-edit" style="position:absolute;z-index:999">
+                                            <label for="one-edit">
+                                                <input type="checkbox" id="one-edit" value="1" name="1">Admin</label>
+                                            <label for="two-edit">
+                                                <input type="checkbox" id="two-edit" value="2" name="2" />Lecturer</label>
+                                            <label for="three-edit">
+                                                <input type="checkbox" id="three-edit" value="3" name="3" />Exam Rep</label>
+                                            <label for="four-edit">
+                                                <input type="checkbox" id="four-edit" value="4" name="4" />Module
+                                                Coordinator</label>
+                                            <label for="five-edit">
+                                                <input type="checkbox" id="five-edit" value="5" name="5" />Admin
+                                                Support</label>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
