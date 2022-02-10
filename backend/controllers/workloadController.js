@@ -104,7 +104,6 @@ exports.createWorkload = async (req, res, next) => {
         let results = await workloadService.createWorkload(component_code, data);
         console.log('Insert New Workload');
         if (results.errno) {
-            console.log(results)
             throw 'Database SQL Error'
         }
         else {
