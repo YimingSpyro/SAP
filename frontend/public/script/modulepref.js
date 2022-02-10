@@ -132,7 +132,7 @@ async function generateExistingPreference(){
 }
 
 generateModuleList()
-.then(generateExistingPreference());
+.then(()=>generateExistingPreference());
 
 $(document).ready(() => {
     $("#submit-preference").click(()=>{
