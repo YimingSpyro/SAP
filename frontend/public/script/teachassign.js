@@ -616,7 +616,7 @@ async function generateModal(module_index) {
 }
 
 async function assignStaff(staff_id, mod_code, module_index) {
-    assignModule(staff_id, mod_code);
+    await assignModule(staff_id, mod_code);
     let staff = await getStaffByID(staff_id);
     let assigned = await checkAssignedModule(staff_id, mod_code);
     let staff_name = staff.staff_name;
@@ -665,7 +665,7 @@ async function assignStaff(staff_id, mod_code, module_index) {
         let staff_name = staff.staff_name
         let assigned = await checkAssignedModule(staff_id, mod_code)
         if (!assigned.assigned) {
-            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
+            $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + ` (` + staff_id + `)</option>`)
         }
     }
     $("#assignment-warning").empty();
@@ -674,7 +674,7 @@ async function assignStaff(staff_id, mod_code, module_index) {
 
 async function unassignStaff(staff_id, ma_id) {
     $(".assigned-staff tr[data-staff='" + staff_id + "']").remove()
-    unassignModule(ma_id);
+    await unassignModule(ma_id);
     let staff = await getStaffByID(staff_id);
     let staff_name = staff.staff_name;
     $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)

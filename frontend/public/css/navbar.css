@@ -126,7 +126,7 @@ i {
 }
 
 #main-list>li.active {
-    background: rgb(63, 113, 130)
+    /* background: rgb(63, 113, 130) */
 }
 
 #main-list>li:hover {
