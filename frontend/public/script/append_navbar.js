@@ -57,20 +57,22 @@ $(document).ready(() => {
       var rows = response.data
       var allDashboardItems = []
       var staffDashboardItemsArrayId = []
-      for (let i = 0; i < rows.length; i++) {
-        allDashboardItems.push(rows[i])
-        var roleIdsArrayForItem = [];
-        roleIdsArrayForItem = (JSON.parse(rows[i].d_role_ids))
-        for (let j = 0; j < role_id.length; j++) {
-          if (roleIdsArrayForItem.includes(parseInt(role_id[j]))) {
-            if (!staffDashboardItemsArrayId.includes(rows[i].d_item_html)) {
-              staffDashboardItemsArrayId.push(rows[i].d_item_html);
-              console.log(rows[i].d_item_html);
-              dashboardHtml += rows[i].d_item_html
+      console.log(rows.length);
+
+        for (let i = 0; i < rows.length; i++) {
+          allDashboardItems.push(rows[i])
+          var roleIdsArrayForItem = [];
+          roleIdsArrayForItem = (JSON.parse(rows[i].d_role_ids))
+          for (let j = 0; j < role_id.length; j++) {
+            if (roleIdsArrayForItem.includes(parseInt(role_id[j]))) {
+              if (!staffDashboardItemsArrayId.includes(rows[i].d_item_html)) {
+                staffDashboardItemsArrayId.push(rows[i].d_item_html);
+                console.log(rows[i].d_item_html);
+                dashboardHtml += rows[i].d_item_html
+              }
             }
           }
         }
-      }
 
       $('#dashboard-view-inner-wrap div.row').append(dashboardHtml);
       dashboardAppended = true;

@@ -73,7 +73,7 @@ module.exports.processLogin = ((req, res) => {
         })
 })
 module.exports.getStaffPrivileges = ((req, res) => {
-    //console.log("owdaj");
+    console.log("staffpriivledgs api");
     let staff_id = req.params.id;
     var data = authManager.getStaffPrivileges(staff_id)
         .then((rows) => {
