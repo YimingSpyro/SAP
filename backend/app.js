@@ -131,8 +131,8 @@ var options = {
 /* var options = {
     key: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/privkey.pem'),
     cert: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/cert.pem')
-}; */
-
+};
+ */
 https.createServer(options, app).listen(8080);
 
 // Connect to the Database

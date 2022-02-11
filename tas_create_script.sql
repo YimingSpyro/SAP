@@ -33,7 +33,7 @@ CREATE TABLE `announcement` (
   `announcement_message` mediumtext NOT NULL,
   `announcement_subject` varchar(255) NOT NULL,
   PRIMARY KEY (`announcement_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,6 +53,22 @@ CREATE TABLE `course` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `dashboard_items`
+--
+
+DROP TABLE IF EXISTS `dashboard_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `dashboard_items` (
+  `d_item_id` int NOT NULL AUTO_INCREMENT,
+  `d_item_title` varchar(45) NOT NULL,
+  `d_role_ids` varchar(45) NOT NULL,
+  `d_item_html` text NOT NULL,
+  PRIMARY KEY (`d_item_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `designation`
 --
 
@@ -63,9 +79,11 @@ CREATE TABLE `designation` (
   `prefix` varchar(6) DEFAULT 'DESIG',
   `designation_id` int NOT NULL AUTO_INCREMENT,
   `designation_name` varchar(255) NOT NULL,
-  `fk_course_id` varchar(255) DEFAULT NULL,
+  `fk_course_id` varchar(255) NOT NULL,
   `section_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`designation_id`)
+  PRIMARY KEY (`designation_id`),
+  KEY `fk_course_id` (`fk_course_id`),
+  CONSTRAINT `designation_ibfk_1` FOREIGN KEY (`fk_course_id`) REFERENCES `course` (`course_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -77,22 +95,23 @@ DROP TABLE IF EXISTS `exam_verifier_sys`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `exam_verifier_sys` (
-  `moderator` varchar(64) NOT NULL,
-  `mdeo_marker` varchar(64) NOT NULL,
+  `fk_course_id` varchar(255) NOT NULL,
+  `fk_module_code` varchar(255) NOT NULL,
+  `fk_semester_code` varchar(255) NOT NULL,
+  `moderator` varchar(64) DEFAULT NULL,
+  `mdeo_marker` varchar(64) DEFAULT NULL,
   `co_marker` varchar(64) DEFAULT NULL,
-  `verifier` varchar(64) NOT NULL,
-  `verifier_details` varchar(64) NOT NULL,
-  `markers_moderator` varchar(64) NOT NULL,
+  `verifier` varchar(64) DEFAULT NULL,
+  `verifier_details` varchar(64) DEFAULT NULL,
+  `markers_moderator` varchar(64) DEFAULT NULL,
   `module_mcl` varchar(64) DEFAULT NULL,
-  `chief_examiner` varchar(64) NOT NULL,
+  `chief_examiner` varchar(64) DEFAULT NULL,
   `co_examiner` varchar(64) DEFAULT NULL,
   `shared_paper` varchar(255) DEFAULT NULL,
   `shared_question` varchar(255) DEFAULT NULL,
   `type_of_module` enum('exam','ica-term-test','ica-no-test''') NOT NULL,
   `external` varchar(255) DEFAULT NULL,
-  `fk_module_code` varchar(255) NOT NULL,
-  `fk_semester_code` varchar(255) NOT NULL,
-  PRIMARY KEY (`fk_module_code`,`fk_semester_code`),
+  PRIMARY KEY (`fk_module_code`,`fk_semester_code`,`type_of_module`,`fk_course_id`),
   KEY `fk_moderator_id_idx` (`moderator`),
   KEY `fk_semester_code_idx` (`fk_semester_code`),
   KEY `fk_evs_mdeo_marker_id_idx` (`mdeo_marker`),
@@ -102,14 +121,16 @@ CREATE TABLE `exam_verifier_sys` (
   KEY `fk_evs_module_mcl_id_idx1` (`module_mcl`),
   KEY `fk_evs_chief_examiner_idx` (`chief_examiner`),
   KEY `fk_evs_co_examiner_id_idx` (`co_examiner`),
-  CONSTRAINT `fk_evs_chief_examiner_id` FOREIGN KEY (`chief_examiner`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE,
+  KEY `fk_evs_course_id_idx` (`fk_course_id`),
+  CONSTRAINT `fk_evs_chief_examiner_id` FOREIGN KEY (`chief_examiner`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_evs_co_examiner_id` FOREIGN KEY (`co_examiner`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `fk_evs_co_marker_id` FOREIGN KEY (`co_marker`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_evs_markers_moderator_id` FOREIGN KEY (`markers_moderator`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_evs_mdeo_marker_id` FOREIGN KEY (`mdeo_marker`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_evs_moderator_id` FOREIGN KEY (`moderator`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_evs_co_marker_id` FOREIGN KEY (`co_marker`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_evs_course_id` FOREIGN KEY (`fk_course_id`) REFERENCES `course` (`course_id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `fk_evs_markers_moderator_id` FOREIGN KEY (`markers_moderator`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_evs_mdeo_marker_id` FOREIGN KEY (`mdeo_marker`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `fk_evs_moderator_id` FOREIGN KEY (`moderator`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_evs_module_code` FOREIGN KEY (`fk_module_code`) REFERENCES `module` (`mod_code`) ON UPDATE CASCADE,
-  CONSTRAINT `fk_evs_module_mcl_id` FOREIGN KEY (`module_mcl`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_evs_module_mcl_id` FOREIGN KEY (`module_mcl`) REFERENCES `staff_information` (`staff_id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `fk_evs_semester_code` FOREIGN KEY (`fk_semester_code`) REFERENCES `semester_code` (`semester_code`) ON UPDATE CASCADE,
   CONSTRAINT `fk_evs_verifier_id` FOREIGN KEY (`verifier`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -131,7 +152,7 @@ CREATE TABLE `jwt_token_storage` (
   PRIMARY KEY (`jwt_id`),
   KEY `fk_jwt_staff_id_idx` (`fk_staff_id`),
   CONSTRAINT `jwt_token_storage_ibfk_1` FOREIGN KEY (`fk_staff_id`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=576 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -157,7 +178,7 @@ CREATE TABLE `mod_assign` (
   CONSTRAINT `mod_assign_ibfk_1` FOREIGN KEY (`fk_semester_code`) REFERENCES `semester_code` (`semester_code`),
   CONSTRAINT `mod_assign_ibfk_2` FOREIGN KEY (`fk_mod_code`) REFERENCES `module` (`mod_code`),
   CONSTRAINT `mod_assign_ibfk_3` FOREIGN KEY (`fk_staff_id`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +283,7 @@ CREATE TABLE `module_preference` (
   KEY `fk_semester_code_idx` (`fk_semester_code`),
   CONSTRAINT `module_preference_ibfk_1` FOREIGN KEY (`fk_semester_code`) REFERENCES `semester_code` (`semester_code`) ON UPDATE CASCADE,
   CONSTRAINT `module_preference_ibfk_2` FOREIGN KEY (`fk_staff_id`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -303,7 +324,7 @@ CREATE TABLE `personal_teaching_req` (
   KEY `personal_teaching_req_ibfk_2` (`fk_staff_id`),
   CONSTRAINT `personal_teaching_req_ibfk_1` FOREIGN KEY (`fk_semester_code`) REFERENCES `semester_code` (`semester_code`) ON UPDATE CASCADE,
   CONSTRAINT `personal_teaching_req_ibfk_2` FOREIGN KEY (`fk_staff_id`) REFERENCES `staff_information` (`staff_id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -486,20 +507,6 @@ CREATE TABLE `system_roles` (
   UNIQUE KEY `role_name` (`role_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `temp_user_accounts`
---
-
-DROP TABLE IF EXISTS `temp_user_accounts`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `temp_user_accounts` (
-  `staff_id` varchar(6) NOT NULL,
-  `staff_password` varchar(255) NOT NULL,
-  PRIMARY KEY (`staff_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -510,4 +517,4 @@ CREATE TABLE `temp_user_accounts` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-09 17:51:33
+-- Dump completed on 2022-02-11 19:48:14
