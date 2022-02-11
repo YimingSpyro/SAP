@@ -171,6 +171,7 @@ i {
     height:100%;
     border-radius: 6px;
     padding: 5px;
+    margin: 0 25px 0 25px;
 }
 
 #dashboard-item-report {
@@ -194,6 +195,7 @@ i {
     justify-content: center;
     flex-direction: column;
     padding: 5px 10px 5px 10px;
+
 }
 
 #navbar-brand{
