@@ -161,7 +161,22 @@ module.exports.processChangePassword = ((req, res) => {
 module.exports.getNavItems = (async (req, res) => {
     try {
         let results = await authManager.getNavItems();
-        console.log('Get All Exams');
+        console.log('Get All Nav Items');
+        if (results) {
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request.';
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+})
+module.exports.getDashboardItems = (async (req, res) => {
+    try {
+        let results = await authManager.getDashboardItems();
+        console.log('Get All Dashboard Items');
         if (results) {
             return res.status(200).json(results);
         }

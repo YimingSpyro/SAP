@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="col-sm-6 col-lg-4 mb-4">
   <div class="card">
     <svg class="bd-placeholder-img card-img-top" width="100%" height="200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
@@ -78,4 +78,216 @@
       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
     </div>
   </div>
+</div> -->
+<div class="d-flex justify-content-center">
+<div class="dashboard-view" class="container">
+    <div class="row">
+        <div class="col-4 dashboard-item">
+            <div class="dashboard-item-title">
+                Maintenence System
+            </div>
+            <div class="list-group d-flex flex-column">
+                <a href="/semester">
+                    <div id="module-info-item" class="list-item p-2 col">Manage Semester</div>
+                </a>
+                <a href="/course">
+                    <div id="staff-info-item" class="list-item p-2 col">Manage Course</div>
+                </a>
+                <a href="/staff-hours">
+                    <div id="staff-info-item" class="list-item p-2 col">Manage Staff Type & Hours</div>
+                </a>
+                <a href="/designation">
+                    <div id="staff-info-item" class="list-item p-2 col">Manage Designation</div>
+                </a>
+                <a href="/maintenance">
+                    <div id="staff-info-item" class="list-item p-2 col">Manage Modules</div>
+                </a>
+                <a href="/maintenance/staff-info">
+                    <div id="staff-info-item" class="list-item p-2 col">Manage Staff List</div>
+                </a>
+            </div>
+        </div>
+        <div class="col-4 dashboard-item">
+            <div class="dashboard-item-title">
+                Reports
+            </div>
+            <div class="list-group d-flex flex-column">
+                <a href="/reports/assignment-report"><div class="list-item p-2 col">Assignment Report</div></a>
+                <a href="/reports/mc-list"><div class="list-item p-2 col">Module Coordinator List</div></a>
+                <a href="/reports/summary-by-module"><div class="list-item p-2 col">Summary by Module</div></a>
+                <a href="/reports/summary-by-staff"><div class="list-item p-2 col">Summary by Staff</div></a>
+                <a href="/reports/workload-summary"><div class="list-item p-2 col">Workload by Summary</div></a>
+                <a href="/upload-reports"><div class="list-item p-2 col">Upload Reports</div></a>
+            </div>
+        </div>
+        <div id="teaching-assignment" class="col-4 dashboard-item">
+            <div class="dashboard-item-title">
+                Teaching Assignment
+            </div>
+            <div class="list-group d-flex flex-column">
+                <a href="/upload-reports">
+                    <div id="module-info-item" class="list-item p-2 col">Upload Modules</div>
+                </a>
+                <a href="/class-assignment">
+                    <div id="staff-info-item" class="list-item p-2 col">Manage Classes</div>
+                </a>
+                <a href="/teaching-assignment">
+                    <div id="staff-info-item" class="list-item p-2 col">Teaching Assignment System</div>
+                </a>
+            </div>
+        </div>
+        <div class="col-4 dashboard-item">
+            <div class="dashboard-item-title">
+                Download Exam Reports
+            </div>
+            <div class="list-group d-flex flex-column">
+                <a href="/reports/examiner-and-moderator-report"><div class="list-item p-2 col">Exam & Moderator Report</div></a>
+                <a href="/reports/examiner-and-verifier-report"><div class="list-item p-2 col">Exam & Verifier Report</div></a>
+            </div>
+        </div>
+
+        <!-- <div class="col-7">
+            <div class="d-flex justify-content-center">
+                <div class="col-4 dashboard-item">
+                    <div class="col dashboard-item-title">
+                        Maintenence System
+                    </div>
+                    <div class="list-group d-flex flex-column">
+                        <a href="/semester">
+                            <div id="module-info-item" class="list-item p-2 col">Module Semester</div>
+                        </a>
+                        <a href="/course">
+                            <div id="staff-info-item" class="list-item p-2 col">Manage Course</div>
+                        </a>
+                        <a href="/staff-hours">
+                            <div id="staff-info-item" class="list-item p-2 col">Manage Staff Type & Hours</div>
+                        </a>
+                        <a href="/designation">
+                            <div id="staff-info-item" class="list-item p-2 col">Manage Designation</div>
+                        </a>
+                        <a href="/maintenance">
+                            <div id="staff-info-item" class="list-item p-2 col">Manage Modules</div>
+                        </a>
+                        <a href="/maintenance/staff-info">
+                            <div id="staff-info-item" class="list-item p-2 col">Manage Staff List</div>
+                        </a>
+                    </div>
+                </div>
+                <div id="teaching-assignment" class="col-4 dashboard-item">
+                    <div class="col dashboard-item-title">
+                        Teaching Assignment
+                    </div>
+                    <div class="list-group d-flex flex-column">
+                        <a href="/upload-reports">
+                            <div id="module-info-item" class="list-item p-2 col">Upload Modules</div>
+                        </a>
+                        <a href="/class-assignment">
+                            <div id="staff-info-item" class="list-item p-2 col">Manage Classes</div>
+                        </a>
+                        <a href="/teaching-assignment">
+                            <div id="staff-info-item" class="list-item p-2 col">Teaching Assignment System</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center">
+                <div class="col-4 dashboard-item">
+                    <div class="col dashboard-item-title">
+                        Exam Matters
+                    </div>
+                    <div class="list-group d-flex flex-column">
+                        <a href="/exam-verifier">
+                            <div class="list-item p-2 col">Exam Moderator & Verifier</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-4 dashboard-item">
+                    <div class="col dashboard-item-title">
+                        Announcements
+                    </div>
+                    <div class="list-group d-flex flex-column">
+                        <div class="list-item p-2 col"><a>View Announcements</a></div>
+                        <div class="list-item p-2 col"><a>Create New Accouncements</a></div>
+                        <div class="list-item p-2 col"><a>Manage Announcements</a></div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="col-5">
+            <div id="dashboard-item-report" class="col">
+                <div class="col dashboard-item-title">
+                    Download Reports
+                </div>
+                <div id="list-group-report" class="d-flex flex-column">
+                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-1">
+                                <p class="report-item-title">MC list</p>
+                                <p class="report-item-desc">Download Module Coordinator List</p>
+                            </div>
+                            <a href="../SVG Icons/Assigned Module.svg" download="Report">
+                                <button id="download-button" class="px-4 download-button">Download</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-1">
+                                <p class="report-item-title">Assignment Report</p>
+                                <p class="report-item-desc">Download all teaching assignments</p>
+                            </div>
+                            <a href="../SVG Icons/Assigned Module.svg" download="Report">
+                                <button id="download-button" class="px-4 download-button">Download</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-1">
+                                <p class="report-item-title">Summary by Module</p>
+                                <p class="report-item-desc">Download Module Summary</p>
+                            </div>
+                            <a href="../SVG Icons/Assigned Module.svg" download="Report">
+                                <button id="download-button" class="px-4 download-button">Download</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-1">
+                                <p class="report-item-title">Summary by Staff</p>
+                                <p class="report-item-desc">Download Staff Summary</p>
+                            </div>
+                            <a href="../SVG Icons/Assigned Module.svg" download="Report">
+                                <button id="download-button" class="px-4 download-button">Download</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-1">
+                                <p class="report-item-title">Examiner & Moderator Report</p>
+                                <p class="report-item-desc">Download Examiner & Moderator Report</p>
+                            </div>
+                            <a href="../SVG Icons/Assigned Module.svg" download="Examiner & Moderator Report">
+                                <button id="download-button" class="px-4 download-button">Download</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div id="report-item-wrap" class="report-item-wrap list-item p-2 col">
+                        <div class="d-flex justify-content-between">
+                            <div class="p-1">
+                                <p class="report-item-title">MDEO Verifier Report</p>
+                                <p class="report-item-desc">Download MDEO Verifier Report</p>
+                            </div>
+                            <a href="../SVG Icons/Assigned Module.svg" download="MDEO Verifier Rerport">
+                                <button id="download-button" class="px-4 download-button">Download</button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
 </div>

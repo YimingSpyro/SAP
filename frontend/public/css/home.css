@@ -14,8 +14,8 @@
 }
 .list-group {
     height: calc(100% - 50px);
-    max-height:200px;
-    overflow-y: scroll;
+    /* max-height: 250px;
+    overflow-y: scroll; */
     border-radius: 0 0 6px 6px;
 }
 
@@ -24,11 +24,11 @@
     border-radius: 0 0 6px 6px;
 }
 
-.list-group>.list-item:last-child {
+.list-group>a:last-child  .list-item {
     border-radius: 0 0 6px 6px;
 }
 
-.list-group>.list-item:not(:first-child) {
+.list-group>a:not(:first-child)  .list-item{
     border-top: 1px solid white
 }
 

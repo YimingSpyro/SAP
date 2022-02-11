@@ -110,7 +110,7 @@ exports.appRoute = router => {
         router.get('/api/user/:recordId', checkUserFn.getClientUserId,checkUserFn.checkAdmin, userController.processGetOneUserData); 
         router.get('/test', staffController.processGetAllStaff);*/
         
-    // LOGIN
+    // AUTHENTICATION
     router.get('/api/staff-privileges/:id', authController.getStaffPrivileges);
     router.post('/api/login/', authController.processLogin);
     router.post('/api/register', authController.processRegister);
@@ -251,5 +251,7 @@ exports.appRoute = router => {
     router.get('/api/cas/module/stage', staffController.getModuleStage);
     router.put('/api/cas/module/stage', staffController.updateNormalStudents);
 
+    //NAVBAR AND DASHBOARD
     router.get('/api/nav-items', authController.getNavItems);
+    router.get('/api/dashboard-items', authController.getDashboardItems);
 }

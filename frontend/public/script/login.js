@@ -13,7 +13,7 @@ function login(){
         $("#error_message").css("display", "block");
         $("input#password").focus()
     } else {
-        axios.post(base_url+'/login', {
+        axios.post(base_url+'/api/login', {
             staff_id: staff_id,
             password: password
         }, { withCredentials: true }).then((response) => {
@@ -54,6 +54,7 @@ function login(){
                 storeAccessTokenInLocalStorage(accessToken);*/
             }
         }).catch((e) => {
+            console.log("bruh");
             console.log(e);
             $("#error_message_content").text('Invalid Login credientals, please try again.')
             $("#error_message").css("display", "block");

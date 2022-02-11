@@ -164,7 +164,6 @@ i {
 #dashboard-view {
     margin-top: 3em;
     width: 90%;
-
 }
 .dashboard-item {
     background-color: transparent;
@@ -194,6 +193,8 @@ i {
     display: flex;
     justify-content: center;
     flex-direction: column;
+    padding-left:5%;
+    padding-right:5%;
 }
 
 #navbar-brand{

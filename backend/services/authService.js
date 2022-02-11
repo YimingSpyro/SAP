@@ -191,3 +191,25 @@ module.exports.getNavItems = () => {
         return error
     })
 }
+module.exports.getDashboardItems = () => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, connection) => {
+            if (err) {
+                resolve(err);
+            } else {
+                connection.query('SELECT * FROM dashboard_items', (err, rows) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+
+                        resolve(rows);
+                    }
+                    connection.release();
+                })
+            }
+        })
+    }).catch((error) => {
+        console.error(error);
+        return error
+    })
+}
