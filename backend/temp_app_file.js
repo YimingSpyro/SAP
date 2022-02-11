@@ -19,10 +19,10 @@ let app = express();
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
     //Localhost Dev URL
-    res.setHeader('Access-Control-Allow-Origin', 'https://localhost:8000');
+    //res.setHeader('Access-Control-Allow-Origin', 'https://localhost:8000');
     
     //Live URL
-    //res.setHeader('Access-Control-Allow-Origin', 'https://soctas2021.irc.sg:8000');
+    res.setHeader('Access-Control-Allow-Origin', 'https://soctas2021.irc.sg:8000');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -115,24 +115,17 @@ process.on('uncaughtException', function (error, origin) {
 })
 
 
-//for localhost WITHOUT HTTPS
+
 /* app.listen(PORT, err => {
     if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
-    console.log(`Server is Listening on: http://soctas2021.irc.sg:${PORT}/`);
+    console.log(`Server is Listening on: http://localhost:${PORT}/`);
 }); */
 
-//OPTIONS FOR LOCAL SERVER HTTPS DEVELOPMENT
+console.log(__dirname)
 var options = {
-    key: fs.readFileSync('./cert/privkey.pem'),
+    key: fs.readFileSync('./cert/key.pem'),
     cert: fs.readFileSync('./cert/cert.pem')
 };
-
-//OPTIONS FOR LIVE SERVER DEPLOYMENT
-/* var options = {
-    key: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/privkey.pem'),
-    cert: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/cert.pem')
-}; */
-
 https.createServer(options, app).listen(8080);
 
 // Connect to the Database
