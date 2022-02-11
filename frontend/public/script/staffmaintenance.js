@@ -210,7 +210,6 @@ function appendStaffFormValues(rows) {
     filterSection(0);
 }
 function createStaff() {
-    var checkedRoles = $('#role-checkboxes input:checked')
     var selected = new Array()
     $('#role-checkboxes input:checked').each((i, ob)=>{
         selected.push($(ob).val());
@@ -269,7 +268,9 @@ function updateStaffById(element) {
         staff_mobile: $('#staff-mobile-edit-input').val(),
         staff_remarks: $('#staff-remarks-edit-input').val(),
         staff_status: $('#staff-status-edit-input').val(),
+        staff_role: selected
     }
+    console.log("staf role is "+data.staff_role);
     axios.put(base_url + '/api/admin/maintenance/staff/update/' + staff_id, data)
         .then((response) => {
             $('#editStaffModal').modal('hide');
@@ -281,7 +282,7 @@ function updateStaffById(element) {
 
         }).catch((e) => {
             customMessage("Unable to update")
-            error(e)
+            /* error(e) */
         })
     console.log(selected);
 }
