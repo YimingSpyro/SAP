@@ -8,12 +8,20 @@ app.use(express.static('profile_picture'))
 app.use(cookieparser());
 const myPort = 8000
 
-var options = {
+/* var options = {
     key: fs.readFileSync('./cert/key.pem'),
     cert: fs.readFileSync('./cert/cert.pem')
 };
 https.createServer(options, app).listen(myPort,function(){
     console.log('Server hosted.')
+}); */
+
+app.listen(myPort,() => {
+    console.log(`Client Server started and accessible via port ${myPort}`)
+});
+
+app.get("/acme-challenge/76g8xXdP7WQ67LwefjaHG1mSyptexvOt5f0_odCF2ek", (req, res) => {
+    res.sendFile("/public/.well-known/acme-challenge/76g8xXdP7WQ67LwefjaHG1mSyptexvOt5f0_odCF2ek.txt", { root: __dirname });
 });
 
 app.get("/", (req, res) => {
@@ -116,6 +124,4 @@ app.get("/staff-hours", (req, res) => {
     res.sendFile("/view/adminstaffhoursmaintenance.html", { root: __dirname });
 });
 
-/* app.listen(myPort,() => {
-    console.log(`Client Server started and accessible via port ${myPort}`)
-}); */
+

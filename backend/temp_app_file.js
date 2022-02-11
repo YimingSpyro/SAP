@@ -116,17 +116,17 @@ process.on('uncaughtException', function (error, origin) {
 
 
 
-app.listen(PORT, err => {
+/* app.listen(PORT, err => {
     if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
-    console.log(`Server is Listening on: http://soctas2021.irc.sg:${PORT}/`);
-});
+    console.log(`Server is Listening on: http://localhost:${PORT}/`);
+}); */
 
 console.log(__dirname)
-/* var options = {
+var options = {
     key: fs.readFileSync('./cert/key.pem'),
     cert: fs.readFileSync('./cert/cert.pem')
 };
-https.createServer(options, app).listen(8080); */
+https.createServer(options, app).listen(8080);
 
 // Connect to the Database
 const pool = require('./config/database')
