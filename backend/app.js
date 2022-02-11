@@ -115,18 +115,25 @@ process.on('uncaughtException', function (error, origin) {
 })
 
 
-
-app.listen(PORT, err => {
+//for localhost WITHOUT HTTPS
+/* app.listen(PORT, err => {
     if (err) return console.log(`Cannot Listen on PORT: ${PORT}`);
     console.log(`Server is Listening on: http://soctas2021.irc.sg:${PORT}/`);
-});
+}); */
 
-console.log(__dirname)
-/* var options = {
-    key: fs.readFileSync('./cert/key.pem'),
+//OPTIONS FOR LOCAL SERVER HTTPS DEVELOPMENT
+var options = {
+    key: fs.readFileSync('./cert/privkey.pem'),
     cert: fs.readFileSync('./cert/cert.pem')
 };
-https.createServer(options, app).listen(8080); */
+
+//OPTIONS FOR LIVE SERVER DEPLOYMENT
+/* var options = {
+    key: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/privkey.pem'),
+    cert: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/cert.pem')
+}; */
+
+https.createServer(options, app).listen(8080);
 
 // Connect to the Database
 const pool = require('./config/database')

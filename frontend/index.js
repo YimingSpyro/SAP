@@ -8,22 +8,30 @@ app.use(express.static('profile_picture'))
 app.use(cookieparser());
 const myPort = 8000
 
-/* var options = {
-    key: fs.readFileSync('./cert/key.pem'),
+//OPTIONS FOR LOCAL SERVER HTTPS DEVELOPMENT
+var options = {
+    key: fs.readFileSync('./cert/privkey.pem'),
     cert: fs.readFileSync('./cert/cert.pem')
 };
-https.createServer(options, app).listen(myPort,function(){
-    console.log('Server hosted.')
+
+//OPTIONS FOR LIVE SERVER DEPLOYMENT
+/* var options = {
+    key: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/privkey.pem'),
+    cert: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/cert.pem')
+}; */
+
+https.createServer(options, app).listen(8000);
+
+//Localhost WITHOUT https
+/* app.listen(myPort,() => {
+    console.log(`Client Server started and accessible via port ${myPort}`)
 }); */
 
-app.listen(myPort,() => {
-    console.log(`Client Server started and accessible via port ${myPort}`)
-});
-
-app.get("/acme-challenge/76g8xXdP7WQ67LwefjaHG1mSyptexvOt5f0_odCF2ek", (req, res) => {
+//GET FILE for receiving SSL certificate
+/* app.get("/acme-challenge/76g8xXdP7WQ67LwefjaHG1mSyptexvOt5f0_odCF2ek", (req, res) => {
     res.sendFile("/public/.well-known/acme-challenge/76g8xXdP7WQ67LwefjaHG1mSyptexvOt5f0_odCF2ek.txt", { root: __dirname });
 });
-
+ */
 app.get("/", (req, res) => {
     res.sendFile("/public/login.html", { root: __dirname });
 });
