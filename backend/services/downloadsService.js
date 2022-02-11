@@ -133,7 +133,7 @@ module.exports.getWorkloadSummaryByModule = (acad_sem) => {
 
 module.exports.getExaminerReports = (acad_sem) => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT tas.exam_verifier_sys.*, mod_abbrv, mod_name, fk_course_id FROM tas.exam_verifier_sys
+        pool.query(`SELECT tas.exam_verifier_sys.*, mod_abbrv, mod_name FROM tas.exam_verifier_sys
                     INNER JOIN module
                     ON fk_module_code = mod_code
                     WHERE tas.exam_verifier_sys.fk_semester_code = ?;`,

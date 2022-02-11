@@ -10,8 +10,8 @@ function getModulesBySection(section) {
         .catch(err => error(err));
 };
 
-function getExamByModule(mod_code) {
-    return axios.get(base_url + '/api/exam/module?mod_code=' + mod_code + '&semester_code=' + sessionStorage.getItem('semester_code'))
+function getExamByModule(mod_code, section) {
+    return axios.get(base_url + '/api/exam/module?mod_code=' + mod_code + '&semester_code=' + sessionStorage.getItem('semester_code') + '&course_id=' + section)
         .then(response => response.data)
         .catch(err => error(err));
 };
@@ -39,7 +39,8 @@ function createExam(mod_code) {
             type_of_module: $("#select-module-type option:selected").val(),
             external: $("#input-external")[0].value,
             module_code: mod_code,
-            semester_code: sessionStorage.getItem('semester_code')
+            semester_code: sessionStorage.getItem('semester_code'),
+            course_id: $("#select-section option:selected").val()
         })
         .then(() => success())
         .catch(err => error(err));
@@ -62,7 +63,8 @@ function updateExam(mod_code) {
             type_of_module: $("#select-module-type option:selected").val(),
             external: $("#input-external")[0].value,
             module_code: mod_code,
-            semester_code: sessionStorage.getItem('semester_code')
+            semester_code: sessionStorage.getItem('semester_code'),
+            course_id: $("#select-section option:selected").val()
         })
         .then(() => success())
         .catch(err => error(err));
@@ -102,7 +104,7 @@ async function generateModal(module_index) {
     let modules = await getModulesBySection(section);
     let module = modules[module_index]
     let mod_code = module.mod_code
-    let exam = await getExamByModule(mod_code);
+    let exam = await getExamByModule(mod_code, section);
     let exam_details = exam[0];
     let verifier_details;
     let external;
@@ -408,7 +410,8 @@ async function generateModal(module_index) {
 }
 
 async function submitChanges(mod_code) {
-    let exam = await getExamByModule(mod_code);
+    let section = $("#select-section option:selected").val();
+    let exam = await getExamByModule(mod_code, section);
     if (exam.length == 0) {
         await createExam(mod_code);
     }

@@ -154,16 +154,14 @@ $(document).ready(() => {
                 let data = response[index];
                 let ptr_id = data.prefix + data.ptr_id;
                 deleteTeachingRequirement(ptr_id)
-                    .then(getTeachingRequirements())
-                    .then(generateTeachingRequirements());
+                    .then(()=>generateTeachingRequirements());
             })
     })
 
     // Add Requirement
     $(".requirements").on('click', "#add-requirement", () => {
         addTeachingRequirement()
-            .then(getTeachingRequirements())
-            .then(generateTeachingRequirements());
+            .then(()=>generateTeachingRequirements());
     });
 
     // Submit Requests

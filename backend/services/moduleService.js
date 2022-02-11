@@ -122,6 +122,26 @@ module.exports.getAllModules = (semester_code,course_id) => {
         return error
     });
 };
+module.exports.getAllSemesterModules = (semester_code) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT * FROM module WHERE fk_semester_code = ? ;`, [semester_code], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+                    //console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+        return error
+    });
+};
 module.exports.createModule = (data) => {
     return new Promise((resolve, reject) => {
         //please use only ? when declaring values to be inserted to prevent sql injection

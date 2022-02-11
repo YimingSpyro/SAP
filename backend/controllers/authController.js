@@ -102,61 +102,71 @@ module.exports.processRegister = ((req, res) => {
             })
         })
 })
-module.exports.processChangePassword = ((req, res) => {
+module.exports.processChangePassword = (async (req, res) => {
     var staff_id = req.staff_id;
     //console.log(staff_id);
     var old_password = req.body.old_password;
     //console.log(old_password);
     var new_password = req.body.new_password;
     var re_new_password = req.body.re_new_password;
-    if (new_password != re_new_password) return res.status(500).send({success: false, error: {message: 'New Passwords do not match'}});
-
-    var data = authManager.login([staff_id, old_password])
+    if (new_password != re_new_password) return res.status(500).json({message: 'New Passwords do not match'});
+    try {
+        await authManager.login([staff_id, old_password])
         .then((rows) => {
-            var old_password_hashed = rows[0].staff_password;
-            bcrypt.compare(old_password, old_password_hashed, (err, resp) => {
-                if (resp) {
-                    bcrypt.compare(new_password, old_password_hashed, (err, resp) => {
-                        if (resp) {
-                            res.status(500).send({success: false, error: {message: "New password cannot be the same as old password!"}});
-                        }
-                    });
-                    bcrypt.hash(new_password, saltRounds, function (err, hash) {
-                        if (err) {
-                           /*  return callback(err, null); */
-                           return res.status(500).send({
-                            error: "Error"
-                        });
-                        }
-                        var new_password_hashed = hash;
-                        authManager.changePassword([staff_id, new_password_hashed]).then((rows) => {
-                            if (rows.affectedRows == 1) {
-                                return res.status(200).json({
-                                    message: "Succesfully updated password"
+            try {
+                var old_password_hashed = rows[0].staff_password;
+                bcrypt.compare(old_password, old_password_hashed, (err, resp) => {
+                    if (resp) {
+                        bcrypt.compare(new_password, old_password_hashed, (err, resp) => {
+                            if (resp) {
+                                return res.status(500).json({
+                                    message: "New password cannot be the same as old password!"
                                 });
                             }
-                        }), ((error) => {
-                            console.log(error)
-                            return res.status(500).send({success: false, error: {message: 'No blah Found'}});
-                        })
-                    });
+                        });
+                        bcrypt.hash(new_password, saltRounds, function (err, hash) {
+                            if (err) {
+                                throw err
+                            }
+                            var new_password_hashed = hash;
+                            authManager.changePassword([staff_id, new_password_hashed]).then((rows) => {
+                                if (rows.affectedRows == 1) {
+                                    return res.status(200).json({
+                                        message: "Succesfully updated password"
+                                    });
+                                }
+                            }), ((error) => {
+                                return res.status(500).json({
+                                    message: error
+                                });
+                            })
+                        });
+    
+    
+                    } else {
+                        return res.status(500).json({
+                            message: "Error: Incorrect Password"
+                        });
+                    }
+                });
+            } catch (error) {
+                let message = 'Server is unable to process your request. Error: ' + error;
+                console.error('Server is unable to process the request', { 'Error': error })
+                return res.status(500).json({
+                    message: message
+                });
+            }
 
 
-                } else {
-                    //console.log("wrong password");
-                    console.log(err);
-                    return res.status(500).json({
-                        error: err
-                    });
-                }
-            });
-
-        }).catch((error) => {
-            console.log(error)
-            return res.status(500).json({
-                error: error
-            });
         })
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
 })
 module.exports.getNavItems = (async (req, res) => {
     try {

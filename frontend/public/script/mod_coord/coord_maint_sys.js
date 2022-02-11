@@ -446,7 +446,7 @@ function _saveComponent(event, button_value) {
 };
 //delete button for components
 function _deleteComponent(event, button_value) {
-    console.log(summary_obj)
+    //console.log(summary_obj)
     let _component_code = $('#component-code-' + button_value).val()
     axios.delete(base_url + '/api/module-workload/mc?mod_coord=' + staff_id, {
         data: {

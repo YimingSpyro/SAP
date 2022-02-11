@@ -702,7 +702,7 @@ async function _getExamnModReport(acad_sem) {
         $('#exam-moderator-report-table').append(table_row)
     });
     document.getElementById("acad-year-head").innerHTML = acad_sem;
-    $('#admin-table').append(`<caption id= 'caption'>Showing ${examiner_report.length} Workloads</caption>`)
+    $('#admin-table').append(`<caption id= 'caption'>Showing ${examiner_report.length} Exam Entries</caption>`)
 };
 
 //get examiner and verifier report
