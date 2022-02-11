@@ -193,8 +193,7 @@ i {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    padding-left:5%;
-    padding-right:5%;
+    padding: 5px 10px 5px 10px;
 }
 
 #navbar-brand{
