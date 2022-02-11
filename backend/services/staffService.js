@@ -15,7 +15,7 @@ module.exports.getAllSections = () => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -35,7 +35,7 @@ module.exports.getStaffTypes = () => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -52,7 +52,7 @@ module.exports.createStaffType = (data) => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -118,7 +118,7 @@ module.exports.getAllDesignations = () => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -135,7 +135,7 @@ module.exports.createDesignation = (data) => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -205,26 +205,28 @@ module.exports.createStaff = (data, roles) => {
                         if (results) {
                             let role_ids = roles[0];
                             const staff_id = roles[1];
-                            if(role_ids<=0) return reject("No role specified!");
-                            else{
-                                if(role_ids.length>1){
+                            if (role_ids <= 0) return reject("No role specified!");
+                            else {
+                                if (role_ids.length > 1) {
                                     console.log("multiple role");
-                                    for(let i = 0;i<role_ids.length;i++){{
-                                        connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[i],staff_id], (err, results1) => {
-                                            if (err) {
-                                                console.log(err);
-                                                reject(err);
-                                            } else {
-                                                if (results1&&i==role_ids.length) {
-                                                    console.log(results1);
-                                                    return resolve(results);
+                                    for (let i = 0; i < role_ids.length; i++) {
+                                        {
+                                            connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[i], staff_id], (err, results1) => {
+                                                if (err) {
+                                                    console.log(err);
+                                                    reject(err);
+                                                } else {
+                                                    if (results1 && i == role_ids.length) {
+                                                        console.log(results1);
+                                                        return resolve(results);
+                                                    }
                                                 }
-                                            }
-                                        })
-                                    }}         
-                                }else{
+                                            })
+                                        }
+                                    }
+                                } else {
                                     console.log("one role");
-                                    connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[0],staff_id], (err, results1) => {
+                                    connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[0], staff_id], (err, results1) => {
                                         if (err) {
                                             console.log(err);
                                             reject(err);
@@ -246,7 +248,7 @@ module.exports.createStaff = (data, roles) => {
                         }
                     }
                 });
-                
+
             }
         })
 
@@ -254,20 +256,58 @@ module.exports.createStaff = (data, roles) => {
 };
 module.exports.getAllStaff = () => {
     return new Promise((resolve, reject) => {
-        pool.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email,staff_number, staff_mobile, staff_remarks,staff_status, fk_staff_type ,designation_id, designation_name,section_name,fk_schedule_id AS 'schedule_id'
-        FROM staff_information t1 INNER JOIN designation t2 WHERE t1.fk_designation_id=t2.designation_id;`, [], (err, results) => {
+        pool.getConnection((err, connection) => {
             if (err) {
-                reject(err);
+                reject(err)
             } else {
-                if (results) {
+                connection.query(`SELECT staff_id, staff_name, staff_abbrv, staff_email,staff_number, staff_mobile, staff_remarks,staff_status, fk_staff_type ,designation_id, designation_name,section_name,fk_schedule_id AS 'schedule_id'
+                FROM staff_information t1 INNER JOIN designation t2 WHERE t1.fk_designation_id=t2.designation_id;`, [], (err, results) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        if (results) {
+                            console.log("yo");
+                            connection.query(`SELECT * from staff_privileges;`, [], (err, results1) => {
+                                if (err) {
+                                    reject(err);
+                                } else {
+                                    if (results1) {
+                                        var privilegeById = [];
+                                        for (const i in results1) {
+                                            if (privilegeById > 1) {
+                                                for (const j in privilegeById) {
+                                                    if (!privilegeById[j].staff_id == results1[i].fk_staff_id) {
+                                                        console.log("same");
+                                                    }
+                                                }
+                                            }
+                                            /* if(privilegeById.filter(e =>e.staff_id=results1[i].fk_staff_id)) {
+                                                privilegeById.push({
+                                                    staff_id :results1[i].fk_staff_id,
+                                                })
+                                                console.log(privilegeById);
+                                                console.log(privilegeById.length);
+                                            } */
+                                        }
+                                        console.log(privilegeById);
+                                        console.log(privilegeById.length);
+                                        return resolve(results);
+                                    } else {
+                                        return resolve('Error Message');
+                                    }
+                                }
 
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
+                            });
+
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+
+                });
             }
-            
-        });
+        })
+
     });
 };
 module.exports.getAllStaffNames = () => {
@@ -283,7 +323,7 @@ module.exports.getAllStaffNames = () => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -300,7 +340,7 @@ module.exports.getStaffNames = () => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -319,7 +359,7 @@ module.exports.getStaffByStaffId = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
@@ -335,33 +375,83 @@ module.exports.deleteStaffByStaffId = (staff_id) => {
                     return resolve('Error Message');
                 }
             }
-            
+
         });
     });
 };
-module.exports.updateStaffByStaffId = (data) => {
-    console.log(data);
+module.exports.updateStaffByStaffId = (data, [role_ids, staff_id]) => {
     return new Promise((resolve, reject) => {
-        //please use only ? when declaring values to be inserted to prevent sql injection
-        pool.query(`UPDATE staff_information 
-                     SET staff_name= ?, staff_abbrv = ?,fk_staff_type=?,fk_schedule_id=?,fk_designation_id=?, staff_email = ?, staff_number = ?, staff_mobile = ?, staff_remarks = ?,staff_status=? 
-                     WHERE staff_id = ?;`, data, (err, results) => {
+        //used pool.getconnnection here to perform multiple queries
+
+        data.push(staff_id);
+        pool.getConnection((err, connection) => {
             if (err) {
-                console.log("error");
-                reject(err);
+                resolve(err);
             } else {
-                if (results) {
-                    console.log(results);
-                    return resolve(results);
-                } else {
-                    return resolve('Error Message');
-                }
+                connection.query(`UPDATE staff_information 
+                SET staff_name= ?, staff_abbrv = ?,fk_staff_type=?,fk_schedule_id=?,fk_designation_id=?, staff_email = ?, staff_number = ?, staff_mobile = ?, staff_remarks = ?,staff_status=? 
+                WHERE staff_id = ?;`, data, (err, results) => {
+                    if (err) {
+                        console.log("error");
+                        reject(err);
+                    } else {
+                        if (results) {
+                            if (role_ids <= 0) return reject("No role specified!");
+                            else {
+                                connection.query(`DELETE FROM staff_privileges WHERE fk_staff_id = ? `, [staff_id], (err, results1) => {
+                                    if (err) {
+                                        console.log(err);
+                                        reject(err);
+                                    } else {
+                                        if (results1) {
+                                            if (role_ids.length > 1) {
+                                                console.log("multiple role");
+                                                for (let i = 0; i < role_ids.length; i++) {
+                                                    console.log(i);
+                                                    {
+                                                        connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[i], staff_id], (err, results2) => {
+                                                            if (err) {
+                                                                console.log(err);
+                                                                reject(err);
+                                                            } else {
+
+
+                                                                if (results2 && i == role_ids.length - 1) {
+                                                                    return resolve(results);
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                }
+                                            } else {
+                                                console.log("one role");
+                                                connection.query(`INSERT INTO staff_privileges (fk_role_id,fk_staff_id) VALUES(?,?)`, [role_ids[0], staff_id], (err, results1) => {
+                                                    if (err) {
+                                                        console.log(err);
+                                                        reject(err);
+                                                    } else {
+                                                        if (results1) {
+                                                            console.log(results1);
+                                                            return resolve(results);
+                                                        } else {
+                                                            return resolve('Error Message');
+                                                        }
+                                                    }
+                                                })
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                        } else {
+                            return resolve('Error Message');
+                        }
+                    }
+
+                });
             }
+        })
 
-        });
-    }).catch((error) => {
-
-        return error
     });
 };
 
@@ -873,7 +963,7 @@ module.exports.updateModuleCAS = (data) => {
 
         });
     }).catch((error) => {
-        console.error("SQL Error: ",error);
+        console.error("SQL Error: ", error);
         return error
     });
 };

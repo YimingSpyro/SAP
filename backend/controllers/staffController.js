@@ -439,11 +439,11 @@ exports.updateStaffByID = async (req, res, next) => {
     let new_staff_mobile = req.body.staff_mobile
     let new_staff_remarks = req.body.staff_remarks
     let new_staff_status = req.body.staff_status
-
-    let data = [new_staff_name, new_staff_abbrv, new_staff_type, new_staff_schedule_id, new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, new_staff_status, staff_id]
+    let new_staff_role_id = req.body.staff_role;
+    
     //console.log(data);
     try {
-        let results = await staffManager.updateStaffByStaffId(data);
+        let results = await staffManager.updateStaffByStaffId([new_staff_name, new_staff_abbrv, new_staff_type, new_staff_schedule_id, new_staff_designation_id, new_staff_email, new_staff_number, new_staff_mobile, new_staff_remarks, new_staff_status],[new_staff_role_id,staff_id]);
         console.log('Update Staff Personal Information by ID');
         if (results.errno) {
             throw 'Database SQL Error'

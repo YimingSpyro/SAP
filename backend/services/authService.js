@@ -1,6 +1,8 @@
 const config = require('../config/config');
 const pool = require('../config/database')
 async function appendRoleToObject(rows, rows1) {
+    console.log(rows);
+    console.log(rows1);
     var roles = [];
     for (let i = 0; i < rows1.length; i++) {
         var row = rows1[i];
@@ -31,17 +33,20 @@ module.exports.login = ([staff_id, password]) => {
                                     reject(err);
                                 } else {
                                     if (rows1) {
-                                        const finalRows = appendRoleToObject(rows, rows1)
-                                        if(!finalRows) return resolve('Error Message');
-                                        else return resolve(finalRows);
+                                        if (rows1.length <= 0 || rows.length <= 0) reject('Error Message');
+                                        else {
+                                            const finalRows = appendRoleToObject(rows, rows1)
+                                            if (!finalRows) reject('Error Message');
+                                            else resolve(finalRows);
+                                        }
                                     } else {
                                         console.log("error");
-                                        return reject("error")
+                                         reject("error")
                                     }
                                 }
                             })
                         } else {
-                            return resolve('Error Message');
+                            reject('Error Message');
                         }
                     }
                 })
@@ -90,7 +95,7 @@ module.exports.changePassword = ([staff_id, new_password]) => {
             if (err) {
                 resolve(err);
             } else {
-                connection.query('UPDATE staff_information SET staff_password = ? WHERE staff_id=?', [new_password,staff_id], (err, rows) => {
+                connection.query('UPDATE staff_information SET staff_password = ? WHERE staff_id=?', [new_password, staff_id], (err, rows) => {
                     if (err) {
                         reject(err);
                     } else {
@@ -153,7 +158,7 @@ module.exports.getStaffPrivileges = (staff_id) => {
             if (err) {
                 resolve(err);
             } else {
-                connection.query('SELECT * FROM staff_privileges WHERE fk_staff_id=?',[staff_id], (err, rows) => {
+                connection.query('SELECT * FROM staff_privileges WHERE fk_staff_id=?', [staff_id], (err, rows) => {
                     if (err) {
                         reject(err);
                     } else {

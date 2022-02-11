@@ -9,11 +9,11 @@ function genAccessToken(rows) {
     var items = {
         staff_name: row.staff_name,
         staff_id: row.staff_id,
-        staff_roles :row.roles
+        staff_roles: row.roles
     }
     const tokenPayload = items;
-    const accessToken = jwt.sign(tokenPayload, config.JWTKey,{
-        expiresIn :config.JWTExpire
+    const accessToken = jwt.sign(tokenPayload, config.JWTKey, {
+        expiresIn: config.JWTExpire
     });
 
     //insert record into jwt records table
@@ -36,31 +36,35 @@ module.exports.processLogin = ((req, res) => {
     //console.log(password);
     var data = authManager.login([staff_id, password])
         .then((rows) => {
-            //console.log("authmanager");
-           // console.log(rows);
-            //console.log(rows[0].staff_name);
-            var hash = rows[0].staff_password;
-            bcrypt.compare(password, hash, (err, resp) => {
-                if (resp) {
-                    const accessToken = genAccessToken(rows,);
-                    // const result = JSON.parse(JSON.stringify(rows[0]));
-                    const result = rows;
-                    result['token'] = accessToken
-                    res.cookie("token", result.token, {
-                        httpOnly: true
-                    });
-                    res.status(200).json({
-                        data: result
-                    });
+            if (rows == 'Error Message') {
+                res.status(500).json({
+                    error: "Invalid Login"
+                });
+            } else {
+                var hash = rows[0].staff_password;
+                bcrypt.compare(password, hash, (err, resp) => {
+                    if (resp) {
+                        const accessToken = genAccessToken(rows,);
+                        // const result = JSON.parse(JSON.stringify(rows[0]));
+                        const result = rows;
+                        result['token'] = accessToken
+                        res.cookie("token", result.token, {
+                            httpOnly: true
+                        });
+                        res.status(200).json({
+                            data: result
+                        });
 
-                } else {
-                    //console.log("BCRYPT error");
-                    console.log(err);
-                    res.status(500).json({
-                        error: err
-                    });
-                }
-            });
+                    } else {
+                        //console.log("BCRYPT error");
+                        console.log(err);
+                        res.status(500).json({
+                            error: err
+                        });
+                    }
+                });
+
+            }
         }).catch((error) => {
             console.log(error)
             res.status(500).json({
@@ -109,56 +113,56 @@ module.exports.processChangePassword = (async (req, res) => {
     //console.log(old_password);
     var new_password = req.body.new_password;
     var re_new_password = req.body.re_new_password;
-    if (new_password != re_new_password) return res.status(500).json({message: 'New Passwords do not match'});
+    if (new_password != re_new_password) return res.status(500).json({ message: 'New Passwords do not match' });
     try {
         await authManager.login([staff_id, old_password])
-        .then((rows) => {
-            try {
-                var old_password_hashed = rows[0].staff_password;
-                bcrypt.compare(old_password, old_password_hashed, (err, resp) => {
-                    if (resp) {
-                        bcrypt.compare(new_password, old_password_hashed, (err, resp) => {
-                            if (resp) {
-                                return res.status(500).json({
-                                    message: "New password cannot be the same as old password!"
-                                });
-                            }
-                        });
-                        bcrypt.hash(new_password, saltRounds, function (err, hash) {
-                            if (err) {
-                                throw err
-                            }
-                            var new_password_hashed = hash;
-                            authManager.changePassword([staff_id, new_password_hashed]).then((rows) => {
-                                if (rows.affectedRows == 1) {
-                                    return res.status(200).json({
-                                        message: "Succesfully updated password"
+            .then((rows) => {
+                try {
+                    var old_password_hashed = rows[0].staff_password;
+                    bcrypt.compare(old_password, old_password_hashed, (err, resp) => {
+                        if (resp) {
+                            bcrypt.compare(new_password, old_password_hashed, (err, resp) => {
+                                if (resp) {
+                                    return res.status(500).json({
+                                        message: "New password cannot be the same as old password!"
                                     });
                                 }
-                            }), ((error) => {
-                                return res.status(500).json({
-                                    message: error
-                                });
-                            })
-                        });
-    
-    
-                    } else {
-                        return res.status(500).json({
-                            message: "Error: Incorrect Password"
-                        });
-                    }
-                });
-            } catch (error) {
-                let message = 'Server is unable to process your request. Error: ' + error;
-                console.error('Server is unable to process the request', { 'Error': error })
-                return res.status(500).json({
-                    message: message
-                });
-            }
+                            });
+                            bcrypt.hash(new_password, saltRounds, function (err, hash) {
+                                if (err) {
+                                    throw err
+                                }
+                                var new_password_hashed = hash;
+                                authManager.changePassword([staff_id, new_password_hashed]).then((rows) => {
+                                    if (rows.affectedRows == 1) {
+                                        return res.status(200).json({
+                                            message: "Succesfully updated password"
+                                        });
+                                    }
+                                }), ((error) => {
+                                    return res.status(500).json({
+                                        message: error
+                                    });
+                                })
+                            });
 
 
-        })
+                        } else {
+                            return res.status(500).json({
+                                message: "Error: Incorrect Password"
+                            });
+                        }
+                    });
+                } catch (error) {
+                    let message = 'Server is unable to process your request. Error: ' + error;
+                    console.error('Server is unable to process the request', { 'Error': error })
+                    return res.status(500).json({
+                        message: message
+                    });
+                }
+
+
+            })
     } catch (error) {
         let message = 'Server is unable to process your request. Error: ' + error;
         console.error('Server is unable to process the request', { 'Error': error })

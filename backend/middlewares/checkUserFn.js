@@ -3,10 +3,10 @@ const config = require('../config/config');
 require('isomorphic-fetch');
 
 //Localhost Dev URL
-//var base_url = 'https://localhost:8080'
+var base_url = 'https://localhost:8080'
 
 //Live URL
-var base_url = 'https://soctas2021.irc.sg:8080'
+//var base_url = 'https://soctas2021.irc.sg:8080'
 module.exports = {
     getClientUserId: (req, res, next) => {
         let message = 'Unauthorized access';
@@ -54,7 +54,7 @@ module.exports = {
             if (data != undefined) {
                 req.staff_name = data.staff_name;
                 req.staff_id = data.staff_id;
-                console.log("staff_id is " + data.staff_id);
+               /*  console.log("staff_id is " + data.staff_id);
                 fetch(base_url+'/staff-privileges/' + data.staff_id)
                     .then(res => res.json())
                     .then(res => {
@@ -64,10 +64,13 @@ module.exports = {
                                 console.log(res.data[i]);
                             }
                         }
-                    });
-                console.log("role_name"+data.staff_id);
+                    }).catch((e)=>{
+                       return res.status(403).json({ message: message });
+                    }); */
+                    return next();
+            }else{
+                return res.status(403).json({ message: message });;
             }
-            return next();
         } catch (e) {
             console.log(e);
             return res.status(403).json({ message: message });
