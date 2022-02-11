@@ -1,63 +1,71 @@
 body {
-  font-family: sans-serif;
-  display: flex;
-  justify-content: center;
-  background: #C1C8CB;
-  height: 100%;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    background: #C1C8CB;
+    height: 100%;
+    background: url("../SVG Icons/login bg.jpg") no-repeat top center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
 }
 
 #content-wrap {
-  margin-top: 10%;
+    margin-top: 13%;
+    background-color: rgb(111, 164, 184, 0.6);
+    padding: 50px 80px 50px 80px;
+    border-radius: 5px;
+    box-shadow: 1px 2px 4px rgb(0, 0, 0, 0.5);
 }
 
 body>div {
-  font-size: 1em;
+    font-size: 1em;
 }
 
 #login-title {
-  font-weight: lighter;
-  font-size: 70px;
-  font-style: italic;
-  text-align: center;
-  color: #01709A;
-  margin-block-end: 0px;
+    font-weight: lighter;
+    font-size: 70px;
+    font-style: italic;
+    text-align: center;
+    color: white;
+    margin-block-end: 0px;
 }
 
 #login-input-wrap {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  padding: 20px;
-
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
 }
 
 #login-input-wrap input {
-  font-size: .8em;
-  font-weight: bold;
-  width: 280px;
-  height: 25px;
-  margin-top: 20px;
-  border-radius: 3px;
-  border: none;
-  padding: 4px 8px 4px 8px
+    font-size: .8em;
+    font-weight: bold;
+    width: 280px;
+    height: 25px;
+    margin-top: 18px;
+    border-radius: 3px;
+    border: none;
+    padding: 4px 8px 4px 8px
 }
 
 #submit-button {
-  font-weight: 600;
-  padding: 4px 5px 4px 5px;
-  color: white;
-  height: 30px;
-  margin-top: 15px;
-  background: #86C4F1;
-  border-radius: 3px;
-  border: none;
+    font-weight: 600;
+    padding: 4px 5px 4px 5px;
+    color: white;
+    height: 30px;
+    margin-top: 15px;
+    background: #86C4F1;
+    border-radius: 3px;
+    border: none;
 }
 
 #error_message {
-  display: none;
-  font-size: .8em;
-  padding: 10px;
-  border-radius: 3px;
-  width: 280px;
-  background: #f7d2d2;
+    display: none;
+    font-size: .8em;
+    padding: 10px;
+    border-radius: 3px;
+    width: 280px;
+    background: #f7d2d2;
 }
