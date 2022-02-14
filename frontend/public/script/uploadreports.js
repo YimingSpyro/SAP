@@ -71,7 +71,7 @@ function ProcessExcel(data) {
     var row = table.insertRow(-1);
     var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks'];
     jsonArr = [];
-    const testField = /^[1-3]+[A|S][1-2]*/
+    const testField = /^[1-3]+[A|B|S][1-2]*/
     //Add the data rows from Excel file.
     //console.log(excelRows)
     for (let i = 0; i < excelRows.length; i++) {
