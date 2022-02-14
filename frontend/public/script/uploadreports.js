@@ -1,6 +1,7 @@
 //global variable so other functions can use data
 var workbook;
 var jsonArr;
+
 //functions to handle excel upload locally
 function Upload() {
     //Reference the FileUpload element.
@@ -92,8 +93,6 @@ function ProcessExcel(data) {
             };
         };
     };
-    //console.log(jsonArr)
-
 };
 //change the sheet to the corresponding year selected
 function selectOption(input) {
@@ -103,7 +102,7 @@ function selectOption(input) {
     var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[userInput[1]]);
     //remove table tr elements
     $("tbody tr").remove();
-    console.log(studentYear[studentYear.length - 1])
+    //console.log(studentYear[studentYear.length - 1])
     //Create a HTML Table element.
     document.createElement('tbody')
     var table = document.getElementById("dvExcel").getElementsByTagName('tbody')[0];
