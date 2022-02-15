@@ -464,6 +464,27 @@ exports.updateStaffByID = async (req, res, next) => {
     }
 
 };
+exports.getStaffRoles = async (req, res, next) => {
+    let staff_id = req.query.staff_id;
+    try {
+        let results = await staffManager.getStaffRoles(staff_id);
+        console.log('get Staff Roles');
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Update Assign Module by Staff ID');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 exports.createStaffRoles = async (req, res, next) => {
     let role = req.body.role;
     let staff_id = req.body.staff_id;

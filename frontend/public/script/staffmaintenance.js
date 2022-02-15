@@ -152,8 +152,8 @@ function filterSection(page) {
     if (status != "all") {
         $('tr.staff-row:contains(' + status + ')').addClass("row-hide")
     }
-    
-    
+
+
     filteredRows = $('tr.staff-row').not('.row-hide');
     totalRows = filteredRows.length
     currentPage = page;
@@ -187,8 +187,13 @@ function paginateRows() {
 
     }
 }
+function getStaffRoles(staff_id) {
+    return axios.get(base_url + '/api/admin/maintenance/staff/roles?staff_id=' + staff_id)
+        .then(response => response.data)
+        .catch(err => error(err));
+};
 function appendStaffFormValues(rows) {
-    $('.view-staff').on('click', function () {
+    $('.view-staff').on('click', async function () {
         var index = $('.view-staff').index(this);
         //  var dataId = $(this).attr("data-staff-id")
         $('#staff-id-edit-input').val(rows[index].staff_id)
@@ -204,6 +209,32 @@ function appendStaffFormValues(rows) {
         $('#staff-status-edit-input').val(rows[index].staff_status)
         $('#update-staff-submit').attr("data-staff-id", rows[index].staff_id)
         $('.reset-password').attr("data-staff-id", rows[index].staff_id)
+        // Get assigned roles
+        let roles = await getStaffRoles(rows[index].staff_id);
+        $("#one-edit").prop("checked", false)
+        $("#two-edit").prop("checked", false)
+        $("#three-edit").prop("checked", false)
+        $("#four-edit").prop("checked", false)
+        $("#five-edit").prop("checked", false)
+        roles.forEach(role => {
+            switch (role.fk_role_id) {
+                case "1":
+                    $("#one-edit").prop("checked", true)
+                    break;
+                case "2":
+                    $("#two-edit").prop("checked", true)
+                    break;
+                case "3":
+                    $("#three-edit").prop("checked", true)
+                    break;
+                case "4":
+                    $("#four-edit").prop("checked", true)
+                    break;
+                case "5":
+                    $("#five-edit").prop("checked", true)
+                    break;
+            }
+        });
     })
     appendPaginationNav();
     paginateRows();
@@ -211,7 +242,7 @@ function appendStaffFormValues(rows) {
 }
 function createStaff() {
     var selected = new Array()
-    $('#role-checkboxes input:checked').each((i, ob)=>{
+    $('#role-checkboxes input:checked').each((i, ob) => {
         selected.push($(ob).val());
     })
     var data = {
@@ -228,7 +259,7 @@ function createStaff() {
         staff_remarks: $('#staff-remarks-input').val(),
         staff_status: $('#staff-status-input').val(),
         staff_role: selected,
-    }   
+    }
     axios.post(base_url + '/api/admin/maintenance/staff/create', data)
         .then((response) => {
             $('#createStaffModal').modal('hide');
@@ -241,18 +272,18 @@ function createStaff() {
 function resetPassword(data) {
     let staff_id = $(data).data("staff-id");
     return axios.put(base_url + '/api/admin/maintenance/staff/password/',
-    {
-        new_password : $("#staff-reset-password")[0].value,
-        staff_id : staff_id
-    })
-    .then(() => {
-        success("reset");
-    })
-    .catch(err => error(err));
+        {
+            new_password: $("#staff-reset-password")[0].value,
+            staff_id: staff_id
+        })
+        .then(() => {
+            success("reset");
+        })
+        .catch(err => error(err));
 }
 function updateStaffById(element) {
     var selected = new Array()
-    $('#role-checkboxes-edit input:checked').each((i, ob)=>{
+    $('#role-checkboxes-edit input:checked').each((i, ob) => {
         selected.push($(ob).val());
     })
     var staff_id = $(element).attr("data-staff-id")
@@ -270,13 +301,13 @@ function updateStaffById(element) {
         staff_status: $('#staff-status-edit-input').val(),
         staff_role: selected
     }
-    console.log("staf role is "+data.staff_role);
+    console.log("staf role is " + data.staff_role);
     axios.put(base_url + '/api/admin/maintenance/staff/update/' + staff_id, data)
         .then((response) => {
             $('#editStaffModal').modal('hide');
             customMessage("Successfully Updated!")
             filterSection(currentPage)
-            let content = {textContent : (currentPage + 1)}
+            let content = { textContent: (currentPage + 1) }
             pageChange(content)
 
 
@@ -297,24 +328,24 @@ function getDesignation() {
         .catch(err => error(err));
 };
 
-function getStaffTypes(){
+function getStaffTypes() {
     return axios.get(base_url + '/api/staff/types')
         .then(response => response.data)
         .catch(err => error(err));
 }
 
-async function generateCreateFormData(){
-    let designations = await getDesignation(); 
+async function generateCreateFormData() {
+    let designations = await getDesignation();
     for (let index = 0; index < designations.length; index++) {
         const designation = designations[index];
-        $("#staff-designation-input").append(`<option value="`+designation.designation_id+`">`+ designation.section_name +`</option>`)
-        $('#staff-designation-edit-input').append(`<option value="`+designation.designation_id+`">`+ designation.section_name +`</option>`)
+        $("#staff-designation-input").append(`<option value="` + designation.designation_id + `">` + designation.section_name + `</option>`)
+        $('#staff-designation-edit-input').append(`<option value="` + designation.designation_id + `">` + designation.section_name + `</option>`)
     }
-    let types = await getStaffTypes(); 
+    let types = await getStaffTypes();
     for (let index = 0; index < types.length; index++) {
         const type = types[index];
-        $("#staff-type-input").append(`<option value="`+type.staff_type+`">`+ type.staff_description +` (`+ type.staff_type +`)</option>`)
-        $("#staff-type-edit-input").append(`<option value="`+type.staff_type+`">`+ type.staff_description +` (`+ type.staff_type +`)</option>`)
+        $("#staff-type-input").append(`<option value="` + type.staff_type + `">` + type.staff_description + ` (` + type.staff_type + `)</option>`)
+        $("#staff-type-edit-input").append(`<option value="` + type.staff_type + `">` + type.staff_description + ` (` + type.staff_type + `)</option>`)
     }
 }
 
@@ -342,7 +373,7 @@ $(document).ready(() => {
     $('.accordion-body a:nth-child(2)').addClass("text-active")
     $('.accordion-button') */
 
-    $(".reset-password").click((e)=>{
+    $(".reset-password").click((e) => {
         let staff_id = $(e.target).data("staff-id");
         $("#reset-staff-password").attr("data-staff-id", staff_id)
     })
