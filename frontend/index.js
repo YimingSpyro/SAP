@@ -11,7 +11,7 @@ const myPort = 8000
 //OPTIONS FOR LOCAL SERVER HTTPS DEVELOPMENT
 var options = {
     key: fs.readFileSync('./cert/privkey.pem'),
-    cert: fs.readFileSync('./cert/cert.pem')
+    cert: fs.readFileSync('./cert/fullchain.pem')
 }; 
 
 https.createServer(options, app).listen(8000);

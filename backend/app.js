@@ -124,7 +124,7 @@ process.on('uncaughtException', function (error, origin) {
 //OPTIONS FOR LOCAL SERVER HTTPS DEVELOPMENT
 var options = {
     key: fs.readFileSync('./cert/privkey.pem'),
-    cert: fs.readFileSync('./cert/cert.pem')
+    cert: fs.readFileSync('./cert/fullchain.pem')
 }; 
 
 https.createServer(options, app).listen(8080);
