@@ -503,6 +503,23 @@ module.exports.updatePersonalInfoByID = (data) => {
         return error
     });
 };
+module.exports.getStaffRoles = (staff_id) => {
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT * FROM staff_privileges WHERE fk_staff_id = ?`, [staff_id], (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+            
+        });
+    });
+};
 /* module.exports.createStaffRoles = (data) => {
     return new Promise((resolve, reject) => {
         pool.query(`INSERT INTO staff_privileges (fk_role_id, fk_staff_id) VALUES (?,?)`, data, (err, results) => {
