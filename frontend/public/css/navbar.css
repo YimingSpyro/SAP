@@ -165,13 +165,17 @@ i {
     margin-top: 3em;
     width: 90%;
 }
+
+#dashboard-view-wrap {
+    padding: 0 50px 0 50px;
+}
 .dashboard-item {
     background-color: transparent;
     background-repeat: repeat;
     height:100%;
     border-radius: 6px;
-    padding: 5px;
-    margin: 0 25px 0 25px;
+    padding: 25px 15px 25px 15px;
+    margin: 0;
 }
 
 #dashboard-item-report {
