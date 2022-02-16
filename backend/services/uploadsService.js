@@ -49,10 +49,10 @@ exports.insertProfilePicture = (staff_id, filename) => {
 
 //MODULES FOR REPORTS-------------------------
 //IN USE
-module.exports.uploadJSONReport = (data) => {
+module.exports.uploadJSONReport = (prepvalues, data) => {
     return new Promise((resolve, reject) => {
         pool.query(`INSERT INTO module (mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks,fk_semester_code, fk_course_id)
-        VALUES ${data}
+        VALUES ${prepvalues}
         ON DUPLICATE KEY UPDATE 
         mod_code=VALUES(mod_code),
         year_offered=VALUES(year_offered),
@@ -70,14 +70,14 @@ module.exports.uploadJSONReport = (data) => {
         total_hours=VALUES(total_hours),
         remarks=VALUES(remarks),
         fk_semester_code=VALUES(fk_semester_code),
-        fk_course_id=VALUES(fk_course_id);`,
-        (err, rows) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(rows);
-            }
-        })
+        fk_course_id=VALUES(fk_course_id);`, data,
+            (err, rows) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(rows);
+                }
+            })
     }).catch((error) => {
         console.error(error);
         return error

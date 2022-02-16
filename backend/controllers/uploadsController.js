@@ -145,16 +145,38 @@ module.exports.uploadFileJSON = async (req, res) => {
     let semester_code = req.body.data.semester_code
     let stringConcat = "";
     //order of elements for reference 
-    //(mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, mod_practical, credit_unit, 
-    // prereq, module_type, type,total_hours, remarks, fk_semester_code, fk_course_id)
+    //(mod_code, year_offered, mod_stage, mod_name, mod_abbrv, mod_dlt, mod_lecture, mod_tutorial, 
+    //mod_practical, credit_unit, prereq, module_type, type,total_hours, remarks,fk_semester_code, fk_course_id)
+    let dataArray = []
+    //push in order
     data.forEach(element => {
-      stringConcat += `,('${element['Code']}','${element['Year']}','${element['Stage']}','${element['Name']}',
-    '${element['Abbrev']}','${element['DLT']}','${element['L']}','${element['T']}','${element['P']}','${element['CU']}',
-    '${element['Prerequisite (Pass\/Taken)']}','${element['Module Type']}','${element['Type']}','${element['Total']}','${element['Remarks']}',
-    '${semester_code}','${course}')`
+      dataArray.push(element['Code'])
+      dataArray.push(element['Year'])
+      dataArray.push(element['Stage'])
+      dataArray.push(element['Name'])
+      dataArray.push(element['Abbrev'])
+      dataArray.push(element['DLT'])
+      dataArray.push(element['L'])
+      dataArray.push(element['T'])
+      dataArray.push(element['P'])
+      dataArray.push(element['CU'])
+      dataArray.push(element['Prerequisite (Pass\/Taken)'])
+      dataArray.push(element['Module Type'])
+      dataArray.push(element['Type'])
+      dataArray.push(element['Total'])
+      dataArray.push(element['Remarks'])
+      dataArray.push(semester_code)
+      dataArray.push(course)
     });
-    let newStringConcat = stringConcat.replace(',', '')
-    let result = await uploadsService.uploadJSONReport(newStringConcat)
+    let appendSQL = " "
+    for (let index = 0; index < data.length; index++) {
+      appendSQL += ",(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+    }
+    //console.log(dataArray)
+    
+    let newStringConcat = appendSQL.replace(',', '')
+    //console.log(newStringConcat)
+    let result = await uploadsService.uploadJSONReport(newStringConcat,dataArray)
     //console.log(stringConcat)
     if (result.changedRows == 0) {
       return res.status(200).json({ message: "Successfully Inserted New Records. Please Proceed to Module Maintenence to Include More Details if Neccessary." });

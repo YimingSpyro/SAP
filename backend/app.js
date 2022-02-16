@@ -124,15 +124,9 @@ process.on('uncaughtException', function (error, origin) {
 //OPTIONS FOR LOCAL SERVER HTTPS DEVELOPMENT
 var options = {
     key: fs.readFileSync('./cert/privkey.pem'),
-    cert: fs.readFileSync('./cert/cert.pem')
-};
+    cert: fs.readFileSync('./cert/fullchain.pem')
+}; 
 
-//OPTIONS FOR LIVE SERVER DEPLOYMENT
-/* var options = {
-    key: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/privkey.pem'),
-    cert: fs.readFileSync('C:/Certbot/live/soctas2021.irc.sg/cert.pem')
-};
- */
 https.createServer(options, app).listen(8080);
 
 // Connect to the Database

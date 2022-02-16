@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `tas` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `tas`;
 -- MySQL dump 10.13  Distrib 8.0.27, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: tas
@@ -23,7 +21,7 @@ USE `tas`;
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES ('DAAA','Diploma In Applied AI and Analytics','active'),('DCITP','Common ICT Programme','active'),('DISM','Diploma in Security Management','active'),('DIT','Diploma In Information Technology','active'),('DMIT','Diploma In Media Information Technology','inactive'),('DSIT','Diploma in Super Idol Training','active'),('SOC','Administrator Only Course','inactive');
+INSERT INTO `course` VALUES ('DAAA','Diploma In Applied AI and Analytics','active'),('DCITP','Common ICT Programme','active'),('DISM','Diploma in Security Management','active'),('DIT','Diploma In Information Technology','active'),('DMIT','Diploma In Media Information Technology','inactive'),('SOC','Administrator Only Course','inactive');
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -33,7 +31,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `dashboard_items` WRITE;
 /*!40000 ALTER TABLE `dashboard_items` DISABLE KEYS */;
-INSERT INTO `dashboard_items` VALUES (1,'Mainenance System','[1]','<div class=\"col-3 dashboard-item\"> <div class=\"dashboard-item-title\"> Maintenence System </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/semester\"> <div id=\"module-info-item\" class=\"list-item p-2 col\">Manage Semester</div> </a> <a href=\"/course\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Course</div> </a> <a href=\"/staff-hours\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Staff Type & Hours</div> </a> <a href=\"/designation\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Designation</div> </a> <a href=\"/maintenance\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Modules</div> </a> <a href=\"/maintenance/staff-info\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Staff List</div> </a> </div> </div>'),(2,'Reports','[5]','<div class=\"col-3 dashboard-item\"> <div class=\"dashboard-item-title\"> Reports </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/reports/assignment-report\"><div class=\"list-item p-2 col\">Assignment Report</div></a> <a href=\"/reports/mc-list\"><div class=\"list-item p-2 col\">Module Coordinator List</div></a> <a href=\"/reports/summary-by-module\"><div class=\"list-item p-2 col\">Summary by Module</div></a> <a href=\"/reports/summary-by-staff\"><div class=\"list-item p-2 col\">Summary by Staff</div></a> <a href=\"/reports/workload-summary\"><div class=\"list-item p-2 col\">Workload by Summary</div></a> <a href=\"/upload-reports\"><div class=\"list-item p-2 col\">Upload Reports</div></a> </div> </div>'),(3,'Teaching Assignment System','[1]','<div id=\"teaching-assignment\" class=\"col-3 dashboard-item\"> <div class=\"dashboard-item-title\"> Teaching Assignment </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/upload-reports\"> <div id=\"module-info-item\" class=\"list-item p-2 col\">Upload Modules</div> </a> <a href=\"/class-assignment\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Classes</div> </a> <a href=\"/teaching-assignment\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Teaching Assignment System</div> </a> </div> </div>'),(4,'Download Exam Reports','[1,3]','<div class=\"col-3 dashboard-item\"> <div class=\"dashboard-item-title\"> Download Exam Reports </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/reports/examiner-and-moderator-report\"><div class=\"list-item p-2 col\">Exam & Moderator Report</div></a> <a href=\"/reports/examiner-and-verifier-report\"><div class=\"list-item p-2 col\">Exam & Verifier Report</div></a> </div> </div>');
+INSERT INTO `dashboard_items` VALUES (1,'Mainenance System','[1]','<div class=\"col-4 dashboard-item\"> <div class=\"dashboard-item-title\"> Maintenence System </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/semester\"> <div id=\"module-info-item\" class=\"list-item p-2 col\">Manage Semester</div> </a> <a href=\"/course\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Course</div> </a> <a href=\"/staff-hours\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Staff Type & Hours</div> </a> <a href=\"/designation\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Designation</div> </a> <a href=\"/maintenance\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Modules</div> </a> <a href=\"/maintenance/staff-info\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Staff List</div> </a> </div> </div>'),(2,'Reports','[5]','<div class=\"col-4 dashboard-item\"> <div class=\"dashboard-item-title\"> Reports </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/reports/assignment-report\"><div class=\"list-item p-2 col\">Assignment Report</div></a> <a href=\"/reports/mc-list\"><div class=\"list-item p-2 col\">Module Coordinator List</div></a> <a href=\"/reports/summary-by-module\"><div class=\"list-item p-2 col\">Summary by Module</div></a> <a href=\"/reports/summary-by-staff\"><div class=\"list-item p-2 col\">Summary by Staff</div></a> <a href=\"/reports/workload-summary\"><div class=\"list-item p-2 col\">Workload by Summary</div></a> <a href=\"/upload-reports\"><div class=\"list-item p-2 col\">Upload Reports</div></a> </div> </div>'),(3,'Teaching Assignment System','[1]','<div id=\"teaching-assignment\" class=\"col-4 dashboard-item\"> <div class=\"dashboard-item-title\"> Teaching Assignment </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/upload-reports\"> <div id=\"module-info-item\" class=\"list-item p-2 col\">Upload Modules</div> </a> <a href=\"/class-assignment\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Manage Classes</div> </a> <a href=\"/teaching-assignment\"> <div id=\"staff-info-item\" class=\"list-item p-2 col\">Teaching Assignment System</div> </a> </div> </div>'),(4,'Download Exam Reports','[1,3]','<div class=\"col-4 dashboard-item\"> <div class=\"dashboard-item-title\"> Download Exam Reports </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/reports/examiner-and-moderator-report\"><div class=\"list-item p-2 col\">Exam & Moderator Report</div></a> <a href=\"/reports/examiner-and-verifier-report\"><div class=\"list-item p-2 col\">Exam & Verifier Report</div></a> </div> </div>'),(5,'New Semester Tasks','[1]','<div class=\"col-4 dashboard-item\"> <div class=\"dashboard-item-title\"> New Semester Tasks </div> <div class=\"list-group d-flex flex-column\"> <a href=\"/semester\"><div class=\"list-item p-2 col\">Create new semester</div></a> <a href=\"/semester\"><div class=\"list-item p-2 col\">Activate new semester</div></a> <a href=\"/upload-reports\"><div class=\"list-item p-2 col\">Upload semester data</div></a> <a href=\"/teaching-assignment\"><div class=\"list-item p-2 col\">Assign Module Coordinator</div></a> <a href=\"/teaching-assignment\"><div class=\"list-item p-2 col\">Teaching Assignment</div></a> </div> </div>');
 /*!40000 ALTER TABLE `dashboard_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,6 +56,15 @@ INSERT INTO `nav_items` VALUES (1,'Dashboard','/SVG Icons/Dashboard.svg','[1,2,3
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `profile_picture`
+--
+
+LOCK TABLES `profile_picture` WRITE;
+/*!40000 ALTER TABLE `profile_picture` DISABLE KEYS */;
+/*!40000 ALTER TABLE `profile_picture` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `schedule`
 --
 
@@ -68,12 +75,22 @@ INSERT INTO `schedule` VALUES ('CET','Lecturers who lurk in the night',NULL),('P
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `staff_information`
+--
+
+LOCK TABLES `staff_information` WRITE;
+/*!40000 ALTER TABLE `staff_information` DISABLE KEYS */;
+INSERT INTO `staff_information` VALUES ('123456','Super Idol','S-I',6,'superidol@sp.edu.sg','91234567','61234567','This staff is great','$2a$10$eAa4ae8Pn.6Pi9oeL3MzEObb9mpc7mKHcSRGtZCFd2BXElLUcdMqG','FT','CET',NULL,'Active');
+/*!40000 ALTER TABLE `staff_information` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `staff_privileges`
 --
 
 LOCK TABLES `staff_privileges` WRITE;
 /*!40000 ALTER TABLE `staff_privileges` DISABLE KEYS */;
-INSERT INTO `staff_privileges` VALUES (1,'1','123456'),(6,'1','424455'),(7,'2','654321'),(8,'1','654321'),(9,'1','8405'),(11,'4','S123456'),(20,'4','S111111'),(21,'1','999999'),(22,'2','999999'),(23,'3','999999'),(24,'4','999999'),(25,'5','999999'),(26,'2','S222222'),(27,'3','S333333'),(28,'5','S555555'),(29,'2','S666666'),(30,'5','S666666'),(31,'4','S444444'),(32,'2','s54172');
+INSERT INTO `staff_privileges` VALUES (1,'1','123456');
 /*!40000 ALTER TABLE `staff_privileges` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,4 +123,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-11 19:49:36
+-- Dump completed on 2022-02-15 23:40:41

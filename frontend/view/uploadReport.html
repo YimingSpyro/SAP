@@ -30,7 +30,7 @@
 
 
 
-    
+
 
 
     <!-- Online scripts to Upload Files -->
@@ -46,7 +46,13 @@
     <script src="/script/append_navbar.js"></script>
     <script src="/script/global.js"></script>
     <script src="/script/uploadreports.js"></script>
-
+    <style>
+        .quick-read {
+            font-size: 15px !important;
+            font-weight: normal !important;
+            margin: 20px;
+        }
+    </style>
 
 
 </head>
@@ -78,6 +84,19 @@
                     <!-- Content Header -->
                     <div id="content-header-admin">
                         <p>Upload Reports</p>
+                        <div class="line"></div>
+                        <p class="quick-read"> 
+                            Quick Overview:
+                            <br> This page is to facilitate the upload of course data for the various courses such as
+                            DAAA, DISM, DCITP etc.
+                            <br>
+                            Please ensure that the stage is clearly labelled and capitalised ie. 1S1, 2A. 
+                            <br>
+                            Please also ensure that the sheet names are clearly labelled with only the year as it will be used to sort the data. 
+                            <br>
+                            The most recent year will contain Year 1 data and so on, with the 2nd most recent being Year 2.
+                        </p>
+                        <div class="line"></div>
                         <div class="d-flex p-2 bd-highlight custom-file">
                             <input class="custom-file-input" type="file" id="fileUpload" />
                             <input class="btn btn-outline-info btn-sm" type="button" id="upload" value="Prepare Data" />

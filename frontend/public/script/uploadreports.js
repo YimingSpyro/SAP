@@ -1,6 +1,7 @@
 //global variable so other functions can use data
 var workbook;
 var jsonArr;
+
 //functions to handle excel upload locally
 function Upload() {
     //Reference the FileUpload element.
@@ -71,7 +72,7 @@ function ProcessExcel(data) {
     var row = table.insertRow(-1);
     var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks'];
     jsonArr = [];
-    const testField = /^\d\w/
+    const testField = /^[1-3]+[A|B|S][1-2]*/
     //Add the data rows from Excel file.
     //console.log(excelRows)
     for (let i = 0; i < excelRows.length; i++) {
@@ -81,8 +82,8 @@ function ProcessExcel(data) {
             var row = table.insertRow(-1);
             //Add the data cells.
             for (let j = 0; j < header_names.length; j++) {
-                if (excelRows[i][objectProperties[j]] == undefined) {
-                    excelRows[i][objectProperties[j]] = 'Nil'
+                if (excelRows[i][objectProperties[j]] == undefined || excelRows[i][objectProperties[j]] == 'Nil') {
+                    excelRows[i][objectProperties[j]] = 0
                     var cell = row.insertCell(-1);
                     cell.innerHTML = excelRows[i][objectProperties[j]];
                 } else {
@@ -92,8 +93,6 @@ function ProcessExcel(data) {
             };
         };
     };
-    //console.log(jsonArr)
-
 };
 //change the sheet to the corresponding year selected
 function selectOption(input) {
@@ -103,7 +102,7 @@ function selectOption(input) {
     var excelRows = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[userInput[1]]);
     //remove table tr elements
     $("tbody tr").remove();
-    console.log(studentYear[studentYear.length - 1])
+    //console.log(studentYear[studentYear.length - 1])
     //Create a HTML Table element.
     document.createElement('tbody')
     var table = document.getElementById("dvExcel").getElementsByTagName('tbody')[0];
@@ -122,8 +121,8 @@ function selectOption(input) {
             var row = table.insertRow(-1);
             //Add the data cells.
             for (let j = 0; j < header_names.length; j++) {
-                if (excelRows[i][objectProperties[j]] == undefined) {
-                    excelRows[i][objectProperties[j]] = 'Nil'
+                if (excelRows[i][objectProperties[j]] == undefined || excelRows[i][objectProperties[j]] == 'Nil') {
+                    excelRows[i][objectProperties[j]] = 0
                     var cell = row.insertCell(-1);
                     cell.innerHTML = excelRows[i][objectProperties[j]];
                 } else {
