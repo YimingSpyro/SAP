@@ -4,6 +4,7 @@ p {
 }
 
 
+
 /* ============================ Notifications ========================= */
 
 .error-message {
@@ -73,7 +74,9 @@ div.accordion-body > a:hover {
 
 
 /* Important */
-
+#announcementcontent {
+    z-index: 999;
+}
 #announcementcontent.important {
     width: 90%;
     background-color: #F58E8E;
@@ -421,6 +424,7 @@ caption {
 
 
 /* ================================================================= Dashboards =======================================================*/
+
 
 .dashboard-item {
     height: 0%;
