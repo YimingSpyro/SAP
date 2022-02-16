@@ -806,7 +806,7 @@ module.exports.getAssignedModulesByModule = (data) => {
         pool.query(`SELECT * FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
-         WHERE fk_mod_code = ? AND module.fk_semester_code = ?;`, data, (err, results) => {
+         WHERE fk_mod_code = ? AND mod_assign.fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
             } else {
