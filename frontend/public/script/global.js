@@ -1,3 +1,6 @@
+var pathname = window.location.pathname;
+if(pathname=='/'){
+}else if (!sessionStorage.getItem("isLoggedIn")) window.location.href = "/"
 function getSemester() {
     return axios.get(base_url + '/api/semester/?status=active')
         .then(response => response.data[0])
@@ -63,10 +66,10 @@ async function generateNavAnnouncements() {
 }
 
 //Live URL
-let base_url = "https://soctas2021.irc.sg:8080";
+//let base_url = "https://soctas2021.irc.sg:8080";
 
 //Localhost Dev URL
-//let base_url = "https://localhost:8080";
+let base_url = "http://localhost:8080";
 
 
 function getProfilePicture() {
