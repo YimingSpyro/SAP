@@ -69,7 +69,7 @@ async function generateNavAnnouncements() {
 let base_url = "https://soctas2021.irc.sg:8080";
 
 //Localhost Dev URL
-//let base_url = "http://localhost:8080";
+/* let base_url = "https://localhost:8080"; */
 
 
 function getProfilePicture() {

@@ -14,9 +14,15 @@ var options = {
     cert: fs.readFileSync('./cert/fullchain.pem')
 }; 
 
+//OPTIONS FOR SERVER HTTPS (SELF-SIGNED)
+/* var options = {
+    key: fs.readFileSync('./cert/key.pem'),
+    cert: fs.readFileSync('./cert/cert.pem')
+};  */
+
 https.createServer(options, app).listen(8000);
 
-//Localhost WITHOUT https
+//Localhost/Live WITHOUT https
 /* app.listen(myPort,() => {
     console.log(`Client Server started and accessible via port ${myPort}`)
 }); */
