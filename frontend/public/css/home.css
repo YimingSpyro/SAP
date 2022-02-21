@@ -2,6 +2,18 @@
     height: 1000px;
 }
 
+.dashboard-item-mc,.dashboard-item-lecturer {
+    background-color: #D0D2D6;
+    height: 100%;
+    padding: 25px 15px 25px 15px;
+}
+
+.table>:not(caption)>*>* {
+    padding: 0.5rem 0.5rem;
+    background-color: #22404F;
+    padding-left: 20px;
+}
+
 .outer-block { 
     -moz-column-count: 4;
     -webkit-column-count: 4;

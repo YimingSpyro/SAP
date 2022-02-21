@@ -19,7 +19,7 @@ async function generateAssignedModules(){
             <td>`+module.ma_practical+`</td>
             <td>`+hours.toFixed(1)+`</td>
         </tr>`);
-        if (parseInt(module.fk_mod_coord) == sessionStorage.getItem('staff_id')) {
+        if (module.fk_mod_coord == sessionStorage.getItem('staff_id')) {
             $("#module-"+index).css("color","orange");
         }
     }
@@ -33,4 +33,6 @@ async function generateAssignedModules(){
     </tr>`);
 }
 
-generateAssignedModules();
+$(document).ready(()=>{
+    generateAssignedModules();
+})

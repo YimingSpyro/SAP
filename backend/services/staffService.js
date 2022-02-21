@@ -829,7 +829,7 @@ module.exports.getAssignedModulesByID = (data) => {
         pool.query(`SELECT assignment_id,ma_lecture,ma_tutorial,ma_practical, module.mod_lecture, module.mod_tutorial, module.mod_practical, module.fk_semester_code, module.mod_code, module.mod_name, module.mod_abbrv, module.fk_mod_coord,module.fk_course_id,module.mod_stage, module.lecture_class, module.tutorial_class, module.practical_class, module.total_students FROM mod_assign
          INNER JOIN module
          ON mod_assign.fk_mod_code = module.mod_code
-         WHERE fk_staff_id = ? AND mod_assign.fk_semester_code = ?;`, data, (err, results) => {
+         WHERE fk_staff_id = ? AND mod_assign.fk_semester_code = ? AND module.fk_semester_code = ?;`, data, (err, results) => {
             if (err) {
                 reject(err);
             } else {
