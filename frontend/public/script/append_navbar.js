@@ -6,6 +6,46 @@ var html = ""
 var dashboardHtml = "";
 var navbarAppended = false;
 var dashboardAppended = false;
+var coord_id = sessionStorage.getItem('staff_id');
+async function _appendMCModules() {
+  const regMC = /Module Coordinator/
+  const mc_modules = await axios.get(base_url + '/api/mod-coord/dashboard-modules?mod_coord=' + coord_id, { withCredentials: true }).then((response) => { return response.data }).catch((error) => { console.log(error) });
+  const title = $(".dashboard-item-title").text()
+  if (regMC.test(title)) { //if the page is module coordinator
+    let list_item = `<div class="">
+  <p class="text-danger"> *Status refers to whether the module has reached 100% in component weightages</p>
+  <table class = "table table-dark" id="dashboard-table-modules"> 
+  <thead>
+  <tr > 
+  <th scope="col" class="col-8">Modules</th>
+  <th scope="col">Status</th>
+  <th scope="col"> </th>
+  </tr>
+  </thead>
+  <tbody id ="dashboard-modules">
+  </tbody>
+  </table>
+  </div>`
+    $(".dashboard-item-mc").prepend(list_item)
+    mc_modules.forEach(element => {
+      let table_row = `<tr>
+      <td class = "text-wrap">${element["mod_code"]} ${element.fk_course_id}: ${element.mod_name} (${element.mod_abbrv}) ${element.mod_stage}</td>
+      `
+      if (element["SUM(mod_workload.weightage)"] == 100) {
+        table_row += `<td>Complete</td>
+                      <td><a href="/module-coordinator/maintenance" class="badge badge-light">View</a></td>
+                      </tr>`
+      } else {
+        table_row += `<td class="text-warning">Incomplete</td>
+                      <td><a href="/module-coordinator/maintenance" class="button view-workload">View</a></td>
+                      </tr>`
+      }
+      $("#dashboard-modules").append(table_row)
+    });
+  };
+
+
+}
 async function appendDashboard() {
   if (!sessionStorage.getItem("navBar&DashboardAppended")) {
     axios.get(base_url + "/api/nav-items").then((response) => {
@@ -79,9 +119,8 @@ async function appendDashboard() {
 }
 async function generateDashboardItems() {
   await appendDashboard()
-    .then(async () => {
+    .then(async ()=> {
       if (location.pathname == "/home") {
-
         // DASHBOARD ITEM CONTENT CODE GOES HERE
         let data = await getAssignedModulesDashboard();
         let total_hours = 0;
@@ -90,13 +129,13 @@ async function generateDashboardItems() {
           let hours = (module.ma_lecture * module.mod_lecture + module.ma_tutorial * module.mod_tutorial + module.ma_practical * module.mod_practical) / 15;
           total_hours += hours;
           $(".assigned-modules").append(`
-        <tr>
-            <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) Year ` + module.mod_stage + `</th>
-            <td>`+ module.ma_lecture + `</td>
-            <td>`+ module.ma_tutorial + `</td>
-            <td>`+ module.ma_practical + `</td>
-            <td>`+ hours.toFixed(1) + `</td>
-        </tr>`);
+          <tr>
+              <td id="module-`+ index + `">` + module.mod_code + ` ` + module.fk_course_id + `: ` + module.mod_name + ` (` + module.mod_abbrv + `) Year ` + module.mod_stage + `</th>
+              <td>`+ module.ma_lecture + `</td>
+              <td>`+ module.ma_tutorial + `</td>
+              <td>`+ module.ma_practical + `</td>
+              <td>`+ hours.toFixed(1) + `</td>
+          </tr>`);
           if (module.fk_mod_coord == sessionStorage.getItem('staff_id')) {
             $("#module-" + index).css("color", "orange");
           }
@@ -110,8 +149,9 @@ async function generateDashboardItems() {
             <th></th>
         </tr>`);
       }
-
-
+    })
+    .then(() => {
+      _appendMCModules()
     })
 }
 function getAssignedModulesDashboard() {

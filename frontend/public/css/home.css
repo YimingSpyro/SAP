@@ -1,7 +1,12 @@
 #dashboard-wrap {
     height: 1000px;
 }
-
+#dashboard-table-modules {
+    font-style: normal;
+    font-weight: normal;
+    text-align: left;
+    padding: 10rem;
+}
 .dashboard-item-mc,.dashboard-item-lecturer {
     background-color: #D0D2D6;
     height: 100%;
@@ -12,6 +17,10 @@
     padding: 0.5rem 0.5rem;
     background-color: #22404F;
     padding-left: 20px;
+}
+.view-workload {
+    color: #ffffff;
+    font-weight: bold;
 }
 
 .outer-block { 
