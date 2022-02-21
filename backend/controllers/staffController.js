@@ -897,7 +897,7 @@ exports.getAssignedModulesByModule = async (req, res, next) => {
 exports.getAssignedModulesByID = async (req, res, next) => {
     let staff_id = req.params.id;
     let semester_code = req.query.semester_code;
-    let data = [staff_id, semester_code]
+    let data = [staff_id, semester_code, semester_code]
     try {
         let results = await staffManager.getAssignedModulesByID(data);
         console.log('Get Staff Assigned Module');

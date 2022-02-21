@@ -677,7 +677,7 @@ async function unassignStaff(staff_id, ma_id) {
     await unassignModule(ma_id);
     let staff = await getStaffByID(staff_id);
     let staff_name = staff.staff_name;
-    $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + `</option>`)
+    $(".select-staff").append(`<option value="` + staff_id + `">` + staff_name + ` (${staff_id})</option>`)
     calculateClassesTBA()
 }
 
