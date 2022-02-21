@@ -25,7 +25,7 @@ module.exports.getModuleBySection = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -46,7 +46,7 @@ module.exports.getModuleBySectionAndStage = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -67,7 +67,7 @@ module.exports.getModuleByCode = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    //console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -89,7 +89,32 @@ module.exports.getModuleByModCoord = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
+                    return resolve(results);
+                } else {
+                    return resolve('Error Message');
+                }
+            }
+
+        });
+    }).catch((error) => {
+
+        return error
+    });
+};
+//getdashboard specifically for mc
+module.exports.getMCDashboardModules = (data) => {
+    return new Promise((resolve, reject) => {
+        //please use only ? when declaring values to be inserted to prevent sql injection
+        pool.query(`SELECT module.fk_course_id, mod_code,module.mod_stage, mod_name, mod_abbrv, SUM(mod_workload.weightage) FROM module 
+        INNER JOIN semester_code ON fk_semester_code = semester_code 
+        LEFT OUTER JOIN mod_workload ON mod_code = fk_mod_code
+        WHERE fk_mod_coord = ? AND latest_sem = 'ACTIVE' 
+        GROUP BY fk_mod_code`, data, (err, results) => {
+            if (err) {
+                reject(err);
+            } else {
+                if (results) {
+
                     return resolve(results);
                 } else {
                     return resolve('Error Message');
@@ -151,7 +176,6 @@ module.exports.createModule = (data) => {
                 reject(err);
             } else {
                 if (results) {
-                    console.log(results);
                     return resolve(results);
                 } else {
                     return resolve('Error Message');

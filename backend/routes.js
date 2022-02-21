@@ -166,6 +166,7 @@ exports.appRoute = router => {
     router.put('/api/update-module/', moduleController.updateModule);
     router.get('/api/mod-coord/modules', moduleController.getModuleByModCoord);
     router.put('/api/mod-coord/update-module/', moduleController.updateMCModule);
+    router.get('/api/mod-coord/dashboard-modules', moduleController.getMCDashboardModules);
 
     // MODULE PREFERENCE
     router.get('/api/module/preference', staffController.getAllModulePreference);

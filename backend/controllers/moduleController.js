@@ -107,6 +107,29 @@ exports.getModuleByModCoord = async (req, res, next) => {
     }
 
 };
+
+// API Get Modules for Dashboard
+exports.getMCDashboardModules = async (req, res, next) => {
+    //let semester_code = req.query.semester_code;
+    let fk_mod_coord = req.query.mod_coord;
+    try {
+        let results = await moduleService.getMCDashboardModules([fk_mod_coord]);
+        if (results.errno) {
+            throw 'Database SQL Error'
+        }
+        else {
+            console.log('Get Dashboard Modules');
+            return res.status(200).json(results);
+        }
+    } catch (error) {
+        let message = 'Server is unable to process your request. Error: ' + error;
+        console.error('Server is unable to process the request', { 'Error': error })
+        return res.status(500).json({
+            message: message
+        });
+    }
+
+};
 // API Get All Modules
 exports.getAllModules = async (req, res, next) => {
     let semester_code = req.query.semester_code;
