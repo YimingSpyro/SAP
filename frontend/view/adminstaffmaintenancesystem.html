@@ -79,9 +79,8 @@
                                 </div>
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">Staff Password:</label>
-                                    <span class="required-indicator">*</span>
                                     <input class="staff-info-input" type="text" id="staff-password-input"
-                                        name="staff-password-input"><br><br>
+                                        name="staff-password-input"><span class="required-indicator">*</span><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">Staff Abbrv:</label>
@@ -107,7 +106,7 @@
                                     <label class="staff-info-label" for="fname">Designation:</label>
                                     <select name="staff-designation-input" id="staff-designation-input"
                                         class="staff-info-input">
-                                    </select><br><br>
+                                    </select><span class="required-indicator">*</span><br><br>
                                 </div>
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">Email:</label>
@@ -132,7 +131,6 @@
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">Staff status (Active or
                                         Inactive):</label>
-                                        <span class="required-indicator">*</span>
                                     <select name="staff-status-input" id="staff-status-input" class="staff-info-input">
                                         <option value="Active">Active</option>
                                         <option value="Inactive">Inactive</option>
@@ -150,7 +148,6 @@
                                 </div> -->
                                 <div class="staff-info-edit-wrapper">
                                     <label class="staff-info-label" for="fname">Staff account role:</label>
-                                    <span class="required-indicator">*</span>
                                     <div class="multiselect">
                                         <div class="selectBox staff-info-input" onclick="showCheckboxes()">
                                             <select id="staff-role-input" class="staff-info-input">
@@ -173,6 +170,7 @@
                                                 Support</label>
                                         </div>
                                     </div>
+                                    <span class="required-indicator">*</span>
                                 </div>
                             </div>
                             <div class="modal-footer">
