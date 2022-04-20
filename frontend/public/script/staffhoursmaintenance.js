@@ -62,7 +62,7 @@ async function inputValidation(type) {
         if (description_check.test(create_description)) {
             throw "Only alphanumeric characters and spaces allowed for description."
         }
-        if (!description_check.test(create_remarks)) {
+        if (description_check.test(create_remarks)) {
             throw "Only alphanumeric characters and spaces allowed for remarks."
         }
     }
@@ -80,7 +80,7 @@ async function inputValidation(type) {
         if (description_check.test(update_description)) {
             throw "Only alphanumeric characters and spaces allowed for description."
         }
-        if (!description_check.test(update_remarks)) {
+        if (description_check.test(update_remarks)) {
             throw "Only alphanumeric characters and spaces allowed for remarks."
         }
     }
