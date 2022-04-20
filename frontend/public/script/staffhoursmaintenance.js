@@ -78,6 +78,7 @@ async function inputValidation(type) {
             throw "Only numeric inputs allowed for hours."
         }
         if (!description_check.test(update_description)) {
+            console.log("update"+update_description)
             throw "Only uppercase and lowercase letters allowed for description."
         }
         if (!description_check.test(update_remarks)) {
