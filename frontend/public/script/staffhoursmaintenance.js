@@ -45,7 +45,7 @@ function updateStaffType(){
 }
 
 async function inputValidation(type) {
-    let description_check = new RegExp('^\w+[-,"\'\s]+[\w\-,"\'\s]*')
+    let description_check = new RegExp('^\w+[\-,"\'\s]+[\w\-,"\'\s]*')
     let type_check = new RegExp('^[A-Za-z0-9 ]+$')
     let hours = new RegExp('^[0-9]+$')
     if (type == "create") {
