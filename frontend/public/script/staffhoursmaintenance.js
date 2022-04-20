@@ -45,7 +45,7 @@ function updateStaffType(){
 }
 
 async function inputValidation(type) {
-    let description_check = /^\w+[-,"\'\s]+[\w\-,"\'\s]*/gm
+    let description_check = /^\w+[\w\-,"\'\s]*/gm
     let type_check = new RegExp('^[A-Za-z0-9 ]+$')
     let hours = new RegExp('^[0-9]+$')
     if (type == "create") {
@@ -81,6 +81,7 @@ async function inputValidation(type) {
             throw "Only alphanumeric characters and spaces allowed for description."
         }
         if (!description_check.test(update_remarks)) {
+            console.log()
             throw "Only alphanumeric characters and spaces allowed for remarks."
         }
     }
