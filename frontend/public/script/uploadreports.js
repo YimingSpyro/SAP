@@ -111,7 +111,7 @@ function selectOption(input) {
     var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module Type', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks']
     jsonArr = [];
     const testField = new RegExp(`^${studentYear[studentYear.length - 1]}\\w`);
-    const testDigit = new RegExp('^\s*\d+\s*+$')
+    const testDigit = new RegExp('^\s*\d+\s*$')
     //Add the data rows from Excel file.
     //console.log(excelRows)
     for (let i = 0; i < excelRows.length; i++) {
