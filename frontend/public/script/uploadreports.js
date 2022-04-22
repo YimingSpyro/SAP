@@ -134,6 +134,7 @@ function selectOption(input) {
                 tmpObj = { 'Year': userInput[1] }
                 Object.assign(obj, tmpObj)
             };
+            parseInt(obj)
             jsonArr.push(obj)
         };
     };
