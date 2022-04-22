@@ -111,7 +111,6 @@ function selectOption(input) {
     var header_names = ['Year', 'Stage', 'Code', 'Abbrev', 'Name', 'Module Type', 'Prerequisite (Pass\/Taken)', 'Type', 'L', 'T', 'P', 'DLT', 'Total', 'CU', 'Remarks']
     jsonArr = [];
     const testField = new RegExp(`^${studentYear[studentYear.length - 1]}\\w`);
-    const testDigit = new RegExp('^\s*\d+\s*$')
     //Add the data rows from Excel file.
     //console.log(excelRows)
     for (let i = 0; i < excelRows.length; i++) {
@@ -130,11 +129,7 @@ function selectOption(input) {
                     var cell = row.insertCell(-1);
                     cell.innerHTML = excelRows[i][objectProperties[j]];
                 }
-                if (testDigit.test(excelRows[i][objectProperties[j]])){
-                    var tmpObj = { [header_names[j]]: parseInt(excelRows[i][objectProperties[j]]) }
-                }else if(excelRows[i][objectProperties[j]] ){
-                    var tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]] }
-                }
+                let tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]].trim() }
                 Object.assign(obj, tmpObj)
                 tmpObj = { 'Year': userInput[1] }
                 Object.assign(obj, tmpObj)
