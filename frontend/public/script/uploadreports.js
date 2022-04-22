@@ -129,7 +129,9 @@ function selectOption(input) {
                     var cell = row.insertCell(-1);
                     cell.innerHTML = excelRows[i][objectProperties[j]];
                 }
-                let tmpObj = { [header_names[j]]: excelRows[i][objectProperties[j]].trim() }
+                console.log(excelRows[i][objectProperties[j]])
+                let trimObj = excelRows[i][objectProperties[j]] 
+                let tmpObj = { [header_names[j]]: trimObj}
                 Object.assign(obj, tmpObj)
                 tmpObj = { 'Year': userInput[1] }
                 Object.assign(obj, tmpObj)
